@@ -1,0 +1,220 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+:root {
+  --bg: #0b0b0b;
+  --card: #131313;
+  --card-2: #171717;
+  --text: #ffffff;
+  --muted: #c9c9c9;
+  --green: #00c853;
+  --red: #ff3d00;
+  --orange: #ff6a00;
+  --line: rgba(255,255,255,0.08);
+  --glow: rgba(255, 106, 0, 0.12);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.topbar, .map-header, .admin-header, .top-driver-bar {
+  padding: 18px 20px;
+  background: #111;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.logo {
+  font-size: 1.8rem;
+  color: var(--orange);
+  font-weight: 800;
+}
+
+.container, .booking-sheet, .earnings-page, .dashboard-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.card, .mini-card, .earnings-card, .withdraw-card, .admin-card, .ride-request-card, .vehicle-card {
+  background: var(--card);
+  padding: 18px;
+  border-radius: 22px;
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  box-shadow: 0 0 30px var(--glow);
+}
+
+.card h2, .card h3, .mini-card h3, .earnings-card h2, .admin-card h3, .ride-request-card h3 {
+  color: var(--orange);
+  margin-bottom: 10px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--card-2);
+  color: white;
+  outline: none;
+}
+
+.main-btn, .secondary-btn, .danger-btn, .logout-btn, .action-btn, .small-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+}
+
+.main-btn {
+  background: linear-gradient(135deg, var(--green), #00a846);
+  color: white;
+}
+
+.secondary-btn {
+  background: linear-gradient(135deg, var(--orange), #ff8c1a);
+  color: white;
+}
+
+.danger-btn {
+  background: linear-gradient(135deg, var(--red), #ff6d3a);
+  color: white;
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, var(--orange), #ff8c1a);
+  color: white;
+  width: auto;
+  padding: 12px 18px;
+}
+
+.grid-2, .grid-3, .grid-4, .stats-grid, .driver-stats, .admin-grid, .earnings-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.grid-2, .driver-stats, .earnings-grid { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4, .admin-grid, .stats-grid { grid-template-columns: repeat(4, 1fr); }
+
+.vehicle-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vehicle-card.selected {
+  border: 2px solid var(--green);
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #1f1f1f;
+  border: 1px solid var(--line);
+}
+
+.badge.pending { color: #ffd54f; }
+.badge.accepted { color: #4fc3f7; }
+.badge.started { color: #81c784; }
+.badge.completed { color: #66bb6a; }
+.badge.rejected { color: #ef5350; }
+
+.ref-box {
+  display: flex;
+  gap: 10px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 55px;
+  height: 28px;
+}
+.switch input { display: none; }
+.slider {
+  position: absolute;
+  inset: 0;
+  background: #666;
+  border-radius: 34px;
+}
+.slider::before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 3px;
+  top: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+.switch input:checked + .slider { background: var(--green); }
+.switch input:checked + .slider::before { transform: translateX(27px); }
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link {
+  color: #8ab4ff;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 12px 0;
+}
+
+@media(max-width: 900px) {
+  .grid-4, .admin-grid, .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media(max-width: 640px) {
+  .grid-2, .grid-3, .grid-4, .driver-stats, .admin-grid, .earnings-grid, .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .ref-box, .row {
+    flex-direction: column;
+  }
+  .logo {
+    font-size: 1.5rem;
+  }
+}

@@ -47,7 +47,12 @@
 
       <button class="main-btn" onclick="bookRide()">Find Driver</button>
     </section>
-
+    <h3>Payment Method</h3>
+<div class="grid-2">
+  <button type="button" class="secondary-btn" onclick="selectPayment('UPI')">UPI</button>
+  <button type="button" class="secondary-btn" onclick="selectPayment('Cash')">Cash on Ride</button>
+</div>
+<p class="muted">Selected: <span id="paymentMethodText">UPI</span></p>
     <section class="grid-3">
       <a class="secondary-btn" href="ride-live.html">Track Ride</a>
       <a class="secondary-btn" href="history.html">Ride History</a>

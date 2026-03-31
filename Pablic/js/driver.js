@@ -16,9 +16,9 @@ import {
 let currentDriverId = null;
 let locationWatchId = null;
 
-// Haversine formula for distance (in KM)
+// Distance formula (KM)
 function getDistance(lat1, lng1, lat2, lng2) {
-  const R = 6371; // Earth radius in KM
+  const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLng = (lng2 - lng1) * Math.PI / 180;
 
@@ -32,7 +32,7 @@ function getDistance(lat1, lng1, lat2, lng2) {
   return R * c;
 }
 
-// Start updating driver location in Firestore
+// Driver live location update
 function startDriverLocationUpdates() {
   if (!navigator.geolocation) {
     alert("Location not supported on this device");
@@ -68,49 +68,105 @@ function stopDriverLocationUpdates() {
 
 // Accept Ride
 async function acceptRide(rideId) {
-  const otp = await generateOTP(rideId);
+  try {
+    const otp = await generateOTP(rideId);
 
-  await updateDoc(doc(db, "rides", rideId), {
-    driverId: currentDriverId,
-    status: "accepted"
-  });
+    await updateDoc(doc(db, "rides", rideId), {
+      driverId: currentDriverId,
+      status: "accepted"
+    });
 
-  alert(`Ride accepted! Customer OTP: ${otp}`);
+    alert(`Ride accepted! Customer OTP: ${otp}`);
+  } catch (e) {
+    alert("Accept failed: " + e.message);
+  }
 }
 
 // Reject Ride
 async function rejectRide(rideId) {
-  await updateDoc(doc(db, "rides", rideId), {
-    status: "rejected"
-  });
+  try {
+    await updateDoc(doc(db, "rides", rideId), {
+      status: "rejected"
+    });
 
-  alert("Ride rejected");
+    alert("Ride rejected");
+  } catch (e) {
+    alert("Reject failed: " + e.message);
+  }
 }
 
-// Complete Ride
+// Complete Ride + Wallet Credit
 async function completeRide(rideId, fare) {
-  const driverRef = doc(db, "drivers", currentDriverId);
-  const driverSnap = await getDoc(driverRef);
-  const driver = driverSnap.data();
+  try {
+    const rideRef = doc(db, "rides", rideId);
+    const rideSnap = await getDoc(rideRef);
+    const ride = rideSnap.data();
 
-  const newEarnings = Number(driver.earnings || 0) + Number(fare || 0);
-  const newWallet = Number(driver.wallet || 0) + Number(fare || 0);
+    if (!ride) {
+      alert("Ride not found");
+      return;
+    }
 
-  await updateDoc(doc(db, "rides", rideId), { status: "completed" });
-  await updateDoc(driverRef, {
-    earnings: newEarnings,
-    wallet: newWallet
-  });
+    const paymentMethod = ride.paymentMethod || "UPI";
+    const paymentStatus = ride.paymentStatus || "unpaid";
 
-  stopDriverTracking();
-  alert("Ride completed!");
+    // UPI payment required before completion
+    if (paymentMethod === "UPI" && paymentStatus !== "paid") {
+      alert("Customer UPI payment is not marked as PAID yet.");
+      return;
+    }
+
+    // Prevent double wallet credit
+    if (ride.walletCredited === true) {
+      alert("Wallet already credited for this ride.");
+      return;
+    }
+
+    const driverRef = doc(db, "drivers", currentDriverId);
+    const driverSnap = await getDoc(driverRef);
+    const driver = driverSnap.data();
+
+    if (!driver) {
+      alert("Driver profile not found");
+      return;
+    }
+
+    const currentEarnings = Number(driver.earnings || 0);
+    const currentWallet = Number(driver.wallet || 0);
+    const rideFare = Number(fare || 0);
+
+    const newEarnings = currentEarnings + rideFare;
+    const newWallet = currentWallet + rideFare;
+
+    // Cash rides auto mark paid on completion
+    const finalPaymentStatus = paymentMethod === "Cash" ? "paid" : paymentStatus;
+
+    // Update ride
+    await updateDoc(rideRef, {
+      status: "completed",
+      paymentStatus: finalPaymentStatus,
+      walletCredited: true,
+      completedAt: new Date().toISOString()
+    });
+
+    // Update driver wallet
+    await updateDoc(driverRef, {
+      earnings: newEarnings,
+      wallet: newWallet
+    });
+
+    stopDriverTracking();
+    alert(`Ride completed! ₹${rideFare} added to your wallet.`);
+  } catch (e) {
+    alert("Complete ride failed: " + e.message);
+  }
 }
 
 window.acceptRide = acceptRide;
 window.rejectRide = rejectRide;
 window.completeRide = completeRide;
 
-// Main
+// Main Driver Page
 guardPage(async (user) => {
   bindLogout();
   currentDriverId = user.uid;
@@ -125,10 +181,12 @@ guardPage(async (user) => {
   }
 
   const driver = driverSnap.data();
+
   setText("driverInfo", `${driver.name || "Driver"} • ${driver.email || ""}`);
   setText("todayEarnings", currency(driver.earnings || 0));
   setText("driverWallet", currency(driver.wallet || 0));
 
+  // Approval check
   if (!driver.approved) {
     document.getElementById("pendingRides").innerHTML = `
       <div class="mini-card">
@@ -143,7 +201,6 @@ guardPage(async (user) => {
   const toggle = document.getElementById("onlineToggle");
   toggle.checked = !!driver.online;
 
-  // If already online from previous session, restart location tracking
   if (toggle.checked) {
     startDriverLocationUpdates();
   }
@@ -158,7 +215,7 @@ guardPage(async (user) => {
     }
   });
 
-  // Show only nearby pending rides
+  // Nearby pending rides
   const pendingQ = query(
     collection(db, "rides"),
     where("status", "==", "pending"),
@@ -205,7 +262,7 @@ guardPage(async (user) => {
         ride.customerLng
       );
 
-      // Only show rides within 5 KM
+      // Only rides within 5 KM
       if (distance <= 5) {
         foundNearbyRide = true;
 
@@ -215,6 +272,8 @@ guardPage(async (user) => {
             <p>Fare: ${currency(ride.fare)}</p>
             <p>Distance: ${distance.toFixed(2)} km</p>
             <p>Status: ${statusBadge(ride.status)}</p>
+            <p>Payment Method: <b>${ride.paymentMethod || "UPI"}</b></p>
+            <p>Payment: <b>${ride.paymentStatus || "unpaid"}</b></p>
             <div class="row">
               <button class="main-btn" onclick="acceptRide('${rideDoc.id}')">Accept</button>
               <button class="danger-btn" onclick="rejectRide('${rideDoc.id}')">Reject</button>
@@ -260,6 +319,8 @@ guardPage(async (user) => {
         <h3>${ride.pickup} → ${ride.drop}</h3>
         <p>Fare: ${currency(ride.fare)}</p>
         <p>Status: ${statusBadge(ride.status)}</p>
+        <p>Payment Method: <b>${ride.paymentMethod || "UPI"}</b></p>
+        <p>Payment: <b>${ride.paymentStatus || "unpaid"}</b></p>
         <input id="otpInput" type="number" placeholder="Enter customer OTP to start ride" />
         <button class="secondary-btn" id="startRideBtn">Start Ride</button>
         <button class="main-btn" id="completeRideBtn">Complete Ride</button>
@@ -269,6 +330,7 @@ guardPage(async (user) => {
     document.getElementById("startRideBtn").onclick = async () => {
       const entered = document.getElementById("otpInput").value;
       const ok = await verifyOTP(ride.id, entered);
+
       if (ok) {
         alert("Ride started!");
       } else {
@@ -281,7 +343,7 @@ guardPage(async (user) => {
     };
   });
 
-  // Cleanup on tab close / refresh
+  // Cleanup on refresh / close
   window.addEventListener("beforeunload", () => {
     stopDriverLocationUpdates();
   });

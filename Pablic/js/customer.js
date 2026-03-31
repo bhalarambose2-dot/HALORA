@@ -15,12 +15,14 @@ import {
 
 let selectedFare = 49;
 
+// Vehicle select
 window.selectVehicle = function (card) {
   document.querySelectorAll(".vehicle-card").forEach(c => c.classList.remove("selected"));
   card.classList.add("selected");
   selectedFare = Number(card.dataset.fare || 49);
 };
 
+// Book Ride with customer live location
 window.bookRide = async function () {
   const pickup = document.getElementById("pickup").value.trim();
   const drop = document.getElementById("drop").value.trim();
@@ -31,30 +33,50 @@ window.bookRide = async function () {
     return;
   }
 
-  try {
-    const rideRef = await addDoc(collection(db, "rides"), {
-      customerId: user.uid,
-      driverId: "",
-      pickup,
-      drop,
-      fare: selectedFare,
-      status: "pending",
-      otp: null,
-      rating: null,
-      review: "",
-      driverLat: null,
-      driverLng: null,
-      createdAt: serverTimestamp()
-    });
-
-    localStorage.setItem("rideId", rideRef.id);
-    alert("Ride requested! Driver will see it now.");
-    window.location.href = "ride-live.html";
-  } catch (e) {
-    alert(e.message);
+  if (!navigator.geolocation) {
+    alert("Location not supported on this device");
+    return;
   }
+
+  navigator.geolocation.getCurrentPosition(async (pos) => {
+    try {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+
+      const rideRef = await addDoc(collection(db, "rides"), {
+        customerId: user.uid,
+        driverId: "",
+        pickup,
+        drop,
+        fare: selectedFare,
+        status: "pending",
+        otp: null,
+        rating: null,
+        review: "",
+        customerLat: lat,
+        customerLng: lng,
+        driverLat: null,
+        driverLng: null,
+        createdAt: serverTimestamp()
+      });
+
+      localStorage.setItem("rideId", rideRef.id);
+      alert("Ride requested! Nearby drivers will receive it.");
+      window.location.href = "ride-live.html";
+    } catch (e) {
+      alert(e.message);
+    }
+  }, (err) => {
+    alert("Location permission denied. Please allow location.");
+    console.error(err);
+  }, {
+    enableHighAccuracy: true,
+    timeout: 10000,
+    maximumAge: 0
+  });
 };
 
+// Auth Guard
 guardPage(async (user) => {
   bindLogout();
 
@@ -81,9 +103,11 @@ guardPage(async (user) => {
       document.getElementById("lastRideStatus").innerHTML = "No ride yet";
       return;
     }
+
     const rideDoc = snap.docs[0];
     const ride = rideDoc.data();
     localStorage.setItem("rideId", rideDoc.id);
+
     document.getElementById("lastRideStatus").innerHTML = `
       <div class="mini-card">
         <h3>${ride.pickup} → ${ride.drop}</h3>

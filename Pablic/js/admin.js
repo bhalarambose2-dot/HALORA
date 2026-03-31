@@ -54,9 +54,12 @@ guardPage(async (user) => {
       approvalList.innerHTML += `
         <div class="mini-card">
           <h3>${driver.name || "Driver"} • ${driver.email || ""}</h3>
-          <p>Aadhaar: <a class="link" href="${driver.aadhaarUrl || '#'}" target="_blank">Open</a></p>
-          <p>DL: <a class="link" href="${driver.dlUrl || '#'}" target="_blank">Open</a></p>
-          <p>RC: <a class="link" href="${driver.rcUrl || '#'}" target="_blank">Open</a></p>
+          <p>Aadhaar: ${driver.aadhaarNo || "-"}</p>
+          <p>DL: ${driver.dlNo || "-"}</p>
+          <p>RC: ${driver.rcNo || "-"}</p>
+          <p>Vehicle No: ${driver.vehicleNumber || "-"}</p>
+          <p>Vehicle Type: ${driver.vehicleType || "-"}</p>
+          <p>UPI: ${driver.upiId || "-"}</p>
           <button class="main-btn" onclick="approveDriver('${d.id}')">Approve Driver</button>
         </div>
       `;

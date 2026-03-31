@@ -14,6 +14,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 let selectedFare = 49;
+let selectedPaymentMethod = "UPI";
 
 // Vehicle select
 window.selectVehicle = function (card) {
@@ -22,7 +23,13 @@ window.selectVehicle = function (card) {
   selectedFare = Number(card.dataset.fare || 49);
 };
 
-// Book Ride with customer live location
+// Payment method select
+window.selectPayment = function (method) {
+  selectedPaymentMethod = method;
+  document.getElementById("paymentMethodText").innerText = method;
+};
+
+// Book Ride with customer live location + payment method
 window.bookRide = async function () {
   const pickup = document.getElementById("pickup").value.trim();
   const drop = document.getElementById("drop").value.trim();
@@ -43,6 +50,8 @@ window.bookRide = async function () {
       const lat = pos.coords.latitude;
       const lng = pos.coords.longitude;
 
+      const paymentStatus = selectedPaymentMethod === "Cash" ? "cash" : "unpaid";
+
       const rideRef = await addDoc(collection(db, "rides"), {
         customerId: user.uid,
         driverId: "",
@@ -50,9 +59,12 @@ window.bookRide = async function () {
         drop,
         fare: selectedFare,
         status: "pending",
+        paymentStatus: paymentStatus,
+        paymentMethod: selectedPaymentMethod,
         otp: null,
         rating: null,
         review: "",
+        walletCredited: false,
         customerLat: lat,
         customerLng: lng,
         driverLat: null,
@@ -61,7 +73,7 @@ window.bookRide = async function () {
       });
 
       localStorage.setItem("rideId", rideRef.id);
-      alert("Ride requested! Nearby drivers will receive it.");
+      alert(`Ride requested with ${selectedPaymentMethod} payment!`);
       window.location.href = "ride-live.html";
     } catch (e) {
       alert(e.message);
@@ -113,6 +125,8 @@ guardPage(async (user) => {
         <h3>${ride.pickup} → ${ride.drop}</h3>
         <p>Fare: ₹${ride.fare}</p>
         <p>Status: ${statusBadge(ride.status)}</p>
+        <p>Payment Method: <b>${ride.paymentMethod || "UPI"}</b></p>
+        <p>Payment: <b>${ride.paymentStatus || "unpaid"}</b></p>
       </div>
     `;
   });

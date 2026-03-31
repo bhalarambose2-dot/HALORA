@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - HALORA RIDE</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">HALORA RIDE</div>
+    <a class="logout-btn" href="signup.html">Signup</a>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Login</h2>
+      <input id="email" type="email" placeholder="Email" />
+      <input id="password" type="password" placeholder="Password" />
+      <button class="main-btn" onclick="loginUser()">Login</button>
+      <br /><br />
+      <p class="muted">Don't have an account? <a class="link" href="signup.html">Signup</a></p>
+    </section>
+  </main>
+
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

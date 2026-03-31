@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Withdraw - HALORA</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">WITHDRAW</div>
+    <a class="logout-btn" href="wallet.html">Back</a>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Withdraw Request</h2>
+      <input id="amount" type="number" placeholder="Enter amount" />
+      <input id="upi" type="text" placeholder="Enter UPI ID (e.g. name@upi)" />
+      <button class="main-btn" onclick="submitWithdraw()">Submit</button>
+    </section>
+  </main>
+
+  <script type="module" src="js/withdraw.js"></script>
+</body>
+</html>

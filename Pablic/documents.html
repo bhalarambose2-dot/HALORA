@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documents - HALORA</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">DRIVER DOCS</div>
+    <a class="logout-btn" href="driver.html">Back</a>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Upload Driver Documents</h2>
+      <p class="muted">Required: Aadhaar, DL, RC, Selfie, Vehicle Photo</p>
+
+      <label>Aadhaar</label>
+      <input type="file" id="aadhaar" />
+      <label>Driving License</label>
+      <input type="file" id="dl" />
+      <label>RC</label>
+      <input type="file" id="rc" />
+      <label>Selfie</label>
+      <input type="file" id="selfie" />
+      <label>Vehicle Photo</label>
+      <input type="file" id="vehicle" />
+
+      <button class="main-btn" onclick="uploadDocs()">Upload</button>
+      <br /><br />
+      <div id="docStatus" class="muted">Not uploaded</div>
+    </section>
+  </main>
+
+  <script type="module" src="js/documents.js"></script>
+</body>
+</html>

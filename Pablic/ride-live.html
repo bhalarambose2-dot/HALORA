@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Track Ride - HALORA</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="map-header">
+    <div class="logo">TRACK RIDE</div>
+    <a class="logout-btn" href="customer.html">Back</a>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Your Live Ride</h2>
+      <div id="rideStatus">Loading...</div>
+      <hr />
+      <p id="otpBox" class="muted">OTP will appear when driver accepts.</p>
+      <p id="driverCoords" class="muted">Driver location: waiting...</p>
+    </section>
+  </main>
+
+  <script type="module">
+    import { db } from "./js/firebase-config.js";
+    import { statusBadge, currency } from "./js/common.js";
+    import {
+      doc,
+      onSnapshot
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const rideId = localStorage.getItem("rideId");
+    const rideStatus = document.getElementById("rideStatus");
+    const otpBox = document.getElementById("otpBox");
+    const coordsEl = document.getElementById("driverCoords");
+
+    if (!rideId) {
+      rideStatus.innerHTML = "No ride found";
+    } else {
+      onSnapshot(doc(db, "rides", rideId), (snap) => {
+        const ride = snap.data();
+        if (!ride) {
+          rideStatus.innerHTML = "Ride not found";
+          return;
+        }
+
+        rideStatus.innerHTML = `
+          <div class="mini-card">
+            <h3>${ride.pickup} → ${ride.drop}</h3>
+            <p>Fare: ${currency(ride.fare)}</p>
+            <p>Status: ${statusBadge(ride.status)}</p>
+          </div>
+        `;
+
+        if (ride.otp) {
+          otpBox.innerText = `Your OTP: ${ride.otp}`;
+        }
+
+        if (ride.driverLat && ride.driverLng) {
+          coordsEl.innerText = `Driver location: Lat ${ride.driverLat}, Lng ${ride.driverLng}`;
+        }
+      });
+    }
+  </script>
+</body>
+</html>

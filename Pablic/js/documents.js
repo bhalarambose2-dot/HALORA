@@ -1,9 +1,4 @@
-import { auth, db, storage } from "./firebase-config.js";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+import { auth, db } from "./firebase-config.js";
 import {
   doc,
   updateDoc,
@@ -11,39 +6,35 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { guardPage } from "./common.js";
 
-async function uploadFile(file, path) {
-  const storageRef = ref(storage, path);
-  await uploadBytes(storageRef, file);
-  return await getDownloadURL(storageRef);
-}
-
-window.uploadDocs = async function () {
+window.saveDocs = async function () {
   const user = auth.currentUser;
-  const aadhaar = document.getElementById("aadhaar").files[0];
-  const dl = document.getElementById("dl").files[0];
-  const rc = document.getElementById("rc").files[0];
-  const selfie = document.getElementById("selfie").files[0];
-  const vehicle = document.getElementById("vehicle").files[0];
 
-  if (!aadhaar || !dl || !rc || !selfie || !vehicle) {
-    alert("Please upload all documents");
+  const aadhaarNo = document.getElementById("aadhaarNo").value.trim();
+  const dlNo = document.getElementById("dlNo").value.trim();
+  const rcNo = document.getElementById("rcNo").value.trim();
+  const vehicleNumber = document.getElementById("vehicleNumber").value.trim();
+  const vehicleType = document.getElementById("vehicleType").value.trim();
+  const upiId = document.getElementById("upiId").value.trim();
+
+  if (!aadhaarNo || !dlNo || !rcNo || !vehicleNumber || !vehicleType || !upiId) {
+    alert("Please fill all fields");
     return;
   }
 
   try {
-    const aadhaarUrl = await uploadFile(aadhaar, `drivers/${user.uid}/aadhaar`);
-    const dlUrl = await uploadFile(dl, `drivers/${user.uid}/dl`);
-    const rcUrl = await uploadFile(rc, `drivers/${user.uid}/rc`);
-    const selfieUrl = await uploadFile(selfie, `drivers/${user.uid}/selfie`);
-    const vehicleUrl = await uploadFile(vehicle, `drivers/${user.uid}/vehicle`);
-
     await updateDoc(doc(db, "drivers", user.uid), {
-      aadhaarUrl, dlUrl, rcUrl, selfieUrl, vehicleUrl,
+      aadhaarNo,
+      dlNo,
+      rcNo,
+      vehicleNumber,
+      vehicleType,
+      upiId,
       approved: false
     });
 
-    document.getElementById("docStatus").innerText = "Documents uploaded! Wait for admin approval.";
-    alert("Documents uploaded!");
+    document.getElementById("docStatus").innerText =
+      "Verification submitted! Wait for admin approval.";
+    alert("Verification submitted successfully!");
   } catch (e) {
     alert(e.message);
   }

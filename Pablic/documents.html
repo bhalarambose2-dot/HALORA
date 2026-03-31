@@ -14,23 +14,19 @@
 
   <main class="container">
     <section class="card">
-      <h2>Upload Driver Documents</h2>
-      <p class="muted">Required: Aadhaar, DL, RC, Selfie, Vehicle Photo</p>
+      <h2>Driver Verification Details</h2>
+      <p class="muted">Storage off hai, isliye abhi text verification use hoga.</p>
 
-      <label>Aadhaar</label>
-      <input type="file" id="aadhaar" />
-      <label>Driving License</label>
-      <input type="file" id="dl" />
-      <label>RC</label>
-      <input type="file" id="rc" />
-      <label>Selfie</label>
-      <input type="file" id="selfie" />
-      <label>Vehicle Photo</label>
-      <input type="file" id="vehicle" />
+      <input type="text" id="aadhaarNo" placeholder="Aadhaar Number" />
+      <input type="text" id="dlNo" placeholder="Driving License Number" />
+      <input type="text" id="rcNo" placeholder="RC Number" />
+      <input type="text" id="vehicleNumber" placeholder="Vehicle Number" />
+      <input type="text" id="vehicleType" placeholder="Vehicle Type (Bike/Auto/Cab)" />
+      <input type="text" id="upiId" placeholder="UPI ID for payouts" />
 
-      <button class="main-btn" onclick="uploadDocs()">Upload</button>
+      <button class="main-btn" onclick="saveDocs()">Submit Verification</button>
       <br /><br />
-      <div id="docStatus" class="muted">Not uploaded</div>
+      <div id="docStatus" class="muted">Not submitted</div>
     </section>
   </main>
 

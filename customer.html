@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer - HALORA RIDE</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">HALORA</div>
+    <button id="logoutBtn" class="logout-btn">Logout</button>
+  </header>
+
+  <main class="dashboard-container">
+    <section class="card">
+      <h2>Book Your Ride</h2>
+      <p class="muted">Welcome, <span id="customerName">Loading...</span> • <span id="customerEmail"></span></p>
+      <hr />
+      <label>Pickup Location</label>
+      <input id="pickup" type="text" placeholder="Enter pickup location" />
+      <label>Drop Location</label>
+      <input id="drop" type="text" placeholder="Enter destination" />
+
+      <h3>Select Vehicle</h3>
+      <div class="vehicle-card selected" data-fare="49" onclick="selectVehicle(this)">
+        <div>
+          <h4>Bike Ride</h4>
+          <p class="muted">Fast & Affordable</p>
+        </div>
+        <span>₹49</span>
+      </div>
+      <div class="vehicle-card" data-fare="89" onclick="selectVehicle(this)">
+        <div>
+          <h4>Auto Ride</h4>
+          <p class="muted">Comfort Ride</p>
+        </div>
+        <span>₹89</span>
+      </div>
+      <div class="vehicle-card" data-fare="149" onclick="selectVehicle(this)">
+        <div>
+          <h4>Cab Ride</h4>
+          <p class="muted">Premium Ride</p>
+        </div>
+        <span>₹149</span>
+      </div>
+
+      <button class="main-btn" onclick="bookRide()">Find Driver</button>
+    </section>
+    <h3>Payment Method</h3>
+<div class="grid-2">
+  <button type="button" class="secondary-btn" onclick="selectPayment('UPI')">UPI</button>
+  <button type="button" class="secondary-btn" onclick="selectPayment('Cash')">Cash on Ride</button>
+</div>
+<p class="muted">Selected: <span id="paymentMethodText">UPI</span></p>
+    <section class="grid-3">
+      <a class="secondary-btn" href="ride-live.html">Track Ride</a>
+      <a class="secondary-btn" href="history.html">Ride History</a>
+      <a class="secondary-btn" href="ratings.html">Rate Last Ride</a>
+    </section>
+
+    <section class="card">
+      <h3>Last Ride Status</h3>
+      <div id="lastRideStatus" class="muted">No ride yet</div>
+    </section>
+  </main>
+
+  <script type="module" src="js/customer.js"></script>
+</body>
+</html>

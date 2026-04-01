@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documents - HALORA</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">DRIVER DOCS</div>
+    <a class="logout-btn" href="driver.html">Back</a>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Driver Verification Details</h2>
+      <p class="muted">Storage off hai, isliye abhi text verification use hoga.</p>
+
+      <input type="text" id="aadhaarNo" placeholder="Aadhaar Number" />
+      <input type="text" id="dlNo" placeholder="Driving License Number" />
+      <input type="text" id="rcNo" placeholder="RC Number" />
+      <input type="text" id="vehicleNumber" placeholder="Vehicle Number" />
+      <input type="text" id="vehicleType" placeholder="Vehicle Type (Bike/Auto/Cab)" />
+      <input type="text" id="upiId" placeholder="UPI ID for payouts" />
+
+      <button class="main-btn" onclick="saveDocs()">Submit Verification</button>
+      <br /><br />
+      <div id="docStatus" class="muted">Not submitted</div>
+    </section>
+  </main>
+
+  <script type="module" src="js/documents.js"></script>
+</body>
+</html>

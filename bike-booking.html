@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HALORA Bike Booking</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+  <header class="top-header">
+    <h2>Bike / Taxi / Auto Booking</h2>
+    <button class="logout-btn" onclick="window.location.href='dashboard.html'">Back</button>
+  </header>
+
+  <div class="dashboard-content">
+    <div id="map" style="height: 300px; border-radius: 15px;"></div>
+
+    <div class="booking-form">
+      <select id="serviceType">
+        <option value="Bike">Bike</option>
+        <option value="Taxi">Taxi</option>
+        <option value="Auto">Auto</option>
+      </select>
+
+      <input type="text" id="pickup" placeholder="Pickup Location" />
+      <input type="text" id="drop" placeholder="Drop Location" />
+      <input type="number" id="price" placeholder="Estimated Price ₹" />
+
+      <button class="main-btn" onclick="saveRideBooking()">Book Now</button>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script type="module" src="map.js"></script>
+  <script type="module" src="booking.js"></script>
+</body>
+</html>

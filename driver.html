@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Driver - HALORA RIDE</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="top-driver-bar">
+    <div>
+      <div class="logo">HALORA DRIVER</div>
+      <div class="muted" id="driverInfo">Loading...</div>
+    </div>
+    <div class="row">
+      <label class="switch">
+        <input id="onlineToggle" type="checkbox" />
+        <span class="slider"></span>
+      </label>
+      <button id="logoutBtn" class="logout-btn">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="grid-2">
+      <div class="mini-card">
+        <h3>Total Earnings</h3>
+        <h2 id="todayEarnings">₹0</h2>
+      </div>
+      <div class="mini-card">
+        <h3>Wallet</h3>
+        <h2 id="driverWallet">₹0</h2>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Pending Ride Requests</h2>
+      <div id="pendingRides">Loading...</div>
+    </section>
+
+    <section class="card">
+      <h2>My Active Ride</h2>
+      <div id="activeRide">No active ride</div>
+    </section>
+
+    <section class="grid-3">
+      <a class="secondary-btn" href="wallet.html">Wallet</a>
+      <a class="secondary-btn" href="withdraw.html">Withdraw</a>
+      <a class="secondary-btn" href="documents.html">Documents</a>
+    </section>
+  </main>
+
+  <script type="module" src="js/driver.js"></script>
+</body>
+</html>

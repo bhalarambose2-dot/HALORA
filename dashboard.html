@@ -3,116 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard - HALORA</title>
-  <link rel="stylesheet" href="./style.css" />
+  <title>HALORA PRO</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="dashboard-body">
 
-  <!-- TOP HEADER -->
-  <header class="topbar">
-    <div class="logo">HALORA RIDE</div>
+  <header class="top-header">
+    <h2>HALORA PRO</h2>
     <button class="logout-btn" onclick="logoutUser()">Logout</button>
   </header>
 
-  <main class="app-container">
+  <main class="dashboard-content">
 
-    <!-- WELCOME CARD -->
-    <section class="welcome-card">
-      <div>
-        <h2>Welcome Back 👋</h2>
-        <p id="userInfo">Loading user...</p>
-      </div>
-      <div class="profile-circle">H</div>
-    </section>
-
-    <!-- DASHBOARD MENU -->
-    <section class="card">
-      <h2 class="section-heading">Dashboard</h2>
-      <div class="menu-grid">
-        <div class="menu-box">My Trip</div>
-        <div class="menu-box">My Booking</div>
-        <div class="menu-box">Profile</div>
-      </div>
-    </section>
-
-    <!-- SERVICES -->
-    <section class="card">
-      <h2 class="section-heading">Choose Service</h2>
+    <!-- HOME TAB -->
+    <section id="homeTab" class="tab-content active">
+      <h3>Quick Booking</h3>
       <div class="service-grid">
-        <div class="service-box" onclick="selectService('Bike',49)">🏍 Bike</div>
-        <div class="service-box" onclick="selectService('Taxi',149)">🚕 Taxi</div>
-        <div class="service-box" onclick="selectService('Auto',89)">🛺 Auto</div>
-        <div class="service-box" onclick="selectService('Hotel',999)">🏨 Hotel</div>
-      </div>
-      <p class="selected-service" id="selectedService">Selected: None</p>
-    </section>
-
-    <!-- BOOKING FORM -->
-    <section class="card">
-      <h2 class="section-heading">Book Now</h2>
-
-      <label>Pickup Location</label>
-      <input id="pickup" type="text" placeholder="Enter pickup location" />
-
-      <label>Drop Location</label>
-      <input id="drop" type="text" placeholder="Enter destination / hotel city" />
-
-      <label>Date</label>
-      <input id="tripDate" type="date" />
-
-      <div class="price-box">
-        <span>Estimated Price</span>
-        <strong id="bookingPrice">₹0</strong>
+        <div class="card" onclick="window.location.href='bike-booking.html'">🏍 Bike Booking</div>
+        <div class="card" onclick="window.location.href='bike-booking.html'">🚕 Taxi Booking</div>
+        <div class="card" onclick="window.location.href='bike-booking.html'">🛺 Auto Booking</div>
+        <div class="card" onclick="window.location.href='hotels.html'">🏨 Hotels</div>
       </div>
 
-      <button class="main-btn" onclick="bookNow()">Book Now</button>
-    </section>
-
-    <!-- BOOKINGS -->
-    <section class="card">
-      <h2 class="section-heading">My Bookings</h2>
-      <div id="myBookings">
-        <p class="muted">No bookings yet.</p>
+      <div class="service-grid" style="margin-top:20px;">
+        <div class="card" onclick="window.location.href='wallet.html'">💰 Wallet</div>
+        <div class="card" onclick="window.location.href='kyc.html'">🪪 KYC</div>
+        <div class="card" onclick="window.location.href='history.html'">📜 History</div>
+        <div class="card" onclick="window.location.href='profile-edit.html'">👤 Edit Profile</div>
       </div>
     </section>
 
-    <!-- POPULAR TRIPS -->
-    <section class="card">
-      <h2 class="section-heading">Popular India Trips</h2>
-      <div class="trip-grid">
-        <div class="trip-card">
-          <h3>Kedarnath</h3>
-          <p>Temple + Trek + Stay</p>
-          <strong>₹4,999</strong>
-        </div>
-        <div class="trip-card">
-          <h3>Goa</h3>
-          <p>Beach + Hotel + Local Ride</p>
-          <strong>₹6,999</strong>
-        </div>
-        <div class="trip-card">
-          <h3>Jaipur</h3>
-          <p>Pink City + Forts</p>
-          <strong>₹3,499</strong>
-        </div>
-        <div class="trip-card">
-          <h3>Manali</h3>
-          <p>Snow + Stay + Cab</p>
-          <strong>₹7,999</strong>
-        </div>
+    <!-- TRIP TAB -->
+    <section id="tripTab" class="tab-content">
+      <h3>All India Trips</h3>
+      <div class="trip-list">
+        <div class="card" onclick="bookTrip('Rajasthan Tour', 4999)">📍 Rajasthan Tour - ₹4999</div>
+        <div class="card" onclick="bookTrip('Goa Beach Trip', 6999)">📍 Goa Beach Trip - ₹6999</div>
+        <div class="card" onclick="bookTrip('Kedarnath Yatra', 3999)">📍 Kedarnath Yatra - ₹3999</div>
+        <div class="card" onclick="bookTrip('Kashmir Tour', 9999)">📍 Kashmir Tour - ₹9999</div>
+      </div>
+    </section>
+
+    <!-- PARTNER TAB -->
+    <section id="partnerTab" class="tab-content">
+      <h3>Become a Partner</h3>
+      <div class="service-grid">
+        <div class="card" onclick="applyPartner('Bike Partner')">🏍 Bike Partner</div>
+        <div class="card" onclick="applyPartner('Hotel Partner')">🏨 Hotel Partner</div>
+        <div class="card" onclick="applyPartner('Trip Agent')">🧳 Trip Agent</div>
+      </div>
+    </section>
+
+    <!-- PROFILE TAB -->
+    <section id="profileTab" class="tab-content">
+      <h3>User Profile</h3>
+      <div class="profile-box">
+        <p><strong>Name:</strong> <span id="profileName">Loading...</span></p>
+        <p><strong>Email:</strong> <span id="profileEmail">Loading...</span></p>
+        <p><strong>Wallet:</strong> ₹<span id="walletBalance">0</span></p>
+        <p><strong>KYC:</strong> <span id="kycStatus">Pending</span></p>
       </div>
     </section>
 
   </main>
 
-  <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
-    <button class="nav-item active">🏠<span>Home</span></button>
-    <button class="nav-item">🧳<span>Trips</span></button>
-    <button class="nav-item">📖<span>Bookings</span></button>
-    <button class="nav-item">👤<span>Profile</span></button>
+    <button onclick="showTab('homeTab')">Home</button>
+    <button onclick="showTab('tripTab')">Trip</button>
+    <button onclick="showTab('partnerTab')">Partner</button>
+    <button onclick="showTab('profileTab')">Profile</button>
   </nav>
 
-  <script type="module" src="./js/dashboard.js"></script>
+  <script type="module" src="auth.js"></script>
+  <script type="module" src="profile.js"></script>
+  <script type="module" src="partner.js"></script>
+  <script type="module" src="trip.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

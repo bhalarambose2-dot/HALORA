@@ -8,40 +8,48 @@
 </head>
 <body>
 
+  <!-- TOP HEADER -->
   <header class="topbar">
     <div class="logo">HALORA RIDE</div>
     <button class="logout-btn" onclick="logoutUser()">Logout</button>
   </header>
 
-  <main class="container">
-    
-    <!-- USER -->
-    <section class="card">
-      <h2>Welcome</h2>
-      <p class="muted" id="userInfo">Loading...</p>
+  <main class="app-container">
+
+    <!-- WELCOME CARD -->
+    <section class="welcome-card">
+      <div>
+        <h2>Welcome Back 👋</h2>
+        <p id="userInfo">Loading user...</p>
+      </div>
+      <div class="profile-circle">H</div>
     </section>
 
-    <!-- MENU -->
+    <!-- DASHBOARD MENU -->
     <section class="card">
-      <h2>Dashboard</h2>
+      <h2 class="section-heading">Dashboard</h2>
       <div class="menu-grid">
         <div class="menu-box">My Trip</div>
         <div class="menu-box">My Booking</div>
-        <div class="menu-box">Profile / Hotel</div>
+        <div class="menu-box">Profile</div>
       </div>
     </section>
 
     <!-- SERVICES -->
     <section class="card">
-      <h2>Book Now</h2>
+      <h2 class="section-heading">Choose Service</h2>
       <div class="service-grid">
-        <div class="service-box" onclick="selectService('Bike',49)">Bike</div>
-        <div class="service-box" onclick="selectService('Taxi',149)">Taxi</div>
-        <div class="service-box" onclick="selectService('Auto',89)">Auto</div>
-        <div class="service-box" onclick="selectService('Hotel',999)">Hotel</div>
+        <div class="service-box" onclick="selectService('Bike',49)">🏍 Bike</div>
+        <div class="service-box" onclick="selectService('Taxi',149)">🚕 Taxi</div>
+        <div class="service-box" onclick="selectService('Auto',89)">🛺 Auto</div>
+        <div class="service-box" onclick="selectService('Hotel',999)">🏨 Hotel</div>
       </div>
-
       <p class="selected-service" id="selectedService">Selected: None</p>
+    </section>
+
+    <!-- BOOKING FORM -->
+    <section class="card">
+      <h2 class="section-heading">Book Now</h2>
 
       <label>Pickup Location</label>
       <input id="pickup" type="text" placeholder="Enter pickup location" />
@@ -52,62 +60,58 @@
       <label>Date</label>
       <input id="tripDate" type="date" />
 
+      <div class="price-box">
+        <span>Estimated Price</span>
+        <strong id="bookingPrice">₹0</strong>
+      </div>
+
       <button class="main-btn" onclick="bookNow()">Book Now</button>
     </section>
 
-    <!-- PRICE -->
+    <!-- BOOKINGS -->
     <section class="card">
-      <h2>Booking Price</h2>
-      <p class="big-price" id="bookingPrice">₹0</p>
-      <p class="muted">Bike / Taxi / Auto / Hotel booking price yahan show hoga.</p>
-    </section>
-
-    <!-- MY BOOKINGS -->
-    <section class="card">
-      <h2>My Booking</h2>
+      <h2 class="section-heading">My Bookings</h2>
       <div id="myBookings">
         <p class="muted">No bookings yet.</p>
       </div>
     </section>
 
-    <!-- ALL INDIA TRIPS -->
+    <!-- POPULAR TRIPS -->
     <section class="card">
-      <h2>Popular India Trips</h2>
+      <h2 class="section-heading">Popular India Trips</h2>
       <div class="trip-grid">
         <div class="trip-card">
-          <h3>Kedarnath Trip</h3>
-          <p>Haridwar → Sonprayag → Kedarnath</p>
+          <h3>Kedarnath</h3>
+          <p>Temple + Trek + Stay</p>
           <strong>₹4,999</strong>
         </div>
         <div class="trip-card">
-          <h3>Goa Trip</h3>
-          <p>Beach + Hotel + Local Travel</p>
+          <h3>Goa</h3>
+          <p>Beach + Hotel + Local Ride</p>
           <strong>₹6,999</strong>
         </div>
         <div class="trip-card">
-          <h3>Jaipur Trip</h3>
-          <p>Pink City + Fort Tour</p>
+          <h3>Jaipur</h3>
+          <p>Pink City + Forts</p>
           <strong>₹3,499</strong>
         </div>
         <div class="trip-card">
-          <h3>Manali Trip</h3>
-          <p>Snow + Hotel + Cab</p>
+          <h3>Manali</h3>
+          <p>Snow + Stay + Cab</p>
           <strong>₹7,999</strong>
-        </div>
-        <div class="trip-card">
-          <h3>Mumbai Trip</h3>
-          <p>City Tour + Hotel</p>
-          <strong>₹5,499</strong>
-        </div>
-        <div class="trip-card">
-          <h3>Udaipur Trip</h3>
-          <p>Lake City + Stay</p>
-          <strong>₹4,299</strong>
         </div>
       </div>
     </section>
 
   </main>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-item active">🏠<span>Home</span></button>
+    <button class="nav-item">🧳<span>Trips</span></button>
+    <button class="nav-item">📖<span>Bookings</span></button>
+    <button class="nav-item">👤<span>Profile</span></button>
+  </nav>
 
   <script type="module" src="./js/dashboard.js"></script>
 </body>

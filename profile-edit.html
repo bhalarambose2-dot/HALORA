@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top-header">
+    <h2>Edit Profile</h2>
+    <button class="logout-btn" onclick="window.location.href='dashboard.html'">Back</button>
+  </header>
+
+  <div class="dashboard-content">
+    <input type="text" id="editName" placeholder="Full Name" />
+    <input type="text" id="editPhone" placeholder="Phone Number" />
+    <button class="main-btn" onclick="updateProfile()">Save Profile</button>
+  </div>
+
+  <script type="module" src="profile.js"></script>
+</body>
+</html>

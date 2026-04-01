@@ -7,37 +7,76 @@
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
+
+  <!-- TOPBAR -->
   <header class="topbar">
-    <div class="logo">HALORA RIDE</div>
-    <a class="logout-btn" href="login.html">Get Started</a>
+    <div class="brand-wrap">
+      <div class="logo">HALORA RIDE</div>
+      <div class="brand-tag">Ride • Driver • Admin</div>
+    </div>
+
+    <a class="logout-btn" href="./signup.html">Get Started</a>
   </header>
 
+  <!-- HERO -->
   <main class="container">
-    <section class="card">
-      <h2>Ride • Driver • Admin</h2>
-      <p class="muted">One-city launch MVP. Customer booking, Driver accept, OTP, Wallet, Withdraw, Documents, History, Ratings, Admin stats.</p>
-      <br />
-      <div class="grid-3">
-        <a class="main-btn" href="signup.html">Create Account</a>
-        <a class="secondary-btn" href="login.html">Login</a>
-        <a class="danger-btn" href="customer.html">Demo Flow</a>
+    <section class="hero-card">
+
+      <!-- LEFT TEXT -->
+      <div class="hero-text">
+        <span class="pill">One-city launch MVP</span>
+        <h1>Book rides, accept trips, manage everything.</h1>
+        <p>
+          Customer booking, Driver accept, OTP, Wallet, Withdraw,
+          Documents, History, Ratings, Admin stats.
+        </p>
+
+        <div class="hero-actions">
+          <a class="main-btn green-btn" href="./signup.html">Create Account</a>
+          <a class="ghost-btn" href="./login.html">Login</a>
+        </div>
       </div>
+
+      <!-- RIGHT ANIMATED LOGO -->
+      <div class="video-card">
+        <div class="video-badge">HALORA 3D</div>
+
+        <div class="halora-3d-box">
+          <div class="glow-ring ring1"></div>
+          <div class="glow-ring ring2"></div>
+          <div class="glow-ring ring3"></div>
+
+          <div class="logo-orb"></div>
+
+          <div class="floating-logo">
+            <span>H</span>
+          </div>
+
+          <h2 class="halora-animated-text">HALORA RIDE</h2>
+          <p class="halora-sub">Smart Ride Booking Platform</p>
+        </div>
+      </div>
+
     </section>
 
-    <section class="grid-3">
-      <div class="mini-card">
+    <!-- FEATURE CARDS -->
+    <section class="cards-grid">
+      <div class="card">
         <h3>Customer</h3>
-        <p class="muted">Book ride, track driver, history, rating.</p>
+        <p>Book ride, track driver, history, rating.</p>
       </div>
-      <div class="mini-card">
+
+      <div class="card">
         <h3>Driver</h3>
-        <p class="muted">Go online, accept rides, OTP start, earnings, withdraw.</p>
+        <p>Go online, accept rides, OTP start, earnings, withdraw.</p>
       </div>
-      <div class="mini-card">
+
+      <div class="card">
         <h3>Admin</h3>
-        <p class="muted">Counts, approvals, requests, control.</p>
+        <p>Counts, approvals, requests, control.</p>
       </div>
     </section>
   </main>
+
 </body>
 </html>

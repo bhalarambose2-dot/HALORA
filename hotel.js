@@ -1,22 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wallet</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header class="top-header">
-    <h2>Wallet Recharge</h2>
-    <button class="logout-btn" onclick="window.location.href='dashboard.html'">Back</button>
-  </header>
+import { auth, db } from './auth.js';
+import {
+  collection,
+  getDocs,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  <div class="dashboard-content">
-    <input type="number" id="walletAmount" placeholder="Enter Amount ₹" />
-    <button class="main-btn" onclick="rechargeWallet()">Recharge Wallet</button>
-  </div>
+const hotelList = document.getElementById("hotelList");
 
-  <script type="module" src="wallet.js"></script>
-</body>
-</html>
+async function loadHotels() {
+  const snapshot = await getDocs(collection(db, "hotels"));
+  hotelList.innerHTML = "";
+
+  snapshot.forEach((docSnap) => {
+    const hotel = docSnap.data();
+
+    hotelList.innerHTML += `
+      <div class="card">
+        <h3>${hotel.name}</h3>
+        <p>${hotel.city}</p>
+        <p>₹${hotel.price}</p>
+        <button class="main-btn" onclick="bookHotel('${docSnap.id}', '${hotel.name}', ${hotel.price})">Book Hotel</button>
+      </div>
+    `;
+  });
+}
+
+window.bookHotel = async function (hotelId, hotelName, amount) {
+  const user = auth.currentUser;
+  if (!user) return alert("Login required");
+
+  try {
+    await addDoc(collection(db, "hotelBookings"), {
+      userId: user.uid,
+      hotelId,
+      hotelName,
+      checkIn: new Date().toISOString(),
+      checkOut: new Date().toISOString(),
+      guests: 2,
+      amount,
+      status: "Booked",
+      createdAt: new Date().toISOString()
+    });
+
+    alert("Hotel booked successfully");
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+loadHotels();

@@ -3,22 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>History - HALORA</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Booking History</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="logo">RIDE HISTORY</div>
-    <a class="logout-btn" href="customer.html">Back</a>
+  <header class="top-header">
+    <h2>Booking History</h2>
+    <button class="logout-btn" onclick="window.location.href='dashboard.html'">Back</button>
   </header>
 
-  <main class="container">
-    <section class="card">
-      <h2>Your Rides</h2>
-      <div id="historyList">Loading...</div>
-    </section>
-  </main>
+  <div class="dashboard-content">
+    <div id="historyList" class="trip-list"></div>
+  </div>
 
-  <script type="module" src="js/history.js"></script>
+  <script type="module" src="history.js"></script>
 </body>
 </html>

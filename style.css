@@ -13,12 +13,12 @@ body {
   min-height: 100vh;
 }
 
-/* HEADER */
+/* TOPBAR */
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 20px;
+  padding: 16px 20px;
   background: #050505;
   border-bottom: 1px solid #1a1a1a;
 }
@@ -29,16 +29,27 @@ body {
   color: #ff7a00;
 }
 
-.logout-btn {
+/* BUTTON */
+.logout-btn,
+.main-btn {
   background: #ff7a00;
   color: #fff;
   padding: 12px 20px;
   border-radius: 30px;
   text-decoration: none;
   font-weight: bold;
+  border: none;
+  cursor: pointer;
 }
 
-/* HERO CENTER */
+.main-btn {
+  width: 100%;
+  margin-top: 15px;
+  background: linear-gradient(135deg, #00c853, #00a63f);
+  box-shadow: 0 0 25px rgba(0, 200, 83, 0.25);
+}
+
+/* HOME */
 .hero-center {
   display: flex;
   justify-content: center;
@@ -47,13 +58,11 @@ body {
   padding: 20px;
 }
 
-/* HERO BOX */
 .hero-box {
   text-align: center;
-  max-width: 400px;
+  max-width: 420px;
 }
 
-/* FLOATING LOGO */
 .floating-logo {
   width: 120px;
   height: 120px;
@@ -70,60 +79,185 @@ body {
   animation: floatLogo 3s ease-in-out infinite;
 }
 
-/* TITLE */
 .hero-title {
   font-size: 42px;
   color: #fff;
   margin-bottom: 12px;
 }
 
-/* SUBTITLE */
 .hero-sub {
   font-size: 18px;
   color: #ccc;
   margin-bottom: 28px;
 }
 
-/* BUTTON */
-.main-btn {
-  display: inline-block;
-  background: linear-gradient(135deg, #00c853, #00a63f);
+/* PAGE CENTER */
+.page-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  min-height: calc(100vh - 80px);
+}
+
+/* CONTAINER */
+.container {
+  padding: 20px;
+}
+
+/* CARD */
+.card {
+  background: #0a0a0a;
+  border: 1px solid #1f1f1f;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* INPUT */
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  border-radius: 12px;
+  border: 1px solid #2a2a2a;
+  background: #111;
   color: #fff;
-  padding: 15px 30px;
-  border-radius: 30px;
+}
+
+/* TEXT */
+h1, h2, h3 {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+label, p, span, div {
+  color: #fff;
+}
+
+.muted {
+  color: #ccc !important;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.link, a {
+  color: #fff;
   text-decoration: none;
-  font-size: 18px;
+}
+
+.link:hover, a:hover {
+  color: #ff7a00;
+}
+
+/* MENU */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.menu-box {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
   font-weight: bold;
-  box-shadow: 0 0 25px rgba(0, 200, 83, 0.25);
+}
+
+/* SERVICES */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.service-box {
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.service-box.active {
+  border: 2px solid #00c853;
+  background: #081c12;
+}
+
+.selected-service {
+  margin-bottom: 12px;
+  color: #ff7a00;
+  font-weight: bold;
+}
+
+/* PRICE */
+.big-price {
+  font-size: 36px;
+  color: #00e676;
+  font-weight: bold;
+}
+
+/* BOOKINGS */
+.booking-item {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 12px;
+}
+
+/* TRIPS */
+.trip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.trip-card {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.trip-card strong {
+  color: #00e676;
+  display: block;
+  margin-top: 10px;
 }
 
 /* ANIMATION */
 @keyframes floatLogo {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
 }
 
 /* MOBILE */
-@media (max-width: 480px) {
-  .logo {
-    font-size: 18px;
+@media (max-width: 768px) {
+  .menu-grid {
+    grid-template-columns: 1fr;
   }
 
-  .logout-btn {
-    padding: 10px 16px;
-    font-size: 14px;
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .trip-grid {
+    grid-template-columns: 1fr;
   }
 
   .hero-title {
     font-size: 32px;
-  }
-
-  .hero-sub {
-    font-size: 16px;
   }
 
   .floating-logo {

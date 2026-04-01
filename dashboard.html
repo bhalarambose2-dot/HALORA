@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - HALORA</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="logo">HALORA RIDE</div>
+    <button class="logout-btn" onclick="logoutUser()">Logout</button>
+  </header>
+
+  <main class="container">
+    
+    <!-- USER -->
+    <section class="card">
+      <h2>Welcome</h2>
+      <p class="muted" id="userInfo">Loading...</p>
+    </section>
+
+    <!-- MENU -->
+    <section class="card">
+      <h2>Dashboard</h2>
+      <div class="menu-grid">
+        <div class="menu-box">My Trip</div>
+        <div class="menu-box">My Booking</div>
+        <div class="menu-box">Profile / Hotel</div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="card">
+      <h2>Book Now</h2>
+      <div class="service-grid">
+        <div class="service-box" onclick="selectService('Bike',49)">Bike</div>
+        <div class="service-box" onclick="selectService('Taxi',149)">Taxi</div>
+        <div class="service-box" onclick="selectService('Auto',89)">Auto</div>
+        <div class="service-box" onclick="selectService('Hotel',999)">Hotel</div>
+      </div>
+
+      <p class="selected-service" id="selectedService">Selected: None</p>
+
+      <label>Pickup Location</label>
+      <input id="pickup" type="text" placeholder="Enter pickup location" />
+
+      <label>Drop Location</label>
+      <input id="drop" type="text" placeholder="Enter destination / hotel city" />
+
+      <label>Date</label>
+      <input id="tripDate" type="date" />
+
+      <button class="main-btn" onclick="bookNow()">Book Now</button>
+    </section>
+
+    <!-- PRICE -->
+    <section class="card">
+      <h2>Booking Price</h2>
+      <p class="big-price" id="bookingPrice">₹0</p>
+      <p class="muted">Bike / Taxi / Auto / Hotel booking price yahan show hoga.</p>
+    </section>
+
+    <!-- MY BOOKINGS -->
+    <section class="card">
+      <h2>My Booking</h2>
+      <div id="myBookings">
+        <p class="muted">No bookings yet.</p>
+      </div>
+    </section>
+
+    <!-- ALL INDIA TRIPS -->
+    <section class="card">
+      <h2>Popular India Trips</h2>
+      <div class="trip-grid">
+        <div class="trip-card">
+          <h3>Kedarnath Trip</h3>
+          <p>Haridwar → Sonprayag → Kedarnath</p>
+          <strong>₹4,999</strong>
+        </div>
+        <div class="trip-card">
+          <h3>Goa Trip</h3>
+          <p>Beach + Hotel + Local Travel</p>
+          <strong>₹6,999</strong>
+        </div>
+        <div class="trip-card">
+          <h3>Jaipur Trip</h3>
+          <p>Pink City + Fort Tour</p>
+          <strong>₹3,499</strong>
+        </div>
+        <div class="trip-card">
+          <h3>Manali Trip</h3>
+          <p>Snow + Hotel + Cab</p>
+          <strong>₹7,999</strong>
+        </div>
+        <div class="trip-card">
+          <h3>Mumbai Trip</h3>
+          <p>City Tour + Hotel</p>
+          <strong>₹5,499</strong>
+        </div>
+        <div class="trip-card">
+          <h3>Udaipur Trip</h3>
+          <p>Lake City + Stay</p>
+          <strong>₹4,299</strong>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="./js/dashboard.js"></script>
+</body>
+</html>

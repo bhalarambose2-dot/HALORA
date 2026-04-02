@@ -1,21 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HALORA Hotels</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Hotels</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <header class="top-header">
-    <h2>Hotels</h2>
-    <button class="logout-btn" onclick="window.location.href='dashboard.html'">Back</button>
-  </header>
 
-  <div class="dashboard-content">
-    <div id="hotelList" class="trip-list"></div>
+<header class="topbar">
+  <div class="logo">Hotels</div>
+  <a href="./dashboard.html" class="logout-btn">Back</a>
+</header>
+
+<main class="container">
+
+  <h2 class="section-title">Top Hotels</h2>
+
+  <div class="scroll-row">
+
+    <div class="trip-card">
+      <img src="https://source.unsplash.com/300x200/?hotel" style="border-radius:16px;margin-bottom:12px;">
+      <h3>Luxury Palace</h3>
+      <p>5 Star • Pool • Free Breakfast</p>
+      <div class="trip-price">₹2999 / night</div>
+      <button>Book Now</button>
+    </div>
+
+    <div class="trip-card">
+      <img src="https://source.unsplash.com/300x200/?resort" style="border-radius:16px;margin-bottom:12px;">
+      <h3>Beach Resort</h3>
+      <p>Sea View • AC Rooms • WiFi</p>
+      <div class="trip-price">₹3999 / night</div>
+      <button>Book Now</button>
+    </div>
+
+    <div class="trip-card">
+      <img src="https://source.unsplash.com/300x200/?hotel-room" style="border-radius:16px;margin-bottom:12px;">
+      <h3>Budget Stay</h3>
+      <p>Affordable • Clean Rooms</p>
+      <div class="trip-price">₹999 / night</div>
+      <button>Book Now</button>
+    </div>
+
   </div>
 
-  <script type="module" src="hotel.js"></script>
+</main>
 </body>
 </html>

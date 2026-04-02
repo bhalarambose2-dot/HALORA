@@ -1,20 +1,26 @@
-import { auth, db } from "./firebase.js";
+// js/auth.js
+
+import { auth, db } from "./firebase-config.js";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
   doc,
   setDoc
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+// ==========================
 // SIGNUP
+// ==========================
 window.signupUser = async function () {
   const name = document.getElementById("name")?.value.trim();
   const email = document.getElementById("email")?.value.trim();
-  const password = document.getElementById("password")?.value;
+  const password = document.getElementById("password")?.value.trim();
 
   if (!name || !email || !password) {
     alert("Please fill all fields");
@@ -28,20 +34,25 @@ window.signupUser = async function () {
     await setDoc(doc(db, "users", uid), {
       name,
       email,
+      wallet: 0,
+      kycStatus: "Pending",
       createdAt: Date.now()
     });
 
     alert("Signup successful!");
     window.location.href = "./dashboard.html";
   } catch (error) {
-    alert(error.message);
+    alert("Signup Error: " + error.message);
+    console.error(error);
   }
 };
 
+// ==========================
 // LOGIN
+// ==========================
 window.loginUser = async function () {
   const email = document.getElementById("email")?.value.trim();
-  const password = document.getElementById("password")?.value;
+  const password = document.getElementById("password")?.value.trim();
 
   if (!email || !password) {
     alert("Please enter email and password");
@@ -53,12 +64,45 @@ window.loginUser = async function () {
     alert("Login successful!");
     window.location.href = "./dashboard.html";
   } catch (error) {
-    alert(error.message);
+    alert("Login Error: " + error.message);
+    console.error(error);
   }
 };
 
+// ==========================
 // LOGOUT
+// ==========================
 window.logoutUser = async function () {
-  await signOut(auth);
-  window.location.href = "./login.html";
+  try {
+    await signOut(auth);
+    window.location.href = "./login.html";
+  } catch (error) {
+    alert("Logout Error: " + error.message);
+  }
 };
+
+// ==========================
+// PROTECT PAGES
+// ==========================
+const protectedPages = [
+  "dashboard.html",
+  "bike-booking.html",
+  "wallet.html",
+  "hotels.html",
+  "history.html",
+  "profile-edit.html",
+  "documents.html",
+  "customer.html",
+  "driver.html",
+  "rider-live.html"
+];
+
+const currentPage = window.location.pathname.split("/").pop();
+
+if (protectedPages.includes(currentPage)) {
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "./login.html";
+    }
+  });
+}

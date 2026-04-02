@@ -1,23 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Admin Panel</title>
-  <link rel="stylesheet" href="admin.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HALORA Admin Panel</title>
+  <link rel="stylesheet" href="admin.css" />
 </head>
 <body>
 
-<h1>HALORA Admin</h1>
+  <header class="admin-header">
+    <h1>HALORA Admin Panel</h1>
+    <a href="../dashboard.html" class="back-btn">⬅ Back</a>
+  </header>
 
-<h3>Users</h3>
-<div id="users"></div>
+  <main class="admin-container">
 
-<h3>Bookings</h3>
-<div id="bookings"></div>
+    <section class="admin-section">
+      <h2>🚕 Bookings</h2>
+      <div id="adminBookings"></div>
+    </section>
 
-<h3>Partners</h3>
-<div id="partners"></div>
+    <section class="admin-section">
+      <h2>🤝 Partners</h2>
+      <div id="adminPartners"></div>
+    </section>
 
-<script src="admin.js"></script>
+    <section class="admin-section">
+      <h2>🪪 KYC Requests</h2>
+      <div id="adminKYC"></div>
+    </section>
 
+  </main>
+
+  <script type="module" src="./admin.js"></script>
 </body>
 </html>

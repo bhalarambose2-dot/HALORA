@@ -4,80 +4,240 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HALORA PRO</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="./style.css" />
 </head>
-<body class="dashboard-body">
+<body>
 
-  <header class="top-header">
-    <h2>HALORA PRO</h2>
+  <header class="topbar">
+    <div class="logo">
+      HALORA PRO
+      <small>Ride • Hotel • Trip • Partner</small>
+    </div>
     <button class="logout-btn" onclick="logoutUser()">Logout</button>
   </header>
 
-  <main class="dashboard-content">
+  <main class="container">
 
-    <!-- HOME TAB -->
-    <section id="homeTab" class="tab-content active">
-      <h3>Quick Booking</h3>
-      <div class="service-grid">
-        <div class="card" onclick="window.location.href='bike-booking.html'">🏍 Bike Booking</div>
-        <div class="card" onclick="window.location.href='bike-booking.html'">🚕 Taxi Booking</div>
-        <div class="card" onclick="window.location.href='bike-booking.html'">🛺 Auto Booking</div>
-        <div class="card" onclick="window.location.href='hotels.html'">🏨 Hotels</div>
-      </div>
-
-      <div class="service-grid" style="margin-top:20px;">
-        <div class="card" onclick="window.location.href='wallet.html'">💰 Wallet</div>
-        <div class="card" onclick="window.location.href='kyc.html'">🪪 KYC</div>
-        <div class="card" onclick="window.location.href='history.html'">📜 History</div>
-        <div class="card" onclick="window.location.href='profile-edit.html'">👤 Edit Profile</div>
+    <!-- HERO -->
+    <section class="hero-card">
+      <h2>Travel smarter with HALORA</h2>
+      <p>Book bikes, taxis, hotels and all India trips in one app.</p>
+      <div class="hero-actions">
+        <a href="./bike-booking.html"><button class="hero-btn primary">Book Ride</button></a>
+        <a href="./trips.html"><button class="hero-btn secondary">Explore Trips</button></a>
       </div>
     </section>
 
-    <!-- TRIP TAB -->
-    <section id="tripTab" class="tab-content">
-      <h3>All India Trips</h3>
-      <div class="trip-list">
-        <div class="card" onclick="bookTrip('Rajasthan Tour', 4999)">📍 Rajasthan Tour - ₹4999</div>
-        <div class="card" onclick="bookTrip('Goa Beach Trip', 6999)">📍 Goa Beach Trip - ₹6999</div>
-        <div class="card" onclick="bookTrip('Kedarnath Yatra', 3999)">📍 Kedarnath Yatra - ₹3999</div>
-        <div class="card" onclick="bookTrip('Kashmir Tour', 9999)">📍 Kashmir Tour - ₹9999</div>
+    <!-- BALANCE -->
+    <section class="balance-card">
+      <div>
+        <h4>Your Wallet</h4>
+        <h2>₹<span id="walletBalance">0</span></h2>
       </div>
+      <a href="./wallet.html" class="badge">Recharge</a>
     </section>
 
-    <!-- PARTNER TAB -->
-    <section id="partnerTab" class="tab-content">
-      <h3>Become a Partner</h3>
-      <div class="service-grid">
-        <div class="card" onclick="applyPartner('Bike Partner')">🏍 Bike Partner</div>
-        <div class="card" onclick="applyPartner('Hotel Partner')">🏨 Hotel Partner</div>
-        <div class="card" onclick="applyPartner('Trip Agent')">🧳 Trip Agent</div>
-      </div>
-    </section>
+    <!-- QUICK ACTION -->
+    <h2 class="section-title">Quick Booking</h2>
+    <div class="quick-grid">
+      <a href="./bike-booking.html" class="quick-card">
+        <div class="icon">🏍️</div>
+        <div>
+          <h3>Bike Booking</h3>
+          <p>Fast local ride in minutes</p>
+        </div>
+      </a>
 
-    <!-- PROFILE TAB -->
-    <section id="profileTab" class="tab-content">
-      <h3>User Profile</h3>
-      <div class="profile-box">
-        <p><strong>Name:</strong> <span id="profileName">Loading...</span></p>
-        <p><strong>Email:</strong> <span id="profileEmail">Loading...</span></p>
-        <p><strong>Wallet:</strong> ₹<span id="walletBalance">0</span></p>
-        <p><strong>KYC:</strong> <span id="kycStatus">Pending</span></p>
+      <a href="./bike-booking.html?type=taxi" class="quick-card">
+        <div class="icon">🚕</div>
+        <div>
+          <h3>Taxi Booking</h3>
+          <p>Comfort cab for city travel</p>
+        </div>
+      </a>
+
+      <a href="./bike-booking.html?type=auto" class="quick-card">
+        <div class="icon">🛺</div>
+        <div>
+          <h3>Auto Booking</h3>
+          <p>Affordable local commute</p>
+        </div>
+      </a>
+
+      <a href="./hotels.html" class="quick-card">
+        <div class="icon">🏨</div>
+        <div>
+          <h3>Hotels</h3>
+          <p>Stay booking with easy check-in</p>
+        </div>
+      </a>
+
+      <a href="./wallet.html" class="quick-card">
+        <div class="icon">💰</div>
+        <div>
+          <h3>Wallet</h3>
+          <p>Add money and pay instantly</p>
+        </div>
+      </a>
+
+      <a href="./kyc.html" class="quick-card">
+        <div class="icon">🪪</div>
+        <div>
+          <h3>KYC</h3>
+          <p>Verify your account securely</p>
+        </div>
+      </a>
+
+      <a href="./history.html" class="quick-card">
+        <div class="icon">📜</div>
+        <div>
+          <h3>History</h3>
+          <p>All your bookings and payments</p>
+        </div>
+      </a>
+
+      <a href="./profile-edit.html" class="quick-card">
+        <div class="icon">👤</div>
+        <div>
+          <h3>Edit Profile</h3>
+          <p>Manage personal information</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- INFO -->
+    <div class="info-row">
+      <div class="info-card">
+        <h5>Saved on rides</h5>
+        <h3>₹1,240</h3>
       </div>
-    </section>
+      <div class="info-card">
+        <h5>Total bookings</h5>
+        <h3>18</h3>
+      </div>
+    </div>
+
+    <!-- TRIPS -->
+    <h2 class="section-title">All India Trips</h2>
+    <div class="scroll-row">
+      <div class="trip-card">
+        <div class="trip-top">
+          <span class="trip-badge">Popular</span>
+          <span>📍</span>
+        </div>
+        <h3>Rajasthan Tour</h3>
+        <p>Desert safari, forts and royal city stay.</p>
+        <div class="trip-price">₹4999</div>
+        <button onclick="location.href='./trips.html'">Book Now</button>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-top">
+          <span class="trip-badge">Beach</span>
+          <span>🏝️</span>
+        </div>
+        <h3>Goa Beach Trip</h3>
+        <p>Beach fun, nightlife and hotel stay.</p>
+        <div class="trip-price">₹6999</div>
+        <button onclick="location.href='./trips.html'">Book Now</button>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-top">
+          <span class="trip-badge">Spiritual</span>
+          <span>🛕</span>
+        </div>
+        <h3>Kedarnath Yatra</h3>
+        <p>Temple visit and mountain journey package.</p>
+        <div class="trip-price">₹3999</div>
+        <button onclick="location.href='./trips.html'">Book Now</button>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-top">
+          <span class="trip-badge">Premium</span>
+          <span>❄️</span>
+        </div>
+        <h3>Kashmir Tour</h3>
+        <p>Snow views, valley stay and sightseeing.</p>
+        <div class="trip-price">₹9999</div>
+        <button onclick="location.href='./trips.html'">Book Now</button>
+      </div>
+    </div>
+
+    <!-- PARTNER -->
+    <h2 class="section-title">Become a Partner</h2>
+    <div class="partner-grid">
+      <div class="partner-card">
+        <div class="left">
+          <div class="icon">🏍️</div>
+          <div>
+            <h4>Bike Partner</h4>
+            <p>Earn by completing local rides</p>
+          </div>
+        </div>
+        <a href="./partner.html"><button class="apply-btn">Apply</button></a>
+      </div>
+
+      <div class="partner-card">
+        <div class="left">
+          <div class="icon">🏨</div>
+          <div>
+            <h4>Hotel Partner</h4>
+            <p>List your hotel and get bookings</p>
+          </div>
+        </div>
+        <a href="./partner.html"><button class="apply-btn">Apply</button></a>
+      </div>
+
+      <div class="partner-card">
+        <div class="left">
+          <div class="icon">🧳</div>
+          <div>
+            <h4>Trip Agent</h4>
+            <p>Sell travel packages on HALORA</p>
+          </div>
+        </div>
+        <a href="./partner.html"><button class="apply-btn">Apply</button></a>
+      </div>
+    </div>
 
   </main>
 
+  <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
-    <button onclick="showTab('homeTab')">Home</button>
-    <button onclick="showTab('tripTab')">Trip</button>
-    <button onclick="showTab('partnerTab')">Partner</button>
-    <button onclick="showTab('profileTab')">Profile</button>
+    <a href="./dashboard.html" class="active">
+      <div class="nav-icon">🏠</div>
+      <span>Home</span>
+    </a>
+    <a href="./trips.html">
+      <div class="nav-icon">🧳</div>
+      <span>Trips</span>
+    </a>
+    <a href="./partner.html">
+      <div class="nav-icon">🤝</div>
+      <span>Partner</span>
+    </a>
+    <a href="./profile-edit.html">
+      <div class="nav-icon">👤</div>
+      <span>Profile</span>
+    </a>
   </nav>
 
-  <script type="module" src="auth.js"></script>
-  <script type="module" src="profile.js"></script>
-  <script type="module" src="partner.js"></script>
-  <script type="module" src="trip.js"></script>
-  <script src="app.js"></script>
+  <script type="module" src="./js/auth.js"></script>
+  <script type="module">
+    import { auth, db } from "./js/firebase-config.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return;
+      const snap = await getDoc(doc(db, "users", user.uid));
+      if (snap.exists()) {
+        document.getElementById("walletBalance").innerText = snap.data().wallet || 0;
+      }
+    });
+  </script>
+
 </body>
 </html>

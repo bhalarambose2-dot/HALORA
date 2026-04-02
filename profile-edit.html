@@ -1,23 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edit Profile</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Profile</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <header class="top-header">
-    <h2>Edit Profile</h2>
-    <button class="logout-btn" onclick="window.location.href='dashboard.html'">Back</button>
-  </header>
 
-  <div class="dashboard-content">
-    <input type="text" id="editName" placeholder="Full Name" />
-    <input type="text" id="editPhone" placeholder="Phone Number" />
-    <button class="main-btn" onclick="updateProfile()">Save Profile</button>
-  </div>
+<header class="topbar">
+  <div class="logo">My Profile</div>
+  <a href="./dashboard.html" class="logout-btn">Back</a>
+</header>
 
-  <script type="module" src="profile.js"></script>
+<main class="page-center">
+
+  <section class="card">
+
+    <div style="text-align:center;margin-bottom:20px;">
+      <img src="https://source.unsplash.com/100x100/?person" style="border-radius:50%;">
+      <h2 id="userName">Bhala Ram</h2>
+      <p style="color:gray">User ID: 875421</p>
+    </div>
+
+    <input type="text" id="name" placeholder="Update Name">
+    <input type="email" id="email" placeholder="Update Email">
+
+    <button class="main-btn">Update Profile</button>
+
+  </section>
+
+</main>
 </body>
 </html>

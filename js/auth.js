@@ -38,7 +38,23 @@ window.signupUser = async function () {
       kycStatus: "Pending",
       createdAt: Date.now()
     });
+    import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+window.resetPassword = async function () {
+  const email = document.getElementById("resetEmail")?.value.trim();
 
+  if (!email) {
+    alert("Please enter your email");
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    alert("Password reset link sent to your email");
+    window.location.href = "login.html";
+  } catch (error) {
+    alert(error.message);
+  }
+};
     alert("Signup successful!");
     window.location.href = "./dashboard.html";
   } catch (error) {

@@ -137,16 +137,10 @@
       updateDoc
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    // =========================
-    // Helpers
-    // =========================
     function currency(value) {
       return "₹" + Number(value || 0);
     }
 
-    // =========================
-    // Ride ID
-    // =========================
     const params = new URLSearchParams(window.location.search);
     const rideId = params.get("rideId") || localStorage.getItem("rideId");
 
@@ -176,6 +170,11 @@
     let routeLine = null;
     let currentRide = null;
 
+    const driverIcon = L.icon({
+      iconUrl: "https://cdn-icons-png.flaticon.com/512/744/744465.png",
+      iconSize: [40, 40]
+    });
+
     function getStatusClass(status = "") {
       const s = status.toLowerCase();
       if (s.includes("pending")) return "status-pending";
@@ -188,6 +187,7 @@
     }
 
     function updateMarkers(ride) {
+      // Pickup
       if (ride.pickupLat && ride.pickupLng) {
         const pickupPos = [ride.pickupLat, ride.pickupLng];
         if (!pickupMarker) {
@@ -197,6 +197,7 @@
         }
       }
 
+      // Drop
       if (ride.dropLat && ride.dropLng) {
         const dropPos = [ride.dropLat, ride.dropLng];
         if (!dropMarker) {
@@ -206,12 +207,14 @@
         }
       }
 
+      // Driver
       if (ride.driverLat && ride.driverLng) {
         const driverPos = [ride.driverLat, ride.driverLng];
         coordsEl.innerText = `Driver location: Lat ${ride.driverLat}, Lng ${ride.driverLng}`;
 
         if (!driverMarker) {
-          driverMarker = L.marker(driverPos).addTo(map).bindPopup("🚖 Driver");
+          driverMarker = L.marker(driverPos, { icon: driverIcon }).addTo(map)
+            .bindPopup("🚖 Driver");
         } else {
           driverMarker.setLatLng(driverPos);
         }
@@ -226,6 +229,9 @@
 
         routeLine = L.polyline(routePoints, { weight: 5 }).addTo(map);
         map.fitBounds(routeLine.getBounds(), { padding: [30, 30] });
+
+        // follow driver a bit
+        map.setView(driverPos, 15);
       }
     }
 

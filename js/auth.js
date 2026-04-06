@@ -68,11 +68,11 @@ window.loginUser = async function () {
     const userCred = await signInWithEmailAndPassword(auth, email, password);
     const user = userCred.user;
 
-    // ==========================
-    // 1. EMAIL ADMIN CHECK
-    // ==========================
     const adminEmails = ["bhalarambose2@gmail.com"];
 
+    // ==========================
+    // ADMIN BY EMAIL
+    // ==========================
     if (adminEmails.includes(user.email)) {
       alert("Admin login successful!");
       window.location.href = "./admin/admin.html";
@@ -80,7 +80,7 @@ window.loginUser = async function () {
     }
 
     // ==========================
-    // 2. FIRESTORE USER CHECK
+    // USER DOC CHECK
     // ==========================
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
@@ -92,7 +92,7 @@ window.loginUser = async function () {
     }
 
     // ==========================
-    // 3. PARTNER CHECK
+    // APPROVED PARTNER CHECK
     // ==========================
     const partnerQuery = query(
       collection(db, "partners"),
@@ -104,20 +104,21 @@ window.loginUser = async function () {
 
     if (!partnerSnap.empty) {
       const partner = partnerSnap.docs[0].data();
+      const type = (partner.partnerType || "").toLowerCase();
 
-      if (partner.partnerType === "driver") {
+      if (type === "bike rider" || type === "driver") {
         alert("Driver login successful!");
         window.location.href = "./driver-panel.html";
         return;
       }
 
-      if (partner.partnerType === "hotel") {
-        alert("Hotel partner login successful!");
+      if (type === "hotel owner" || type === "hotel") {
+        alert("Hotel login successful!");
         window.location.href = "./hotel-dashboard.html";
         return;
       }
 
-      if (partner.partnerType === "trip") {
+      if (type === "trip agent" || type === "trip") {
         alert("Trip partner login successful!");
         window.location.href = "./trip-dashboard.html";
         return;
@@ -125,7 +126,7 @@ window.loginUser = async function () {
     }
 
     // ==========================
-    // 4. PENDING PARTNER CHECK
+    // PENDING PARTNER CHECK
     // ==========================
     const pendingQuery = query(
       collection(db, "partners"),
@@ -142,14 +143,14 @@ window.loginUser = async function () {
     }
 
     // ==========================
-    // 5. NORMAL USER
+    // NORMAL USER
     // ==========================
     alert("Login successful!");
     window.location.href = "./dashboard.html";
 
   } catch (error) {
     alert("Login Error: " + error.message);
-    console.error(error);
+    console.error("LOGIN ERROR FULL:", error);
   }
 };
 
@@ -196,19 +197,13 @@ const protectedPages = [
   "wallet.html",
   "profile.html",
   "partner.html",
-  "support.html",
-  "offers.html",
-  "notifications.html",
   "track-ride.html",
   "bike-booking.html",
-
   "driver-panel.html",
   "driver-live.html",
   "driver-requests.html",
-
   "hotel-dashboard.html",
   "trip-dashboard.html",
-
   "admin.html",
   "admin-wallet.html"
 ];
@@ -221,4 +216,4 @@ if (protectedPages.includes(currentPage)) {
       window.location.href = "./login.html";
     }
   });
-}
+  }

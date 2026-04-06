@@ -69,3 +69,55 @@ body {
 .admin-card button:hover {
   opacity: 0.9;
 }
+
+.admin-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.admin-actions button,
+.admin-links button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #8b5cf6;
+  color: white;
+}
+
+.admin-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.status {
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status.approved {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}

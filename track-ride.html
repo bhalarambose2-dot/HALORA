@@ -96,6 +96,8 @@
     const rideStatus = document.getElementById("rideStatus");
     const otpBox = document.getElementById("otpBox");
     const coordsEl = document.getElementById("driverCoords");
+    const driverInfoEl = document.getElementById("driverInfo");
+    const driverPhoneEl = document.getElementById("driverPhone"); 
     const paymentStatusBox = document.getElementById("paymentStatusBox");
     const paymentMethodBox = document.getElementById("paymentMethodBox");
     const payBtn = document.getElementById("payBtn");
@@ -217,7 +219,8 @@
 
         paymentMethodBox.innerText = `Method: ${ride.paymentMethod || "UPI"}`;
         paymentStatusBox.innerText = `Payment: ${ride.paymentStatus || "unpaid"}`;
-
+        driverInfoEl.innerText = `Driver: ${ride.driverName || "Searching for driver..."}`;
+        driverPhoneEl.innerText = `Phone: ${ride.driverPhone || "Waiting..."}`;
         // Show/hide payment sections
         if ((ride.paymentMethod || "UPI") === "Cash") {
           upiSection.style.display = "none";

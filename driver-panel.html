@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Driver Panel - HALORA</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background: #0f172a;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .box {
+      max-width: 550px;
+      margin: auto;
+      background: #1e293b;
+      padding: 24px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .ride-card {
+      background: #111827;
+      padding: 18px;
+      border-radius: 16px;
+      margin-top: 18px;
+    }
+
+    .ride-card p {
+      margin: 8px 0;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    input {
+      background: #e2e8f0;
+      color: #111827;
+    }
+
+    button {
+      background: #8b5cf6;
+      color: white;
+      cursor: pointer;
+    }
+
+    .btn-green {
+      background: #22c55e;
+    }
+
+    .btn-red {
+      background: #ef4444;
+    }
+
+    .muted {
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .earnings-box {
+      background: #0f172a;
+      padding: 16px;
+      border-radius: 14px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h1>🚖 Driver Panel</h1>
+
+    <div class="earnings-box">
+      <h3>Today's Earnings: ₹<span id="todayEarnings">0</span></h3>
+      <p class="muted">Complete rides to increase earnings.</p>
+    </div>
+
+    <div id="currentRide" class="ride-card">
+      <p>Loading current ride...</p>
+    </div>
+
+    <div id="rideActions" style="display:none;">
+      <input type="text" id="otpInput" placeholder="Enter customer OTP to start ride" />
+      <button id="verifyOtpBtn">Verify OTP & Start Ride</button>
+      <button id="completeRideBtn" class="btn-green">Complete Ride</button>
+      <button id="confirmPaymentBtn">Confirm Payment</button>
+      <button id="cancelRideBtn" class="btn-red">Cancel Ride</button>
+    </div>
+  </div>
+
+  <script type="module" src="./js/driver-panel.js"></script>
+</body>
+</html>

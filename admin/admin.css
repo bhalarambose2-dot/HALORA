@@ -1,37 +1,84 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #0b0b0b;
+  background: linear-gradient(135deg, #050816, #0b1120);
   color: white;
 }
 
+/* =========================
+   HEADER
+========================= */
 .admin-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  background: #111;
+  background: rgba(17, 17, 17, 0.95);
   border-bottom: 1px solid #222;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
 }
 
 .admin-header h1 {
   margin: 0;
   font-size: 24px;
+  color: #fff;
 }
 
 .back-btn {
-  background: orange;
+  background: linear-gradient(135deg, #ff9800, #ff6a00);
   color: black;
   text-decoration: none;
   padding: 10px 14px;
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: bold;
+  box-shadow: 0 4px 14px rgba(255, 136, 0, 0.3);
 }
 
+/* =========================
+   MAIN CONTAINER
+========================= */
 .admin-container {
   padding: 16px;
 }
 
+/* =========================
+   STATS GRID
+========================= */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: rgba(21, 21, 21, 0.85);
+  border: 1px solid #222;
+  border-radius: 18px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+}
+
+.stat-card h3 {
+  margin: 0;
+  font-size: 28px;
+  color: #ff9800;
+}
+
+.stat-card p {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #bbb;
+}
+
+/* =========================
+   SECTION
+========================= */
 .admin-section {
   margin-bottom: 30px;
 }
@@ -39,50 +86,36 @@ body {
 .admin-section h2 {
   margin-bottom: 14px;
   color: orange;
+  font-size: 22px;
 }
 
+/* =========================
+   CARD
+========================= */
 .admin-card {
-  background: #151515;
+  background: rgba(21, 21, 21, 0.92);
   border: 1px solid #222;
-  border-radius: 16px;
-  padding: 14px;
-  margin-bottom: 14px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.28);
+  backdrop-filter: blur(8px);
 }
 
 .admin-card p {
   margin: 8px 0;
   font-size: 15px;
+  color: #f5f5f5;
 }
 
-.admin-card button {
-  background: orange;
-  color: black;
-  border: none;
-  padding: 10px 14px;
-  margin: 6px 6px 0 0;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.admin-card button:hover {
-  opacity: 0.9;
-}
-
-.admin-card {
-  background: #fff;
-  padding: 16px;
-  border-radius: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-}
-
+/* =========================
+   ACTION BUTTONS
+========================= */
 .admin-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
 .admin-actions button,
@@ -91,20 +124,53 @@ body {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  background: #8b5cf6;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.admin-actions button:hover,
+.admin-links button:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+/* Buttons */
+.admin-actions button:nth-child(1) {
+  background: #22c55e;
   color: white;
+}
+
+.admin-actions button:nth-child(2) {
+  background: #ef4444;
+  color: white;
+}
+
+.admin-actions button:nth-child(3) {
+  background: #f59e0b;
+  color: black;
 }
 
 .admin-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
 }
 
+.admin-links button {
+  background: #8b5cf6;
+  color: white;
+}
+
+/* =========================
+   STATUS BADGES
+========================= */
 .status {
   font-weight: bold;
-  padding: 4px 10px;
-  border-radius: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  display: inline-block;
+  font-size: 13px;
 }
 
 .status.pending {
@@ -113,8 +179,7 @@ body {
 }
 
 .status.approved {
-  background: #
-    dcfce7;
+  background: #dcfce7;
   color: #166534;
 }
 
@@ -123,15 +188,47 @@ body {
   color: #991b1b;
 }
 
+/* =========================
+   FILTER BAR
+========================= */
 .filter-bar {
   margin-bottom: 20px;
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .filter-bar select,
 .filter-bar button {
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
+  background: #1e293b;
+  color: white;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+@media (max-width: 600px) {
+  .admin-header h1 {
+    font-size: 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stat-card h3 {
+    font-size: 24px;
+  }
+
+  .admin-actions {
+    flex-direction: column;
+  }
+
+  .admin-actions button,
+  .admin-links button {
+    width: 100%;
+  }
 }

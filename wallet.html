@@ -2,21 +2,68 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wallet</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>HALORA Wallet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .box {
+      max-width: 500px;
+      margin: auto;
+      background: #1e293b;
+      padding: 24px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    input {
+      background: #e2e8f0;
+      color: #111827;
+    }
+
+    button {
+      background: #8b5cf6;
+      color: white;
+      cursor: pointer;
+    }
+
+    .txn {
+      background: #111827;
+      padding: 12px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+  </style>
 </head>
 <body>
-  <header class="top-header">
-    <h2>Wallet Recharge</h2>
-    <button class="logout-btn" onclick="window.location.href='dashboard.html'">Back</button>
-  </header>
+  <div class="box">
+    <h1>💰 My Wallet</h1>
+    <h2>Balance: ₹<span id="walletBalance">0</span></h2>
 
-  <div class="dashboard-content">
-    <input type="number" id="walletAmount" placeholder="Enter Amount ₹" />
-    <button class="main-btn" onclick="rechargeWallet()">Recharge Wallet</button>
+    <input type="number" id="rechargeAmount" placeholder="Enter recharge amount" />
+    <button onclick="requestRecharge()">Request Recharge</button>
+
+    <a href="withdrawal.html"><button>Withdraw Money</button></a>
+
+    <h3 style="margin-top: 24px;">📜 Transactions</h3>
+    <div id="transactions"></div>
   </div>
 
-  <script type="module" src="wallet.js"></script>
+  <script type="module" src="./js/wallet.js"></script>
 </body>
 </html>

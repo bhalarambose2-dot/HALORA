@@ -1,14 +1,9 @@
-import { auth, db } from "./js/firebase-config.js";
+// booking.js
 
+import { auth, db } from "./js/firebase-config.js";
 import {
   collection,
-  addDoc,
-  getDocs,
-  query,
-  where,
-  limit,
-  doc,
-  updateDoc
+  addDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // =======================
@@ -43,48 +38,15 @@ function calculatePrice() {
     perKm = 25;
   }
 
-  // 🔥 simple distance logic (improved)
   const distance = Math.floor(Math.random() * 8) + 2;
-
   const total = baseFare + (distance * perKm);
 
   priceInput.value = total;
 }
 
-// listeners
 pickupInput.addEventListener("input", calculatePrice);
 dropInput.addEventListener("input", calculatePrice);
 serviceTypeInput.addEventListener("change", calculatePrice);
-
-// =======================
-// FIND DRIVER (IMPROVED)
-// =======================
-async function findAvailableDriver() {
-  try {
-    const q = query(
-      collection(db, "drivers"),
-      where("online", "==", true),
-      where("available", "==", true),
-      limit(3) // 🔥 multiple drivers fetch
-    );
-
-    const snapshot = await getDocs(q);
-
-    if (snapshot.empty) return null;
-
-    // random driver selection (better UX)
-    const drivers = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
-
-    return drivers[Math.floor(Math.random() * drivers.length)];
-
-  } catch (error) {
-    console.error("Driver find error:", error);
-    return null;
-  }
-}
 
 // =======================
 // SAVE RIDE BOOKING
@@ -109,22 +71,6 @@ window.saveRideBooking = async function () {
   }
 
   try {
-    // 🔥 FIND DRIVER
-    const driver = await findAvailableDriver();
-
-    let rideStatus = "Pending";
-    let driverId = "";
-    let driverName = "";
-    let driverPhone = "";
-
-    if (driver) {
-      rideStatus = "Driver Assigned";
-      driverId = driver.id;
-      driverName = driver.name || "HALORA Driver";
-      driverPhone = driver.phone || "N/A";
-    }
-
-    // 🔥 CREATE RIDE
     const docRef = await addDoc(collection(db, "rides"), {
       userId: user.uid,
       serviceType,
@@ -133,34 +79,24 @@ window.saveRideBooking = async function () {
       pickupLat: window.userPickupLat || 0,
       pickupLng: window.userPickupLng || 0,
       fare: price,
+
+      // payment
       paymentMethod: "UPI",
       paymentStatus: "unpaid",
-      status: rideStatus,
-      driverId,
-      driverName,
-      driverPhone,
-      otp: Math.floor(1000 + Math.random() * 9000).toString(),
+
+      // driver flow
+      status: "Pending",
+      driverId: "",
+      driverName: "",
+      driverPhone: "",
+      otp: "",
+
       createdAt: Date.now()
     });
 
-    // 🔥 UPDATE DRIVER STATUS
-    if (driver) {
-      await updateDoc(doc(db, "drivers", driver.id), {
-        available: false,
-        currentRideId: docRef.id
-      });
-    }
-
-    // 🔥 SAVE RIDE ID
     localStorage.setItem("rideId", docRef.id);
 
-    if (driver) {
-      alert(`🚖 Driver Assigned: ${driverName}`);
-    } else {
-      alert("⏳ Searching for driver...");
-    }
-
-    // 🔥 REDIRECT
+    alert("Ride booked successfully! Waiting for driver acceptance...");
     window.location.href = "track-ride.html?rideId=" + docRef.id;
 
   } catch (error) {

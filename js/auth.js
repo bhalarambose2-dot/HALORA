@@ -39,7 +39,7 @@ window.signupUser = async function () {
       name,
       email,
       wallet: 0,
-      role: "user",
+      role: email === "bhalarambose2@gmail.com" ? "admin" : "user",
       kycStatus: "Pending",
       createdAt: Date.now()
     });
@@ -48,7 +48,7 @@ window.signupUser = async function () {
     window.location.href = "./dashboard.html";
   } catch (error) {
     alert("Signup Error: " + error.message);
-    console.error(error);
+    console.error("SIGNUP ERROR:", error);
   }
 };
 
@@ -67,49 +67,12 @@ window.loginUser = async function () {
   try {
     const userCred = await signInWithEmailAndPassword(auth, email, password);
     const user = userCred.user;
-     
-  }
-  // ==========================
-// PARTNER CHECK
-// ==========================
-const partnerQuery = query(
-  collection(db, "partners"),
-  where("uid", "==", user.uid),
-  where("status", "==", "Approved")
-);
 
-const partnerSnap = await getDocs(partnerQuery);
-
-if (!partnerSnap.empty) {
-  const partner = partnerSnap.docs[0].data();
-  const type = (partner.partnerType || "").toLowerCase();
-
-  // 🔥 DRIVER
-  if (type.includes("bike") || type.includes("driver") || type.includes("rider")) {
-    alert("Driver login successful!");
-    window.location.href = "./driver-panel.html";
-    return;
-  }
-
-  // 🔥 HOTEL (👉 YAHI TUMHARA CODE)
-  if (type.includes("hotel")) {
-    alert("Hotel login successful!");
-    window.location.href = "./hotel-dashboard.html";
-    return;
-  }
-
-  // 🔥 TRIP
-  if (type.includes("trip")) {
-    alert("Trip partner login successful!");
-    window.location.href = "./trip-dashboard.html";
-    return;
-  }
-}
+    // ==========================
+    // 1. ADMIN EMAIL CHECK
+    // ==========================
     const adminEmails = ["bhalarambose2@gmail.com"];
 
-    // ==========================
-    // ADMIN BY EMAIL
-    // ==========================
     if (adminEmails.includes(user.email)) {
       alert("Admin login successful!");
       window.location.href = "./admin/admin.html";
@@ -117,7 +80,7 @@ if (!partnerSnap.empty) {
     }
 
     // ==========================
-    // USER DOC CHECK
+    // 2. USER DOC CHECK
     // ==========================
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
@@ -129,7 +92,7 @@ if (!partnerSnap.empty) {
     }
 
     // ==========================
-    // APPROVED PARTNER CHECK
+    // 3. APPROVED PARTNER CHECK
     // ==========================
     const partnerQuery = query(
       collection(db, "partners"),
@@ -143,19 +106,26 @@ if (!partnerSnap.empty) {
       const partner = partnerSnap.docs[0].data();
       const type = (partner.partnerType || "").toLowerCase();
 
-      if (type === "bike rider" || type === "driver") {
+      // DRIVER
+      if (
+        type.includes("bike") ||
+        type.includes("driver") ||
+        type.includes("rider")
+      ) {
         alert("Driver login successful!");
         window.location.href = "./driver-panel.html";
         return;
       }
 
-      if (type === "hotel owner" || type === "hotel") {
+      // HOTEL
+      if (type.includes("hotel")) {
         alert("Hotel login successful!");
         window.location.href = "./hotel-dashboard.html";
         return;
       }
 
-      if (type === "trip agent" || type === "trip") {
+      // TRIP
+      if (type.includes("trip")) {
         alert("Trip partner login successful!");
         window.location.href = "./trip-dashboard.html";
         return;
@@ -163,7 +133,7 @@ if (!partnerSnap.empty) {
     }
 
     // ==========================
-    // PENDING PARTNER CHECK
+    // 4. PENDING PARTNER CHECK
     // ==========================
     const pendingQuery = query(
       collection(db, "partners"),
@@ -180,7 +150,7 @@ if (!partnerSnap.empty) {
     }
 
     // ==========================
-    // NORMAL USER
+    // 5. NORMAL USER
     // ==========================
     alert("Login successful!");
     window.location.href = "./dashboard.html";
@@ -253,4 +223,4 @@ if (protectedPages.includes(currentPage)) {
       window.location.href = "./login.html";
     }
   });
-  }
+}

@@ -1,12 +1,11 @@
-// js/auth.js
-
 import { auth, db } from "./firebase-config.js";
 
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
@@ -38,23 +37,7 @@ window.signupUser = async function () {
       kycStatus: "Pending",
       createdAt: Date.now()
     });
-    import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-window.resetPassword = async function () {
-  const email = document.getElementById("resetEmail")?.value.trim();
 
-  if (!email) {
-    alert("Please enter your email");
-    return;
-  }
-
-  try {
-    await sendPasswordResetEmail(auth, email);
-    alert("Password reset link sent to your email");
-    window.location.href = "login.html";
-  } catch (error) {
-    alert(error.message);
-  }
-};
     alert("Signup successful!");
     window.location.href = "./dashboard.html";
   } catch (error) {
@@ -86,6 +69,27 @@ window.loginUser = async function () {
 };
 
 // ==========================
+// RESET PASSWORD
+// ==========================
+window.resetPassword = async function () {
+  const email = document.getElementById("resetEmail")?.value.trim();
+
+  if (!email) {
+    alert("Please enter your email");
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    alert("Password reset link sent to your email");
+    window.location.href = "./login.html";
+  } catch (error) {
+    alert("Reset Error: " + error.message);
+    console.error(error);
+  }
+};
+
+// ==========================
 // LOGOUT
 // ==========================
 window.logoutUser = async function () {
@@ -102,15 +106,33 @@ window.logoutUser = async function () {
 // ==========================
 const protectedPages = [
   "dashboard.html",
-  "bike-booking.html",
+  "trip.html",
+  "bookings.html",
   "wallet.html",
-  "hotels.html",
-  "history.html",
-  "profile-edit.html",
-  "documents.html",
-  "customer.html",
-  "driver.html",
-  "rider-live.html"
+  "profile.html",
+  "partner.html",
+  "support.html",
+  "offers.html",
+  "notifications.html",
+  "driver-dashboard.html",
+  "driver-profile.html",
+  "driver-documents.html",
+  "driver-trips.html",
+  "driver-earnings.html",
+  "driver-status.html",
+  "hotel-dashboard.html",
+  "hotel-listing.html",
+  "hotel-bookings.html",
+  "hotel-profile.html",
+  "admin.html",
+  "admin-users.html",
+  "admin-drivers.html",
+  "admin-hotels.html",
+  "admin-bookings.html",
+  "admin-wallet.html",
+  "admin-withdraw.html",
+  "admin-support.html",
+  "admin-reports.html"
 ];
 
 const currentPage = window.location.pathname.split("/").pop();

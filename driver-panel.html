@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HALORA Driver Dashboard</title>
   <link rel="stylesheet" href="./style.css" />
+
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body class="premium-body">
 
@@ -49,11 +53,23 @@
       <p id="rideCustomer">Customer: --</p>
       <p id="rideFare">Fare: ₹0</p>
       <p id="rideOtp">OTP: ----</p>
+      <p id="rideStatusText">Status: --</p>
     </div>
 
     <div id="rideActions" class="driver-action-grid" style="display:block;">
       <button class="start-btn" onclick="startRide()">Start Ride</button>
       <button class="complete-btn" onclick="completeRide()">Complete</button>
+    </div>
+  </section>
+
+  <!-- LIVE NAVIGATION -->
+  <section class="driver-ride-card">
+    <h3>Pickup Navigation</h3>
+    <div id="driverMap" style="height: 300px; width: 100%; border-radius: 20px; margin-top: 12px;"></div>
+
+    <div class="driver-action-grid" style="margin-top:16px;">
+      <button class="start-btn" onclick="openGoogleMaps()">Navigate</button>
+      <button class="accept-btn" onclick="refreshDriverLocation()">Refresh Location</button>
     </div>
   </section>
 

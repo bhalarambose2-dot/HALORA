@@ -84,6 +84,8 @@ window.saveRideBooking = async function () {
       driverId: "",
       driverName: "",
       driverPhone: "",
+      driverLat: 0,
+      driverLng: 0,
       otp: Math.floor(1000 + Math.random() * 9000).toString(),
       createdAt: Date.now()
     });

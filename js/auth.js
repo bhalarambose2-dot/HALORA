@@ -10,7 +10,12 @@ import {
 
 import {
   doc,
-  setDoc
+  setDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ==========================
@@ -59,9 +64,76 @@ window.loginUser = async function () {
   }
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCred = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCred.user;
+
+    // ==========================
+    // 1. ADMIN CHECK
+    // ==========================
+    const adminRef = doc(db, "admins", user.uid);
+    const adminSnap = await getDoc(adminRef);
+
+    if (adminSnap.exists()) {
+      alert("Admin login successful!");
+      window.location.href = "./admin/admin.html";
+      return;
+    }
+
+    // ==========================
+    // 2. PARTNER CHECK
+    // ==========================
+    const q = query(
+      collection(db, "partners"),
+      where("uid", "==", user.uid)
+    );
+
+    const snapshot = await getDocs(q);
+
+    if (!snapshot.empty) {
+      const partner = snapshot.docs[0].data();
+
+      // APPROVED PARTNER
+      if (partner.status === "Approved") {
+        if (partner.partnerType === "driver") {
+          alert("Driver login successful!");
+          window.location.href = "./driver-panel.html";
+          return;
+        }
+
+        if (partner.partnerType === "hotel") {
+          alert("Hotel partner login successful!");
+          window.location.href = "./hotel-dashboard.html";
+          return;
+        }
+
+        if (partner.partnerType === "trip") {
+          alert("Trip partner login successful!");
+          window.location.href = "./trip-dashboard.html";
+          return;
+        }
+      }
+
+      // PENDING PARTNER
+      if (partner.status === "Pending") {
+        alert("Your partner request is pending approval.");
+        window.location.href = "./dashboard.html";
+        return;
+      }
+
+      // REJECTED PARTNER
+      if (partner.status === "Rejected") {
+        alert("Your partner request was rejected.");
+        window.location.href = "./dashboard.html";
+        return;
+      }
+    }
+
+    // ==========================
+    // 3. NORMAL USER
+    // ==========================
     alert("Login successful!");
     window.location.href = "./dashboard.html";
+
   } catch (error) {
     alert("Login Error: " + error.message);
     console.error(error);
@@ -114,16 +186,14 @@ const protectedPages = [
   "support.html",
   "offers.html",
   "notifications.html",
-  "driver-dashboard.html",
-  "driver-profile.html",
-  "driver-documents.html",
-  "driver-trips.html",
-  "driver-earnings.html",
-  "driver-status.html",
+
+  "driver-panel.html",
+  "driver-live.html",
+  "driver-requests.html",
+
   "hotel-dashboard.html",
-  "hotel-listing.html",
-  "hotel-bookings.html",
-  "hotel-profile.html",
+  "trip-dashboard.html",
+
   "admin.html",
   "admin-users.html",
   "admin-drivers.html",
@@ -132,7 +202,8 @@ const protectedPages = [
   "admin-wallet.html",
   "admin-withdraw.html",
   "admin-support.html",
-  "admin-reports.html"
+  "admin-reports.html",
+  "admin-login.html"
 ];
 
 const currentPage = window.location.pathname.split("/").pop();

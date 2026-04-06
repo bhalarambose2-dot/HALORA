@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Driver Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .box {
+      max-width: 420px;
+      margin: auto;
+      background: #1e293b;
+      padding: 24px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    button {
+      margin: 10px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 10px;
+      background: #8b5cf6;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .status {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>🚖 Driver Live Tracking</h1>
+    <p>Turn on live location to receive rides.</p>
+
+    <button onclick="setDriverOnline()">Go Online</button>
+    <button onclick="setDriverOffline()">Go Offline</button>
+
+    <div class="status" id="driverStatus">Status: Offline</div>
+  </div>
+
+  <script type="module" src="./driver-live.js"></script>
+</body>
+</html>

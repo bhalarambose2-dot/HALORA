@@ -2,40 +2,83 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Driver Requests</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Driver Requests - HALORA</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      font-family: Arial;
-      background: #0f172a;
+      background: #020617;
       color: white;
-      padding: 20px;
+      font-family: Arial, sans-serif;
     }
 
-    .card {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 16px;
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .container {
+      padding: 18px;
+    }
+
+    .request-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 18px;
       margin-bottom: 16px;
+      backdrop-filter: blur(14px);
     }
 
-    button {
-      padding: 10px 14px;
-      margin: 5px;
-      border-radius: 10px;
+    .request-card h3 {
+      margin: 0 0 10px;
+    }
+
+    .request-card p {
+      margin: 8px 0;
+      color: #d6d6d6;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .accept-btn, .reject-btn {
+      flex: 1;
+      padding: 12px;
       border: none;
+      border-radius: 12px;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    .accept { background: #22c55e; color: white; }
-    .reject { background: #ef4444; color: white; }
+    .accept-btn {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+    }
+
+    .reject-btn {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+    }
   </style>
 </head>
 <body>
 
-<h1>🚖 Ride Requests</h1>
-<div id="requests"></div>
+  <header class="top-header">
+    <h2>Ride Requests</h2>
+    <button onclick="history.back()" class="logout-btn">Back</button>
+  </header>
 
-<script type="module" src="./driver-requests.js"></script>
+  <main class="container">
+    <div id="requestsContainer">Loading ride requests...</div>
+  </main>
+
+  <script type="module" src="./driver-requests.js"></script>
 </body>
 </html>

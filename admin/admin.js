@@ -7,7 +7,9 @@ import {
   getDocs,
   doc,
   updateDoc,
-  getDoc
+  getDoc,
+  deleteDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import {
@@ -22,6 +24,17 @@ const adminPartners = document.getElementById("adminPartners");
 const adminKYC = document.getElementById("adminKYC");
 
 // ==============================
+// SAFE TEXT FUNCTION
+// ==============================
+function safeText(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+// ==============================
 // SECURE ADMIN CHECK
 // ==============================
 onAuthStateChanged(auth, async (user) => {
@@ -32,16 +45,15 @@ onAuthStateChanged(auth, async (user) => {
   }
 
   try {
-    const adminRef = doc(db, "admins", user.uid);
-    const adminSnap = await getDoc(adminRef);
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
 
-    if (!adminSnap.exists()) {
-      alert("Access denied. Not an admin.");
+    if (!userSnap.exists() || userSnap.data().role !== "admin") {
+      alert("Access denied. Admin only.");
       window.location.href = "../dashboard.html";
       return;
     }
 
-    // If admin verified, load all data
     loadBookings();
     loadPartners();
     loadKYC();
@@ -72,11 +84,16 @@ async function loadBookings() {
 
       adminBookings.innerHTML += `
         <div class="admin-card">
-          <p><strong>${booking.serviceType || "Ride"}</strong></p>
-          <p>${booking.pickup || "Pickup"} → ${booking.drop || "Drop"}</p>
-          <p>₹${booking.price || 0}</p>
-          <p>Status: ${booking.status || "Pending"}</p>
-          <button onclick="approveBooking('${docSnap.id}')">Approve</button>
+          <p><strong>${safeText(booking.serviceType || "Ride")}</strong></p>
+          <p>${safeText(booking.pickup || "Pickup")} → ${safeText(booking.drop || "Drop")}</p>
+          <p>₹${safeText(booking.price || 0)}</p>
+          <p>Status: <span class="status ${String(booking.status || "Pending").toLowerCase()}">${safeText(booking.status || "Pending")}</span></p>
+
+          <div class="admin-actions">
+            <button onclick="updateBookingStatus('${docSnap.id}', 'Approved')">Approve</button>
+            <button onclick="updateBookingStatus('${docSnap.id}', 'Rejected')">Reject</button>
+            <button onclick="deleteBooking('${docSnap.id}')">Delete</button>
+          </div>
         </div>
       `;
     });
@@ -107,9 +124,14 @@ async function loadPartners() {
 
       adminPartners.innerHTML += `
         <div class="admin-card">
-          <p><strong>${partner.partnerType || partner.type || "Partner"}</strong></p>
-          <p>Status: ${partner.status || "Pending"}</p>
-          <button onclick="approvePartner('${docSnap.id}')">Approve</button>
+          <p><strong>${safeText(partner.partnerType || partner.type || "Partner")}</strong></p>
+          <p>Status: <span class="status ${String(partner.status || "Pending").toLowerCase()}">${safeText(partner.status || "Pending")}</span></p>
+
+          <div class="admin-actions">
+            <button onclick="updatePartnerStatus('${docSnap.id}', 'Approved')">Approve</button>
+            <button onclick="updatePartnerStatus('${docSnap.id}', 'Rejected')">Reject</button>
+            <button onclick="deletePartner('${docSnap.id}')">Delete</button>
+          </div>
         </div>
       `;
     });
@@ -140,12 +162,19 @@ async function loadKYC() {
 
       adminKYC.innerHTML += `
         <div class="admin-card">
-          <p><strong>User ID:</strong> ${kyc.userId || "N/A"}</p>
-          <p>Status: ${kyc.status || "Pending"}</p>
-          ${kyc.aadhaarUrl ? `<a href="${kyc.aadhaarUrl}" target="_blank"><button>Aadhaar</button></a>` : ""}
-          ${kyc.panUrl ? `<a href="${kyc.panUrl}" target="_blank"><button>PAN</button></a>` : ""}
-          ${kyc.selfieUrl ? `<a href="${kyc.selfieUrl}" target="_blank"><button>Selfie</button></a>` : ""}
-          <button onclick="approveKYC('${docSnap.id}', '${kyc.userId}')">Approve KYC</button>
+          <p><strong>User ID:</strong> ${safeText(kyc.userId || "N/A")}</p>
+          <p>Status: <span class="status ${String(kyc.status || "Pending").toLowerCase()}">${safeText(kyc.status || "Pending")}</span></p>
+
+          <div class="admin-links">
+            ${kyc.aadhaarUrl ? `<a href="${kyc.aadhaarUrl}" target="_blank"><button>Aadhaar</button></a>` : ""}
+            ${kyc.panUrl ? `<a href="${kyc.panUrl}" target="_blank"><button>PAN</button></a>` : ""}
+            ${kyc.selfieUrl ? `<a href="${kyc.selfieUrl}" target="_blank"><button>Selfie</button></a>` : ""}
+          </div>
+
+          <div class="admin-actions">
+            <button onclick="updateKYCStatus('${docSnap.id}', '${kyc.userId}', 'Approved')">Approve</button>
+            <button onclick="updateKYCStatus('${docSnap.id}', '${kyc.userId}', 'Rejected')">Reject</button>
+          </div>
         </div>
       `;
     });
@@ -157,16 +186,28 @@ async function loadKYC() {
 }
 
 // ==============================
-// APPROVE BOOKING
+// BOOKING ACTIONS
 // ==============================
-window.approveBooking = async function (id) {
+window.updateBookingStatus = async function (id, status) {
   try {
     await updateDoc(doc(db, "bookings", id), {
-      status: "Approved",
-      approvedAt: Date.now()
+      status,
+      updatedAt: serverTimestamp()
     });
 
-    alert("Booking approved");
+    alert(`Booking ${status}`);
+    loadBookings();
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+window.deleteBooking = async function (id) {
+  if (!confirm("Delete this booking?")) return;
+
+  try {
+    await deleteDoc(doc(db, "bookings", id));
+    alert("Booking deleted");
     loadBookings();
   } catch (error) {
     alert(error.message);
@@ -174,16 +215,28 @@ window.approveBooking = async function (id) {
 };
 
 // ==============================
-// APPROVE PARTNER
+// PARTNER ACTIONS
 // ==============================
-window.approvePartner = async function (id) {
+window.updatePartnerStatus = async function (id, status) {
   try {
     await updateDoc(doc(db, "partners", id), {
-      status: "Approved",
-      approvedAt: Date.now()
+      status,
+      updatedAt: serverTimestamp()
     });
 
-    alert("Partner approved");
+    alert(`Partner ${status}`);
+    loadPartners();
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+window.deletePartner = async function (id) {
+  if (!confirm("Delete this partner request?")) return;
+
+  try {
+    await deleteDoc(doc(db, "partners", id));
+    alert("Partner deleted");
     loadPartners();
   } catch (error) {
     alert(error.message);
@@ -191,20 +244,20 @@ window.approvePartner = async function (id) {
 };
 
 // ==============================
-// APPROVE KYC
+// KYC ACTIONS
 // ==============================
-window.approveKYC = async function (kycId, userId) {
+window.updateKYCStatus = async function (kycId, userId, status) {
   try {
     await updateDoc(doc(db, "kyc", kycId), {
-      status: "Approved",
-      approvedAt: Date.now()
+      status,
+      updatedAt: serverTimestamp()
     });
 
     await updateDoc(doc(db, "users", userId), {
-      kycStatus: "Approved"
+      kycStatus: status
     });
 
-    alert("KYC approved");
+    alert(`KYC ${status}`);
     loadKYC();
   } catch (error) {
     alert(error.message);

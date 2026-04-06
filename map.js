@@ -1,25 +1,81 @@
-let userLat = 28.6139;
-let userLng = 77.2090;
+// js/map.js
 
-const map = L.map('map').setView([userLat, userLng], 13);
+let map;
+let driverMarker;
+let pickupMarker;
+let dropMarker;
+let routeLine;
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
-
-let marker = L.marker([userLat, userLng]).addTo(map)
-  .bindPopup("Your Location")
-  .openPopup();
-
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition((position) => {
-    userLat = position.coords.latitude;
-    userLng = position.coords.longitude;
-
-    map.setView([userLat, userLng], 15);
-    marker.setLatLng([userLat, userLng]).bindPopup("Live Location").openPopup();
-
-    window.userPickupLat = userLat;
-    window.userPickupLng = userLng;
+export function initMap(center = { lat: 26.9124, lng: 75.7873 }) {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center,
+    zoom: 13,
+    disableDefaultUI: false
   });
+
+  return map;
+}
+
+export function updateDriverMarker(position, title = "Driver") {
+  if (!map) return;
+
+  if (!driverMarker) {
+    driverMarker = new google.maps.Marker({
+      position,
+      map,
+      title,
+      label: "D"
+    });
+  } else {
+    driverMarker.setPosition(position);
+  }
+}
+
+export function setPickupMarker(position) {
+  if (!map) return;
+
+  if (!pickupMarker) {
+    pickupMarker = new google.maps.Marker({
+      position,
+      map,
+      title: "Pickup",
+      label: "P"
+    });
+  } else {
+    pickupMarker.setPosition(position);
+  }
+}
+
+export function setDropMarker(position) {
+  if (!map) return;
+
+  if (!dropMarker) {
+    dropMarker = new google.maps.Marker({
+      position,
+      map,
+      title: "Drop",
+      label: "X"
+    });
+  } else {
+    dropMarker.setPosition(position);
+  }
+}
+
+export function drawSimpleRoute(driverPos, pickupPos, dropPos) {
+  if (!map) return;
+
+  if (routeLine) routeLine.setMap(null);
+
+  routeLine = new google.maps.Polyline({
+    path: [driverPos, pickupPos, dropPos],
+    geodesic: true,
+    strokeOpacity: 1.0,
+    strokeWeight: 4,
+    map
+  });
+}
+
+export function focusMap(position) {
+  if (!map) return;
+  map.setCenter(position);
 }

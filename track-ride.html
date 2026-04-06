@@ -2,46 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Track Ride - HALORA</title>
   <link rel="stylesheet" href="./style.css" />
 
-  <!-- Leaflet Map -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <style>
-    .ride-status-pill {
-      display: inline-block;
-      padding: 10px 16px;
-      border-radius: 999px;
-      font-weight: 700;
-      margin-top: 12px;
-      font-size: 14px;
-    }
-
-    .status-pending { background: #fef3c7; color: #92400e; }
-    .status-assigned { background: #dbeafe; color: #1d4ed8; }
-    .status-accepted { background: #dcfce7; color: #166534; }
-    .status-started { background: #ede9fe; color: #6d28d9; }
-    .status-completed { background: #d1fae5; color: #065f46; }
-    .status-cancelled { background: #fee2e2; color: #991b1b; }
-
-    .mini-card {
-      background: rgba(255,255,255,0.08);
-      padding: 18px;
-      border-radius: 24px;
-      margin-top: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 16px 36px rgba(0,0,0,0.22);
-    }
-
-    .trip-meta p {
-      margin: 8px 0;
-      color: #dbeafe;
-    }
-
     .track-card {
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.08);
@@ -52,14 +20,37 @@
       box-shadow: 0 16px 36px rgba(0,0,0,0.25);
     }
 
-    .track-card h2, .track-card h3 {
-      margin-bottom: 12px;
+    .mini-card {
+      background: rgba(255,255,255,0.06);
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
     .muted {
       color: #cbd5e1;
       margin: 8px 0;
-      font-size: 15px;
+    }
+
+    .ride-status-pill {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .status-pending { background: #fef3c7; color: #92400e; }
+    .status-accepted { background: #dcfce7; color: #166534; }
+    .status-started { background: #ede9fe; color: #6d28d9; }
+    .status-completed { background: #d1fae5; color: #065f46; }
+
+    #map {
+      width: 100%;
+      height: 340px;
+      border-radius: 20px;
+      margin-top: 18px;
     }
 
     .grid-2 {
@@ -68,264 +59,187 @@
       gap: 12px;
       margin-top: 12px;
     }
-
-    #map {
-      width: 100%;
-      height: 320px;
-      border-radius: 20px;
-      margin-top: 18px;
-      overflow: hidden;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-    }
-
-    hr {
-      border: none;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      margin: 18px 0;
-    }
   </style>
 </head>
 <body class="premium-body">
 
-  <header class="premium-topbar">
-    <div>
-      <h2 class="brand-title">Track Ride</h2>
-      <p class="brand-sub">Live ride status & payment</p>
+<header class="premium-topbar">
+  <div>
+    <h2 class="brand-title">Track Ride</h2>
+    <p class="brand-sub">Live Driver • OTP • Payment</p>
+  </div>
+  <a class="logout-btn" href="./dashboard.html" style="text-decoration:none;">Back</a>
+</header>
+
+<main class="premium-container">
+  <section class="track-card">
+    <h2>Your Live Ride</h2>
+    <div id="rideStatus">Loading...</div>
+
+    <p id="otpBox" class="muted">OTP will appear when driver accepts.</p>
+    <p id="driverInfo" class="muted">Driver: Searching...</p>
+    <p id="driverPhone" class="muted">Phone: Waiting...</p>
+    <p id="driverCoords" class="muted">Driver location: waiting...</p>
+
+    <h3 style="margin-top:18px;">Payment</h3>
+    <p id="paymentMethodBox" class="muted">Method: Loading...</p>
+
+    <div id="upiSection">
+      <div class="grid-2">
+        <button id="payBtn" class="main-btn">Pay Now</button>
+        <button id="paidBtn" class="secondary-btn">I Have Paid</button>
+      </div>
     </div>
-    <a class="logout-btn" href="./dashboard.html">Back</a>
-  </header>
 
-  <main class="premium-container">
-    <section class="track-card">
-      <h2>Your Live Ride</h2>
-      <div id="rideStatus">Loading...</div>
-      <hr />
+    <p id="paymentStatusBox" class="muted">Payment: unpaid</p>
 
-      <p id="otpBox" class="muted">OTP will appear when driver accepts.</p>
-      <p id="driverCoords" class="muted">Driver location: waiting...</p>
-      <p id="driverInfo" class="muted">Driver: Searching for driver...</p>
-      <p id="driverPhone" class="muted">Phone: Waiting...</p>
+    <div id="map"></div>
+  </section>
+</main>
 
-      <hr />
+<script type="module">
+  import { db } from "./js/firebase-config.js";
+  import {
+    doc,
+    onSnapshot,
+    updateDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-      <h3>Payment</h3>
-      <p id="paymentMethodBox" class="muted">Method: Loading...</p>
+  function currency(value) {
+    return "₹" + Number(value || 0);
+  }
 
-      <div id="upiSection">
-        <p class="muted">Pay your fare using any UPI app.</p>
-        <div class="grid-2">
-          <button id="payBtn" class="main-btn">Pay Now</button>
-          <button id="paidBtn" class="secondary-btn">I Have Paid</button>
-        </div>
-      </div>
+  const params = new URLSearchParams(window.location.search);
+  const rideId = params.get("rideId") || localStorage.getItem("rideId");
 
-      <div id="cashSection" style="display:none;">
-        <p class="muted">Cash selected. Pay cash directly to the driver at the end of the ride.</p>
-      </div>
+  const rideStatus = document.getElementById("rideStatus");
+  const otpBox = document.getElementById("otpBox");
+  const driverInfoEl = document.getElementById("driverInfo");
+  const driverPhoneEl = document.getElementById("driverPhone");
+  const coordsEl = document.getElementById("driverCoords");
+  const paymentMethodBox = document.getElementById("paymentMethodBox");
+  const paymentStatusBox = document.getElementById("paymentStatusBox");
+  const payBtn = document.getElementById("payBtn");
+  const paidBtn = document.getElementById("paidBtn");
 
-      <p id="paymentStatusBox" class="muted">Payment: unpaid</p>
+  const HALORA_UPI = "cedarjs@ibl";
 
-      <div id="map"></div>
-    </section>
-  </main>
+  const map = L.map("map").setView([26.9124, 75.7873], 13);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap contributors"
+  }).addTo(map);
 
-  <script type="module">
-    import { db } from "./js/firebase-config.js";
-    import {
-      doc,
-      onSnapshot,
-      updateDoc
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  let driverMarker = null;
+  let pickupMarker = null;
+  let dropMarker = null;
+  let routeLine = null;
+  let currentRide = null;
 
-    function currency(value) {
-      return "₹" + Number(value || 0);
+  const driverIcon = L.icon({
+    iconUrl: "https://cdn-icons-png.flaticon.com/512/744/744465.png",
+    iconSize: [40, 40]
+  });
+
+  function getStatusClass(status = "") {
+    const s = status.toLowerCase();
+    if (s.includes("pending")) return "status-pending";
+    if (s.includes("accepted")) return "status-accepted";
+    if (s.includes("started")) return "status-started";
+    if (s.includes("completed")) return "status-completed";
+    return "status-pending";
+  }
+
+  function updateMarkers(ride) {
+    if (ride.pickupLat && ride.pickupLng) {
+      const pickupPos = [ride.pickupLat, ride.pickupLng];
+      if (!pickupMarker) pickupMarker = L.marker(pickupPos).addTo(map).bindPopup("📍 Pickup");
+      else pickupMarker.setLatLng(pickupPos);
     }
 
-    const params = new URLSearchParams(window.location.search);
-    const rideId = params.get("rideId") || localStorage.getItem("rideId");
+    if (ride.dropLat && ride.dropLng) {
+      const dropPos = [ride.dropLat, ride.dropLng];
+      if (!dropMarker) dropMarker = L.marker(dropPos).addTo(map).bindPopup("🏁 Drop");
+      else dropMarker.setLatLng(dropPos);
+    }
 
-    const rideStatus = document.getElementById("rideStatus");
-    const otpBox = document.getElementById("otpBox");
-    const coordsEl = document.getElementById("driverCoords");
-    const driverInfoEl = document.getElementById("driverInfo");
-    const driverPhoneEl = document.getElementById("driverPhone");
-    const paymentStatusBox = document.getElementById("paymentStatusBox");
-    const paymentMethodBox = document.getElementById("paymentMethodBox");
-    const payBtn = document.getElementById("payBtn");
-    const paidBtn = document.getElementById("paidBtn");
-    const upiSection = document.getElementById("upiSection");
-    const cashSection = document.getElementById("cashSection");
+    if (ride.driverLat && ride.driverLng) {
+      const driverPos = [ride.driverLat, ride.driverLng];
+      coordsEl.innerText = `Driver location: ${ride.driverLat.toFixed(5)}, ${ride.driverLng.toFixed(5)}`;
 
-    const HALORA_UPI = "cedarjs@ibl";
+      if (!driverMarker) driverMarker = L.marker(driverPos, { icon: driverIcon }).addTo(map).bindPopup("🚖 Driver");
+      else driverMarker.setLatLng(driverPos);
 
-    const map = L.map("map").setView([26.9124, 75.7873], 13);
+      const points = [driverPos];
+      if (ride.pickupLat && ride.pickupLng) points.push([ride.pickupLat, ride.pickupLng]);
+      if (ride.dropLat && ride.dropLng) points.push([ride.dropLat, ride.dropLng]);
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap contributors"
-    }).addTo(map);
+      if (routeLine) map.removeLayer(routeLine);
+      routeLine = L.polyline(points, { weight: 5 }).addTo(map);
+      map.fitBounds(routeLine.getBounds(), { padding: [30, 30] });
+    }
+  }
 
-    let driverMarker = null;
-    let pickupMarker = null;
-    let dropMarker = null;
-    let routeLine = null;
-    let currentRide = null;
+  if (!rideId) {
+    rideStatus.innerHTML = "No ride found";
+  } else {
+    onSnapshot(doc(db, "rides", rideId), async (snap) => {
+      const ride = snap.data();
+      currentRide = ride;
 
-    const driverIcon = L.icon({
-      iconUrl: "https://cdn-icons-png.flaticon.com/512/744/744465.png",
-      iconSize: [40, 40]
+      if (!ride) {
+        rideStatus.innerHTML = "Ride not found";
+        return;
+      }
+
+      localStorage.setItem("rideId", rideId);
+
+      const statusClass = getStatusClass(ride.status || "Pending");
+
+      rideStatus.innerHTML = `
+        <div class="mini-card">
+          <h3>${ride.pickup || "-"} → ${ride.drop || "-"}</h3>
+          <p>Fare: ${currency(ride.fare || 0)}</p>
+          <p>Payment Method: <b>${ride.paymentMethod || "UPI"}</b></p>
+          <p>Payment: <b>${ride.paymentStatus || "unpaid"}</b></p>
+          <span class="ride-status-pill ${statusClass}">${ride.status || "Pending"}</span>
+        </div>
+      `;
+
+      paymentMethodBox.innerText = `Method: ${ride.paymentMethod || "UPI"}`;
+      paymentStatusBox.innerText = `Payment: ${ride.paymentStatus || "unpaid"}`;
+      driverInfoEl.innerText = `Driver: ${ride.driverName || "Searching..."}`;
+      driverPhoneEl.innerText = `Phone: ${ride.driverPhone || "Waiting..."}`;
+
+      if (ride.otp && ["Accepted", "Started"].includes(ride.status)) {
+        otpBox.innerText = `Your OTP: ${ride.otp}`;
+      }
+
+      updateMarkers(ride);
     });
 
-    function getStatusClass(status = "") {
-      const s = status.toLowerCase();
-      if (s.includes("pending")) return "status-pending";
-      if (s.includes("assigned")) return "status-assigned";
-      if (s.includes("accepted")) return "status-accepted";
-      if (s.includes("started")) return "status-started";
-      if (s.includes("completed")) return "status-completed";
-      if (s.includes("cancel")) return "status-cancelled";
-      return "status-pending";
-    }
+    payBtn.addEventListener("click", () => {
+      if (!currentRide) return;
 
-    function updateMarkers(ride) {
-      // Pickup
-      if (ride.pickupLat && ride.pickupLng) {
-        const pickupPos = [ride.pickupLat, ride.pickupLng];
-        if (!pickupMarker) {
-          pickupMarker = L.marker(pickupPos).addTo(map).bindPopup("📍 Pickup");
-        } else {
-          pickupMarker.setLatLng(pickupPos);
-        }
+      const amount = currentRide.fare || 0;
+      const note = `HALORA Ride Payment - ${rideId}`;
+      const upiLink = `upi://pay?pa=${HALORA_UPI}&pn=HALORA&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+      window.location.href = upiLink;
+    });
+
+    paidBtn.addEventListener("click", async () => {
+      if (!currentRide) return;
+
+      try {
+        await updateDoc(doc(db, "rides", rideId), {
+          paymentStatus: "pending_verification",
+          paymentMarkedAt: Date.now()
+        });
+        alert("Payment submitted for verification!");
+      } catch (e) {
+        alert(e.message);
       }
-
-      // Drop
-      if (ride.dropLat && ride.dropLng) {
-        const dropPos = [ride.dropLat, ride.dropLng];
-        if (!dropMarker) {
-          dropMarker = L.marker(dropPos).addTo(map).bindPopup("🏁 Drop");
-        } else {
-          dropMarker.setLatLng(dropPos);
-        }
-      }
-
-      // Driver
-      if (ride.driverLat && ride.driverLng) {
-        const driverPos = [ride.driverLat, ride.driverLng];
-        coordsEl.innerText = `Driver location: Lat ${ride.driverLat}, Lng ${ride.driverLng}`;
-
-        if (!driverMarker) {
-          driverMarker = L.marker(driverPos, { icon: driverIcon }).addTo(map)
-            .bindPopup("🚖 Driver");
-        } else {
-          driverMarker.setLatLng(driverPos);
-        }
-
-        const routePoints = [driverPos];
-        if (ride.pickupLat && ride.pickupLng) routePoints.push([ride.pickupLat, ride.pickupLng]);
-        if (ride.dropLat && ride.dropLng) routePoints.push([ride.dropLat, ride.dropLng]);
-
-        if (routeLine) {
-          map.removeLayer(routeLine);
-        }
-
-        routeLine = L.polyline(routePoints, { weight: 5 }).addTo(map);
-        map.fitBounds(routeLine.getBounds(), { padding: [30, 30] });
-
-        // follow driver a bit
-        map.setView(driverPos, 15);
-      }
-    }
-
-    function disablePaymentButtons() {
-      payBtn.disabled = true;
-      paidBtn.disabled = true;
-      payBtn.style.opacity = "0.5";
-      paidBtn.style.opacity = "0.5";
-    }
-
-    if (!rideId) {
-      rideStatus.innerHTML = "No ride found";
-      disablePaymentButtons();
-    } else {
-      onSnapshot(doc(db, "rides", rideId), async (snap) => {
-        const ride = snap.data();
-        currentRide = ride;
-
-        if (!ride) {
-          rideStatus.innerHTML = "Ride not found";
-          disablePaymentButtons();
-          return;
-        }
-
-        localStorage.setItem("rideId", rideId);
-
-        const statusClass = getStatusClass(ride.status || "Pending");
-
-        rideStatus.innerHTML = `
-          <div class="mini-card">
-            <h3>${ride.pickup || "-"} → ${ride.drop || "-"}</h3>
-            <div class="trip-meta">
-              <p>Fare: ${currency(ride.fare || 0)}</p>
-              <p>Payment Method: <b>${ride.paymentMethod || "UPI"}</b></p>
-              <p>Payment: <b>${ride.paymentStatus || "unpaid"}</b></p>
-            </div>
-            <span class="ride-status-pill ${statusClass}">${ride.status || "Pending"}</span>
-          </div>
-        `;
-
-        paymentMethodBox.innerText = `Method: ${ride.paymentMethod || "UPI"}`;
-        paymentStatusBox.innerText = `Payment: ${ride.paymentStatus || "unpaid"}`;
-        driverInfoEl.innerText = `Driver: ${ride.driverName || "Searching for driver..."}`;
-        driverPhoneEl.innerText = `Phone: ${ride.driverPhone || "Waiting..."}`;
-
-        if ((ride.paymentMethod || "UPI") === "Cash") {
-          upiSection.style.display = "none";
-          cashSection.style.display = "block";
-        } else {
-          upiSection.style.display = "block";
-          cashSection.style.display = "none";
-        }
-
-        if (ride.otp && ["Accepted", "Started", "Driver Assigned"].includes(ride.status)) {
-          otpBox.innerText = `Your OTP: ${ride.otp}`;
-        } else {
-          otpBox.innerText = "OTP will appear when driver accepts.";
-        }
-
-        updateMarkers(ride);
-
-        if (["Completed", "Cancelled"].includes(ride.status)) {
-          disablePaymentButtons();
-        }
-
-        if ((ride.paymentStatus || "").toLowerCase() === "paid") {
-          disablePaymentButtons();
-        }
-      });
-
-      payBtn.addEventListener("click", () => {
-        if (!currentRide) return;
-
-        const amount = currentRide.fare || 0;
-        const note = `HALORA Ride Payment - ${rideId}`;
-        const upiLink = `upi://pay?pa=${HALORA_UPI}&pn=HALORA&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
-
-        window.location.href = upiLink;
-      });
-
-      paidBtn.addEventListener("click", async () => {
-        if (!currentRide) return;
-
-        try {
-          await updateDoc(doc(db, "rides", rideId), {
-            paymentStatus: "pending_verification",
-            paymentMarkedAt: Date.now()
-          });
-          alert("Payment submitted for verification!");
-        } catch (e) {
-          alert(e.message);
-        }
-      });
-    }
-  </script>
+    });
+  }
+</script>
 </body>
 </html>

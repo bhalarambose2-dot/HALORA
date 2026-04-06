@@ -2,116 +2,243 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Book Ride - HALORA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HALORA Booking</title>
   <link rel="stylesheet" href="./style.css" />
+
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <style>
+    .booking-hero {
+      background: linear-gradient(135deg, rgba(255,138,0,0.20), rgba(0,80,255,0.14));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.22);
+      backdrop-filter: blur(16px);
+    }
+
+    .booking-hero h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .booking-hero p {
+      color: #dbeafe;
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .service-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .service-btn {
+      border: none;
+      border-radius: 20px;
+      padding: 14px 10px;
+      font-weight: 800;
+      font-size: 14px;
+      color: white;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .service-btn.active {
+      background: linear-gradient(135deg, #ff8a00, #ff5e00);
+      box-shadow: 0 12px 28px rgba(255,115,0,0.30);
+    }
+
+    .booking-form-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 20px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.25);
+      margin-top: 20px;
+    }
+
+    .booking-form-card h3 {
+      margin-bottom: 14px;
+      font-size: 22px;
+    }
+
+    .mini-note {
+      color: #cbd5e1;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .map-box {
+      width: 100%;
+      height: 340px;
+      border-radius: 24px;
+      overflow: hidden;
+      margin-top: 18px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.30);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .price-box {
+      margin-top: 16px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 22px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .price-box h4 {
+      margin: 0 0 6px;
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .price-box h2 {
+      margin: 0;
+      font-size: 34px;
+      color: #fff;
+    }
+
+    .booking-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .small-btn {
+      border: none;
+      border-radius: 18px;
+      padding: 14px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .loc-btn {
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .book-btn-final {
+      width: 100%;
+      margin-top: 18px;
+      border: none;
+      border-radius: 20px;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 800;
+      color: white;
+      background: linear-gradient(135deg, #ff8a00, #ff5e00);
+      box-shadow: 0 12px 28px rgba(255,115,0,0.30);
+      cursor: pointer;
+    }
+
+    .booking-info-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .booking-info-card {
+      background: rgba(255,255,255,0.06);
+      border-radius: 22px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .booking-info-card p {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    .booking-info-card h3 {
+      margin-top: 8px;
+      font-size: 22px;
+    }
+  </style>
 </head>
 <body class="premium-body">
 
-  <header class="premium-topbar">
-    <div>
-      <h2 class="brand-title">Book Your Ride</h2>
-      <p class="brand-sub">Bike • Auto • Taxi in minutes</p>
+<header class="premium-topbar">
+  <div>
+    <h2 class="brand-title">Book Ride</h2>
+    <p class="brand-sub">Bike • Auto • Taxi</p>
+  </div>
+  <a href="./dashboard.html" class="logout-btn" style="text-decoration:none;">Back</a>
+</header>
+
+<main class="premium-container">
+
+  <!-- HERO -->
+  <section class="booking-hero">
+    <h2>Ride in minutes 🚖</h2>
+    <p>Select your service, set pickup & drop on map, and book instantly.</p>
+
+    <div class="service-tabs">
+      <button class="service-btn active" data-type="Bike">🏍️ Bike</button>
+      <button class="service-btn" data-type="Auto">🛺 Auto</button>
+      <button class="service-btn" data-type="Taxi">🚕 Taxi</button>
     </div>
-    <a href="./dashboard.html" class="logout-btn">Back</a>
-  </header>
+  </section>
 
-  <main class="premium-container">
+  <!-- FORM -->
+  <section class="booking-form-card">
+    <h3>Ride Details</h3>
+    <p class="mini-note">Tip: First set Pickup, then Drop on the map.</p>
 
-    <!-- HERO -->
-    <section class="hero-banner fade-in">
-      <h3>Quick & Affordable Travel</h3>
-      <p>Book a ride instantly with HALORA and travel safely.</p>
-      <button class="hero-main-btn">Live Booking</button>
-    </section>
+    <input type="hidden" id="serviceType" value="Bike" />
 
-    <!-- BOOKING FORM -->
-    <section class="form-card fade-in booking-pro-card">
-      <h2>Bike / Taxi / Auto Booking</h2>
-      <p class="sub-text">Choose your ride and confirm instantly</p>
+    <input type="text" id="pickup" placeholder="Pickup Location" readonly />
+    <input type="text" id="drop" placeholder="Drop Location" readonly />
+    <input type="hidden" id="price" />
 
-      <select id="serviceType">
-        <option value="Bike">🏍️ Bike</option>
-        <option value="Auto">🛺 Auto</option>
-        <option value="Taxi">🚕 Taxi</option>
-      </select>
+    <div class="booking-actions">
+      <button class="small-btn loc-btn" id="setPickupBtn">📍 Set Pickup</button>
+      <button class="small-btn loc-btn" id="setDropBtn">🏁 Set Drop</button>
+    </div>
 
-      <input type="text" id="pickup" placeholder="Pickup Location" />
-      <input type="text" id="drop" placeholder="Drop Location" />
-      <input type="number" id="price" placeholder="Estimated Price ₹" readonly />
+    <div class="booking-actions">
+      <button class="small-btn loc-btn" id="useCurrentLocationBtn">📡 Use My Location</button>
+      <button class="small-btn loc-btn" id="clearMapBtn">🧹 Clear</button>
+    </div>
 
-      <div class="payment-select">
-        <label class="pay-option active" onclick="selectPayment('UPI', this)">
-          <input type="radio" name="paymentMethod" value="UPI" checked hidden />
-          💳 UPI
-        </label>
+    <div class="map-box" id="map"></div>
 
-        <label class="pay-option" onclick="selectPayment('Cash', this)">
-          <input type="radio" name="paymentMethod" value="Cash" hidden />
-          💵 Cash
-        </label>
+    <div class="price-box">
+      <h4>Estimated Fare</h4>
+      <h2>₹<span id="farePreview">0</span></h2>
+    </div>
+
+    <div class="booking-info-row">
+      <div class="booking-info-card">
+        <p>Distance</p>
+        <h3><span id="distancePreview">0</span> km</h3>
       </div>
-
-      <button class="main-btn booking-main-btn" onclick="saveRideBooking()">
-        Book Now
-      </button>
-
-      <div id="bookingLoader" class="booking-loader" style="display:none;">
-        <div class="loader-circle"></div>
-        <p>Searching nearby driver...</p>
+      <div class="booking-info-card">
+        <p>ETA</p>
+        <h3><span id="etaPreview">0</span> min</h3>
       </div>
-    </section>
+    </div>
 
-    <!-- FARE INFO -->
-    <section class="info-row fade-in">
-      <div class="info-card">
-        <h5>Estimated Time</h5>
-        <h3>4 min</h3>
-      </div>
-      <div class="info-card">
-        <h5>Ride Safety</h5>
-        <h3>100%</h3>
-      </div>
-    </section>
+    <button class="book-btn-final" onclick="saveRideBooking()">Book Now</button>
+  </section>
 
-    <!-- RIDE BENEFITS -->
-    <section class="section-block fade-in">
-      <h3 class="section-heading">Why ride with HALORA?</h3>
-      <div class="offer-scroll">
-        <div class="offer-card">
-          <span class="offer-badge">Fast</span>
-          <h4>Quick Driver Match</h4>
-          <p>Get matched with a nearby driver instantly.</p>
-        </div>
+</main>
 
-        <div class="offer-card">
-          <span class="offer-badge">Safe</span>
-          <h4>OTP Verified Ride</h4>
-          <p>Every ride starts with OTP verification.</p>
-        </div>
-
-        <div class="offer-card">
-          <span class="offer-badge">Affordable</span>
-          <h4>Low Fare</h4>
-          <p>Best local prices for daily travel.</p>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <script type="module" src="./js/auth.js"></script>
-  <script type="module" src="./booking.js"></script>
-
-  <script>
-    function selectPayment(method, el) {
-      document.querySelectorAll(".pay-option").forEach(item => item.classList.remove("active"));
-      el.classList.add("active");
-
-      document.querySelectorAll('input[name="paymentMethod"]').forEach(r => {
-        r.checked = (r.value === method);
-      });
-    }
-  </script>
+<script type="module" src="./booking.js"></script>
 </body>
 </html>

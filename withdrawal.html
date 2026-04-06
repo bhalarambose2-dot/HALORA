@@ -2,25 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Withdraw - HALORA</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Withdraw</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      padding: 20px;
+    }
+
+    .box {
+      max-width: 450px;
+      margin: auto;
+      background: #1e293b;
+      padding: 24px;
+      border-radius: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    button {
+      background: #8b5cf6;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="logo">WITHDRAW</div>
-    <a class="logout-btn" href="wallet.html">Back</a>
-  </header>
+  <div class="box">
+    <h1>🏦 Withdraw Money</h1>
 
-  <main class="container">
-    <section class="card">
-      <h2>Withdraw Request</h2>
-      <input id="amount" type="number" placeholder="Enter amount" />
-      <input id="upi" type="text" placeholder="Enter UPI ID (e.g. name@upi)" />
-      <button class="main-btn" onclick="submitWithdraw()">Submit</button>
-    </section>
-  </main>
+    <input type="number" id="withdrawAmount" placeholder="Enter amount" />
+    <input type="text" id="bankName" placeholder="Bank / UPI Name" />
+    <input type="text" id="accountNumber" placeholder="Account Number / UPI ID" />
 
-  <script type="module" src="js/withdraw.js"></script>
+    <button onclick="requestWithdraw()">Submit Withdraw Request</button>
+  </div>
+
+  <script type="module" src="./js/withdrawal.js"></script>
 </body>
 </html>

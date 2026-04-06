@@ -1,5 +1,3 @@
-// admin/admin.js
-
 import { auth, db } from "../js/firebase-config.js";
 
 import {
@@ -35,6 +33,25 @@ function safeText(value) {
 }
 
 // ==============================
+// LOAD STATS
+// ==============================
+async function loadStats() {
+  try {
+    const bookingsSnap = await getDocs(collection(db, "bookings"));
+    const partnersSnap = await getDocs(collection(db, "partners"));
+    const kycSnap = await getDocs(collection(db, "kyc"));
+    const usersSnap = await getDocs(collection(db, "users"));
+
+    document.getElementById("totalBookings").innerText = bookingsSnap.size;
+    document.getElementById("totalPartners").innerText = partnersSnap.size;
+    document.getElementById("totalKYC").innerText = kycSnap.size;
+    document.getElementById("totalUsers").innerText = usersSnap.size;
+  } catch (error) {
+    console.error("Stats error:", error);
+  }
+}
+
+// ==============================
 // SECURE ADMIN CHECK
 // ==============================
 onAuthStateChanged(auth, async (user) => {
@@ -48,12 +65,20 @@ onAuthStateChanged(auth, async (user) => {
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
-    if (!userSnap.exists() || userSnap.data().role !== "admin") {
+    // 🔥 ADMIN EMAIL FIX
+    const adminEmails = ["bhalarambose2@gmail.com"];
+
+    const isAdmin =
+      (userSnap.exists() && userSnap.data().role === "admin") ||
+      adminEmails.includes(user.email);
+
+    if (!isAdmin) {
       alert("Access denied. Admin only.");
       window.location.href = "../dashboard.html";
       return;
     }
 
+    loadStats();
     loadBookings();
     loadPartners();
     loadKYC();
@@ -86,7 +111,7 @@ async function loadBookings() {
         <div class="admin-card">
           <p><strong>${safeText(booking.serviceType || "Ride")}</strong></p>
           <p>${safeText(booking.pickup || "Pickup")} → ${safeText(booking.drop || "Drop")}</p>
-          <p>₹${safeText(booking.price || 0)}</p>
+          <p>₹${safeText(booking.price || booking.fare || 0)}</p>
           <p>Status: <span class="status ${String(booking.status || "Pending").toLowerCase()}">${safeText(booking.status || "Pending")}</span></p>
 
           <div class="admin-actions">
@@ -125,6 +150,9 @@ async function loadPartners() {
       adminPartners.innerHTML += `
         <div class="admin-card">
           <p><strong>${safeText(partner.partnerType || partner.type || "Partner")}</strong></p>
+          <p>Name: ${safeText(partner.name || "N/A")}</p>
+          <p>City: ${safeText(partner.city || "N/A")}</p>
+          <p>Phone: ${safeText(partner.phone || "N/A")}</p>
           <p>Status: <span class="status ${String(partner.status || "Pending").toLowerCase()}">${safeText(partner.status || "Pending")}</span></p>
 
           <div class="admin-actions">
@@ -197,6 +225,7 @@ window.updateBookingStatus = async function (id, status) {
 
     alert(`Booking ${status}`);
     loadBookings();
+    loadStats();
   } catch (error) {
     alert(error.message);
   }
@@ -209,6 +238,7 @@ window.deleteBooking = async function (id) {
     await deleteDoc(doc(db, "bookings", id));
     alert("Booking deleted");
     loadBookings();
+    loadStats();
   } catch (error) {
     alert(error.message);
   }
@@ -226,6 +256,7 @@ window.updatePartnerStatus = async function (id, status) {
 
     alert(`Partner ${status}`);
     loadPartners();
+    loadStats();
   } catch (error) {
     alert(error.message);
   }
@@ -238,6 +269,7 @@ window.deletePartner = async function (id) {
     await deleteDoc(doc(db, "partners", id));
     alert("Partner deleted");
     loadPartners();
+    loadStats();
   } catch (error) {
     alert(error.message);
   }
@@ -259,6 +291,7 @@ window.updateKYCStatus = async function (kycId, userId, status) {
 
     alert(`KYC ${status}`);
     loadKYC();
+    loadStats();
   } catch (error) {
     alert(error.message);
   }

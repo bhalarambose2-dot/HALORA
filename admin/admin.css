@@ -113,11 +113,25 @@ body {
 }
 
 .status.approved {
-  background: #dcfce7;
+  background: #
+    dcfce7;
   color: #166534;
 }
 
 .status.rejected {
   background: #fee2e2;
   color: #991b1b;
+}
+
+.filter-bar {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.filter-bar select,
+.filter-bar button {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
 }

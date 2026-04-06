@@ -1,217 +1,285 @@
-import { auth, db } from "./firebase-config.js";
+// admin/admin.js
+
+import { auth, db } from "../js/firebase-config.js";
 
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  sendPasswordResetEmail
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-  doc,
-  setDoc,
   collection,
-  query,
-  where,
   getDocs,
-  getDoc
+  doc,
+  updateDoc,
+  getDoc,
+  deleteDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ==========================
-// SIGNUP
-// ==========================
-window.signupUser = async function () {
-  const name = document.getElementById("name")?.value.trim();
-  const email = document.getElementById("email")?.value.trim();
-  const password = document.getElementById("password")?.value.trim();
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  if (!name || !email || !password) {
-    alert("Please fill all fields");
+// ==============================
+// HTML Elements
+// ==============================
+const adminBookings = document.getElementById("adminBookings");
+const adminPartners = document.getElementById("adminPartners");
+const adminKYC = document.getElementById("adminKYC");
+
+// ==============================
+// SAFE TEXT FUNCTION
+// ==============================
+function safeText(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+// ==============================
+// SECURE ADMIN CHECK
+// ==============================
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    alert("Please login first");
+    window.location.href = "../login.html";
     return;
   }
 
   try {
-    const userCred = await createUserWithEmailAndPassword(auth, email, password);
-    const uid = userCred.user.uid;
-
-    await setDoc(doc(db, "users", uid), {
-      name,
-      email,
-      wallet: 0,
-      kycStatus: "Pending",
-      createdAt: Date.now()
-    });
-
-    alert("Signup successful!");
-    window.location.href = "./dashboard.html";
-  } catch (error) {
-    alert("Signup Error: " + error.message);
-    console.error(error);
-  }
-};
-
-// ==========================
-// LOGIN
-// ==========================
-window.loginUser = async function () {
-  const email = document.getElementById("email")?.value.trim();
-  const password = document.getElementById("password")?.value.trim();
-
-  if (!email || !password) {
-    alert("Please enter email and password");
-    return;
-  }
-
-  try {
-    const userCred = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCred.user;
-
     // ==========================
-    // 1. ADMIN CHECK
+    // 1. EMAIL BASED ADMIN CHECK
     // ==========================
-    const adminRef = doc(db, "admins", user.uid);
-    const adminSnap = await getDoc(adminRef);
+    const allowedAdminEmails = [
+      "bhalarambose2@gmail.com"
+    ];
 
-    if (adminSnap.exists()) {
-      alert("Admin login successful!");
-      window.location.href = "./admin/admin.html";
+    if (allowedAdminEmails.includes(user.email)) {
+      loadBookings();
+      loadPartners();
+      loadKYC();
       return;
     }
 
     // ==========================
-    // 2. PARTNER CHECK
+    // 2. FIRESTORE ROLE CHECK
     // ==========================
-    const q = query(
-      collection(db, "partners"),
-      where("uid", "==", user.uid)
-    );
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
 
-    const snapshot = await getDocs(q);
-
-    if (!snapshot.empty) {
-      const partner = snapshot.docs[0].data();
-
-      // APPROVED PARTNER
-      if (partner.status === "Approved") {
-        if (partner.partnerType === "driver") {
-          alert("Driver login successful!");
-          window.location.href = "./driver-panel.html";
-          return;
-        }
-
-        if (partner.partnerType === "hotel") {
-          alert("Hotel partner login successful!");
-          window.location.href = "./hotel-dashboard.html";
-          return;
-        }
-
-        if (partner.partnerType === "trip") {
-          alert("Trip partner login successful!");
-          window.location.href = "./trip-dashboard.html";
-          return;
-        }
-      }
-
-      // PENDING PARTNER
-      if (partner.status === "Pending") {
-        alert("Your partner request is pending approval.");
-        window.location.href = "./dashboard.html";
-        return;
-      }
-
-      // REJECTED PARTNER
-      if (partner.status === "Rejected") {
-        alert("Your partner request was rejected.");
-        window.location.href = "./dashboard.html";
-        return;
-      }
+    if (!userSnap.exists() || userSnap.data().role !== "admin") {
+      alert("Access denied. Admin only.");
+      window.location.href = "../dashboard.html";
+      return;
     }
 
     // ==========================
-    // 3. NORMAL USER
+    // ADMIN VERIFIED
     // ==========================
-    alert("Login successful!");
-    window.location.href = "./dashboard.html";
+    loadBookings();
+    loadPartners();
+    loadKYC();
 
   } catch (error) {
-    alert("Login Error: " + error.message);
-    console.error(error);
+    console.error("Admin auth error:", error);
+    alert(error.message);
   }
-};
+});
 
-// ==========================
-// RESET PASSWORD
-// ==========================
-window.resetPassword = async function () {
-  const email = document.getElementById("resetEmail")?.value.trim();
-
-  if (!email) {
-    alert("Please enter your email");
-    return;
-  }
-
+// ==============================
+// LOAD BOOKINGS
+// ==============================
+async function loadBookings() {
   try {
-    await sendPasswordResetEmail(auth, email);
-    alert("Password reset link sent to your email");
-    window.location.href = "./login.html";
-  } catch (error) {
-    alert("Reset Error: " + error.message);
-    console.error(error);
-  }
-};
+    adminBookings.innerHTML = "<p>Loading bookings...</p>";
 
-// ==========================
-// LOGOUT
-// ==========================
-window.logoutUser = async function () {
-  try {
-    await signOut(auth);
-    window.location.href = "./login.html";
-  } catch (error) {
-    alert("Logout Error: " + error.message);
-  }
-};
+    const snapshot = await getDocs(collection(db, "bookings"));
+    adminBookings.innerHTML = "";
 
-// ==========================
-// PROTECT PAGES
-// ==========================
-const protectedPages = [
-  "dashboard.html",
-  "trip.html",
-  "bookings.html",
-  "wallet.html",
-  "profile.html",
-  "partner.html",
-  "support.html",
-  "offers.html",
-  "notifications.html",
-
-  "driver-panel.html",
-  "driver-live.html",
-  "driver-requests.html",
-
-  "hotel-dashboard.html",
-  "trip-dashboard.html",
-
-  "admin.html",
-  "admin-users.html",
-  "admin-drivers.html",
-  "admin-hotels.html",
-  "admin-bookings.html",
-  "admin-wallet.html",
-  "admin-withdraw.html",
-  "admin-support.html",
-  "admin-reports.html",
-  "admin-login.html"
-];
-
-const currentPage = window.location.pathname.split("/").pop();
-
-if (protectedPages.includes(currentPage)) {
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      window.location.href = "./login.html";
+    if (snapshot.empty) {
+      adminBookings.innerHTML = "<p>No bookings found</p>";
+      return;
     }
-  });
+
+    snapshot.forEach((docSnap) => {
+      const booking = docSnap.data();
+
+      adminBookings.innerHTML += `
+        <div class="admin-card">
+          <p><strong>${safeText(booking.serviceType || "Ride")}</strong></p>
+          <p>${safeText(booking.pickup || "Pickup")} → ${safeText(booking.drop || "Drop")}</p>
+          <p>₹${safeText(booking.price || 0)}</p>
+          <p>Status: <span class="status ${String(booking.status || "Pending").toLowerCase()}">${safeText(booking.status || "Pending")}</span></p>
+
+          <div class="admin-actions">
+            <button onclick="updateBookingStatus('${docSnap.id}', 'Approved')">Approve</button>
+            <button onclick="updateBookingStatus('${docSnap.id}', 'Rejected')">Reject</button>
+            <button onclick="deleteBooking('${docSnap.id}')">Delete</button>
+          </div>
+        </div>
+      `;
+    });
+
+  } catch (error) {
+    console.error("Load bookings error:", error);
+    adminBookings.innerHTML = "<p>Error loading bookings</p>";
+  }
 }
+
+// ==============================
+// LOAD PARTNERS
+// ==============================
+async function loadPartners() {
+  try {
+    adminPartners.innerHTML = "<p>Loading partners...</p>";
+
+    const snapshot = await getDocs(collection(db, "partners"));
+    adminPartners.innerHTML = "";
+
+    if (snapshot.empty) {
+      adminPartners.innerHTML = "<p>No partners found</p>";
+      return;
+    }
+
+    snapshot.forEach((docSnap) => {
+      const partner = docSnap.data();
+
+      adminPartners.innerHTML += `
+        <div class="admin-card">
+          <p><strong>${safeText(partner.partnerType || partner.type || "Partner")}</strong></p>
+          <p>Status: <span class="status ${String(partner.status || "Pending").toLowerCase()}">${safeText(partner.status || "Pending")}</span></p>
+
+          <div class="admin-actions">
+            <button onclick="updatePartnerStatus('${docSnap.id}', 'Approved')">Approve</button>
+            <button onclick="updatePartnerStatus('${docSnap.id}', 'Rejected')">Reject</button>
+            <button onclick="deletePartner('${docSnap.id}')">Delete</button>
+          </div>
+        </div>
+      `;
+    });
+
+  } catch (error) {
+    console.error("Load partners error:", error);
+    adminPartners.innerHTML = "<p>Error loading partners</p>";
+  }
+}
+
+// ==============================
+// LOAD KYC
+// ==============================
+async function loadKYC() {
+  try {
+    adminKYC.innerHTML = "<p>Loading KYC...</p>";
+
+    const snapshot = await getDocs(collection(db, "kyc"));
+    adminKYC.innerHTML = "";
+
+    if (snapshot.empty) {
+      adminKYC.innerHTML = "<p>No KYC requests found</p>";
+      return;
+    }
+
+    snapshot.forEach((docSnap) => {
+      const kyc = docSnap.data();
+
+      adminKYC.innerHTML += `
+        <div class="admin-card">
+          <p><strong>User ID:</strong> ${safeText(kyc.userId || "N/A")}</p>
+          <p>Status: <span class="status ${String(kyc.status || "Pending").toLowerCase()}">${safeText(kyc.status || "Pending")}</span></p>
+
+          <div class="admin-links">
+            ${kyc.aadhaarUrl ? `<a href="${kyc.aadhaarUrl}" target="_blank"><button>Aadhaar</button></a>` : ""}
+            ${kyc.panUrl ? `<a href="${kyc.panUrl}" target="_blank"><button>PAN</button></a>` : ""}
+            ${kyc.selfieUrl ? `<a href="${kyc.selfieUrl}" target="_blank"><button>Selfie</button></a>` : ""}
+          </div>
+
+          <div class="admin-actions">
+            <button onclick="updateKYCStatus('${docSnap.id}', '${kyc.userId}', 'Approved')">Approve</button>
+            <button onclick="updateKYCStatus('${docSnap.id}', '${kyc.userId}', 'Rejected')">Reject</button>
+          </div>
+        </div>
+      `;
+    });
+
+  } catch (error) {
+    console.error("Load KYC error:", error);
+    adminKYC.innerHTML = "<p>Error loading KYC</p>";
+  }
+}
+
+// ==============================
+// BOOKING ACTIONS
+// ==============================
+window.updateBookingStatus = async function (id, status) {
+  try {
+    await updateDoc(doc(db, "bookings", id), {
+      status,
+      updatedAt: serverTimestamp()
+    });
+
+    alert(`Booking ${status}`);
+    loadBookings();
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+window.deleteBooking = async function (id) {
+  if (!confirm("Delete this booking?")) return;
+
+  try {
+    await deleteDoc(doc(db, "bookings", id));
+    alert("Booking deleted");
+    loadBookings();
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+// ==============================
+// PARTNER ACTIONS
+// ==============================
+window.updatePartnerStatus = async function (id, status) {
+  try {
+    await updateDoc(doc(db, "partners", id), {
+      status,
+      updatedAt: serverTimestamp()
+    });
+
+    alert(`Partner ${status}`);
+    loadPartners();
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+window.deletePartner = async function (id) {
+  if (!confirm("Delete this partner request?")) return;
+
+  try {
+    await deleteDoc(doc(db, "partners", id));
+    alert("Partner deleted");
+    loadPartners();
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+// ==============================
+// KYC ACTIONS
+// ==============================
+window.updateKYCStatus = async function (kycId, userId, status) {
+  try {
+    await updateDoc(doc(db, "kyc", kycId), {
+      status,
+      updatedAt: serverTimestamp()
+    });
+
+    await updateDoc(doc(db, "users", userId), {
+      kycStatus: status
+    });
+
+    alert(`KYC ${status}`);
+    loadKYC();
+  } catch (error) {
+    alert(error.message);
+  }
+};

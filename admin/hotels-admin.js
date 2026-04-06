@@ -1,14 +1,8 @@
-import { firebaseConfig } from '../firebase-config.js';
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { db } from "../js/firebase-config.js";
 import {
-  getFirestore,
   collection,
   addDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 window.addHotel = async function () {
   const name = document.getElementById("hotelName").value;
@@ -17,7 +11,7 @@ window.addHotel = async function () {
   const image = document.getElementById("hotelImage").value;
 
   if (!name || !city || !price || !image) {
-    return alert("Fill all hotel fields");
+    return alert("Fill all fields");
   }
 
   try {

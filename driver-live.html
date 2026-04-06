@@ -1,56 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Driver Live</title>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <style>
-    body {
-      font-family: Arial;
-      background: #0f172a;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .box {
-      max-width: 420px;
-      margin: auto;
-      background: #1e293b;
-      padding: 24px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    button {
-      margin: 10px;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 10px;
-      background: #8b5cf6;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .status {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-  </style>
+  <title>Driver Live Ride</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
-<body>
-  <div class="box">
-    <h1>🚖 Driver Live Tracking</h1>
-    <p>Turn on live location to receive rides.</p>
+<body class="premium-body">
 
-    <button onclick="setDriverOnline()">Go Online</button>
-    <button onclick="setDriverOffline()">Go Offline</button>
+<header class="premium-topbar">
+  <h2 class="brand-title">Live Ride</h2>
+  <a href="./driver-panel.html" class="logout-btn">Back</a>
+</header>
 
-    <div class="status" id="driverStatus">Status: Offline</div>
-  </div>
+<main class="premium-container">
+  <section class="driver-ride-card">
+    <h3>Live Ride Status</h3>
+    <p id="liveRideStatus">Waiting for ride...</p>
+    <div id="map" style="height:350px; border-radius:20px; background:#111;"></div>
+  </section>
+</main>
 
-  <script type="module" src="./driver-live.js"></script>
+<nav class="premium-bottom-nav">
+  <a href="./driver-panel.html"><span>🏠</span><small>Home</small></a>
+  <a href="./driver-live.html" class="active"><span>📍</span><small>Live</small></a>
+  <a href="./driver-wallet.html"><span>💰</span><small>Wallet</small></a>
+  <a href="./driver-profile.html"><span>👤</span><small>Profile</small></a>
+</nav>
+
 </body>
 </html>

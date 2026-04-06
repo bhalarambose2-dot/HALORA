@@ -67,7 +67,44 @@ window.loginUser = async function () {
   try {
     const userCred = await signInWithEmailAndPassword(auth, email, password);
     const user = userCred.user;
+     
+  }
+  // ==========================
+// PARTNER CHECK
+// ==========================
+const partnerQuery = query(
+  collection(db, "partners"),
+  where("uid", "==", user.uid),
+  where("status", "==", "Approved")
+);
 
+const partnerSnap = await getDocs(partnerQuery);
+
+if (!partnerSnap.empty) {
+  const partner = partnerSnap.docs[0].data();
+  const type = (partner.partnerType || "").toLowerCase();
+
+  // 🔥 DRIVER
+  if (type.includes("bike") || type.includes("driver") || type.includes("rider")) {
+    alert("Driver login successful!");
+    window.location.href = "./driver-panel.html";
+    return;
+  }
+
+  // 🔥 HOTEL (👉 YAHI TUMHARA CODE)
+  if (type.includes("hotel")) {
+    alert("Hotel login successful!");
+    window.location.href = "./hotel-dashboard.html";
+    return;
+  }
+
+  // 🔥 TRIP
+  if (type.includes("trip")) {
+    alert("Trip partner login successful!");
+    window.location.href = "./trip-dashboard.html";
+    return;
+  }
+}
     const adminEmails = ["bhalarambose2@gmail.com"];
 
     // ==========================

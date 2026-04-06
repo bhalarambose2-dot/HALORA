@@ -6,7 +6,6 @@
   <title>HALORA Booking</title>
   <link rel="stylesheet" href="./style.css" />
 
-  <!-- Leaflet Map -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
@@ -49,7 +48,6 @@
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.08);
       cursor: pointer;
-      transition: 0.2s ease;
     }
 
     .service-btn.active {
@@ -65,17 +63,6 @@
       backdrop-filter: blur(16px);
       box-shadow: 0 16px 36px rgba(0,0,0,0.25);
       margin-top: 20px;
-    }
-
-    .booking-form-card h3 {
-      margin-bottom: 14px;
-      font-size: 22px;
-    }
-
-    .mini-note {
-      color: #cbd5e1;
-      font-size: 13px;
-      margin-bottom: 12px;
     }
 
     .map-box {
@@ -123,9 +110,6 @@
       font-weight: 700;
       font-size: 14px;
       cursor: pointer;
-    }
-
-    .loc-btn {
       background: rgba(255,255,255,0.08);
       color: white;
       border: 1px solid rgba(255,255,255,0.08);
@@ -182,8 +166,6 @@
 </header>
 
 <main class="premium-container">
-
-  <!-- HERO -->
   <section class="booking-hero">
     <h2>Ride in minutes 🚖</h2>
     <p>Select your service, set pickup & drop on map, and book instantly.</p>
@@ -195,11 +177,7 @@
     </div>
   </section>
 
-  <!-- FORM -->
   <section class="booking-form-card">
-    <h3>Ride Details</h3>
-    <p class="mini-note">Tip: First set Pickup, then Drop on the map.</p>
-
     <input type="hidden" id="serviceType" value="Bike" />
 
     <input type="text" id="pickup" placeholder="Pickup Location" readonly />
@@ -207,13 +185,13 @@
     <input type="hidden" id="price" />
 
     <div class="booking-actions">
-      <button class="small-btn loc-btn" id="setPickupBtn">📍 Set Pickup</button>
-      <button class="small-btn loc-btn" id="setDropBtn">🏁 Set Drop</button>
+      <button class="small-btn" id="setPickupBtn">📍 Set Pickup</button>
+      <button class="small-btn" id="setDropBtn">🏁 Set Drop</button>
     </div>
 
     <div class="booking-actions">
-      <button class="small-btn loc-btn" id="useCurrentLocationBtn">📡 Use My Location</button>
-      <button class="small-btn loc-btn" id="clearMapBtn">🧹 Clear</button>
+      <button class="small-btn" id="useCurrentLocationBtn">📡 Use My Location</button>
+      <button class="small-btn" id="clearMapBtn">🧹 Clear</button>
     </div>
 
     <div class="map-box" id="map"></div>
@@ -236,7 +214,6 @@
 
     <button class="book-btn-final" onclick="saveRideBooking()">Book Now</button>
   </section>
-
 </main>
 
 <script type="module" src="./booking.js"></script>

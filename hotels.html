@@ -1,48 +1,242 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Hotels</title>
-  <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HALORA Hotels</title>
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    body {
+      background: #050816;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-bottom: 100px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 20px;
+      background: rgba(0,0,0,0.35);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .logo small {
+      display: block;
+      font-size: 12px;
+      color: #aaa;
+      font-weight: 400;
+    }
+
+    .logout-btn {
+      background: orange;
+      color: black;
+      border: none;
+      border-radius: 14px;
+      padding: 10px 18px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 18px rgba(255,140,0,0.25);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, rgba(255,140,0,0.18), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 24px;
+      margin-bottom: 22px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.28);
+    }
+
+    .hero-card h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .hero-card p {
+      margin: 0;
+      color: #cfcfcf;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 14px;
+      margin: 20px 0 26px;
+    }
+
+    .filters input,
+    .filters select {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: white;
+      font-size: 15px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin: 10px 0 18px;
+    }
+
+    .hotel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 18px;
+    }
+
+    .hotel-card {
+      background: linear-gradient(145deg, rgba(14,20,45,0.96), rgba(7,10,22,0.96));
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.30);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hotel-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 48px rgba(0,0,0,0.38);
+    }
+
+    .hotel-img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      background: #111827;
+    }
+
+    .hotel-content {
+      padding: 18px;
+    }
+
+    .hotel-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .hotel-name {
+      font-size: 22px;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .price-tag {
+      background: rgba(255,140,0,0.15);
+      color: orange;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .meta {
+      color: #c8c8c8;
+      font-size: 14px;
+      margin: 6px 0;
+    }
+
+    .desc {
+      color: #b8b8b8;
+      font-size: 14px;
+      margin: 12px 0 18px;
+      line-height: 1.6;
+      min-height: 46px;
+    }
+
+    .book-btn {
+      width: 100%;
+      background: orange;
+      color: black;
+      border: none;
+      border-radius: 16px;
+      padding: 14px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(255,140,0,0.22);
+    }
+
+    .empty-box {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 22px;
+      color: #bfbfbf;
+    }
+
+    @media (max-width: 700px) {
+      .filters {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card h2 {
+        font-size: 24px;
+      }
+
+      .hotel-img {
+        height: 190px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="logo">Hotels</div>
-  <a href="./dashboard.html" class="logout-btn">Back</a>
-</header>
+  <header class="topbar">
+    <div class="logo">
+      HALORA HOTELS
+      <small>Premium stays across India</small>
+    </div>
+    <a href="./dashboard.html" class="logout-btn">Back</a>
+  </header>
 
-<main class="container">
+  <main class="container">
 
-  <h2 class="section-title">Top Hotels</h2>
+    <section class="hero-card">
+      <h2>Find your perfect stay</h2>
+      <p>Book trusted hotels with easy check-in and premium comfort.</p>
+    </section>
 
-  <div class="scroll-row">
-
-    <div class="trip-card">
-      <img src="https://source.unsplash.com/300x200/?hotel" style="border-radius:16px;margin-bottom:12px;">
-      <h3>Luxury Palace</h3>
-      <p>5 Star • Pool • Free Breakfast</p>
-      <div class="trip-price">₹2999 / night</div>
-      <button>Book Now</button>
+    <div class="filters">
+      <input type="text" id="searchInput" placeholder="Search hotel or city..." />
+      <select id="cityFilter">
+        <option value="">All Cities</option>
+      </select>
     </div>
 
-    <div class="trip-card">
-      <img src="https://source.unsplash.com/300x200/?resort" style="border-radius:16px;margin-bottom:12px;">
-      <h3>Beach Resort</h3>
-      <p>Sea View • AC Rooms • WiFi</p>
-      <div class="trip-price">₹3999 / night</div>
-      <button>Book Now</button>
-    </div>
+    <h2 class="section-title">Available Hotels</h2>
+    <div id="hotelList" class="hotel-grid">Loading...</div>
 
-    <div class="trip-card">
-      <img src="https://source.unsplash.com/300x200/?hotel-room" style="border-radius:16px;margin-bottom:12px;">
-      <h3>Budget Stay</h3>
-      <p>Affordable • Clean Rooms</p>
-      <div class="trip-price">₹999 / night</div>
-      <button>Book Now</button>
-    </div>
+  </main>
 
-  </div>
-
-</main>
+  <script type="module" src="./hotels.js"></script>
 </body>
 </html>

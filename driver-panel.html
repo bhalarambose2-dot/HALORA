@@ -18,6 +18,7 @@
 
 <main class="premium-container">
 
+  <!-- EARNINGS -->
   <section class="driver-balance-card">
     <p>Total Earnings</p>
     <h1>₹<span id="driverEarnings">0</span></h1>
@@ -27,6 +28,7 @@
     </div>
   </section>
 
+  <!-- ONLINE / OFFLINE -->
   <section class="driver-status-card">
     <div>
       <h3>Status</h3>
@@ -38,18 +40,34 @@
     </label>
   </section>
 
+  <!-- CURRENT RIDE -->
   <section class="driver-ride-card">
     <h3>Current Ride</h3>
-    <div id="currentRide">No active ride</div>
 
-    <div id="rideActions" class="driver-action-grid" style="display:none;">
-      <button id="acceptRideBtn" class="accept-btn">Accept</button>
-      <input type="text" id="otpInput" placeholder="Enter OTP" />
-      <button id="verifyOtpBtn" class="start-btn">Start Ride</button>
-      <button id="confirmPaymentBtn" class="withdraw-main-btn">Confirm Payment</button>
-      <button id="completeRideBtn" class="complete-btn">Complete</button>
-      <button id="cancelRideBtn" class="cancel-btn">Cancel</button>
+    <div id="currentRide">
+      <p id="rideRoute">No active ride</p>
+      <p id="rideCustomer">Customer: --</p>
+      <p id="rideFare">Fare: ₹0</p>
+      <p id="rideOtp">OTP: ----</p>
     </div>
+
+    <div id="rideActions" class="driver-action-grid" style="display:block;">
+      <button class="start-btn" onclick="startRide()">Start Ride</button>
+      <button class="complete-btn" onclick="completeRide()">Complete</button>
+    </div>
+  </section>
+
+  <!-- WITHDRAW -->
+  <section class="withdraw-card-ui">
+    <h3>Withdraw Earnings</h3>
+    <input type="number" id="withdrawAmount" placeholder="Enter amount" />
+    <button class="withdraw-main-btn" onclick="withdrawNow()">Withdraw</button>
+  </section>
+
+  <!-- INCOMING REQUESTS -->
+  <section class="section-block">
+    <h3 class="section-heading">Incoming Ride Requests</h3>
+    <div id="driverRequestsList"></div>
   </section>
 
 </main>

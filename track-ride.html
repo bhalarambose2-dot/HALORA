@@ -4,19 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Track Ride - HALORA</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="./style.css" />
 
-  <!-- Leaflet Free Map -->
+  <!-- Leaflet Map -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <style>
     .ride-status-pill {
       display: inline-block;
-      padding: 8px 14px;
+      padding: 10px 16px;
       border-radius: 999px;
       font-weight: 700;
-      margin-top: 8px;
+      margin-top: 12px;
       font-size: 14px;
     }
 
@@ -28,25 +28,75 @@
     .status-cancelled { background: #fee2e2; color: #991b1b; }
 
     .mini-card {
-      background: #0f172a;
-      padding: 14px;
-      border-radius: 16px;
-      margin-top: 10px;
+      background: rgba(255,255,255,0.08);
+      padding: 18px;
+      border-radius: 24px;
+      margin-top: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.22);
     }
 
     .trip-meta p {
-      margin: 6px 0;
+      margin: 8px 0;
+      color: #dbeafe;
+    }
+
+    .track-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 20px;
+      margin-top: 20px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.25);
+    }
+
+    .track-card h2, .track-card h3 {
+      margin-bottom: 12px;
+    }
+
+    .muted {
+      color: #cbd5e1;
+      margin: 8px 0;
+      font-size: 15px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    #map {
+      width: 100%;
+      height: 320px;
+      border-radius: 20px;
+      margin-top: 18px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin: 18px 0;
     }
   </style>
 </head>
-<body>
-  <header class="map-header">
-    <div class="logo">TRACK RIDE</div>
-    <a class="logout-btn" href="customer.html">Back</a>
+<body class="premium-body">
+
+  <header class="premium-topbar">
+    <div>
+      <h2 class="brand-title">Track Ride</h2>
+      <p class="brand-sub">Live ride status & payment</p>
+    </div>
+    <a class="logout-btn" href="./dashboard.html">Back</a>
   </header>
 
-  <main class="container">
-    <section class="card">
+  <main class="premium-container">
+    <section class="track-card">
       <h2>Your Live Ride</h2>
       <div id="rideStatus">Loading...</div>
       <hr />
@@ -55,7 +105,9 @@
       <p id="driverCoords" class="muted">Driver location: waiting...</p>
       <p id="driverInfo" class="muted">Driver: Searching for driver...</p>
       <p id="driverPhone" class="muted">Phone: Waiting...</p>
+
       <hr />
+
       <h3>Payment</h3>
       <p id="paymentMethodBox" class="muted">Method: Loading...</p>
 
@@ -73,14 +125,12 @@
 
       <p id="paymentStatusBox" class="muted">Payment: unpaid</p>
 
-      <br />
-      <div id="map" style="width:100%; height:350px; border-radius:16px;"></div>
+      <div id="map"></div>
     </section>
   </main>
 
   <script type="module">
     import { db } from "./js/firebase-config.js";
-    import { statusBadge, currency } from "./js/common.js";
     import {
       doc,
       onSnapshot,
@@ -88,7 +138,14 @@
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     // =========================
-    // Ride ID (URL + localStorage fallback)
+    // Helpers
+    // =========================
+    function currency(value) {
+      return "₹" + Number(value || 0);
+    }
+
+    // =========================
+    // Ride ID
     // =========================
     const params = new URLSearchParams(window.location.search);
     const rideId = params.get("rideId") || localStorage.getItem("rideId");
@@ -97,7 +154,7 @@
     const otpBox = document.getElementById("otpBox");
     const coordsEl = document.getElementById("driverCoords");
     const driverInfoEl = document.getElementById("driverInfo");
-    const driverPhoneEl = document.getElementById("driverPhone"); 
+    const driverPhoneEl = document.getElementById("driverPhone");
     const paymentStatusBox = document.getElementById("paymentStatusBox");
     const paymentMethodBox = document.getElementById("paymentMethodBox");
     const payBtn = document.getElementById("payBtn");
@@ -131,7 +188,6 @@
     }
 
     function updateMarkers(ride) {
-      // Pickup
       if (ride.pickupLat && ride.pickupLng) {
         const pickupPos = [ride.pickupLat, ride.pickupLng];
         if (!pickupMarker) {
@@ -141,7 +197,6 @@
         }
       }
 
-      // Drop
       if (ride.dropLat && ride.dropLng) {
         const dropPos = [ride.dropLat, ride.dropLng];
         if (!dropMarker) {
@@ -151,19 +206,16 @@
         }
       }
 
-      // Driver
       if (ride.driverLat && ride.driverLng) {
         const driverPos = [ride.driverLat, ride.driverLng];
         coordsEl.innerText = `Driver location: Lat ${ride.driverLat}, Lng ${ride.driverLng}`;
 
         if (!driverMarker) {
-          driverMarker = L.marker(driverPos).addTo(map)
-            .bindPopup("🚖 Driver is here");
+          driverMarker = L.marker(driverPos).addTo(map).bindPopup("🚖 Driver");
         } else {
           driverMarker.setLatLng(driverPos);
         }
 
-        // Draw route line
         const routePoints = [driverPos];
         if (ride.pickupLat && ride.pickupLng) routePoints.push([ride.pickupLat, ride.pickupLng]);
         if (ride.dropLat && ride.dropLng) routePoints.push([ride.dropLat, ride.dropLng]);
@@ -172,10 +224,7 @@
           map.removeLayer(routeLine);
         }
 
-        routeLine = L.polyline(routePoints, {
-          weight: 5
-        }).addTo(map);
-
+        routeLine = L.polyline(routePoints, { weight: 5 }).addTo(map);
         map.fitBounds(routeLine.getBounds(), { padding: [30, 30] });
       }
     }
@@ -221,7 +270,7 @@
         paymentStatusBox.innerText = `Payment: ${ride.paymentStatus || "unpaid"}`;
         driverInfoEl.innerText = `Driver: ${ride.driverName || "Searching for driver..."}`;
         driverPhoneEl.innerText = `Phone: ${ride.driverPhone || "Waiting..."}`;
-        // Show/hide payment sections
+
         if ((ride.paymentMethod || "UPI") === "Cash") {
           upiSection.style.display = "none";
           cashSection.style.display = "block";
@@ -230,7 +279,6 @@
           cashSection.style.display = "none";
         }
 
-        // OTP
         if (ride.otp && ["Accepted", "Started", "Driver Assigned"].includes(ride.status)) {
           otpBox.innerText = `Your OTP: ${ride.otp}`;
         } else {
@@ -239,20 +287,15 @@
 
         updateMarkers(ride);
 
-        // Completed / Cancelled => disable payment
         if (["Completed", "Cancelled"].includes(ride.status)) {
           disablePaymentButtons();
         }
 
-        // Already paid => disable buttons
         if ((ride.paymentStatus || "").toLowerCase() === "paid") {
           disablePaymentButtons();
         }
       });
 
-      // =========================
-      // UPI Pay
-      // =========================
       payBtn.addEventListener("click", () => {
         if (!currentRide) return;
 
@@ -263,9 +306,6 @@
         window.location.href = upiLink;
       });
 
-      // =========================
-      // User payment request
-      // =========================
       paidBtn.addEventListener("click", async () => {
         if (!currentRide) return;
 

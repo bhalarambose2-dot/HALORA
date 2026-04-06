@@ -13,8 +13,8 @@
     <a href="./signup.html" class="logout-btn">Signup</a>
   </header>
 
-  <main class="page-center">
-    <section class="card form-card">
+  <main class="container">
+    <div class="card">
       <h2>Login</h2>
 
       <input id="email" type="email" placeholder="Email" />
@@ -22,11 +22,14 @@
 
       <button class="main-btn" onclick="loginUser()">Login</button>
 
-      <p class="muted">
-        Login nahi hai?
-        <a class="link" href="./signup.html">Signup Karen</a>
+      <p style="margin-top:16px;">
+        Login nahi hai? <a href="./signup.html">Signup Karen</a>
       </p>
-    </section>
+
+      <p>
+        <a href="./forgot-password.html">Forgot Password?</a>
+      </p>
+    </div>
   </main>
 
   <script type="module" src="./js/auth.js"></script>

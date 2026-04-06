@@ -19,7 +19,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // =============================
-// HTML ELEMENTS
+// ELEMENTS
 // =============================
 const currentRideDiv = document.getElementById("currentRide");
 const rideActions = document.getElementById("rideActions");
@@ -29,7 +29,15 @@ const completeRideBtn = document.getElementById("completeRideBtn");
 const confirmPaymentBtn = document.getElementById("confirmPaymentBtn");
 const cancelRideBtn = document.getElementById("cancelRideBtn");
 const todayEarningsEl = document.getElementById("todayEarnings");
-const acceptRideBtn = document.getElementById("acceptRideBtn");
+
+const driverRequestsList = document.getElementById("driverRequestsList");
+const driverStatusText = document.getElementById("driverStatusText");
+const onlineToggle = document.getElementById("onlineToggle");
+
+const rideRoute = document.getElementById("rideRoute");
+const rideCustomer = document.getElementById("rideCustomer");
+const rideFare = document.getElementById("rideFare");
+const rideOtp = document.getElementById("rideOtp");
 
 let currentUser = null;
 let currentRideId = null;
@@ -47,9 +55,32 @@ onAuthStateChanged(auth, async (user) => {
 
   currentUser = user;
   await ensureDriverWallet();
+  await ensureDriverDoc();
   loadTodayEarnings();
   listenCurrentRide();
+  listenIncomingRequests();
+  loadDriverStatus();
 });
+
+// =============================
+// ENSURE DRIVER DOC
+// =============================
+async function ensureDriverDoc() {
+  const driverRef = doc(db, "drivers", currentUser.uid);
+  const snap = await getDoc(driverRef);
+
+  if (!snap.exists()) {
+    await setDoc(driverRef, {
+      uid: currentUser.uid,
+      name: auth.currentUser.displayName || "HALORA Driver",
+      phone: auth.currentUser.phoneNumber || "N/A",
+      online: false,
+      available: true,
+      currentRideId: null,
+      createdAt: Date.now()
+    });
+  }
+}
 
 // =============================
 // ENSURE DRIVER WALLET
@@ -67,6 +98,36 @@ async function ensureDriverWallet() {
     });
   }
 }
+
+// =============================
+// LOAD ONLINE STATUS
+// =============================
+async function loadDriverStatus() {
+  const driverRef = doc(db, "drivers", currentUser.uid);
+  const snap = await getDoc(driverRef);
+
+  if (snap.exists()) {
+    const data = snap.data();
+    onlineToggle.checked = data.online || false;
+    driverStatusText.innerText = data.online ? "Online" : "Offline";
+  }
+}
+
+// =============================
+// TOGGLE ONLINE/OFFLINE
+// =============================
+onlineToggle?.addEventListener("change", async () => {
+  try {
+    await updateDoc(doc(db, "drivers", currentUser.uid), {
+      online: onlineToggle.checked,
+      available: onlineToggle.checked
+    });
+
+    driverStatusText.innerText = onlineToggle.checked ? "Online" : "Offline";
+  } catch (error) {
+    alert(error.message);
+  }
+});
 
 // =============================
 // LOAD TODAY EARNINGS
@@ -99,30 +160,71 @@ async function loadTodayEarnings() {
 }
 
 // =============================
-// BUTTON STATE RESET
+// INCOMING REQUESTS
 // =============================
-function resetRideButtons() {
-  if (acceptRideBtn) {
-    acceptRideBtn.style.display = "none";
-    acceptRideBtn.disabled = false;
-  }
+function listenIncomingRequests() {
+  const q = query(collection(db, "rides"), where("status", "==", "Pending"));
 
-  otpInput.style.display = "none";
-  otpInput.value = "";
+  onSnapshot(q, (snapshot) => {
+    driverRequestsList.innerHTML = "";
 
-  verifyOtpBtn.style.display = "none";
-  verifyOtpBtn.disabled = false;
-  verifyOtpBtn.innerText = "Verify OTP & Start Ride";
+    if (snapshot.empty) {
+      driverRequestsList.innerHTML = "<p>No incoming requests</p>";
+      return;
+    }
 
-  completeRideBtn.style.display = "none";
-  completeRideBtn.disabled = false;
+    snapshot.forEach((docSnap) => {
+      const ride = docSnap.data();
 
-  confirmPaymentBtn.style.display = "none";
-  confirmPaymentBtn.disabled = false;
-
-  cancelRideBtn.style.display = "none";
-  cancelRideBtn.disabled = false;
+      driverRequestsList.innerHTML += `
+        <div class="admin-card">
+          <p><strong>${ride.pickup || "-"}</strong> → <strong>${ride.drop || "-"}</strong></p>
+          <p>Service: ${ride.serviceType || "Ride"}</p>
+          <p>Fare: ₹${ride.fare || 0}</p>
+          <div class="driver-action-grid">
+            <button class="accept-btn" onclick="acceptRide('${docSnap.id}')">Accept</button>
+            <button class="secondary-btn" onclick="rejectRide('${docSnap.id}')">Reject</button>
+          </div>
+        </div>
+      `;
+    });
+  });
 }
+
+// =============================
+// ACCEPT RIDE
+// =============================
+window.acceptRide = async function (rideId) {
+  try {
+    const driverRef = doc(db, "drivers", currentUser.uid);
+    const driverSnap = await getDoc(driverRef);
+    const driver = driverSnap.data();
+
+    await updateDoc(doc(db, "rides", rideId), {
+      status: "Accepted",
+      driverId: currentUser.uid,
+      driverName: driver?.name || "HALORA Driver",
+      driverPhone: driver?.phone || "N/A",
+      acceptedAt: Date.now()
+    });
+
+    await updateDoc(driverRef, {
+      available: false,
+      currentRideId: rideId
+    });
+
+    alert("Ride accepted successfully!");
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+// =============================
+// REJECT RIDE
+// =============================
+window.rejectRide = async function (rideId) {
+  alert("Ride rejected");
+};
 
 // =============================
 // LISTEN CURRENT RIDE
@@ -139,107 +241,41 @@ function listenCurrentRide() {
     snapshot.forEach((docSnap) => {
       const ride = docSnap.data();
 
-      // Only active rides
-      if (["Driver Assigned", "Accepted", "Started"].includes(ride.status)) {
+      if (["Accepted", "Started"].includes(ride.status)) {
         found = true;
         currentRideId = docSnap.id;
         currentRide = ride;
 
-        currentRideDiv.innerHTML = `
-          <h3>${ride.pickup || "-"} → ${ride.drop || "-"}</h3>
-          <p><strong>Fare:</strong> ₹${ride.fare || 0}</p>
-          <p><strong>Status:</strong> ${ride.status || "Pending"}</p>
-          <p><strong>Payment:</strong> ${ride.paymentStatus || "unpaid"}</p>
-          <p><strong>Customer OTP:</strong> ${ride.otp || "Not available yet"}</p>
-        `;
-
-        rideActions.style.display = "block";
-        resetRideButtons();
-
-        // =============================
-        // DRIVER ASSIGNED → ONLY ACCEPT
-        // =============================
-        if (ride.status === "Driver Assigned") {
-          if (acceptRideBtn) acceptRideBtn.style.display = "inline-block";
-          cancelRideBtn.style.display = "inline-block";
-        }
-
-        // =============================
-        // ACCEPTED → OTP VERIFY
-        // =============================
-        if (ride.status === "Accepted") {
-          otpInput.style.display = "block";
-          verifyOtpBtn.style.display = "inline-block";
-          cancelRideBtn.style.display = "inline-block";
-        }
-
-        // =============================
-        // STARTED → COMPLETE + PAYMENT
-        // =============================
-        if (ride.status === "Started") {
-          otpInput.style.display = "none";
-          verifyOtpBtn.style.display = "inline-block";
-          verifyOtpBtn.innerText = "Ride Started";
-          verifyOtpBtn.disabled = true;
-
-          completeRideBtn.style.display = "inline-block";
-          cancelRideBtn.style.display = "inline-block";
-
-          // Payment button only if unpaid
-          if ((ride.paymentStatus || "").toLowerCase() !== "paid") {
-            confirmPaymentBtn.style.display = "inline-block";
-          }
-        }
+        rideRoute.innerText = `${ride.pickup || "-"} → ${ride.drop || "-"}`;
+        rideCustomer.innerText = `Customer: ${ride.userId || "--"}`;
+        rideFare.innerText = `Fare: ₹${ride.fare || 0}`;
+        rideOtp.innerText = `OTP: ${ride.otp || "----"}`;
       }
     });
 
     if (!found) {
-      currentRideDiv.innerHTML = "<p>No active ride currently</p>";
-      rideActions.style.display = "none";
+      rideRoute.innerText = "No active ride";
+      rideCustomer.innerText = "Customer: --";
+      rideFare.innerText = "Fare: ₹0";
+      rideOtp.innerText = "OTP: ----";
       currentRideId = null;
       currentRide = null;
-      resetRideButtons();
     }
   });
 }
 
 // =============================
-// ACCEPT RIDE
+// START RIDE
 // =============================
-if (acceptRideBtn) {
-  acceptRideBtn.addEventListener("click", async () => {
-    if (!currentRide || !currentRideId) return;
-
-    try {
-      await updateDoc(doc(db, "rides", currentRideId), {
-        status: "Accepted",
-        acceptedAt: Date.now()
-      });
-
-      await updateDoc(doc(db, "drivers", currentUser.uid), {
-        available: false,
-        currentRideId: currentRideId
-      });
-
-      alert("Ride accepted successfully");
-    } catch (error) {
-      alert(error.message);
-    }
-  });
-}
-
-// =============================
-// VERIFY OTP & START RIDE
-// =============================
-verifyOtpBtn.addEventListener("click", async () => {
-  if (!currentRide || !currentRideId) return;
-
-  const enteredOtp = otpInput.value.trim();
-
-  if (!enteredOtp) {
-    alert("Enter OTP first");
+window.startRide = async function () {
+  if (!currentRide || !currentRideId) {
+    alert("No active ride");
     return;
   }
+
+  const enteredOtp = prompt("Enter customer OTP");
+
+  if (!enteredOtp) return;
 
   if (enteredOtp !== String(currentRide.otp)) {
     alert("Invalid OTP");
@@ -256,96 +292,23 @@ verifyOtpBtn.addEventListener("click", async () => {
   } catch (error) {
     alert(error.message);
   }
-});
-
-// =============================
-// CONFIRM PAYMENT
-// =============================
-confirmPaymentBtn.addEventListener("click", async () => {
-  if (!currentRide || !currentRideId) return;
-
-  try {
-    // Prevent duplicate payment
-    const rideRef = doc(db, "rides", currentRideId);
-    const rideSnap = await getDoc(rideRef);
-
-    if (!rideSnap.exists()) {
-      alert("Ride not found");
-      return;
-    }
-
-    const freshRide = rideSnap.data();
-
-    if ((freshRide.paymentStatus || "").toLowerCase() === "paid") {
-      alert("Payment already confirmed");
-      return;
-    }
-
-    const fare = Number(freshRide.fare || 0);
-    const driverEarning = Math.round(fare * 0.85); // 85% driver
-
-    // Update ride payment
-    await updateDoc(rideRef, {
-      paymentStatus: "paid",
-      paymentConfirmedAt: Date.now()
-    });
-
-    // Update wallet
-    const walletRef = doc(db, "wallets", currentUser.uid);
-    const walletSnap = await getDoc(walletRef);
-    const currentBalance = walletSnap.exists() ? (walletSnap.data().balance || 0) : 0;
-
-    await updateDoc(walletRef, {
-      balance: currentBalance + driverEarning
-    });
-
-    // Add transaction
-    await addDoc(collection(db, "transactions"), {
-      uid: currentUser.uid,
-      type: "Driver Earning",
-      amount: driverEarning,
-      rideId: currentRideId,
-      status: "Success",
-      createdAt: Date.now()
-    });
-
-    alert(`Payment confirmed. ₹${driverEarning} added to wallet.`);
-    loadTodayEarnings();
-
-  } catch (error) {
-    alert(error.message);
-  }
-});
+};
 
 // =============================
 // COMPLETE RIDE
 // =============================
-completeRideBtn.addEventListener("click", async () => {
-  if (!currentRide || !currentRideId) return;
+window.completeRide = async function () {
+  if (!currentRide || !currentRideId) {
+    alert("No active ride");
+    return;
+  }
 
   try {
-    // Reload ride for latest payment check
-    const rideRef = doc(db, "rides", currentRideId);
-    const rideSnap = await getDoc(rideRef);
-
-    if (!rideSnap.exists()) {
-      alert("Ride not found");
-      return;
-    }
-
-    const freshRide = rideSnap.data();
-
-    if ((freshRide.paymentStatus || "").toLowerCase() !== "paid") {
-      alert("Please confirm payment first");
-      return;
-    }
-
-    await updateDoc(rideRef, {
+    await updateDoc(doc(db, "rides", currentRideId), {
       status: "Completed",
       completedAt: Date.now()
     });
 
-    // Driver available again
     await updateDoc(doc(db, "drivers", currentUser.uid), {
       available: true,
       currentRideId: null
@@ -355,30 +318,18 @@ completeRideBtn.addEventListener("click", async () => {
   } catch (error) {
     alert(error.message);
   }
-});
+};
 
 // =============================
-// CANCEL RIDE
+// WITHDRAW
 // =============================
-cancelRideBtn.addEventListener("click", async () => {
-  if (!currentRideId) return;
+window.withdrawNow = async function () {
+  const amount = Number(document.getElementById("withdrawAmount")?.value || 0);
 
-  if (!confirm("Cancel this ride?")) return;
-
-  try {
-    await updateDoc(doc(db, "rides", currentRideId), {
-      status: "Cancelled",
-      cancelledBy: "driver",
-      cancelledAt: Date.now()
-    });
-
-    await updateDoc(doc(db, "drivers", currentUser.uid), {
-      available: true,
-      currentRideId: null
-    });
-
-    alert("Ride cancelled");
-  } catch (error) {
-    alert(error.message);
+  if (!amount || amount <= 0) {
+    alert("Enter valid amount");
+    return;
   }
-});
+
+  alert("Withdraw request submitted!");
+};

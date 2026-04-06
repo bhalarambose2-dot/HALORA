@@ -1,37 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>HALORA Admin Panel</title>
-  <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="admin.css">
 </head>
+
 <body>
 
-  <header class="admin-header">
-    <h1>HALORA Admin Panel</h1>
-    <a href="../dashboard.html" class="back-btn">⬅ Back</a>
-  </header>
+<header class="admin-header">
+  <h1>HALORA Admin Panel</h1>
+  <a href="../dashboard.html" class="back-btn">← Back</a>
+</header>
 
-  <main class="admin-container">
+<main class="admin-container">
 
-    <section class="admin-section">
-      <h2>🚕 Bookings</h2>
-      <div id="adminBookings"></div>
-    </section>
+  <!-- 🔥 STATS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3 id="totalBookings">0</h3>
+      <p>Bookings</p>
+    </div>
+    <div class="stat-card">
+      <h3 id="totalPartners">0</h3>
+      <p>Partners</p>
+    </div>
+    <div class="stat-card">
+      <h3 id="totalKYC">0</h3>
+      <p>KYC Requests</p>
+    </div>
+    <div class="stat-card">
+      <h3 id="totalUsers">0</h3>
+      <p>Users</p>
+    </div>
+  </div>
 
-    <section class="admin-section">
-      <h2>🤝 Partners</h2>
-      <div id="adminPartners"></div>
-    </section>
+  <!-- BOOKINGS -->
+  <section>
+    <h2>🚖 Bookings</h2>
+    <div id="adminBookings"></div>
+  </section>
 
-    <section class="admin-section">
-      <h2>🪪 KYC Requests</h2>
-      <div id="adminKYC"></div>
-    </section>
+  <!-- PARTNERS -->
+  <section>
+    <h2>🤝 Partners</h2>
+    <div id="adminPartners"></div>
+  </section>
 
-  </main>
+  <!-- KYC -->
+  <section>
+    <h2>🪪 KYC Requests</h2>
+    <div id="adminKYC"></div>
+  </section>
 
-  <script type="module" src="./admin.js"></script>
+</main>
+
+<script type="module" src="./admin.js"></script>
 </body>
 </html>

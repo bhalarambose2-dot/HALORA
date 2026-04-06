@@ -2,82 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HALORA Driver Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HALORA Driver Dashboard</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body class="premium-body">
 
-  <header class="premium-topbar">
-    <div>
-      <h2 class="brand-title">Driver Panel</h2>
-      <p class="brand-sub">Ride • Earnings • Withdraw</p>
+<header class="premium-topbar">
+  <div>
+    <h2 class="brand-title">HALORA Driver</h2>
+    <p class="brand-sub">Dashboard • Earnings • Ride</p>
+  </div>
+  <button class="logout-btn" onclick="logoutUser()">Logout</button>
+</header>
+
+<main class="premium-container">
+
+  <section class="driver-balance-card">
+    <p>Total Earnings</p>
+    <h1>₹<span id="driverEarnings">0</span></h1>
+    <div class="earn-row">
+      <span>Today: ₹<span id="todayEarnings">0</span></span>
+      <span>Rides: <span id="rideCount">0</span></span>
     </div>
-    <button class="logout-btn" onclick="logoutUser()">Logout</button>
-  </header>
+  </section>
 
-  <main class="premium-container">
+  <section class="driver-status-card">
+    <div>
+      <h3>Status</h3>
+      <p id="driverStatusText">Offline</p>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="onlineToggle">
+      <span class="slider"></span>
+    </label>
+  </section>
 
-    <!-- EARNINGS -->
-    <section class="driver-balance-card">
-      <p>Total Earnings</p>
-      <h1>₹<span id="driverEarnings">0</span></h1>
-      <div class="earn-row">
-        <span>Today: ₹<span id="todayEarnings">0</span></span>
-        <span>Rides: <span id="rideCount">0</span></span>
-      </div>
-    </section>
+  <section class="driver-ride-card">
+    <h3>Current Ride</h3>
+    <div id="currentRide">No active ride</div>
 
-    <!-- ONLINE TOGGLE -->
-    <section class="driver-status-card">
-      <div>
-        <h3>Status</h3>
-        <p id="driverStatusText">Offline</p>
-      </div>
-      <label class="switch">
-        <input type="checkbox" id="onlineToggle">
-        <span class="slider"></span>
-      </label>
-    </section>
+    <div id="rideActions" class="driver-action-grid" style="display:none;">
+      <button id="acceptRideBtn" class="accept-btn">Accept</button>
+      <input type="text" id="otpInput" placeholder="Enter OTP" />
+      <button id="verifyOtpBtn" class="start-btn">Start Ride</button>
+      <button id="confirmPaymentBtn" class="withdraw-main-btn">Confirm Payment</button>
+      <button id="completeRideBtn" class="complete-btn">Complete</button>
+      <button id="cancelRideBtn" class="cancel-btn">Cancel</button>
+    </div>
+  </section>
 
-    <!-- CURRENT RIDE -->
-    <section class="driver-ride-card">
-      <h3>Current Ride</h3>
-      <p id="rideRoute">No active ride</p>
-      <p id="rideCustomer">Customer: --</p>
-      <p id="rideFare">Fare: ₹0</p>
-      <p id="rideOtp">OTP: ----</p>
+</main>
 
-      <div class="driver-action-grid">
-        <button class="accept-btn" onclick="acceptRide()">Accept</button>
-        <button class="start-btn" onclick="startRide()">Start</button>
-        <button class="complete-btn" onclick="completeRide()">Complete</button>
-      </div>
-    </section>
+<nav class="premium-bottom-nav">
+  <a href="./driver-panel.html" class="active"><span>🏠</span><small>Home</small></a>
+  <a href="./driver-live.html"><span>📍</span><small>Live</small></a>
+  <a href="./driver-wallet.html"><span>💰</span><small>Wallet</small></a>
+  <a href="./driver-profile.html"><span>👤</span><small>Profile</small></a>
+</nav>
 
-    <!-- WITHDRAW -->
-    <section class="withdraw-card-ui">
-      <h3>Withdraw Earnings</h3>
-      <input type="number" id="withdrawAmount" placeholder="Enter amount" />
-      <button class="withdraw-main-btn" onclick="withdrawNow()">Withdraw</button>
-    </section>
-
-    <!-- REQUESTS -->
-    <section class="section-block">
-      <h3 class="section-heading">Incoming Ride Requests</h3>
-      <div id="driverRequestsList"></div>
-    </section>
-
-  </main>
-
-  <nav class="premium-bottom-nav">
-    <a href="./driver-panel.html" class="active"><span>🏍️</span><small>Home</small></a>
-    <a href="./driver-live.html"><span>📍</span><small>Live</small></a>
-    <a href="./withdraw.html"><span>💸</span><small>Withdraw</small></a>
-    <a href="./profile-edit.html"><span>👤</span><small>Profile</small></a>
-  </nav>
-
-  <script type="module" src="./js/auth.js"></script>
-  <script type="module" src="./js/driver-panel.js"></script>
+<script type="module" src="./js/auth.js"></script>
+<script type="module" src="./js/driver-panel.js"></script>
 </body>
 </html>

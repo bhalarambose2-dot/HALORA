@@ -1,37 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HALORA Bike Booking</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HALORA Ride Booking</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<style>
+body {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: white;
+}
+
+.booking-card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+input, select {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border-radius: 14px;
+  border: none;
+  background: rgba(255,255,255,0.08);
+  color: white;
+}
+
+.main-btn {
+  width: 100%;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #ff7a00, #ff3d00);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+</style>
 </head>
+
 <body>
-  <header class="top-header">
-    <h2>Bike / Taxi / Auto Booking</h2>
-    <button class="logout-btn" onclick="window.location.href='dashboard.html'">Back</button>
-  </header>
 
-  <div class="dashboard-content">
-    <div id="map" style="height: 300px; border-radius: 15px;"></div>
+<header class="top-header">
+  <h2>Bike / Taxi / Auto Booking</h2>
+  <button onclick="history.back()" class="logout-btn">Back</button>
+</header>
 
-    <div class="booking-form">
-      <select id="serviceType">
-        <option value="Bike">Bike</option>
-        <option value="Taxi">Taxi</option>
-        <option value="Auto">Auto</option>
-      </select>
+<div class="container">
 
-      <input type="text" id="pickup" placeholder="Pickup Location" />
-      <input type="text" id="drop" placeholder="Drop Location" />
-      
-      <button class="main-btn" onclick="saveRideBooking()">Book Now</button>
-    </div>
+  <div id="map" style="height:300px; border-radius:16px;"></div>
+
+  <div class="booking-card">
+
+    <select id="serviceType">
+      <option value="Bike">Bike</option>
+      <option value="Taxi">Taxi</option>
+      <option value="Auto">Auto</option>
+    </select>
+
+    <input type="text" id="pickup" placeholder="Pickup Location">
+    <input type="text" id="drop" placeholder="Drop Location">
+
+    <input type="number" id="price" placeholder="Estimated Price ₹" readonly>
+
+    <button class="main-btn" onclick="bookRide()">Book Now</button>
+
   </div>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script type="module" src="map.js"></script>
-  <script type="module" src="booking.js"></script>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script type="module" src="booking.js"></script>
+
 </body>
 </html>

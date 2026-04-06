@@ -1,6 +1,5 @@
-// booking.js
-
 import { auth, db } from "./js/firebase-config.js";
+
 import {
   collection,
   addDoc,
@@ -13,34 +12,52 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // =======================
-// AUTO PRICE CALCULATION
+// ELEMENTS
 // =======================
 const pickupInput = document.getElementById("pickup");
 const dropInput = document.getElementById("drop");
 const priceInput = document.getElementById("price");
 const serviceTypeInput = document.getElementById("serviceType");
 
+// =======================
+// AUTO PRICE CALCULATION
+// =======================
 function calculatePrice() {
-  if (pickupInput.value && dropInput.value) {
-    const baseFare = 50;
+  if (!pickupInput.value || !dropInput.value) return;
 
-    let perKm = 10;
-    if (serviceTypeInput.value === "Auto") perKm = 25;
-    if (serviceTypeInput.value === "Taxi") perKm = 60;
-    if (serviceTypeInput.value === "bike") parkm = 8
-    const fakeDistance = Math.floor(Math.random() * 10) + 2;
-    const total = baseFare + (fakeDistance * perKm);
+  let baseFare = 30;
+  let perKm = 10;
 
-    priceInput.value = total;
+  if (serviceTypeInput.value === "Bike") {
+    baseFare = 20;
+    perKm = 8;
   }
+
+  if (serviceTypeInput.value === "Auto") {
+    baseFare = 40;
+    perKm = 15;
+  }
+
+  if (serviceTypeInput.value === "Taxi") {
+    baseFare = 80;
+    perKm = 25;
+  }
+
+  // 🔥 simple distance logic (improved)
+  const distance = Math.floor(Math.random() * 8) + 2;
+
+  const total = baseFare + (distance * perKm);
+
+  priceInput.value = total;
 }
 
+// listeners
 pickupInput.addEventListener("input", calculatePrice);
 dropInput.addEventListener("input", calculatePrice);
 serviceTypeInput.addEventListener("change", calculatePrice);
 
 // =======================
-// FIND AVAILABLE DRIVER
+// FIND DRIVER (IMPROVED)
 // =======================
 async function findAvailableDriver() {
   try {
@@ -48,20 +65,21 @@ async function findAvailableDriver() {
       collection(db, "drivers"),
       where("online", "==", true),
       where("available", "==", true),
-      limit(1)
+      limit(3) // 🔥 multiple drivers fetch
     );
 
     const snapshot = await getDocs(q);
 
-    if (snapshot.empty) {
-      return null;
-    }
+    if (snapshot.empty) return null;
 
-    const driverDoc = snapshot.docs[0];
-    return {
-      id: driverDoc.id,
-      ...driverDoc.data()
-    };
+    // random driver selection (better UX)
+    const drivers = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    return drivers[Math.floor(Math.random() * drivers.length)];
+
   } catch (error) {
     console.error("Driver find error:", error);
     return null;
@@ -91,7 +109,7 @@ window.saveRideBooking = async function () {
   }
 
   try {
-    // 1. Find driver
+    // 🔥 FIND DRIVER
     const driver = await findAvailableDriver();
 
     let rideStatus = "Pending";
@@ -106,7 +124,7 @@ window.saveRideBooking = async function () {
       driverPhone = driver.phone || "N/A";
     }
 
-    // 2. Create ride
+    // 🔥 CREATE RIDE
     const docRef = await addDoc(collection(db, "rides"), {
       userId: user.uid,
       serviceType,
@@ -125,7 +143,7 @@ window.saveRideBooking = async function () {
       createdAt: Date.now()
     });
 
-    // 3. Mark driver unavailable
+    // 🔥 UPDATE DRIVER STATUS
     if (driver) {
       await updateDoc(doc(db, "drivers", driver.id), {
         available: false,
@@ -133,16 +151,16 @@ window.saveRideBooking = async function () {
       });
     }
 
-    // 4. Save ride ID
+    // 🔥 SAVE RIDE ID
     localStorage.setItem("rideId", docRef.id);
 
     if (driver) {
-      alert(`Driver assigned: ${driverName}`);
+      alert(`🚖 Driver Assigned: ${driverName}`);
     } else {
-      alert("Ride booked. Waiting for driver...");
+      alert("⏳ Searching for driver...");
     }
 
-    // 5. Redirect
+    // 🔥 REDIRECT
     window.location.href = "track-ride.html?rideId=" + docRef.id;
 
   } catch (error) {

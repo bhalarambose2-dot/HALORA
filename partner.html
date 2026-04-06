@@ -6,52 +6,72 @@
 </head>
 <body>
 
-<header class="topbar">
-  <div class="logo">Become Partner</div>
-  <a href="./dashboard.html" class="logout-btn">Back</a>
-</header>
+  <header class="topbar">
+    <div class="logo">Become Partner</div>
+    <a href="./dashboard.html" class="logout-btn">Back</a>
+  </header>
 
-<main class="container">
+  <main class="container">
 
-<h2 class="section-title">Earn with HALORA</h2>
+    <h2 class="section-title">Earn with HALORA</h2>
 
-<div class="partner-grid">
+    <div class="partner-grid">
 
-  <div class="partner-card">
-    <div class="left">
-      <div class="icon">🏍️</div>
-      <div>
-        <h4>Bike Rider</h4>
-        <p>Earn per ride</p>
+      <!-- Bike Rider -->
+      <div class="partner-card">
+        <div class="left">
+          <div class="icon">🏍️</div>
+          <div>
+            <h4>Bike Rider</h4>
+            <p>Earn per ride</p>
+          </div>
+        </div>
+        <button class="apply-btn" onclick="openPartner('driver')">Apply</button>
       </div>
-    </div>
-    <button class="apply-btn">Apply</button>
-  </div>
 
-  <div class="partner-card">
-    <div class="left">
-      <div class="icon">🏨</div>
-      <div>
-        <h4>Hotel Owner</h4>
-        <p>List your hotel</p>
+      <!-- Hotel Owner -->
+      <div class="partner-card">
+        <div class="left">
+          <div class="icon">🏨</div>
+          <div>
+            <h4>Hotel Owner</h4>
+            <p>List your hotel</p>
+          </div>
+        </div>
+        <button class="apply-btn" onclick="openPartner('hotel')">Apply</button>
       </div>
-    </div>
-    <button class="apply-btn">Apply</button>
-  </div>
 
-  <div class="partner-card">
-    <div class="left">
-      <div class="icon">🧳</div>
-      <div>
-        <h4>Trip Agent</h4>
-        <p>Sell packages</p>
+      <!-- Trip Agent -->
+      <div class="partner-card">
+        <div class="left">
+          <div class="icon">🧳</div>
+          <div>
+            <h4>Trip Agent</h4>
+            <p>Sell packages</p>
+          </div>
+        </div>
+        <button class="apply-btn" onclick="openPartner('trip')">Apply</button>
       </div>
+
     </div>
-    <button class="apply-btn">Apply</button>
-  </div>
 
-</div>
+  </main>
 
-</main>
+  <script>
+    function openPartner(type) {
+      if (type === "driver") {
+        window.location.href = "driver.html";
+      }
+
+      if (type === "hotel") {
+        window.location.href = "hotel-partner.html";
+      }
+
+      if (type === "trip") {
+        window.location.href = "trip-partner.html";
+      }
+    }
+  </script>
+
 </body>
 </html>

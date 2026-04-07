@@ -61,9 +61,9 @@
   </div>
 
   <script type="module">
-    import { auth, db } from './firebase-config.js';
+    import { auth, db } from './js/firebase-config.js';
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     let currentUid = null;
     const qs = (id) => document.getElementById(id);
@@ -75,12 +75,13 @@
       }
 
       currentUid = user.uid;
-      const driverRef = ref(db, 'drivers/' + currentUid);
 
       try {
-        const snapshot = await get(driverRef);
-        if (snapshot.exists()) {
-          const data = snapshot.val();
+        const driverRef = doc(db, "drivers", currentUid);
+        const snap = await getDoc(driverRef);
+
+        if (snap.exists()) {
+          const data = snap.data();
           qs("name").value = data.name || "";
           qs("phone").value = data.phone || "";
           qs("vehicleType").value = data.vehicleType || "Bike";
@@ -106,7 +107,7 @@
       };
 
       try {
-        await update(ref(db, 'drivers/' + currentUid), profileData);
+        await setDoc(doc(db, "drivers", currentUid), profileData, { merge: true });
         alert("Profile updated successfully!");
         window.location.href = "driver-profile.html";
       } catch (error) {

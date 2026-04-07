@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Driver Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+    body{
+      background:linear-gradient(180deg,#020617 0%,#03143d 55%,#020617 100%);
+      color:#fff;min-height:100vh;padding:24px 18px;
+    }
+    .container{max-width:480px;margin:auto}
+    .title{font-size:34px;font-weight:800;margin-bottom:22px}
+    .card{
+      background:rgba(20,29,58,.92);border:1px solid rgba(255,255,255,.07);border-radius:28px;padding:22px;
+      box-shadow:0 8px 25px rgba(0,0,0,.18)
+    }
+    label{display:block;margin:14px 0 8px;font-weight:600}
+    input,select{
+      width:100%;padding:14px 16px;border-radius:16px;border:none;outline:none;background:#111b3a;color:#fff;font-size:15px
+    }
+    .btn{
+      width:100%;margin-top:22px;background:linear-gradient(135deg,#ff8c00,#ff6a00);color:#fff;border:none;padding:15px;border-radius:18px;
+      font-size:16px;font-weight:800;cursor:pointer
+    }
+    .back{display:inline-block;margin-bottom:16px;color:#ffb14a;text-decoration:none;font-weight:700}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="driver-profile.html" class="back">← Back</a>
+    <div class="title">Edit Profile</div>
+
+    <div class="card">
+      <label>Name</label>
+      <input type="text" id="name" placeholder="Enter full name">
+
+      <label>Phone</label>
+      <input type="text" id="phone" placeholder="Enter phone number">
+
+      <label>Vehicle Type</label>
+      <select id="vehicleType">
+        <option value="Bike">Bike</option>
+        <option value="Auto">Auto</option>
+        <option value="Taxi">Taxi</option>
+      </select>
+
+      <label>Vehicle Number</label>
+      <input type="text" id="vehicleNumber" placeholder="RJ19 AB 4567">
+
+      <label>Vehicle Model</label>
+      <input type="text" id="vehicleModel" placeholder="Honda Shine">
+
+      <label>Insurance Date</label>
+      <input type="text" id="insuranceDate" placeholder="25 Apr 2026">
+
+      <button class="btn" onclick="saveProfile()">Save Profile</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { auth, db } from './firebase-config.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    let currentUid = null;
+    const qs = (id) => document.getElementById(id);
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      currentUid = user.uid;
+      const driverRef = ref(db, 'drivers/' + currentUid);
+
+      try {
+        const snapshot = await get(driverRef);
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          qs("name").value = data.name || "";
+          qs("phone").value = data.phone || "";
+          qs("vehicleType").value = data.vehicleType || "Bike";
+          qs("vehicleNumber").value = data.vehicleNumber || "";
+          qs("vehicleModel").value = data.vehicleModel || "";
+          qs("insuranceDate").value = data.insuranceDate || "";
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    window.saveProfile = async function () {
+      if (!currentUid) return;
+
+      const profileData = {
+        name: qs("name").value.trim(),
+        phone: qs("phone").value.trim(),
+        vehicleType: qs("vehicleType").value,
+        vehicleNumber: qs("vehicleNumber").value.trim(),
+        vehicleModel: qs("vehicleModel").value.trim(),
+        insuranceDate: qs("insuranceDate").value.trim()
+      };
+
+      try {
+        await update(ref(db, 'drivers/' + currentUid), profileData);
+        alert("Profile updated successfully!");
+        window.location.href = "driver-profile.html";
+      } catch (error) {
+        alert("Update failed: " + error.message);
+      }
+    };
+  </script>
+</body>
+</html>

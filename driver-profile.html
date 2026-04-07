@@ -6,426 +6,133 @@
   <title>HALORA Driver Profile</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-      -webkit-tap-highlight-color: transparent;
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;-webkit-tap-highlight-color:transparent}
+    body{
+      background: radial-gradient(circle at top left, rgba(255,136,0,.15), transparent 25%),
+                  radial-gradient(circle at top right, rgba(255,136,0,.12), transparent 25%),
+                  linear-gradient(180deg,#020617 0%,#03143d 55%,#020617 100%);
+      color:#fff;min-height:100vh;padding:24px 18px 120px;
     }
-
-    body {
-      background: radial-gradient(circle at top left, rgba(255,136,0,0.15), transparent 25%),
-                  radial-gradient(circle at top right, rgba(255,136,0,0.12), transparent 25%),
-                  linear-gradient(180deg, #020617 0%, #03143d 55%, #020617 100%);
-      color: white;
-      min-height: 100vh;
-      padding: 24px 18px 120px;
+    .container{max-width:480px;margin:auto}
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+    .title{font-size:42px;font-weight:800;line-height:1.05;letter-spacing:-1px}
+    .back-btn{
+      background:linear-gradient(135deg,#ff8c00,#ff6a00);color:#fff;border:none;padding:15px 26px;border-radius:22px;
+      font-size:22px;font-weight:700;box-shadow:0 0 25px rgba(255,136,0,.35);cursor:pointer
     }
-
-    .container {
-      max-width: 480px;
-      margin: auto;
+    .profile-card,.section-card{
+      background:rgba(20,29,58,.92);border:1px solid rgba(255,255,255,.07);border-radius:28px;padding:20px;margin-bottom:16px;
+      box-shadow:0 8px 25px rgba(0,0,0,.18);position:relative;overflow:hidden
     }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 28px;
+    .profile-card{display:flex;gap:18px;align-items:center;padding:22px;background:rgba(32,42,77,.88);border-radius:32px}
+    .profile-card::after,.section-card::before{
+      content:"";position:absolute;border-radius:50%;background:radial-gradient(circle, rgba(255,136,0,.18), transparent 70%)
     }
-
-    .title {
-      font-size: 42px;
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -1px;
+    .profile-card::after{right:-30px;top:-25px;width:130px;height:130px}
+    .section-card::before{top:-50px;right:-30px;width:120px;height:120px}
+    .avatar{
+      width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#ff8c00,#ff6a00);
+      display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;box-shadow:0 0 18px rgba(255,136,0,.35);flex-shrink:0;z-index:2
     }
-
-    .back-btn {
-      background: linear-gradient(135deg, #ff8c00, #ff6a00);
-      color: white;
-      border: none;
-      padding: 15px 26px;
-      border-radius: 22px;
-      font-size: 22px;
-      font-weight: 700;
-      box-shadow: 0 0 25px rgba(255, 136, 0, 0.35);
-      cursor: pointer;
+    .profile-info{z-index:2;flex:1}
+    .profile-info h2{font-size:25px;font-weight:800;margin-bottom:6px}
+    .profile-info p{font-size:14px;opacity:.95;margin-bottom:4px}
+    .status-row{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+    .online-dot{width:10px;height:10px;border-radius:50%;background:#00ff7f;box-shadow:0 0 10px #00ff7f}
+    .status-badge{
+      background:rgba(0,255,127,.12);color:#6dffb0;border:1px solid rgba(0,255,127,.22);padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700
     }
-
-    .profile-card {
-      background: rgba(32, 42, 77, 0.88);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 32px;
-      padding: 22px;
-      display: flex;
-      gap: 18px;
-      align-items: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.22);
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 18px;
+    .edit-btn,.action-btn{
+      display:inline-block;background:linear-gradient(135deg,#ff8c00,#ff6a00);color:#fff;padding:10px 16px;border-radius:14px;
+      font-size:13px;font-weight:700;text-decoration:none;box-shadow:0 0 16px rgba(255,136,0,.25)
     }
-
-    .profile-card::after {
-      content: "";
-      position: absolute;
-      right: -30px;
-      top: -25px;
-      width: 130px;
-      height: 130px;
-      background: radial-gradient(circle, rgba(255,136,0,0.28), transparent 70%);
-      border-radius: 50%;
+    .edit-btn{margin-top:12px}
+    .section-title{font-size:20px;font-weight:800;margin-bottom:14px;position:relative;z-index:2}
+    .info-line{font-size:15px;margin-bottom:10px;opacity:.96;z-index:2;position:relative}
+    .highlight{color:#ffae42;font-weight:700}
+    .progress-bar{width:100%;height:12px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-top:8px}
+    .progress-fill{height:100%;background:linear-gradient(90deg,#ff8c00,#ff6a00);border-radius:999px;box-shadow:0 0 15px rgba(255,136,0,.35)}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .mini-card{
+      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05);border-radius:22px;padding:16px;text-align:center;position:relative;z-index:2
     }
-
-    .avatar {
-      width: 88px;
-      height: 88px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ff8c00, #ff6a00);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 34px;
-      font-weight: 800;
-      box-shadow: 0 0 18px rgba(255,136,0,0.35);
-      flex-shrink: 0;
-      z-index: 2;
+    .mini-card h3{font-size:15px;margin-bottom:6px;opacity:.88}
+    .mini-card p{font-size:22px;font-weight:800;color:#ffb14a}
+    .action-row{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;position:relative;z-index:2}
+    .secondary-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);box-shadow:none}
+    .settings-list{display:grid;gap:12px;position:relative;z-index:2}
+    .setting-item{
+      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:15px 16px;
+      display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;cursor:pointer
     }
-
-    .profile-info {
-      z-index: 2;
-      flex: 1;
+    .setting-item span:last-child{color:#ff9d2f;font-size:18px;font-weight:800}
+    .bottom-nav{
+      position:fixed;left:50%;transform:translateX(-50%);bottom:18px;width:calc(100% - 24px);max-width:480px;
+      background:rgba(48,54,68,.92);border:1px solid rgba(255,255,255,.08);border-radius:999px;display:flex;justify-content:space-around;
+      align-items:center;padding:18px 10px;box-shadow:0 12px 30px rgba(0,0,0,.28);backdrop-filter:blur(12px);z-index:99
     }
-
-    .profile-info h2 {
-      font-size: 25px;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .profile-info p {
-      font-size: 14px;
-      opacity: 0.95;
-      margin-bottom: 4px;
-    }
-
-    .status-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 8px;
-      flex-wrap: wrap;
-    }
-
-    .online-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #00ff7f;
-      box-shadow: 0 0 10px #00ff7f;
-    }
-
-    .status-badge {
-      background: rgba(0,255,127,0.12);
-      color: #6dffb0;
-      border: 1px solid rgba(0,255,127,0.22);
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .edit-btn {
-      margin-top: 12px;
-      display: inline-block;
-      background: linear-gradient(135deg, #ff8c00, #ff6a00);
-      color: white;
-      padding: 10px 16px;
-      border-radius: 14px;
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
-      box-shadow: 0 0 16px rgba(255,136,0,0.25);
-    }
-
-    .section-card {
-      background: rgba(20, 29, 58, 0.92);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 28px;
-      padding: 20px;
-      margin-bottom: 16px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.18);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .section-card::before {
-      content: "";
-      position: absolute;
-      top: -50px;
-      right: -30px;
-      width: 120px;
-      height: 120px;
-      background: radial-gradient(circle, rgba(255,136,0,0.14), transparent 70%);
-      border-radius: 50%;
-    }
-
-    .section-title {
-      font-size: 20px;
-      font-weight: 800;
-      margin-bottom: 14px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .info-line {
-      font-size: 15px;
-      margin-bottom: 10px;
-      opacity: 0.96;
-      z-index: 2;
-      position: relative;
-    }
-
-    .highlight {
-      color: #ffae42;
-      font-weight: 700;
-    }
-
-    .progress-wrap {
-      margin-top: 10px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 12px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: 8px;
-    }
-
-    .progress-fill {
-      width: 60%;
-      height: 100%;
-      background: linear-gradient(90deg, #ff8c00, #ff6a00);
-      border-radius: 999px;
-      box-shadow: 0 0 15px rgba(255,136,0,0.35);
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .mini-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 22px;
-      padding: 16px;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
-
-    .mini-card h3 {
-      font-size: 15px;
-      margin-bottom: 6px;
-      opacity: 0.88;
-    }
-
-    .mini-card p {
-      font-size: 22px;
-      font-weight: 800;
-      color: #ffb14a;
-    }
-
-    .action-row {
-      display: flex;
-      gap: 12px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 2;
-    }
-
-    .action-btn {
-      flex: 1;
-      min-width: 140px;
-      text-align: center;
-      background: linear-gradient(135deg, #ff8c00, #ff6a00);
-      color: white;
-      padding: 13px 14px;
-      border-radius: 16px;
-      font-size: 14px;
-      font-weight: 700;
-      text-decoration: none;
-      box-shadow: 0 0 16px rgba(255,136,0,0.22);
-    }
-
-    .secondary-btn {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: none;
-    }
-
-    .settings-list {
-      display: grid;
-      gap: 12px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .setting-item {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 18px;
-      padding: 15px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .setting-item span:last-child {
-      color: #ff9d2f;
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 18px;
-      width: calc(100% - 24px);
-      max-width: 480px;
-      background: rgba(48, 54, 68, 0.92);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 999px;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 18px 10px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.28);
-      backdrop-filter: blur(12px);
-      z-index: 99;
-    }
-
-    .nav-item {
-      color: #d5d5d5;
-      text-align: center;
-      font-size: 14px;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .nav-item.active {
-      color: #ff9a22;
-      font-weight: 800;
-    }
-
-    @media (max-width: 420px) {
-      .title {
-        font-size: 34px;
-      }
-
-      .back-btn {
-        font-size: 18px;
-        padding: 12px 20px;
-      }
-
-      .grid-2 {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .mini-card p {
-        font-size: 19px;
-      }
+    .nav-item{color:#d5d5d5;text-align:center;font-size:14px;text-decoration:none;font-weight:500}
+    .nav-item.active{color:#ff9a22;font-weight:800}
+    @media (max-width:420px){
+      .title{font-size:34px}.back-btn{font-size:18px;padding:12px 20px}.mini-card p{font-size:19px}
     }
   </style>
 </head>
 <body>
   <div class="container">
-
-    <!-- Top -->
     <div class="topbar">
       <div class="title">Driver Profile</div>
-      <button class="back-btn" onclick="goBack()">Back</button>
+      <button class="back-btn" onclick="history.back()">Back</button>
     </div>
 
-    <!-- Profile Main Card -->
+    <!-- Profile -->
     <div class="profile-card">
-      <div class="avatar">D</div>
+      <div class="avatar" id="avatarLetter">D</div>
       <div class="profile-info">
-        <h2>HALORA Driver</h2>
-        <p>📞 9876543210</p>
-        <p>🆔 Driver ID: HAL-DR-1024</p>
-        <p>🚘 Vehicle: Bike</p>
+        <h2 id="driverName">Loading...</h2>
+        <p>📞 <span id="driverPhone">Loading...</span></p>
+        <p>🆔 Driver ID: <span id="driverId">Loading...</span></p>
+        <p>🚘 Vehicle: <span id="vehicleType">Loading...</span></p>
 
         <div class="status-row">
           <div class="online-dot"></div>
-          <span>Online</span>
-          <div class="status-badge">KYC Pending</div>
+          <span id="onlineStatus">Online</span>
+          <div class="status-badge" id="kycBadge">KYC Pending</div>
         </div>
 
-        <a href="#" class="edit-btn" onclick="editProfile()">Edit Profile</a>
+        <a href="edit-profile.html" class="edit-btn">Edit Profile</a>
       </div>
     </div>
 
-    <!-- KYC Section -->
+    <!-- KYC -->
     <div class="section-card">
       <div class="section-title">KYC Verification</div>
-      <div class="info-line">Status: <span class="highlight">Pending Approval</span></div>
-      <div class="info-line">Documents Uploaded: <span class="highlight">3 / 5</span></div>
-
-      <div class="progress-wrap">
-        <div class="progress-bar">
-          <div class="progress-fill"></div>
-        </div>
-      </div>
-
+      <div class="info-line">Status: <span class="highlight" id="kycStatus">Pending Approval</span></div>
+      <div class="info-line">Documents Uploaded: <span class="highlight" id="docsUploaded">0 / 5</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="kycProgress" style="width:0%"></div></div>
       <div class="action-row">
-        <a href="#" class="action-btn" onclick="uploadDocs()">Upload Documents</a>
-        <a href="#" class="action-btn secondary-btn" onclick="viewKYC()">View Status</a>
+        <a href="#" class="action-btn">Upload Documents</a>
+        <a href="#" class="action-btn secondary-btn">View Status</a>
       </div>
     </div>
 
-    <!-- Vehicle Details -->
+    <!-- Vehicle -->
     <div class="section-card">
       <div class="section-title">Vehicle Details</div>
-      <div class="info-line">Vehicle Type: <span class="highlight">Bike</span></div>
-      <div class="info-line">Vehicle Number: <span class="highlight">RJ19 AB 4567</span></div>
-      <div class="info-line">Model: <span class="highlight">Honda Shine</span></div>
-      <div class="info-line">Insurance: <span class="highlight">Valid till 25 Apr 2026</span></div>
+      <div class="info-line">Vehicle Type: <span class="highlight" id="vehicleType2">-</span></div>
+      <div class="info-line">Vehicle Number: <span class="highlight" id="vehicleNumber">-</span></div>
+      <div class="info-line">Model: <span class="highlight" id="vehicleModel">-</span></div>
+      <div class="info-line">Insurance: <span class="highlight" id="insuranceDate">-</span></div>
     </div>
 
     <!-- Earnings -->
     <div class="section-card">
       <div class="section-title">Earnings & Trips</div>
       <div class="grid-2">
-        <div class="mini-card">
-          <h3>Today Earnings</h3>
-          <p>₹840</p>
-        </div>
-        <div class="mini-card">
-          <h3>This Week</h3>
-          <p>₹4,250</p>
-        </div>
-        <div class="mini-card">
-          <h3>Total Trips</h3>
-          <p>126</p>
-        </div>
-        <div class="mini-card">
-          <h3>Cancelled</h3>
-          <p>7</p>
-        </div>
+        <div class="mini-card"><h3>Today Earnings</h3><p id="todayEarnings">₹0</p></div>
+        <div class="mini-card"><h3>This Week</h3><p id="weekEarnings">₹0</p></div>
+        <div class="mini-card"><h3>Total Trips</h3><p id="totalTrips">0</p></div>
+        <div class="mini-card"><h3>Cancelled</h3><p id="cancelledTrips">0</p></div>
       </div>
     </div>
 
@@ -433,19 +140,12 @@
     <div class="section-card">
       <div class="section-title">Wallet</div>
       <div class="grid-2">
-        <div class="mini-card">
-          <h3>Balance</h3>
-          <p>₹1,240</p>
-        </div>
-        <div class="mini-card">
-          <h3>Bonus</h3>
-          <p>₹150</p>
-        </div>
+        <div class="mini-card"><h3>Balance</h3><p id="walletBalance">₹0</p></div>
+        <div class="mini-card"><h3>Bonus</h3><p id="bonusBalance">₹0</p></div>
       </div>
-
       <div class="action-row">
-        <a href="#" class="action-btn" onclick="withdrawMoney()">Withdraw</a>
-        <a href="#" class="action-btn secondary-btn" onclick="walletHistory()">History</a>
+        <a href="wallet.html" class="action-btn">Withdraw</a>
+        <a href="wallet.html" class="action-btn secondary-btn">History</a>
       </div>
     </div>
 
@@ -453,22 +153,10 @@
     <div class="section-card">
       <div class="section-title">Ratings & Performance</div>
       <div class="grid-2">
-        <div class="mini-card">
-          <h3>Rating</h3>
-          <p>⭐ 4.8</p>
-        </div>
-        <div class="mini-card">
-          <h3>Reviews</h3>
-          <p>128</p>
-        </div>
-        <div class="mini-card">
-          <h3>Distance</h3>
-          <p>1842 km</p>
-        </div>
-        <div class="mini-card">
-          <h3>Acceptance</h3>
-          <p>92%</p>
-        </div>
+        <div class="mini-card"><h3>Rating</h3><p id="rating">⭐ 0.0</p></div>
+        <div class="mini-card"><h3>Reviews</h3><p id="reviews">0</p></div>
+        <div class="mini-card"><h3>Distance</h3><p id="distance">0 km</p></div>
+        <div class="mini-card"><h3>Acceptance</h3><p id="acceptance">0%</p></div>
       </div>
     </div>
 
@@ -476,27 +164,15 @@
     <div class="section-card">
       <div class="section-title">Settings</div>
       <div class="settings-list">
-        <div class="setting-item" onclick="editProfile()">
-          <span>Edit Profile</span><span>›</span>
-        </div>
-        <div class="setting-item" onclick="openBank()">
-          <span>Bank Details</span><span>›</span>
-        </div>
-        <div class="setting-item" onclick="openSupport()">
-          <span>Help & Support</span><span>›</span>
-        </div>
-        <div class="setting-item" onclick="openNotifications()">
-          <span>Notifications</span><span>›</span>
-        </div>
-        <div class="setting-item" onclick="logoutUser()">
-          <span>Logout</span><span>›</span>
-        </div>
+        <div class="setting-item" onclick="location.href='edit-profile.html'"><span>Edit Profile</span><span>›</span></div>
+        <div class="setting-item"><span>Bank Details</span><span>›</span></div>
+        <div class="setting-item"><span>Help & Support</span><span>›</span></div>
+        <div class="setting-item"><span>Notifications</span><span>›</span></div>
+        <div class="setting-item" onclick="logoutUser()"><span>Logout</span><span>›</span></div>
       </div>
     </div>
-
   </div>
 
-  <!-- Bottom Navigation -->
   <div class="bottom-nav">
     <a href="dashboard.html" class="nav-item">🏠 Home</a>
     <a href="live.html" class="nav-item">📍 Live</a>
@@ -504,58 +180,86 @@
     <a href="driver-profile.html" class="nav-item active">👤 Profile</a>
   </div>
 
-  <script>
-    function goBack() {
-      window.history.back();
-    }
+  <script type="module">
+    import { auth, db } from './firebase-config.js';
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { ref, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    function editProfile() {
-      alert("Edit Profile page coming soon!");
-      // window.location.href = "edit-profile.html";
-    }
+    const qs = (id) => document.getElementById(id);
 
-    function uploadDocs() {
-      alert("Upload Documents feature coming soon!");
-      // window.location.href = "kyc-upload.html";
-    }
-
-    function viewKYC() {
-      alert("KYC Status page coming soon!");
-      // window.location.href = "kyc-status.html";
-    }
-
-    function withdrawMoney() {
-      alert("Withdraw feature coming soon!");
-      // window.location.href = "withdraw.html";
-    }
-
-    function walletHistory() {
-      alert("Wallet History page coming soon!");
-      // window.location.href = "wallet-history.html";
-    }
-
-    function openBank() {
-      alert("Bank Details page coming soon!");
-      // window.location.href = "bank-details.html";
-    }
-
-    function openSupport() {
-      alert("Support page coming soon!");
-      // window.location.href = "support.html";
-    }
-
-    function openNotifications() {
-      alert("Notifications settings coming soon!");
-      // window.location.href = "notifications.html";
-    }
-
-    function logoutUser() {
-      const confirmLogout = confirm("Are you sure you want to logout?");
-      if (confirmLogout) {
-        alert("Logged out successfully!");
-        // window.location.href = "login.html";
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
       }
-    }
+
+      const uid = user.uid;
+      const driverRef = ref(db, 'drivers/' + uid);
+
+      try {
+        const snapshot = await get(driverRef);
+
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+
+          const name = data.name || "HALORA Driver";
+          const phone = data.phone || user.phoneNumber || "No Phone";
+          const vehicleType = data.vehicleType || "Bike";
+          const vehicleNumber = data.vehicleNumber || "Not Added";
+          const vehicleModel = data.vehicleModel || "Not Added";
+          const insurance = data.insuranceDate || "Not Added";
+          const kycStatus = data.kycStatus || "Pending";
+          const docsUploaded = data.docsUploaded || 0;
+          const totalDocs = 5;
+          const progress = Math.min((docsUploaded / totalDocs) * 100, 100);
+
+          qs("driverName").textContent = name;
+          qs("driverPhone").textContent = phone;
+          qs("driverId").textContent = uid.slice(0, 8).toUpperCase();
+          qs("vehicleType").textContent = vehicleType;
+          qs("vehicleType2").textContent = vehicleType;
+          qs("vehicleNumber").textContent = vehicleNumber;
+          qs("vehicleModel").textContent = vehicleModel;
+          qs("insuranceDate").textContent = insurance;
+          qs("kycStatus").textContent = kycStatus;
+          qs("kycBadge").textContent = "KYC " + kycStatus;
+          qs("docsUploaded").textContent = `${docsUploaded} / ${totalDocs}`;
+          qs("kycProgress").style.width = progress + "%";
+          qs("avatarLetter").textContent = name.charAt(0).toUpperCase();
+
+          qs("todayEarnings").textContent = "₹" + (data.todayEarnings || 0);
+          qs("weekEarnings").textContent = "₹" + (data.weekEarnings || 0);
+          qs("totalTrips").textContent = data.totalTrips || 0;
+          qs("cancelledTrips").textContent = data.cancelledTrips || 0;
+
+          qs("walletBalance").textContent = "₹" + (data.walletBalance || 0);
+          qs("bonusBalance").textContent = "₹" + (data.bonusBalance || 0);
+
+          qs("rating").textContent = "⭐ " + (data.rating || 0.0);
+          qs("reviews").textContent = data.reviews || 0;
+          qs("distance").textContent = (data.distance || 0) + " km";
+          qs("acceptance").textContent = (data.acceptance || 0) + "%";
+        } else {
+          alert("Driver profile not found. Please complete registration.");
+        }
+      } catch (error) {
+        console.error("Error loading driver profile:", error);
+        alert("Failed to load profile data.");
+      }
+    });
+
+    window.logoutUser = async function () {
+      const confirmLogout = confirm("Are you sure you want to logout?");
+      if (!confirmLogout) return;
+
+      try {
+        await signOut(auth);
+        alert("Logged out successfully!");
+        window.location.href = "login.html";
+      } catch (error) {
+        alert("Logout failed: " + error.message);
+      }
+    };
   </script>
 </body>
 </html>

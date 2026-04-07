@@ -73,9 +73,6 @@
     }
     .nav-item{color:#d5d5d5;text-align:center;font-size:14px;text-decoration:none;font-weight:500}
     .nav-item.active{color:#ff9a22;font-weight:800}
-    @media (max-width:420px){
-      .title{font-size:34px}.back-btn{font-size:18px;padding:12px 20px}.mini-card p{font-size:19px}
-    }
   </style>
 </head>
 <body>
@@ -85,7 +82,6 @@
       <button class="back-btn" onclick="history.back()">Back</button>
     </div>
 
-    <!-- Profile -->
     <div class="profile-card">
       <div class="avatar" id="avatarLetter">D</div>
       <div class="profile-info">
@@ -96,7 +92,7 @@
 
         <div class="status-row">
           <div class="online-dot"></div>
-          <span id="onlineStatus">Online</span>
+          <span>Online</span>
           <div class="status-badge" id="kycBadge">KYC Pending</div>
         </div>
 
@@ -104,19 +100,13 @@
       </div>
     </div>
 
-    <!-- KYC -->
     <div class="section-card">
       <div class="section-title">KYC Verification</div>
-      <div class="info-line">Status: <span class="highlight" id="kycStatus">Pending Approval</span></div>
+      <div class="info-line">Status: <span class="highlight" id="kycStatus">Pending</span></div>
       <div class="info-line">Documents Uploaded: <span class="highlight" id="docsUploaded">0 / 5</span></div>
       <div class="progress-bar"><div class="progress-fill" id="kycProgress" style="width:0%"></div></div>
-      <div class="action-row">
-        <a href="#" class="action-btn">Upload Documents</a>
-        <a href="#" class="action-btn secondary-btn">View Status</a>
-      </div>
     </div>
 
-    <!-- Vehicle -->
     <div class="section-card">
       <div class="section-title">Vehicle Details</div>
       <div class="info-line">Vehicle Type: <span class="highlight" id="vehicleType2">-</span></div>
@@ -125,7 +115,6 @@
       <div class="info-line">Insurance: <span class="highlight" id="insuranceDate">-</span></div>
     </div>
 
-    <!-- Earnings -->
     <div class="section-card">
       <div class="section-title">Earnings & Trips</div>
       <div class="grid-2">
@@ -136,20 +125,14 @@
       </div>
     </div>
 
-    <!-- Wallet -->
     <div class="section-card">
       <div class="section-title">Wallet</div>
       <div class="grid-2">
         <div class="mini-card"><h3>Balance</h3><p id="walletBalance">₹0</p></div>
         <div class="mini-card"><h3>Bonus</h3><p id="bonusBalance">₹0</p></div>
       </div>
-      <div class="action-row">
-        <a href="wallet.html" class="action-btn">Withdraw</a>
-        <a href="wallet.html" class="action-btn secondary-btn">History</a>
-      </div>
     </div>
 
-    <!-- Rating -->
     <div class="section-card">
       <div class="section-title">Ratings & Performance</div>
       <div class="grid-2">
@@ -160,14 +143,10 @@
       </div>
     </div>
 
-    <!-- Settings -->
     <div class="section-card">
       <div class="section-title">Settings</div>
       <div class="settings-list">
         <div class="setting-item" onclick="location.href='edit-profile.html'"><span>Edit Profile</span><span>›</span></div>
-        <div class="setting-item"><span>Bank Details</span><span>›</span></div>
-        <div class="setting-item"><span>Help & Support</span><span>›</span></div>
-        <div class="setting-item"><span>Notifications</span><span>›</span></div>
         <div class="setting-item" onclick="logoutUser()"><span>Logout</span><span>›</span></div>
       </div>
     </div>
@@ -181,9 +160,9 @@
   </div>
 
   <script type="module">
-    import { auth, db } from './firebase-config.js';
+    import { auth, db } from './js/firebase-config.js';
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { ref, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const qs = (id) => document.getElementById(id);
 
@@ -194,13 +173,13 @@
       }
 
       const uid = user.uid;
-      const driverRef = ref(db, 'drivers/' + uid);
+      const driverRef = doc(db, "drivers", uid);
 
       try {
-        const snapshot = await get(driverRef);
+        const driverSnap = await getDoc(driverRef);
 
-        if (snapshot.exists()) {
-          const data = snapshot.val();
+        if (driverSnap.exists()) {
+          const data = driverSnap.data();
 
           const name = data.name || "HALORA Driver";
           const phone = data.phone || user.phoneNumber || "No Phone";
@@ -231,20 +210,18 @@
           qs("weekEarnings").textContent = "₹" + (data.weekEarnings || 0);
           qs("totalTrips").textContent = data.totalTrips || 0;
           qs("cancelledTrips").textContent = data.cancelledTrips || 0;
-
           qs("walletBalance").textContent = "₹" + (data.walletBalance || 0);
           qs("bonusBalance").textContent = "₹" + (data.bonusBalance || 0);
-
           qs("rating").textContent = "⭐ " + (data.rating || 0.0);
           qs("reviews").textContent = data.reviews || 0;
           qs("distance").textContent = (data.distance || 0) + " km";
           qs("acceptance").textContent = (data.acceptance || 0) + "%";
         } else {
-          alert("Driver profile not found. Please complete registration.");
+          alert("Driver profile not found in Firestore.");
         }
       } catch (error) {
-        console.error("Error loading driver profile:", error);
-        alert("Failed to load profile data.");
+        console.error(error);
+        alert("Failed to load profile.");
       }
     });
 

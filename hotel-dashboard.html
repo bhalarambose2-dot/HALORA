@@ -321,7 +321,7 @@
       margin-top: 16px;
     }
 
-    .approve-btn, .reject-btn, .save-btn, .price-btn {
+    .approve-btn, .reject-btn, .save-btn, .price-btn, .back-btn {
       border: none;
       border-radius: 18px;
       padding: 14px;
@@ -332,10 +332,11 @@
 
     .approve-btn { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
     .reject-btn { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
-    .save-btn, .price-btn {
+    .save-btn, .price-btn, .back-btn {
       background: linear-gradient(135deg, #2563eb, #60a5fa);
       color: white;
       width: 100%;
+      margin-top: 10px;
     }
 
     .input-field {
@@ -445,27 +446,30 @@
       font-size: 15px;
       margin-bottom: 20px;
     }
+
     .profile-actions {
-     margin-top: 20px;
-     display: grid;
-     grid-template-columns: 1fr 1fr;
-     gap: 12px;
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
+
     .action-btn {
-     background: #18233a;
-     color: #fff;
-     padding: 14px;
-     border-radius: 12px;
-     text-align: center;
-     font-weight: 500;
-     cursor: pointer;  
-     transition: 0.3s;
+      background: #18233a;
+      color: #fff;
+      padding: 14px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
     .action-btn:hover {
-     background: #2563eb;
-     transform: scale(1.05);
+      background: #2563eb;
+      transform: scale(1.03);
     }
+
     .tabs {
       position: fixed;
       bottom: 0;
@@ -569,6 +573,36 @@
       font-size: 13px;
       color: #64748b;
       font-weight: 600;
+    }
+
+    .settings-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #eef2ff;
+    }
+
+    .settings-row:last-child {
+      border-bottom: none;
+    }
+
+    .subtext {
+      color: #64748b;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .history-item, .notif-item, .payment-item, .customer-item {
+      padding: 14px 0;
+      border-bottom: 1px solid #eef2ff;
+    }
+
+    .history-item:last-child,
+    .notif-item:last-child,
+    .payment-item:last-child,
+    .customer-item:last-child {
+      border-bottom: none;
     }
 
     canvas {
@@ -735,66 +769,23 @@
     <div id="profilePanel" class="panel">
       <div class="section-title">Hotel Profile</div>
       <div class="profile-card profile-box">
-       <div class="profile-actions">
         <div class="profile-avatar" id="profileAvatar">H</div>
         <div class="profile-name" id="profileHotelName">HALORA HOTEL</div>
         <div class="profile-email" id="profileEmail">Loading...</div>
+
         <div class="profile-actions">
-
-  <div class="action-btn" onclick="openEditProfile()">
-    ✏️ Edit Profile
-  </div>
-
-  <div class="action-btn" onclick="openSettings()">
-    ⚙️ Settings
-  </div>
-
-  <div class="action-btn" onclick="openCustomers()">
-    👥 Customers
-  </div>
-
-  <div class="action-btn" onclick="openKYC()">
-    🪪 KYC Verification
-  </div>
-
-  <div class="action-btn" onclick="openPayments()">
-    💳 Payments / UPI
-  </div>
-
-  <div class="action-btn" onclick="openHistory()">
-    📜 Booking History
-  </div>
-
-  <div class="action-btn" onclick="openNotifications()">
-    🔔 Notifications
-  </div>
-
+          <div class="action-btn" onclick="openTab('editProfilePanel')">✏️ Edit Profile</div>
+          <div class="action-btn" onclick="openTab('settingsPanel')">⚙️ Settings</div>
+          <div class="action-btn" onclick="openTab('customersPanel')">👥 Customers</div>
+          <div class="action-btn" onclick="openTab('kycPanel')">🪪 KYC Verification</div>
+          <div class="action-btn" onclick="openTab('paymentsPanel')">💳 Payments / UPI</div>
+          <div class="action-btn" onclick="openTab('historyPanel')">📜 Booking History</div>
+          <div class="action-btn" onclick="openTab('notificationsPanel')">🔔 Notifications</div>
+        </div>
+      </div>
     </div>
 
-  </div>
-
-  <div class="tabs">
-    <button id="tabHome" class="tab-btn active" onclick="openTab('homePanel', this)">
-      <i class="fa-solid fa-house"></i>
-      <span>Home</span>
-    </button>
-
-    <button id="tabBookings" class="tab-btn" onclick="openTab('bookingsPanel', this)">
-      <i class="fa-solid fa-calendar-check"></i>
-      <span>Bookings</span>
-    </button>
-
-    <button id="tabManage" class="tab-btn" onclick="openTab('managementPanel', this)">
-      <i class="fa-solid fa-hotel"></i>
-      <span>Manage</span>
-    </button>
-
-    <button id="tabProfile" class="tab-btn" onclick="openTab('profilePanel', this)">
-      <i class="fa-solid fa-user"></i>
-      <span>Profile</span>
-    </button>
-  </div>
-
-  <script type="module" src="./hotel-dashboard.js"></script>
-</body>
-</html>
+    <!-- EDIT PROFILE PANEL -->
+    <div id="editProfilePanel" class="panel">
+      <div class="section-title">Edit Profile</div>
+      <div cl

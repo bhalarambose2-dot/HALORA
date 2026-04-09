@@ -2,478 +2,485 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HALORA HOTEL Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-    body{
-      background: radial-gradient(circle at top,#0b1020,#030712 70%);
-      color:#fff;
-      min-height:100vh;
-      padding-bottom:30px;
-    }
-    .container{
-      width:100%;
-      max-width:520px;
-      margin:auto;
-      padding:16px;
-    }
-    .topbar{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      margin-bottom:16px;
-      margin-top:6px;
-    }
-    .menu-btn{
-      width:48px;height:48px;border-radius:14px;
-      display:flex;align-items:center;justify-content:center;
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.08);
-      font-size:22px;cursor:pointer;
-    }
-    .search-box{
-      flex:1;
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:16px;
-      padding:14px 16px;
-      color:#fff;
-      outline:none;
-      font-size:14px;
-    }
-    .header{
-      display:flex;justify-content:space-between;align-items:center;
-      margin-bottom:18px;
-    }
-    .brand h1{
-      font-size:30px;font-weight:800;
-      background:linear-gradient(90deg,#fff,#ffb300);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-    .brand p{color:#cbd5e1;font-size:14px;margin-top:4px;}
-    .logout-btn{
-      background:linear-gradient(135deg,#ffb300,#ff8c00);
-      color:#111827;border:none;padding:12px 18px;border-radius:16px;
-      font-weight:700;font-size:14px;cursor:pointer;
-      box-shadow:0 10px 20px rgba(255,179,0,0.25);
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .hero{
-      background:linear-gradient(135deg,rgba(15,23,42,0.96),rgba(30,41,59,0.92));
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:28px;
-      padding:20px;
-      overflow:hidden;
-      position:relative;
-      box-shadow:0 20px 50px rgba(0,0,0,0.35);
-      margin-bottom:18px;
-    }
-    .hero-img{
-      width:100%;
-      height:180px;
-      object-fit:cover;
-      border-radius:20px;
-      margin-top:14px;
-      border:1px solid rgba(255,255,255,0.06);
-    }
-    .hero h2{
-      font-size:30px;line-height:1.1;font-weight:800;
-      margin-bottom:10px;max-width:280px;
-    }
-    .hero p{
-      color:#dbe4f0;font-size:15px;line-height:1.7;max-width:320px;
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #0b1633 0%, #050816 70%);
+      color: white;
+      padding-bottom: 100px;
     }
 
-    .tab-buttons{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:10px;
-      margin-top:16px;
-    }
-    .tab-btn{
-      border:none;border-radius:16px;padding:12px 10px;
-      font-size:14px;font-weight:700;cursor:pointer;
-      background:rgba(255,255,255,0.08);color:#fff;
-      border:1px solid rgba(255,255,255,0.06);
-    }
-    .tab-btn.active{
-      background:linear-gradient(135deg,#ffb300,#ff8c00);
-      color:#111827;
+    .container {
+      max-width: 520px;
+      margin: auto;
+      padding: 16px;
     }
 
-    .stats-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-      margin-top:18px;
-    }
-    .stat-card{
-      background:rgba(15,23,42,0.82);
-      border:1px solid rgba(255,255,255,0.06);
-      border-radius:24px;
-      padding:20px 18px;
-    }
-    .stat-value{
-      font-size:34px;font-weight:800;color:#ffb300;margin-bottom:8px;
-    }
-    .stat-label{color:#cbd5e1;font-size:15px;}
-
-    .section-title{
-      font-size:22px;font-weight:700;margin:24px 0 14px;
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(5, 8, 22, 0.85);
+      backdrop-filter: blur(10px);
     }
 
-    .panel{
-      display:none;
-      background:rgba(15,23,42,0.82);
-      border:1px solid rgba(255,255,255,0.06);
-      border-radius:24px;
-      padding:20px;
-      margin-top:14px;
-    }
-    .panel.active{display:block;}
-
-    .edit-input{
-      width:100%;
-      padding:14px;
-      margin-top:12px;
-      border:none;
-      border-radius:14px;
-      outline:none;
-      background:#0f172a;
-      color:#fff;
-      font-size:15px;
-      border:1px solid rgba(255,255,255,0.08);
-    }
-    .save-btn{
-      margin-top:14px;
-      width:100%;
-      background:linear-gradient(135deg,#ffb300,#ff8c00);
-      border:none;color:#111827;font-weight:700;
-      padding:14px;border-radius:16px;cursor:pointer;font-size:16px;
+    .brand {
+      font-size: 26px;
+      font-weight: 900;
+      color: #f7c86f;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .toggle-wrap{
-      display:flex;justify-content:space-between;align-items:center;
-      margin-top:16px;padding:16px;background:rgba(255,255,255,0.03);
-      border-radius:16px;
-    }
-    .switch{position:relative;display:inline-block;width:56px;height:30px;}
-    .switch input{opacity:0;width:0;height:0;}
-    .slider{
-      position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;
-      background:#475569;transition:.4s;border-radius:999px;
-    }
-    .slider:before{
-      position:absolute;content:"";height:22px;width:22px;left:4px;bottom:4px;
-      background:white;transition:.4s;border-radius:50%;
-    }
-    input:checked + .slider{background:#22c55e;}
-    input:checked + .slider:before{transform:translateX(26px);}
-
-    .booking-card{
-      background:rgba(255,255,255,0.03);
-      border:1px solid rgba(255,255,255,0.06);
-      border-radius:22px;
-      padding:16px;
-      margin-top:14px;
-    }
-    .booking-top{
-      display:flex;justify-content:space-between;align-items:center;
-      margin-bottom:10px;gap:10px;
-    }
-    .booking-name{font-size:18px;font-weight:700;}
-    .booking-status{
-      padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;
-    }
-    .pending{background:rgba(245,158,11,0.15);color:#f59e0b;}
-    .confirmed{background:rgba(34,197,94,0.15);color:#22c55e;}
-    .rejected{background:rgba(239,68,68,0.15);color:#ef4444;}
-    .booking-details{color:#cbd5e1;font-size:14px;line-height:1.8;}
-    .booking-actions{display:flex;gap:10px;margin-top:14px;}
-    .approve-btn,.reject-btn{
-      flex:1;border:none;padding:12px;border-radius:14px;font-weight:700;
-      cursor:pointer;font-size:14px;
-    }
-    .approve-btn{
-      background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.25);
-    }
-    .reject-btn{
-      background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.25);
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: #fbbf24;
+      color: black;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
     }
 
-    .hidden{display:none!important;}
+    .logout-btn {
+      background: linear-gradient(135deg, #ffb000, #ffc933);
+      color: black;
+      border: none;
+      border-radius: 18px;
+      padding: 12px 18px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(255,176,0,0.35);
+    }
+
+    .searchbar {
+      width: 100%;
+      padding: 16px 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      outline: none;
+      font-size: 15px;
+      margin: 12px 0 18px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      min-height: 260px;
+      background: linear-gradient(135deg, rgba(10,14,38,0.92), rgba(7,10,22,0.92));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+      margin-bottom: 20px;
+    }
+
+    .hero img {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 52%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.9;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(7,10,22,0.98) 0%, rgba(7,10,22,0.7) 45%, rgba(7,10,22,0.08) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 24px;
+      width: 58%;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 42px;
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .hero p {
+      margin: 0 0 18px;
+      color: #d6d6d6;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-btn {
+      border: none;
+      border-radius: 18px;
+      padding: 12px 18px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, #ffb000, #ffc933);
+      color: black;
+    }
+
+    .secondary-btn {
+      background: rgba(255,255,255,0.08);
+      color: white;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .stat-card {
+      background: linear-gradient(145deg, rgba(14,20,45,0.96), rgba(7,10,22,0.96));
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 26px;
+      padding: 22px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.28);
+    }
+
+    .stat-value {
+      font-size: 42px;
+      font-weight: 900;
+      color: #ffb000;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 16px;
+      color: #cfcfcf;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 900;
+      margin: 24px 0 16px;
+    }
+
+    .tabs {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 520px;
+      margin: auto;
+      background: rgba(10,14,38,0.95);
+      backdrop-filter: blur(14px);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      z-index: 30;
+    }
+
+    .tab-btn {
+      padding: 14px 8px;
+      border: none;
+      background: transparent;
+      color: #9ca3af;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      color: #ffb000;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .booking-card, .management-card, .profile-card {
+      background: linear-gradient(145deg, rgba(14,20,45,0.96), rgba(7,10,22,0.96));
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 26px;
+      padding: 18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.28);
+      margin-bottom: 16px;
+    }
+
+    .booking-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .booking-name {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .booking-status {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .pending { background: rgba(255,176,0,0.18); color: #ffb000; }
+    .confirmed { background: rgba(34,197,94,0.18); color: #22c55e; }
+    .rejected { background: rgba(239,68,68,0.18); color: #ef4444; }
+
+    .booking-details {
+      color: #d1d5db;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .booking-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .approve-btn, .reject-btn, .save-btn, .price-btn {
+      border: none;
+      border-radius: 18px;
+      padding: 14px;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .approve-btn { background: linear-gradient(135deg, #0ea5a4, #22c55e); color: white; }
+    .reject-btn { background: linear-gradient(135deg, #7f1d1d, #ef4444); color: white; }
+    .save-btn, .price-btn { background: linear-gradient(135deg, #ffb000, #ffc933); color: black; width: 100%; }
+
+    .input-field {
+      width: 100%;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      color: white;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .toggle-wrap {
+      margin-top: 20px;
+      background: rgba(255,255,255,0.03);
+      padding: 18px 20px;
+      border-radius: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 58px;
+      height: 32px;
+    }
+
+    .switch input { display: none; }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #475569;
+      border-radius: 999px;
+      transition: .3s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      width: 24px;
+      height: 24px;
+      left: 4px;
+      top: 4px;
+      background: white;
+      border-radius: 50%;
+      transition: .3s;
+    }
+
+    .switch input:checked + .slider {
+      background: #22c55e;
+    }
+
+    .switch input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    .profile-box {
+      text-align: center;
+    }
+
+    .profile-avatar {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffb000, #ffc933);
+      color: black;
+      display: grid;
+      place-items: center;
+      font-size: 34px;
+      font-weight: 900;
+      margin: 0 auto 14px;
+    }
+
+    .profile-name {
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .profile-email {
+      color: #d1d5db;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
+  <div class="container">
 
-<div class="container">
-
-  <div class="topbar">
-    <div class="menu-btn">☰</div>
-    <input type="text" id="globalSearch" class="search-box" placeholder="Search bookings, guests..." onkeyup="searchBookings()">
-  </div>
-
-  <div class="header">
-    <div class="brand">
-      <h1>HALORA HOTEL</h1>
-      <p>Hotel Partner Dashboard</p>
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-icon">H</div>
+        HALORA HOTEL
+      </div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </div>
 
-  <div class="hero">
-    <h2>Manage your hotel with HALORA</h2>
-    <p>Update hotel details, room prices, room availability, and booking requests — all in one place.</p>
-    <img id="heroHotelImage" class="hero-img" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1000" alt="Hotel Image">
+    <input type="text" id="globalSearch" class="searchbar" placeholder="Search bookings, guests..." />
 
-    <div class="tab-buttons">
-      <button class="tab-btn active" onclick="openTab('editPanel', this)">Edit Hotel</button>
-      <button class="tab-btn" onclick="openTab('bookingPanel', this)">Bookings</button>
-      <button class="tab-btn" onclick="openTab('pricePanel', this)">Price</button>
-    </div>
-  </div>
-
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-value" id="totalBookings">0</div>
-      <div class="stat-label">Total Bookings</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" id="roomPrice">₹0</div>
-      <div class="stat-label">Room Price</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" id="monthlyEarnings">₹0</div>
-      <div class="stat-label">Monthly Earnings</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" id="todayBookings">0</div>
-      <div class="stat-label">Today Bookings</div>
-    </div>
-  </div>
-
-  <h3 class="section-title">HALORA Hotel Controls</h3>
-
-  <!-- EDIT HOTEL PANEL -->
-  <div class="panel active" id="editPanel">
-    <input type="text" id="editHotelName" class="edit-input" placeholder="Hotel Name">
-    <input type="text" id="editCity" class="edit-input" placeholder="City">
-    <input type="text" id="editContact" class="edit-input" placeholder="Contact Number">
-    <input type="number" id="editRooms" class="edit-input" placeholder="Available Rooms">
-    <input type="time" id="editCheckIn" class="edit-input">
-    <input type="time" id="editCheckOut" class="edit-input">
-    <input type="text" id="editImage" class="edit-input" placeholder="Hotel Image URL">
-    <button class="save-btn" onclick="saveHotelDetails()">Save Hotel Details</button>
-
-    <div class="toggle-wrap">
-      <span>Hotel Availability</span>
-      <label class="switch">
-        <input type="checkbox" id="hotelAvailabilityToggle" onchange="toggleHotelStatus()">
-        <span class="slider"></span>
-      </label>
-    </div>
-  </div>
-
-  <!-- BOOKINGS PANEL -->
-  <div class="panel" id="bookingPanel">
-    <input type="text" id="bookingSearch" class="edit-input" placeholder="Search customer / booking..." onkeyup="searchBookings()">
-    <div id="bookingsContainer"></div>
-  </div>
-
-  <!-- PRICE PANEL -->
-  <div class="panel" id="pricePanel">
-    <input type="text" id="priceSearch" class="edit-input" placeholder="Search room type / price note">
-    <input type="number" id="newRoomPrice" class="edit-input" placeholder="Enter new room price">
-    <button class="save-btn" onclick="updateRoomPrice()">Save New Price</button>
-  </div>
-
-</div>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-  import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDJnOh92AYUzFeWtuLMtDciETdpCQ7-MNs",
-    authDomain: "halorebook.firebaseapp.com",
-    databaseURL: "https://halorebook-default-rtdb.firebaseio.com",
-    projectId: "halorebook",
-    storageBucket: "halorebook.firebasestorage.app",
-    messagingSenderId: "58132767978",
-    appId: "1:58132767978:web:2165ca8a94fb0cfe5a6393",
-    measurementId: "G-2MX4YC3ESQ"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const auth = getAuth(app);
-
-  const hotelId = "hotel_001";
-
-  window.openTab = function(panelId, btn){
-    document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-    document.getElementById(panelId).classList.add("active");
-    btn.classList.add("active");
-  }
-
-  async function loadHotelData() {
-    const hotelRef = ref(db, 'hotels/' + hotelId);
-    const snapshot = await get(hotelRef);
-
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-
-      document.getElementById("editHotelName").value = data.hotelName || "";
-      document.getElementById("editCity").value = data.city || "";
-      document.getElementById("editContact").value = data.contact || "";
-      document.getElementById("editRooms").value = data.availableRooms || "";
-      document.getElementById("editCheckIn").value = convertToTimeInput(data.checkIn || "12:00 PM");
-      document.getElementById("editCheckOut").value = convertToTimeInput(data.checkOut || "11:00 AM");
-      document.getElementById("editImage").value = data.hotelImage || "";
-      document.getElementById("heroHotelImage").src = data.hotelImage || "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1000";
-      document.getElementById("roomPrice").innerText = "₹" + (data.roomPrice || 0);
-      document.getElementById("monthlyEarnings").innerText = "₹" + (data.monthlyEarnings || 0);
-      document.getElementById("todayBookings").innerText = data.todayBookings || 0;
-      document.getElementById("totalBookings").innerText = data.totalBookings || 0;
-      document.getElementById("hotelAvailabilityToggle").checked = data.status === "Active";
-    }
-  }
-
-  async function loadBookings() {
-    const bookingsRef = ref(db, 'hotelBookings/' + hotelId);
-    const snapshot = await get(bookingsRef);
-    const container = document.getElementById("bookingsContainer");
-    container.innerHTML = "";
-
-    if (snapshot.exists()) {
-      const bookings = snapshot.val();
-
-      Object.entries(bookings).reverse().forEach(([bookingId, booking]) => {
-        let statusClass = "pending";
-        if(booking.status === "Confirmed") statusClass = "confirmed";
-        if(booking.status === "Rejected") statusClass = "rejected";
-
-        container.innerHTML += `
-          <div class="booking-card">
-            <div class="booking-top">
-              <div class="booking-name">${booking.name || "Guest"}</div>
-              <div class="booking-status ${statusClass}">${booking.status || "Pending"}</div>
-            </div>
-            <div class="booking-details">
-              Room: ${booking.roomType || "Standard"}<br>
-              Check-in: ${booking.checkInDate || "-"}<br>
-              Nights: ${booking.nights || 1}<br>
-              Guests: ${booking.guests || 1}
-            </div>
-            <div class="booking-actions">
-              <button class="approve-btn" onclick="updateBookingStatus('${bookingId}','Confirmed')">Approve</button>
-              <button class="reject-btn" onclick="updateBookingStatus('${bookingId}','Rejected')">Reject</button>
-            </div>
+    <!-- HOME TAB -->
+    <div id="homePanel" class="panel active">
+      <div class="hero">
+        <img id="heroHotelImage" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop" alt="Hotel">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <h1>Manage your hotel with HALORA</h1>
+          <p>Update hotel details, room prices, room availability, and booking requests all in one place.</p>
+          <div class="hero-actions">
+            <button class="hero-btn primary-btn" onclick="openTab('managementPanel', document.getElementById('tabManage'))">Edit Hotel</button>
+            <button class="hero-btn secondary-btn" onclick="openTab('bookingsPanel', document.getElementById('tabBookings'))">Bookings</button>
+            <button class="hero-btn secondary-btn" onclick="document.getElementById('newRoomPrice').focus()">Price</button>
           </div>
-        `;
-      });
-    } else {
-      container.innerHTML = `<div class="booking-card"><div class="booking-details">No bookings yet.</div></div>`;
-    }
-  }
+        </div>
+      </div>
 
-  window.saveHotelDetails = async function () {
-    const hotelName = document.getElementById("editHotelName").value;
-    const city = document.getElementById("editCity").value;
-    const contact = document.getElementById("editContact").value;
-    const availableRooms = document.getElementById("editRooms").value;
-    const checkIn = document.getElementById("editCheckIn").value;
-    const checkOut = document.getElementById("editCheckOut").value;
-    const hotelImage = document.getElementById("editImage").value;
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="totalBookings">0</div>
+          <div class="stat-label">Total Bookings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="roomPrice">₹0</div>
+          <div class="stat-label">Room Price</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="monthlyEarnings">₹0</div>
+          <div class="stat-label">Monthly Earnings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="todayBookings">0</div>
+          <div class="stat-label">Today Bookings</div>
+        </div>
+      </div>
+    </div>
 
-    await update(ref(db, 'hotels/' + hotelId), {
-      hotelName,
-      city,
-      contact,
-      availableRooms: Number(availableRooms),
-      checkIn: convertToAMPM(checkIn),
-      checkOut: convertToAMPM(checkOut),
-      hotelImage
-    });
+    <!-- BOOKINGS TAB -->
+    <div id="bookingsPanel" class="panel">
+      <div class="section-title">Recent Booking Requests</div>
+      <input type="text" id="bookingSearch" class="searchbar" placeholder="Search booking by guest, room, phone..." />
+      <div id="bookingsContainer"></div>
+    </div>
 
-    document.getElementById("heroHotelImage").src = hotelImage;
-    alert("Hotel details updated successfully!");
-  }
+    <!-- MANAGEMENT TAB -->
+    <div id="managementPanel" class="panel">
+      <div class="section-title">HALORA Hotel Controls</div>
 
-  window.updateRoomPrice = async function () {
-    const newPrice = document.getElementById("newRoomPrice").value;
-    if (!newPrice) return alert("Enter new room price");
+      <div class="management-card">
+        <input type="text" id="editHotelName" class="input-field" placeholder="Hotel Name">
+        <input type="text" id="editCity" class="input-field" placeholder="City">
+        <input type="text" id="editContact" class="input-field" placeholder="Contact Number">
+        <input type="number" id="editRooms" class="input-field" placeholder="Available Rooms">
+        <input type="time" id="editCheckIn" class="input-field">
+        <input type="time" id="editCheckOut" class="input-field">
+        <input type="text" id="editImage" class="input-field" placeholder="Hotel Image URL">
+        <button class="save-btn" onclick="saveHotelDetails()">Save Hotel Details</button>
 
-    await update(ref(db, 'hotels/' + hotelId), {
-      roomPrice: Number(newPrice)
-    });
+        <div class="toggle-wrap">
+          <div>
+            <div style="font-size:16px;font-weight:700;">Hotel Availability</div>
+            <div id="hotelStatusText" style="margin-top:6px;font-size:14px;font-weight:800;color:#ef4444;">Inactive</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="hotelAvailabilityToggle" onchange="toggleHotelStatus()">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
 
-    document.getElementById("roomPrice").innerText = "₹" + newPrice;
-    alert("Room price updated successfully!");
-    document.getElementById("newRoomPrice").value = "";
-  }
+      <div class="section-title">Room Price Management</div>
+      <div class="management-card">
+        <input type="number" id="newRoomPrice" class="input-field" placeholder="Enter New Room Price">
+        <button class="price-btn" onclick="updateRoomPrice()">Update Room Price</button>
+      </div>
+    </div>
 
-  window.toggleHotelStatus = async function () {
-    const isActive = document.getElementById("hotelAvailabilityToggle").checked;
-    await update(ref(db, 'hotels/' + hotelId), {
-      status: isActive ? "Active" : "Inactive"
-    });
-  }
+    <!-- PROFILE TAB -->
+    <div id="profilePanel" class="panel">
+      <div class="section-title">Hotel Profile</div>
+      <div class="profile-card profile-box">
+        <div class="profile-avatar" id="profileAvatar">H</div>
+        <div class="profile-name" id="profileHotelName">HALORA HOTEL</div>
+        <div class="profile-email" id="profileEmail">Loading...</div>
+      </div>
+    </div>
 
-  window.updateBookingStatus = async function (bookingId, status) {
-    await update(ref(db, 'hotelBookings/' + hotelId + '/' + bookingId), {
-      status: status
-    });
-    loadBookings();
-  }
+  </div>
 
-  window.searchBookings = function () {
-    const g = document.getElementById("globalSearch").value.toLowerCase();
-    const b = document.getElementById("bookingSearch").value.toLowerCase();
-    const searchText = (g + " " + b).trim();
-
-    document.querySelectorAll(".booking-card").forEach(card => {
-      const text = card.innerText.toLowerCase();
-      card.classList.toggle("hidden", !text.includes(searchText));
-    });
-  }
-
-  window.logout = async function () {
-    try { await signOut(auth); } catch(e){}
-    alert("Logged out successfully");
-  }
-
-  function convertToAMPM(time24) {
-    if (!time24) return "";
-    let [hours, minutes] = time24.split(':');
-    hours = parseInt(hours);
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12 || 12;
-    return `${hours}:${minutes} ${ampm}`;
-  }
-
-  function convertToTimeInput(time12h) {
-    if (!time12h) return "";
-    const [time, modifier] = time12h.split(' ');
-    let [hours, minutes] = time.split(':');
-    hours = parseInt(hours);
-
-    if (modifier === 'PM' && hours < 12) hours += 12;
-    if (modifier === 'AM' && hours === 12) hours = 0;
-
-    return `${String(hours).padStart(2, '0')}:${minutes}`;
-  }
-
-  loadHotelData();
-  loadBookings();
-</script>
+  <!-- BOTTOM TABS -->
+  <div class="tabs">
+    <button id="tabHome" class="tab-btn active" onclick="openTab('homePanel', this)">Home</button>
+    <button id="tabBookings" class="tab-btn" onclick="openTab('bookingsPanel', this)">Bookings</button>
+    <button id="tabManage" class="tab-btn" onclick="openTab('managementPanel', this)">Trip Mgmt</button>
+    <button id="tabProfile" class="tab-btn" onclick="openTab('profilePanel', this)">Profile</button>
+  </div>
 
   <script type="module" src="./hotel-dashboard.js"></script>
-
 </body>
 </html>

@@ -51,7 +51,7 @@
 
     /* SIDEBAR */
     .sidebar{
-      width:280px;
+      width:290px;
       background:rgba(255,255,255,0.05);
       border-right:1px solid var(--line);
       backdrop-filter:blur(18px);
@@ -107,8 +107,8 @@
     }
 
     .profile-mini img{
-      width:56px;
-      height:56px;
+      width:58px;
+      height:58px;
       border-radius:18px;
       object-fit:cover;
       border:2px solid rgba(255,255,255,0.15);
@@ -182,8 +182,8 @@
 
     /* MAIN */
     .main{
-      margin-left:280px;
-      width:calc(100% - 280px);
+      margin-left:290px;
+      width:calc(100% - 290px);
       padding:22px 22px 110px;
     }
 
@@ -316,11 +316,12 @@
     .btn-red{ background:linear-gradient(135deg,#ff5f7e,#ff355e); color:#fff; }
     .btn-blue{ background:linear-gradient(135deg,#4d7fff,#2e6df2); color:#fff; }
     .btn-dark{ background:#10192b; color:#fff; border:1px solid var(--line); }
+    .btn-yellow{ background:linear-gradient(135deg,#ffd84d,#ffbe2f); color:#222; }
 
     .request-list,
     .trip-list,
     .review-list,
-    .chat-users{
+    .history-list{
       display:grid;
       gap:14px;
     }
@@ -328,7 +329,7 @@
     .request-item,
     .trip-item,
     .review-item,
-    .chat-user{
+    .history-item{
       background:rgba(255,255,255,0.05);
       border:1px solid var(--line);
       border-radius:22px;
@@ -396,24 +397,6 @@
       min-height:120px;
     }
 
-    .upload-box{
-      border:2px dashed rgba(255,255,255,0.14);
-      background:rgba(255,255,255,0.04);
-      border-radius:22px;
-      padding:18px;
-      text-align:center;
-    }
-
-    .trip-preview{
-      width:100%;
-      max-height:220px;
-      object-fit:cover;
-      border-radius:18px;
-      margin-top:12px;
-      display:none;
-      border:1px solid var(--line);
-    }
-
     .wallet-grid{
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -435,96 +418,39 @@
 
     .profile-grid{
       display:grid;
-      grid-template-columns:140px 1fr;
+      grid-template-columns:160px 1fr;
       gap:18px;
       align-items:start;
     }
 
     .profile-grid img{
-      width:140px;
-      height:140px;
+      width:160px;
+      height:160px;
       border-radius:28px;
       object-fit:cover;
       border:2px solid rgba(255,255,255,0.12);
       background:#101828;
     }
 
-    .chat-layout{
-      display:grid;
-      grid-template-columns:320px 1fr;
-      gap:16px;
-      min-height:520px;
-    }
-
-    .chat-sidebar{
+    .upload-box{
+      border:2px dashed rgba(255,255,255,0.14);
       background:rgba(255,255,255,0.04);
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:12px;
-      overflow:auto;
-      max-height:72vh;
+      border-radius:22px;
+      padding:18px;
+      text-align:center;
     }
 
-    .chat-main{
-      display:flex;
-      flex-direction:column;
-      background:rgba(255,255,255,0.04);
-      border:1px solid var(--line);
-      border-radius:24px;
-      overflow:hidden;
-    }
-
-    .chat-header{
-      padding:16px;
-      border-bottom:1px solid var(--line);
-      background:rgba(255,255,255,0.04);
-    }
-
-    .messages{
-      flex:1;
-      padding:16px;
-      overflow:auto;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      min-height:360px;
-      max-height:55vh;
-    }
-
-    .bubble{
-      max-width:78%;
-      padding:12px 14px;
+    .trip-preview{
+      width:100%;
+      max-height:220px;
+      object-fit:cover;
       border-radius:18px;
-      font-size:14px;
-      line-height:1.5;
+      margin-top:12px;
+      display:none;
       border:1px solid var(--line);
-    }
-
-    .bubble.me{
-      align-self:flex-end;
-      background:rgba(0,234,255,0.12);
-    }
-
-    .bubble.other{
-      align-self:flex-start;
-      background:rgba(255,255,255,0.06);
-    }
-
-    .chat-input{
-      display:flex;
-      gap:10px;
-      padding:14px;
-      border-top:1px solid var(--line);
-      background:rgba(255,255,255,0.04);
     }
 
     .hidden{ display:none !important; }
-
-    .empty{
-      text-align:center;
-      color:var(--muted);
-      padding:30px 12px;
-    }
 
     .toast{
       position:fixed;
@@ -552,9 +478,25 @@
       display:none;
     }
 
+    .switch{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:16px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid var(--line);
+      border-radius:18px;
+      margin-top:10px;
+    }
+
+    .switch input{
+      width:auto;
+      transform:scale(1.3);
+    }
+
     @media(max-width:1180px){
       .span-3,.span-4,.span-5,.span-6,.span-7,.span-8{grid-column:span 12;}
-      .chat-layout{grid-template-columns:1fr;}
     }
 
     @media(max-width:920px){
@@ -623,26 +565,24 @@
     </div>
 
     <div class="profile-mini">
-      <img src="https://via.placeholder.com/100x100.png?text=A" id="agentAvatar">
+      <img src="https://via.placeholder.com/100x100.png?text=A" id="agentAvatar" alt="Agent">
       <div>
-        <h3 id="agentName">Trip Agent</h3>
+        <h3 id="agentName">Bhala Ram</h3>
         <p id="agentEmail">agent@halora.com</p>
-        <div class="status">Approved</div>
+        <div class="status" id="kycBadge">KYC Verified</div>
       </div>
     </div>
 
     <div class="menu">
-      <button class="nav-btn active" data-page="dashboard">🏠 Dashboard</button>
-      <button class="nav-btn" data-page="requests">📥 Booking Requests</button>
-      <button class="nav-btn" data-page="addTrip">➕ Add Trip</button>
-      <button class="nav-btn" data-page="myTrips">🧳 My Trips</button>
+      <button class="nav-btn active" data-page="home">🏠 Home</button>
+      <button class="nav-btn" data-page="myBookings">📘 My Bookings</button>
+      <button class="nav-btn" data-page="history">🕘 Booking History</button>
       <button class="nav-btn" data-page="wallet">💰 Wallet</button>
-      <button class="nav-btn" data-page="profile">👤 Profile / KYC</button>
-      <button class="nav-btn" data-page="reviews">⭐ Reviews</button>
-      <button class="nav-btn" data-page="chat">💬 Live Chat</button>
+      <button class="nav-btn" data-page="profile">👤 Profile</button>
+      <button class="nav-btn" data-page="settings">⚙️ Settings</button>
     </div>
 
-    <button class="logout">Logout</button>
+    <button class="logout" onclick="showToast('Logged out (demo)')">Logout</button>
   </aside>
 
   <!-- MAIN -->
@@ -650,31 +590,32 @@
 
     <div class="topbar">
       <div>
-        <h2 id="pageTitle">Dashboard</h2>
-        <p id="pageSub">Manage your trips, bookings, wallet and live customer chats.</p>
+        <h2 id="pageTitle">Home</h2>
+        <p id="pageSub">Manage your trips, booking requests, wallet and profile.</p>
       </div>
       <div class="top-actions">
         <button class="glass-btn" id="menuBtn">☰ Menu</button>
-        <button class="glass-btn">⟳ Refresh</button>
+        <button class="glass-btn" onclick="renderAll()">⟳ Refresh</button>
       </div>
     </div>
 
-    <!-- DASHBOARD -->
-    <section class="page" id="dashboardPage">
+    <!-- HOME -->
+    <section class="page" id="homePage">
       <div class="grid">
+
         <div class="card stat span-3">
           <div class="icon">📥</div>
           <div>
             <h3>Pending Requests</h3>
-            <div class="value">12</div>
+            <div class="value" id="pendingCount">0</div>
           </div>
         </div>
 
         <div class="card stat span-3">
-          <div class="icon">🧳</div>
+          <div class="icon">📘</div>
           <div>
-            <h3>Active Trips</h3>
-            <div class="value">8</div>
+            <h3>My Bookings</h3>
+            <div class="value" id="myBookingsCount">0</div>
           </div>
         </div>
 
@@ -682,153 +623,190 @@
           <div class="icon">💰</div>
           <div>
             <h3>Wallet Balance</h3>
-            <div class="value">₹25,800</div>
+            <div class="value">₹<span id="walletBalance">25800</span></div>
           </div>
         </div>
 
         <div class="card stat span-3">
           <div class="icon">⭐</div>
           <div>
-            <h3>Average Rating</h3>
-            <div class="value">4.8</div>
+            <h3>Rating</h3>
+            <div class="value" id="ratingValue">4.8</div>
           </div>
         </div>
 
-        <div class="card span-7">
+        <div class="card span-8">
           <div class="section-head">
             <div>
-              <h3>Latest Booking Requests</h3>
-              <p>Recent customer trip booking requests</p>
-            </div>
-            <button class="btn btn-dark" onclick="showPage('requests')">View All</button>
-          </div>
-
-          <div class="request-list">
-            <div class="request-item">
-              <div class="row">
-                <div>
-                  <h4>Rahul Sharma</h4>
-                  <p class="muted small">Jaipur → Udaipur • 4 People</p>
-                </div>
-                <div class="chip">Pending</div>
-              </div>
-              <div class="chips">
-                <div class="chip">Trip: Udaipur Family Trip</div>
-                <div class="chip">Budget: ₹16000</div>
-                <div class="chip">Date: 15 Apr</div>
-              </div>
-              <div style="height:14px;"></div>
-              <div class="row">
-                <span class="muted small">2 min ago</span>
-                <div style="display:flex;gap:10px;">
-                  <button class="btn btn-green">Accept</button>
-                  <button class="btn btn-red">Reject</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="request-item">
-              <div class="row">
-                <div>
-                  <h4>Priya Mehta</h4>
-                  <p class="muted small">Delhi → Manali • 2 People</p>
-                </div>
-                <div class="chip">Pending</div>
-              </div>
-              <div class="chips">
-                <div class="chip">Trip: Manali Honeymoon</div>
-                <div class="chip">Budget: ₹22000</div>
-                <div class="chip">Date: 20 Apr</div>
-              </div>
-              <div style="height:14px;"></div>
-              <div class="row">
-                <span class="muted small">15 min ago</span>
-                <div style="display:flex;gap:10px;">
-                  <button class="btn btn-green">Accept</button>
-                  <button class="btn btn-red">Reject</button>
-                </div>
-              </div>
+              <h3>New Trip Requests</h3>
+              <p>Accept or reject customer bookings</p>
             </div>
           </div>
+          <div class="request-list" id="requestList"></div>
         </div>
 
-        <div class="card span-5">
+        <div class="card span-4">
           <div class="section-head">
             <div>
               <h3>Quick Status</h3>
-              <p>Agent profile and business status</p>
+              <p>Business summary</p>
             </div>
           </div>
 
           <div class="chips">
-            <div class="chip">Approval: Verified</div>
-            <div class="chip">Trips: 8</div>
-            <div class="chip">Unread Chats: 3</div>
+            <div class="chip" id="statusTripsChip">Trips: 0</div>
+            <div class="chip" id="statusAcceptedChip">Accepted: 0</div>
+            <div class="chip">KYC: Verified</div>
           </div>
 
           <div style="height:18px;"></div>
 
           <div class="upload-box">
-            <div style="font-size:42px;">🪪</div>
-            <h4 style="margin-top:10px;">KYC Completed</h4>
-            <p class="muted small" style="margin-top:6px;">Your documents are verified and your profile is active.</p>
+            <div style="font-size:42px;">🚘</div>
+            <h4 style="margin-top:10px;">Trip Agent Active</h4>
+            <p class="muted small" style="margin-top:6px;">You can now accept customer trip bookings and manage them from My Bookings.</p>
             <div style="height:14px;"></div>
-            <button class="btn btn-blue" onclick="showPage('profile')">View Profile</button>
+            <button class="btn btn-blue" onclick="showPage('myBookings')">Open My Bookings</button>
           </div>
         </div>
+
       </div>
     </section>
 
-    <!-- REQUESTS -->
-    <section class="page hidden" id="requestsPage">
+    <!-- MY BOOKINGS -->
+    <section class="page hidden" id="myBookingsPage">
       <div class="card">
         <div class="section-head">
           <div>
-            <h3>Booking Requests</h3>
-            <p>Manage all customer requests</p>
+            <h3>My Bookings</h3>
+            <p>Accepted bookings automatically appear here</p>
           </div>
         </div>
-
-        <div class="request-list">
-          <div class="request-item">
-            <div class="row">
-              <div>
-                <h4>Vikas Singh</h4>
-                <p class="muted small">Mumbai → Goa • 5 People</p>
-              </div>
-              <div class="chip">Pending</div>
-            </div>
-            <div class="chips">
-              <div class="chip">Trip: Goa Beach Tour</div>
-              <div class="chip">Budget: ₹30000</div>
-              <div class="chip">Date: 25 Apr</div>
-            </div>
-            <p class="muted small" style="margin-top:12px;">Need hotel + sightseeing + pickup.</p>
-            <div style="height:14px;"></div>
-            <div class="row">
-              <span class="muted small">Today, 4:10 PM</span>
-              <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                <button class="btn btn-green">Accept</button>
-                <button class="btn btn-red">Reject</button>
-                <button class="btn btn-dark" onclick="showPage('chat')">Chat</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="trip-list" id="myBookingsList"></div>
       </div>
     </section>
 
-    <!-- ADD TRIP -->
-    <section class="page hidden" id="addTripPage">
+    <!-- HISTORY -->
+    <section class="page hidden" id="historyPage">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h3>Booking History</h3>
+            <p>Accepted, rejected and completed bookings</p>
+          </div>
+        </div>
+        <div class="history-list" id="historyList"></div>
+      </div>
+    </section>
+
+    <!-- WALLET -->
+    <section class="page hidden" id="walletPage">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h3>Wallet</h3>
+            <p>Track earnings and request withdrawals</p>
+          </div>
+        </div>
+
+        <div class="wallet-grid">
+          <div class="wallet-box">
+            <div class="muted">Available Balance</div>
+            <div class="value">₹<span id="walletAvailable">25800</span></div>
+          </div>
+          <div class="wallet-box">
+            <div class="muted">Pending Amount</div>
+            <div class="value">₹<span id="walletPending">4500</span></div>
+          </div>
+          <div class="wallet-box">
+            <div class="muted">Total Earned</div>
+            <div class="value">₹<span id="walletTotal">128000</span></div>
+          </div>
+        </div>
+
+        <div style="height:20px;"></div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label>Withdraw Amount</label>
+            <input type="number" id="withdrawAmount" placeholder="e.g. 5000">
+          </div>
+          <div class="field">
+            <label>UPI / Bank Detail</label>
+            <input type="text" id="withdrawMethod" placeholder="yourupi@okaxis">
+          </div>
+        </div>
+
+        <div style="height:14px;"></div>
+        <button class="btn btn-blue" onclick="requestWithdraw()">Request Withdraw</button>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="page hidden" id="profilePage">
       <div class="grid">
-        <div class="card span-7">
+
+        <div class="card span-12">
           <div class="section-head">
             <div>
-              <h3>Add New Trip</h3>
-              <p>Create a new premium trip package</p>
+              <h3>Profile</h3>
+              <p>Agent details, KYC and bank information</p>
             </div>
           </div>
 
-          <div class="form-grid">
-            <div class="field">
-              <label>Trip Title</l
+          <div class="profile-grid">
+            <div>
+              <img src="https://via.placeholder.com/300x300.png?text=Agent" id="profilePreview" alt="Profile">
+              <div style="height:12px;"></div>
+              <input type="file" id="profileInput" accept="image/*">
+            </div>
+
+            <div>
+              <div class="form-grid">
+                <div class="field">
+                  <label>Full Name</label>
+                  <input type="text" id="fullName" value="Bhala Ram">
+                </div>
+                <div class="field">
+                  <label>Email</label>
+                  <input type="email" id="email" value="agent@halora.com">
+                </div>
+                <div class="field">
+                  <label>Phone</label>
+                  <input type="text" id="phone" value="8769930595">
+                </div>
+                <div class="field">
+                  <label>City</label>
+                  <input type="text" id="city" value="Jodhpur">
+                </div>
+                <div class="field">
+                  <label>Agency Name</label>
+                  <input type="text" id="agency" value="HALORA Trips">
+                </div>
+                <div class="field">
+                  <label>Experience</label>
+                  <input type="text" id="experience" value="2 Years">
+                </div>
+              </div>
+
+              <div style="height:18px;"></div>
+
+              <h3 style="margin-bottom:12px;">KYC Details</h3>
+              <div class="form-grid">
+                <div class="field">
+                  <label>Aadhaar Number</label>
+                  <input type="text" id="aadhaarNo" placeholder="XXXX-XXXX-XXXX">
+                </div>
+                <div class="field">
+                  <label>PAN Number</label>
+                  <input type="text" id="panNo" placeholder="ABCDE1234F">
+                </div>
+                <div class="field">
+                  <label>Aadhaar Upload</label>
+                  <input type="file" id="aadhaarFile">
+                </div>
+                <div class="field">
+                  <label>PAN Upload</label>
+                  <input type="file" id="panFile">
+                </div>
+         

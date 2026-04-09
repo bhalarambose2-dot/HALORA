@@ -11,8 +11,18 @@ const hotelList = document.getElementById("hotelList");
 const searchInput = document.getElementById("searchInput");
 const cityFilter = document.getElementById("cityFilter");
 
+// BOOKING MODAL ELEMENTS
+const bookingModal = document.getElementById("bookingModal");
+const customerName = document.getElementById("customerName");
+const customerPhone = document.getElementById("customerPhone");
+const roomType = document.getElementById("roomType");
+const checkInDate = document.getElementById("checkInDate");
+const nights = document.getElementById("nights");
+const guests = document.getElementById("guests");
+
 let currentUser = null;
 let allHotels = [];
+let selectedHotel = null;
 
 // ==========================
 // AUTH
@@ -40,7 +50,10 @@ async function loadHotels() {
 
       if (hotel.status !== "Active") return;
 
-      allHotels.push(hotel);
+      allHotels.push({
+        id: docSnap.id,
+        ...hotel
+      });
 
       if (hotel.city) {
         citySet.add(hotel.city);
@@ -55,7 +68,7 @@ async function loadHotels() {
     renderHotels(allHotels);
   } catch (error) {
     hotelList.innerHTML = `<div class="empty-box">Error loading hotels</div>`;
-    console.error(error);
+    console.error("Load Hotels Error:", error);
   }
 }
 
@@ -76,7 +89,10 @@ function renderHotels(hotels) {
   }
 
   hotels.forEach((hotel) => {
-    const image = hotel.image?.trim() || "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop";
+    const image =
+      hotel.image?.trim() ||
+      hotel.hotelImage?.trim() ||
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop";
 
     hotelList.innerHTML += `
       <div class="hotel-card">
@@ -88,9 +104,10 @@ function renderHotels(hotels) {
           </div>
 
           <p class="meta">📍 ${hotel.city || "Unknown City"}</p>
+          <p class="meta">🛏 ${hotel.availableRooms || 0} Rooms Available</p>
           <p class="desc">${hotel.description || "Comfortable stay with trusted service and smooth booking experience."}</p>
 
-          <button class="book-btn" onclick="bookHotel('${hotel.uid}', '${hotel.hotelName}', '${hotel.city}', ${hotel.roomPrice || 0})">
+          <button class="book-btn" onclick="openBookingModal('${hotel.id}')">
             Book Now
           </button>
         </div>
@@ -126,27 +143,89 @@ searchInput.addEventListener("input", applyFilters);
 cityFilter.addEventListener("change", applyFilters);
 
 // ==========================
-// BOOK HOTEL
+// OPEN BOOKING MODAL
 // ==========================
-window.bookHotel = async function (hotelOwnerId, hotelName, city, price) {
-  const checkin = prompt("Enter Check-in Date (YYYY-MM-DD)");
-  if (!checkin) return;
+window.openBookingModal = function (hotelId) {
+  selectedHotel = allHotels.find(h => h.id === hotelId);
+
+  if (!selectedHotel) {
+    alert("Hotel data not found");
+    return;
+  }
+
+  bookingModal.classList.add("active");
+};
+
+// ==========================
+// CLOSE BOOKING MODAL
+// ==========================
+window.closeBookingModal = function () {
+  bookingModal.classList.remove("active");
+
+  customerName.value = "";
+  customerPhone.value = "";
+  roomType.value = "Standard Room";
+  checkInDate.value = "";
+  nights.value = "";
+  guests.value = "";
+};
+
+// ==========================
+// SUBMIT BOOKING
+// ==========================
+window.submitBooking = async function () {
+  if (!selectedHotel) {
+    alert("No hotel selected");
+    return;
+  }
+
+  const name = customerName.value.trim();
+  const phone = customerPhone.value.trim();
+  const selectedRoomType = roomType.value;
+  const selectedCheckIn = checkInDate.value;
+  const selectedNights = nights.value.trim();
+  const selectedGuests = guests.value.trim();
+
+  if (!name || !phone || !selectedCheckIn || !selectedNights || !selectedGuests) {
+    alert("Please fill all booking details");
+    return;
+  }
 
   try {
     await addDoc(collection(db, "hotelBookings"), {
-      hotelOwnerId,
-      hotelName,
-      city,
-      roomPrice: price,
+      hotelId: selectedHotel.id,
+      hotelOwnerId: selectedHotel.uid || selectedHotel.ownerId || "",
+      hotelName: selectedHotel.hotelName || "HALORA Hotel",
+      city: selectedHotel.city || "",
+      roomPrice: selectedHotel.roomPrice || 0,
+
       userId: currentUser.uid,
-      userName: currentUser.email,
-      checkin,
+      userEmail: currentUser.email || "",
+      customerName: name,
+      customerPhone: phone,
+
+      roomType: selectedRoomType,
+      checkInDate: selectedCheckIn,
+      nights: Number(selectedNights),
+      guests: Number(selectedGuests),
+
       status: "Pending",
       createdAt: Date.now()
     });
 
-    alert("Hotel booked successfully!");
+    alert("Booking request sent successfully!");
+    closeBookingModal();
   } catch (error) {
+    console.error("Booking Error:", error);
     alert(error.message);
   }
 };
+
+// ==========================
+// ESC CLICK CLOSE
+// ==========================
+window.addEventListener("click", (e) => {
+  if (e.target === bookingModal) {
+    closeBookingModal();
+  }
+});

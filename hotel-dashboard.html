@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HALORA Hotel Dashboard</title>
+  <title>HALORA HOTEL</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     * {
@@ -20,7 +19,7 @@
 
     body {
       margin: 0;
-      background: linear-gradient(180deg, #f4f8ff 0%, #eaf2ff 100%);
+      background: linear-gradient(180deg, #eef4ff 0%, #f8fbff 100%);
       color: #0f172a;
       padding-bottom: 110px;
     }
@@ -35,21 +34,21 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 0 18px;
+      padding: 8px 0 16px;
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(244,248,255,0.88);
+      background: rgba(238,244,255,0.85);
       backdrop-filter: blur(14px);
     }
 
     .brand {
-      font-size: 22px;
-      font-weight: 900;
-      color: #2563eb;
       display: flex;
       align-items: center;
       gap: 12px;
+      font-size: 22px;
+      font-weight: 900;
+      color: #2563eb;
     }
 
     .brand-icon {
@@ -57,38 +56,36 @@
       height: 48px;
       border-radius: 16px;
       background: linear-gradient(135deg, #2563eb, #60a5fa);
-      color: white;
+      color: #fff;
       display: grid;
       place-items: center;
-      font-weight: 900;
       font-size: 22px;
+      font-weight: 900;
       box-shadow: 0 12px 24px rgba(37,99,235,0.20);
     }
 
     .logout-btn {
       background: linear-gradient(135deg, #2563eb, #60a5fa);
-      color: white;
+      color: #fff;
       border: none;
       border-radius: 16px;
       padding: 12px 18px;
       font-weight: 800;
-      font-size: 14px;
       cursor: pointer;
       box-shadow: 0 10px 24px rgba(37,99,235,0.18);
     }
 
     .search-wrap {
       position: relative;
-      margin: 12px 0 18px;
+      margin: 10px 0 18px;
     }
 
-    .search-icon {
+    .search-wrap i {
       position: absolute;
       left: 18px;
       top: 50%;
       transform: translateY(-50%);
       color: #64748b;
-      font-size: 15px;
       z-index: 2;
     }
 
@@ -97,8 +94,7 @@
       padding: 16px 18px 16px 46px;
       border-radius: 18px;
       border: 1px solid #dbeafe;
-      background: white;
-      color: #0f172a;
+      background: rgba(255,255,255,0.92);
       outline: none;
       font-size: 15px;
       box-shadow: 0 10px 24px rgba(15,23,42,0.04);
@@ -167,9 +163,7 @@
       font-size: 14px;
     }
 
-    .hero-btn i {
-      margin-right: 8px;
-    }
+    .hero-btn i { margin-right: 8px; }
 
     .primary-btn {
       background: white;
@@ -189,13 +183,12 @@
       margin-bottom: 22px;
     }
 
-    .stat-card, .booking-card, .management-card, .profile-card {
-      background: white;
+    .card, .stat-card, .booking-card, .management-card, .profile-card {
+      background: rgba(255,255,255,0.94);
       border: 1px solid #e2e8f0;
       border-radius: 24px;
-      padding: 22px;
+      padding: 20px;
       box-shadow: 0 14px 32px rgba(15,23,42,0.05);
-      margin-bottom: 16px;
     }
 
     .stat-value {
@@ -230,14 +223,17 @@
     }
 
     .panel { display: none; }
-    .panel.active { display: block; animation: fadeUp 0.22s ease; }
+    .panel.active {
+      display: block;
+      animation: fadeUp .22s ease;
+    }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .input-field {
+    .input-field, textarea {
       width: 100%;
       padding: 16px 18px;
       margin-bottom: 14px;
@@ -276,6 +272,7 @@
       margin-top: 10px;
       background: linear-gradient(135deg, #2563eb, #60a5fa);
       color: white;
+      box-shadow: 0 10px 24px rgba(37,99,235,0.18);
     }
 
     .toggle-wrap {
@@ -319,103 +316,8 @@
       transition: .3s;
     }
 
-    .switch input:checked + .slider {
-      background: #2563eb;
-    }
-
-    .switch input:checked + .slider:before {
-      transform: translateX(26px);
-    }
-
-    .profile-box { text-align: center; }
-
-    .profile-avatar {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #2563eb, #60a5fa);
-      color: white;
-      display: grid;
-      place-items: center;
-      font-size: 34px;
-      font-weight: 900;
-      margin: 0 auto 14px;
-      box-shadow: 0 12px 28px rgba(37,99,235,0.18);
-    }
-
-    .profile-name {
-      font-size: 24px;
-      font-weight: 900;
-      margin-bottom: 6px;
-      color: #0f172a;
-    }
-
-    .profile-email {
-      color: #64748b;
-      font-size: 15px;
-      margin-bottom: 20px;
-    }
-
-    .profile-actions {
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .action-btn {
-      background: #18233a;
-      color: #fff;
-      padding: 14px;
-      border-radius: 12px;
-      text-align: center;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .action-btn:hover {
-      background: #2563eb;
-      transform: scale(1.03);
-    }
-
-    .tabs {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      max-width: 520px;
-      margin: auto;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(18px);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border-top: 1px solid #e2e8f0;
-      z-index: 30;
-      padding: 8px 6px 14px;
-    }
-
-    .tab-btn {
-      padding: 12px 8px;
-      border: none;
-      background: transparent;
-      color: #64748b;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      border-radius: 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .tab-btn i { font-size: 18px; }
-
-    .tab-btn.active {
-      color: #2563eb;
-      background: #eff6ff;
-    }
+    .switch input:checked + .slider { background: #2563eb; }
+    .switch input:checked + .slider:before { transform: translateX(26px); }
 
     .booking-top {
       display: flex;
@@ -522,7 +424,7 @@
     }
 
     .mini-stat-card {
-      background: white;
+      background: rgba(255,255,255,0.94);
       border: 1px solid #dbeafe;
       border-radius: 20px;
       padding: 16px 14px;
@@ -543,13 +445,66 @@
       font-weight: 600;
     }
 
+    .profile-box { text-align: center; }
+
+    .profile-avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 36px;
+      font-weight: 900;
+      margin: 0 auto 14px;
+      box-shadow: 0 12px 28px rgba(37,99,235,0.18);
+    }
+
+    .profile-name {
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 6px;
+      color: #0f172a;
+    }
+
+    .profile-email {
+      color: #64748b;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .profile-actions {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .action-btn {
+      background: #18233a;
+      color: #fff;
+      padding: 14px;
+      border-radius: 16px;
+      text-align: center;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.25s;
+      box-shadow: 0 10px 20px rgba(24,35,58,0.10);
+    }
+
+    .action-btn:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+
     .subtext {
       color: #64748b;
       font-size: 14px;
       margin-top: 4px;
     }
 
-    .settings-row, .history-item, .notif-item, .payment-item, .customer-item {
+    .settings-row, .history-item, .notif-item, .customer-item {
       padding: 14px 0;
       border-bottom: 1px solid #eef2ff;
     }
@@ -557,14 +512,59 @@
     .settings-row:last-child,
     .history-item:last-child,
     .notif-item:last-child,
-    .payment-item:last-child,
     .customer-item:last-child {
       border-bottom: none;
+    }
+
+    .tabs {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 520px;
+      margin: auto;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(18px);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid #e2e8f0;
+      z-index: 9999;
+      padding: 8px 6px 14px;
+      box-shadow: 0 -8px 30px rgba(15,23,42,0.08);
+    }
+
+    .tab-btn {
+      padding: 12px 8px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-btn i { font-size: 18px; }
+
+    .tab-btn.active {
+      color: #2563eb;
+      background: #eff6ff;
     }
 
     canvas {
       width: 100% !important;
       max-width: 100%;
+    }
+
+    @media (max-width: 430px) {
+      .hero { min-height: 300px; }
+      .hero-content { width: 65%; padding: 24px 18px; }
+      .hero h1 { font-size: 24px; }
+      .hero img { width: 50%; }
     }
   </style>
 </head>
@@ -581,7 +581,7 @@
     </div>
 
     <div class="search-wrap">
-      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <i class="fa-solid fa-magnifying-glass"></i>
       <input type="text" id="globalSearch" class="searchbar" placeholder="Search bookings, guests..." />
     </div>
 
@@ -600,7 +600,7 @@
             <button class="hero-btn secondary-btn" onclick="openTab('bookingsPanel', document.getElementById('tabBookings'))">
               <i class="fa-solid fa-calendar-check"></i> Bookings
             </button>
-            <button class="hero-btn secondary-btn" onclick="openTab('managementPanel', document.getElementById('tabManage'))">
+            <button class="hero-btn secondary-btn" onclick="openTab('managementPanel', document.getElementById('tabManage')); setTimeout(()=>document.getElementById('newRoomPrice')?.focus(),200)">
               <i class="fa-solid fa-indian-rupee-sign"></i> Price
             </button>
           </div>
@@ -637,7 +637,7 @@
       <div class="section-title">Recent Booking Requests</div>
 
       <div class="search-wrap">
-        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="bookingSearch" class="searchbar" placeholder="Search booking by guest, room, phone..." />
       </div>
 
@@ -732,11 +732,4 @@
         <input type="text" id="profileEditCity" class="input-field" placeholder="City">
         <input type="text" id="profileEditContact" class="input-field" placeholder="Contact Number">
         <button class="save-btn" onclick="saveProfile()">Save Profile</button>
-        <button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">⬅ Back</button>
-      </div>
-    </div>
-
-    <!-- SETTINGS -->
-    <div id="settingsPanel" class="panel">
-      <div class="section-title">Settings</div>
-      <div class="management-c
+        <button class="back-btn" onclick="openTs="management-c

@@ -189,12 +189,13 @@
       margin-bottom: 22px;
     }
 
-    .stat-card {
+    .stat-card, .booking-card, .management-card, .profile-card {
       background: white;
       border: 1px solid #e2e8f0;
       border-radius: 24px;
       padding: 22px;
       box-shadow: 0 14px 32px rgba(15,23,42,0.05);
+      margin-bottom: 16px;
     }
 
     .stat-value {
@@ -228,115 +229,12 @@
       background: linear-gradient(180deg, #2563eb, #60a5fa);
     }
 
-    .panel {
-      display: none;
-    }
-
-    .panel.active {
-      display: block;
-      animation: fadeUp 0.22s ease;
-    }
+    .panel { display: none; }
+    .panel.active { display: block; animation: fadeUp 0.22s ease; }
 
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .booking-card,
-    .management-card,
-    .profile-card {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 26px;
-      padding: 18px;
-      box-shadow: 0 14px 32px rgba(15,23,42,0.05);
-      margin-bottom: 16px;
-    }
-
-    .booking-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .booking-avatar-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .booking-avatar {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #2563eb, #60a5fa);
-      color: white;
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      font-size: 18px;
-    }
-
-    .booking-name {
-      font-size: 18px;
-      font-weight: 800;
-      color: #0f172a;
-    }
-
-    .booking-sub {
-      color: #64748b;
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    .booking-status {
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .pending { background: #fef3c7; color: #d97706; }
-    .confirmed { background: #dcfce7; color: #16a34a; }
-    .rejected { background: #fee2e2; color: #dc2626; }
-
-    .booking-details {
-      color: #475569;
-      font-size: 15px;
-      line-height: 1.8;
-    }
-
-    .booking-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .approve-btn, .reject-btn, .save-btn, .price-btn, .back-btn {
-      border: none;
-      border-radius: 18px;
-      padding: 14px;
-      font-weight: 800;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    .approve-btn { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
-    .reject-btn { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
-    .save-btn, .price-btn, .back-btn {
-      background: linear-gradient(135deg, #2563eb, #60a5fa);
-      color: white;
-      width: 100%;
-      margin-top: 10px;
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .input-field {
@@ -365,6 +263,19 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .save-btn, .price-btn, .back-btn {
+      border: none;
+      border-radius: 18px;
+      padding: 14px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      color: white;
     }
 
     .toggle-wrap {
@@ -416,9 +327,7 @@
       transform: translateX(26px);
     }
 
-    .profile-box {
-      text-align: center;
-    }
+    .profile-box { text-align: center; }
 
     .profile-avatar {
       width: 90px;
@@ -501,26 +410,86 @@
       gap: 6px;
     }
 
-    .tab-btn i {
-      font-size: 18px;
-    }
+    .tab-btn i { font-size: 18px; }
 
     .tab-btn.active {
       color: #2563eb;
       background: #eff6ff;
     }
 
-    .empty-state {
-      text-align: center;
-      padding: 28px 20px;
-      color: #64748b;
+    .booking-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
-    .empty-state i {
-      font-size: 34px;
-      color: #2563eb;
-      margin-bottom: 12px;
+    .booking-avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
+
+    .booking-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .booking-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .booking-sub {
+      color: #64748b;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .booking-status {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .pending { background: #fef3c7; color: #d97706; }
+    .confirmed { background: #dcfce7; color: #16a34a; }
+    .rejected { background: #fee2e2; color: #dc2626; }
+
+    .booking-details {
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .booking-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .approve-btn, .reject-btn {
+      border: none;
+      border-radius: 18px;
+      padding: 14px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .approve-btn { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+    .reject-btn { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
 
     .filter-row {
       display: flex;
@@ -543,7 +512,6 @@
     .filter-btn.active-filter {
       background: linear-gradient(135deg, #2563eb, #60a5fa);
       color: white;
-      box-shadow: 0 8px 20px rgba(37,99,235,0.18);
     }
 
     .stats-mini-grid {
@@ -575,29 +543,18 @@
       font-weight: 600;
     }
 
-    .settings-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 0;
-      border-bottom: 1px solid #eef2ff;
-    }
-
-    .settings-row:last-child {
-      border-bottom: none;
-    }
-
     .subtext {
       color: #64748b;
       font-size: 14px;
       margin-top: 4px;
     }
 
-    .history-item, .notif-item, .payment-item, .customer-item {
+    .settings-row, .history-item, .notif-item, .payment-item, .customer-item {
       padding: 14px 0;
       border-bottom: 1px solid #eef2ff;
     }
 
+    .settings-row:last-child,
     .history-item:last-child,
     .notif-item:last-child,
     .payment-item:last-child,
@@ -609,28 +566,10 @@
       width: 100% !important;
       max-width: 100%;
     }
-
-    @media (max-width: 430px) {
-      .hero {
-        min-height: 300px;
-      }
-
-      .hero-content {
-        width: 65%;
-        padding: 24px 18px;
-      }
-
-      .hero h1 {
-        font-size: 24px;
-      }
-
-      .hero img {
-        width: 50%;
-      }
-    }
   </style>
 </head>
 <body>
+
   <div class="container">
 
     <div class="topbar">
@@ -661,7 +600,7 @@
             <button class="hero-btn secondary-btn" onclick="openTab('bookingsPanel', document.getElementById('tabBookings'))">
               <i class="fa-solid fa-calendar-check"></i> Bookings
             </button>
-            <button class="hero-btn secondary-btn" onclick="openTab('managementPanel', document.getElementById('tabManage')); setTimeout(() => document.getElementById('newRoomPrice').focus(), 200);">
+            <button class="hero-btn secondary-btn" onclick="openTab('managementPanel', document.getElementById('tabManage'))">
               <i class="fa-solid fa-indian-rupee-sign"></i> Price
             </button>
           </div>
@@ -774,18 +713,30 @@
         <div class="profile-email" id="profileEmail">Loading...</div>
 
         <div class="profile-actions">
-          <div class="action-btn" onclick="openTab('editProfilePanel')">✏️ Edit Profile</div>
-          <div class="action-btn" onclick="openTab('settingsPanel')">⚙️ Settings</div>
-          <div class="action-btn" onclick="openTab('customersPanel')">👥 Customers</div>
-          <div class="action-btn" onclick="openTab('kycPanel')">🪪 KYC Verification</div>
-          <div class="action-btn" onclick="openTab('paymentsPanel')">💳 Payments / UPI</div>
-          <div class="action-btn" onclick="openTab('historyPanel')">📜 Booking History</div>
-          <div class="action-btn" onclick="openTab('notificationsPanel')">🔔 Notifications</div>
+          <div class="action-btn" onclick="openTab('editProfilePanel', document.getElementById('tabProfile'))">✏️ Edit Profile</div>
+          <div class="action-btn" onclick="openTab('settingsPanel', document.getElementById('tabProfile'))">⚙️ Settings</div>
+          <div class="action-btn" onclick="openTab('customersPanel', document.getElementById('tabProfile'))">👥 Customers</div>
+          <div class="action-btn" onclick="openTab('kycPanel', document.getElementById('tabProfile'))">🪪 KYC Verification</div>
+          <div class="action-btn" onclick="openTab('paymentsPanel', document.getElementById('tabProfile'))">💳 Payments / UPI</div>
+          <div class="action-btn" onclick="openTab('historyPanel', document.getElementById('tabProfile'))">📜 Booking History</div>
+          <div class="action-btn" onclick="openTab('notificationsPanel', document.getElementById('tabProfile'))">🔔 Notifications</div>
         </div>
       </div>
     </div>
 
-    <!-- EDIT PROFILE PANEL -->
+    <!-- EDIT PROFILE -->
     <div id="editProfilePanel" class="panel">
       <div class="section-title">Edit Profile</div>
-      <div cl
+      <div class="management-card">
+        <input type="text" id="profileEditHotelName" class="input-field" placeholder="Hotel Name">
+        <input type="text" id="profileEditCity" class="input-field" placeholder="City">
+        <input type="text" id="profileEditContact" class="input-field" placeholder="Contact Number">
+        <button class="save-btn" onclick="saveProfile()">Save Profile</button>
+        <button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">⬅ Back</button>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="settingsPanel" class="panel">
+      <div class="section-title">Settings</div>
+      <div class="management-c

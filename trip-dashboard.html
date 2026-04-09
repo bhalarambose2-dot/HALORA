@@ -3,30 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>HALORA Agent Dashboard</title>
-
+  <title>HALORA Trip Agent Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg:#08101f;
-      --bg2:#0d172a;
-      --card:rgba(255,255,255,.08);
-      --card2:rgba(255,255,255,.06);
-      --line:rgba(255,255,255,.10);
-      --txt:#ffffff;
-      --muted:#9fb0d0;
-      --cyan:#00e7ff;
-      --green:#00ff9d;
-      --yellow:#ffd54a;
-      --red:#ff5b7f;
-      --blue:#4d8dff;
-      --shadow:0 12px 40px rgba(0,0,0,.35);
-      --radius:24px;
-    }
-
     *{
       margin:0;
       padding:0;
@@ -35,13 +17,31 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    :root{
+      --bg:#070b14;
+      --bg2:#0d1322;
+      --card:rgba(255,255,255,0.06);
+      --card2:rgba(255,255,255,0.04);
+      --line:rgba(255,255,255,0.08);
+      --text:#ffffff;
+      --muted:#a8b3cf;
+      --cyan:#00eaff;
+      --blue:#4d7fff;
+      --green:#00ff99;
+      --yellow:#ffd84d;
+      --red:#ff5f7e;
+      --shadow:0 15px 50px rgba(0,0,0,0.35);
+      --radius:24px;
+    }
+
     body{
       background:
-        radial-gradient(circle at top left, rgba(0,231,255,.10), transparent 25%),
-        radial-gradient(circle at top right, rgba(77,141,255,.10), transparent 20%),
-        linear-gradient(180deg, var(--bg), #060b14);
-      color:var(--txt);
+        radial-gradient(circle at top left, rgba(0,234,255,0.10), transparent 20%),
+        radial-gradient(circle at top right, rgba(77,127,255,0.10), transparent 20%),
+        linear-gradient(180deg, var(--bg), #05070d);
+      color:var(--text);
       min-height:100vh;
+      overflow-x:hidden;
     }
 
     .app{
@@ -52,159 +52,139 @@
     /* SIDEBAR */
     .sidebar{
       width:280px;
-      background:rgba(255,255,255,.05);
+      background:rgba(255,255,255,0.05);
       border-right:1px solid var(--line);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
       padding:20px;
       position:fixed;
       inset:0 auto 0 0;
-      z-index:50;
-      box-shadow: var(--shadow);
+      z-index:100;
+      box-shadow:var(--shadow);
     }
 
     .brand{
       display:flex;
       align-items:center;
       gap:14px;
-      margin-bottom:24px;
+      margin-bottom:25px;
     }
 
-    .brand .logo{
-      width:56px;
-      height:56px;
+    .logo{
+      width:58px;
+      height:58px;
       border-radius:18px;
-      background:linear-gradient(135deg, var(--cyan), var(--blue));
+      background:linear-gradient(135deg,var(--cyan),var(--blue));
       display:grid;
       place-items:center;
-      color:#001018;
-      font-size:24px;
+      font-size:26px;
       font-weight:800;
-      box-shadow:0 10px 30px rgba(0,231,255,.25);
+      color:#001018;
+      box-shadow:0 12px 30px rgba(0,234,255,0.25);
     }
 
     .brand h1{
-      font-size:22px;
-      line-height:1.1;
+      font-size:24px;
       font-weight:800;
-      letter-spacing:.3px;
+      line-height:1.1;
     }
 
     .brand p{
-      color:var(--muted);
       font-size:12px;
+      color:var(--muted);
       margin-top:4px;
     }
 
-    .agent-mini{
+    .profile-mini{
       background:var(--card);
       border:1px solid var(--line);
-      border-radius:20px;
+      border-radius:22px;
       padding:16px;
       display:flex;
       align-items:center;
       gap:14px;
-      margin-bottom:18px;
+      margin-bottom:20px;
     }
 
-    .agent-mini img{
-      width:54px;
-      height:54px;
+    .profile-mini img{
+      width:56px;
+      height:56px;
       border-radius:18px;
       object-fit:cover;
-      border:2px solid rgba(255,255,255,.15);
+      border:2px solid rgba(255,255,255,0.15);
     }
 
-    .agent-mini .name{
+    .profile-mini h3{
       font-size:15px;
       font-weight:700;
     }
 
-    .agent-mini .sub{
-      color:var(--muted);
+    .profile-mini p{
       font-size:12px;
+      color:var(--muted);
       margin-top:2px;
     }
 
-    .status-pill{
+    .status{
+      margin-top:8px;
       display:inline-flex;
       align-items:center;
       gap:8px;
       padding:6px 10px;
       border-radius:999px;
+      background:rgba(0,255,153,0.12);
+      color:#88ffd1;
       font-size:11px;
-      margin-top:8px;
-      background:rgba(0,255,157,.12);
-      color:#8fffcf;
-      border:1px solid rgba(0,255,157,.18);
+      border:1px solid rgba(0,255,153,0.18);
     }
 
-    .status-pill.pending{
-      background:rgba(255,213,74,.12);
-      color:#ffe694;
-      border:1px solid rgba(255,213,74,.18);
-    }
-
-    .status-pill.rejected{
-      background:rgba(255,91,127,.12);
-      color:#ff9eb2;
-      border:1px solid rgba(255,91,127,.18);
-    }
-
-    .nav{
+    .menu{
       display:flex;
       flex-direction:column;
       gap:10px;
-      margin-top:12px;
     }
 
-    .nav button{
+    .menu button{
       border:none;
       background:transparent;
-      color:#dce7ff;
-      display:flex;
-      align-items:center;
-      gap:14px;
+      color:#dce6ff;
       padding:14px 16px;
       border-radius:18px;
-      font-size:15px;
-      cursor:pointer;
-      transition:.22s ease;
-      border:1px solid transparent;
       text-align:left;
+      font-size:15px;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.25s ease;
+      border:1px solid transparent;
     }
 
-    .nav button:hover,
-    .nav button.active{
-      background:rgba(255,255,255,.08);
+    .menu button:hover,
+    .menu button.active{
+      background:rgba(255,255,255,0.08);
       border-color:var(--line);
       transform:translateX(4px);
     }
 
-    .sidebar-footer{
+    .logout{
       position:absolute;
+      bottom:20px;
       left:20px;
       right:20px;
-      bottom:20px;
-      display:grid;
-      gap:10px;
-    }
-
-    .logout-btn{
-      background:linear-gradient(135deg, #1b2944, #122038);
-      border:1px solid var(--line);
-      color:#fff;
+      border:none;
       padding:14px;
       border-radius:18px;
-      cursor:pointer;
+      background:linear-gradient(135deg,#17233b,#10192c);
+      color:#fff;
       font-weight:700;
+      cursor:pointer;
+      border:1px solid var(--line);
     }
 
     /* MAIN */
     .main{
       margin-left:280px;
       width:calc(100% - 280px);
-      padding:20px 20px 110px;
+      padding:22px 22px 110px;
     }
 
     .topbar{
@@ -212,20 +192,19 @@
       align-items:center;
       justify-content:space-between;
       gap:14px;
-      margin-bottom:18px;
+      margin-bottom:20px;
       flex-wrap:wrap;
     }
 
-    .title-wrap h2{
+    .topbar h2{
       font-size:30px;
       font-weight:800;
-      letter-spacing:.2px;
     }
 
-    .title-wrap p{
+    .topbar p{
       color:var(--muted);
-      margin-top:4px;
       font-size:14px;
+      margin-top:4px;
     }
 
     .top-actions{
@@ -241,9 +220,9 @@
       color:#fff;
       padding:14px 18px;
       border-radius:18px;
-      cursor:pointer;
       font-weight:700;
-      box-shadow: var(--shadow);
+      cursor:pointer;
+      box-shadow:var(--shadow);
     }
 
     .grid{
@@ -257,9 +236,9 @@
       border:1px solid var(--line);
       border-radius:var(--radius);
       padding:18px;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: var(--shadow);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      box-shadow:var(--shadow);
       overflow:hidden;
     }
 
@@ -272,29 +251,28 @@
     .span-12{grid-column:span 12;}
 
     .stat{
-      position:relative;
-      min-height:140px;
+      min-height:145px;
       display:flex;
       flex-direction:column;
       justify-content:space-between;
     }
 
     .stat .icon{
-      width:52px;
-      height:52px;
+      width:54px;
+      height:54px;
       border-radius:18px;
+      background:rgba(255,255,255,0.08);
+      border:1px solid var(--line);
       display:grid;
       place-items:center;
-      background:rgba(255,255,255,.08);
       font-size:24px;
-      border:1px solid var(--line);
     }
 
     .stat h3{
       font-size:15px;
       color:var(--muted);
-      font-weight:600;
       margin-top:14px;
+      font-weight:600;
     }
 
     .stat .value{
@@ -303,29 +281,46 @@
       margin-top:8px;
     }
 
-    .section-title{
+    .section-head{
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:10px;
+      align-items:center;
       margin-bottom:14px;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
-    .section-title h3{
+    .section-head h3{
       font-size:20px;
       font-weight:800;
     }
 
-    .section-title p{
+    .section-head p{
       color:var(--muted);
       font-size:13px;
       margin-top:4px;
     }
 
+    .btn{
+      border:none;
+      padding:12px 16px;
+      border-radius:16px;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.2s ease;
+    }
+
+    .btn:hover{ transform:translateY(-2px); }
+
+    .btn-green{ background:linear-gradient(135deg,#00ff99,#00d97f); color:#00170f; }
+    .btn-red{ background:linear-gradient(135deg,#ff5f7e,#ff355e); color:#fff; }
+    .btn-blue{ background:linear-gradient(135deg,#4d7fff,#2e6df2); color:#fff; }
+    .btn-dark{ background:#10192b; color:#fff; border:1px solid var(--line); }
+
     .request-list,
     .trip-list,
-    .reviews-list,
-    .chat-list{
+    .review-list,
+    .chat-users{
       display:grid;
       gap:14px;
     }
@@ -333,8 +328,8 @@
     .request-item,
     .trip-item,
     .review-item,
-    .chat-item{
-      background:rgba(255,255,255,.05);
+    .chat-user{
+      background:rgba(255,255,255,0.05);
       border:1px solid var(--line);
       border-radius:22px;
       padding:16px;
@@ -342,8 +337,8 @@
 
     .row{
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:12px;
       flex-wrap:wrap;
     }
@@ -351,52 +346,20 @@
     .muted{ color:var(--muted); }
     .small{ font-size:12px; }
 
-    .btn{
-      border:none;
-      cursor:pointer;
-      border-radius:16px;
-      padding:12px 16px;
-      font-weight:700;
-      transition:.2s ease;
-    }
-
-    .btn:hover{ transform:translateY(-2px); }
-
-    .btn-green{
-      background:linear-gradient(135deg, #00ff9d, #00d77f);
-      color:#001810;
-    }
-
-    .btn-red{
-      background:linear-gradient(135deg, #ff5b7f, #ff3560);
-      color:#fff;
-    }
-
-    .btn-blue{
-      background:linear-gradient(135deg, #4d8dff, #2f73f0);
-      color:#fff;
-    }
-
-    .btn-dark{
-      background:#111b2f;
-      color:#fff;
-      border:1px solid var(--line);
-    }
-
     .chips{
       display:flex;
-      gap:8px;
       flex-wrap:wrap;
+      gap:8px;
       margin-top:10px;
     }
 
     .chip{
       padding:8px 12px;
       border-radius:999px;
-      background:rgba(255,255,255,.06);
+      background:rgba(255,255,255,0.06);
       border:1px solid var(--line);
       font-size:12px;
-      color:#dbe7ff;
+      color:#dce6ff;
     }
 
     .form-grid{
@@ -413,15 +376,15 @@
 
     .field label{
       font-size:13px;
-      color:#d9e6ff;
       font-weight:600;
+      color:#dce6ff;
     }
 
     input, textarea, select{
       width:100%;
-      background:#0f1728;
+      background:#0d1525;
       color:#fff;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,0.10);
       outline:none;
       border-radius:18px;
       padding:14px 16px;
@@ -434,14 +397,14 @@
     }
 
     .upload-box{
-      border:2px dashed rgba(255,255,255,.14);
-      background:rgba(255,255,255,.04);
+      border:2px dashed rgba(255,255,255,0.14);
+      background:rgba(255,255,255,0.04);
       border-radius:22px;
       padding:18px;
       text-align:center;
     }
 
-    .thumb{
+    .trip-preview{
       width:100%;
       max-height:220px;
       object-fit:cover;
@@ -451,6 +414,25 @@
       border:1px solid var(--line);
     }
 
+    .wallet-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .wallet-box{
+      background:rgba(255,255,255,0.05);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px;
+    }
+
+    .wallet-box .value{
+      font-size:24px;
+      font-weight:800;
+      margin-top:8px;
+    }
+
     .profile-grid{
       display:grid;
       grid-template-columns:140px 1fr;
@@ -458,62 +440,35 @@
       align-items:start;
     }
 
-    .profile-avatar{
+    .profile-grid img{
       width:140px;
       height:140px;
       border-radius:28px;
       object-fit:cover;
-      border:2px solid rgba(255,255,255,.12);
+      border:2px solid rgba(255,255,255,0.12);
       background:#101828;
     }
 
-    .wallet-box{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:14px;
-      margin-top:10px;
-    }
-
-    .wallet-mini{
-      background:rgba(255,255,255,.05);
-      border:1px solid var(--line);
-      border-radius:20px;
-      padding:16px;
-    }
-
-    .wallet-mini .v{
-      font-size:24px;
-      font-weight:800;
-      margin-top:8px;
-    }
-
-    .rating{
-      display:flex;
-      gap:4px;
-      font-size:20px;
-      color:#ffd54a;
-    }
-
-    .chat-wrap{
+    .chat-layout{
       display:grid;
       grid-template-columns:320px 1fr;
       gap:16px;
       min-height:520px;
     }
 
-    .chat-users{
-      background:rgba(255,255,255,.04);
+    .chat-sidebar{
+      background:rgba(255,255,255,0.04);
       border:1px solid var(--line);
       border-radius:24px;
       padding:12px;
       overflow:auto;
-      max-height:70vh;
+      max-height:72vh;
     }
 
-    .chat-thread{
+    .chat-main{
       display:flex;
       flex-direction:column;
-      background:rgba(255,255,255,.04);
+      background:rgba(255,255,255,0.04);
       border:1px solid var(--line);
       border-radius:24px;
       overflow:hidden;
@@ -522,7 +477,7 @@
     .chat-header{
       padding:16px;
       border-bottom:1px solid var(--line);
-      background:rgba(255,255,255,.04);
+      background:rgba(255,255,255,0.04);
     }
 
     .messages{
@@ -547,12 +502,12 @@
 
     .bubble.me{
       align-self:flex-end;
-      background:rgba(0,231,255,.12);
+      background:rgba(0,234,255,0.12);
     }
 
     .bubble.other{
       align-self:flex-start;
-      background:rgba(255,255,255,.06);
+      background:rgba(255,255,255,0.06);
     }
 
     .chat-input{
@@ -560,7 +515,7 @@
       gap:10px;
       padding:14px;
       border-top:1px solid var(--line);
-      background:rgba(255,255,255,.04);
+      background:rgba(255,255,255,0.04);
     }
 
     .hidden{ display:none !important; }
@@ -571,24 +526,20 @@
       padding:30px 12px;
     }
 
-    .mobile-nav{
-      display:none;
-    }
-
     .toast{
       position:fixed;
       right:20px;
       bottom:20px;
-      background:#0f1728;
+      background:#0d1525;
       border:1px solid var(--line);
       color:#fff;
       padding:14px 16px;
       border-radius:18px;
-      box-shadow: var(--shadow);
+      box-shadow:var(--shadow);
       z-index:999;
       opacity:0;
       transform:translateY(16px);
-      transition:.25s ease;
+      transition:0.25s ease;
       max-width:320px;
     }
 
@@ -597,257 +548,287 @@
       transform:translateY(0);
     }
 
-    .loader{
-      width:18px;height:18px;border:2px solid rgba(255,255,255,.25);
-      border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin .8s linear infinite;
-      vertical-align:middle;
+    .mobile-nav{
+      display:none;
     }
-    @keyframes spin{to{transform:rotate(360deg)}}
 
-    @media (max-width: 1180px){
+    @media(max-width:1180px){
       .span-3,.span-4,.span-5,.span-6,.span-7,.span-8{grid-column:span 12;}
-      .chat-wrap{grid-template-columns:1fr;}
+      .chat-layout{grid-template-columns:1fr;}
     }
 
-    @media (max-width: 920px){
+    @media(max-width:920px){
       .sidebar{
         transform:translateX(-100%);
-        transition:.25s ease;
+        transition:0.25s ease;
       }
-      .sidebar.open{
-        transform:translateX(0);
-      }
+      .sidebar.open{ transform:translateX(0); }
+
       .main{
         margin-left:0;
         width:100%;
         padding-bottom:110px;
       }
+
+      .form-grid,
+      .wallet-grid,
+      .profile-grid{
+        grid-template-columns:1fr;
+      }
+
       .mobile-nav{
         position:fixed;
         left:12px;
         right:12px;
         bottom:12px;
-        z-index:60;
+        z-index:100;
         display:grid;
         grid-template-columns:repeat(5,1fr);
         gap:10px;
-        background:rgba(10,16,31,.85);
+        background:rgba(10,16,31,0.85);
         border:1px solid var(--line);
-        backdrop-filter: blur(16px);
+        backdrop-filter:blur(16px);
         border-radius:24px;
         padding:10px;
-        box-shadow: var(--shadow);
+        box-shadow:var(--shadow);
       }
+
       .mobile-nav button{
         border:none;
         background:transparent;
-        color:#dce7ff;
+        color:#dce6ff;
         padding:12px 8px;
         border-radius:18px;
         font-size:12px;
       }
+
       .mobile-nav button.active{
-        background:rgba(255,255,255,.08);
-      }
-      .form-grid,
-      .profile-grid,
-      .wallet-box{
-        grid-template-columns:1fr;
-      }
-      .topbar{
-        margin-top:8px;
+        background:rgba(255,255,255,0.08);
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="app">
+<div class="app">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="logo">H</div>
-        <div>
-          <h1>HALORA</h1>
-          <p>Agent Partner Dashboard</p>
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo">H</div>
+      <div>
+        <h1>HALORA</h1>
+        <p>Trip Agent Dashboard</p>
+      </div>
+    </div>
+
+    <div class="profile-mini">
+      <img src="https://via.placeholder.com/100x100.png?text=A" id="agentAvatar">
+      <div>
+        <h3 id="agentName">Trip Agent</h3>
+        <p id="agentEmail">agent@halora.com</p>
+        <div class="status">Approved</div>
+      </div>
+    </div>
+
+    <div class="menu">
+      <button class="nav-btn active" data-page="dashboard">🏠 Dashboard</button>
+      <button class="nav-btn" data-page="requests">📥 Booking Requests</button>
+      <button class="nav-btn" data-page="addTrip">➕ Add Trip</button>
+      <button class="nav-btn" data-page="myTrips">🧳 My Trips</button>
+      <button class="nav-btn" data-page="wallet">💰 Wallet</button>
+      <button class="nav-btn" data-page="profile">👤 Profile / KYC</button>
+      <button class="nav-btn" data-page="reviews">⭐ Reviews</button>
+      <button class="nav-btn" data-page="chat">💬 Live Chat</button>
+    </div>
+
+    <button class="logout">Logout</button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="topbar">
+      <div>
+        <h2 id="pageTitle">Dashboard</h2>
+        <p id="pageSub">Manage your trips, bookings, wallet and live customer chats.</p>
+      </div>
+      <div class="top-actions">
+        <button class="glass-btn" id="menuBtn">☰ Menu</button>
+        <button class="glass-btn">⟳ Refresh</button>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <section class="page" id="dashboardPage">
+      <div class="grid">
+        <div class="card stat span-3">
+          <div class="icon">📥</div>
+          <div>
+            <h3>Pending Requests</h3>
+            <div class="value">12</div>
+          </div>
         </div>
-      </div>
 
-      <div class="agent-mini">
-        <img id="miniAvatar" src="https://via.placeholder.com/120x120.png?text=Agent" alt="Agent">
-        <div>
-          <div class="name" id="miniName">Loading...</div>
-          <div class="sub" id="miniEmail">agent@email.com</div>
-          <div class="status-pill pending" id="approvalPill">KYC Pending</div>
-        </div>
-      </div>
-
-      <div class="nav">
-        <button class="nav-btn active" data-page="dashboard">🏠 Dashboard</button>
-        <button class="nav-btn" data-page="requests">📥 Requests</button>
-        <button class="nav-btn" data-page="addTrip">➕ Add Trip</button>
-        <button class="nav-btn" data-page="myTrips">🧳 My Trips</button>
-        <button class="nav-btn" data-page="wallet">💰 Wallet</button>
-        <button class="nav-btn" data-page="profile">👤 Profile & KYC</button>
-        <button class="nav-btn" data-page="reviews">⭐ Reviews</button>
-        <button class="nav-btn" data-page="chat">💬 Live Chat</button>
-      </div>
-
-      <div class="sidebar-footer">
-        <button class="logout-btn" id="logoutBtn">Logout</button>
-      </div>
-    </aside>
-
-    <!-- MAIN -->
-    <main class="main">
-
-      <div class="topbar">
-        <div class="title-wrap">
-          <h2 id="pageTitle">Dashboard</h2>
-          <p id="pageSub">Manage your trips, requests, KYC, wallet and live customer chats.</p>
+        <div class="card stat span-3">
+          <div class="icon">🧳</div>
+          <div>
+            <h3>Active Trips</h3>
+            <div class="value">8</div>
+          </div>
         </div>
 
-        <div class="top-actions">
-          <button class="glass-btn" id="menuBtn">☰ Menu</button>
-          <button class="glass-btn" id="refreshBtn">⟳ Refresh</button>
+        <div class="card stat span-3">
+          <div class="icon">💰</div>
+          <div>
+            <h3>Wallet Balance</h3>
+            <div class="value">₹25,800</div>
+          </div>
         </div>
-      </div>
 
-      <!-- DASHBOARD -->
-      <section class="page" id="dashboardPage">
-        <div class="grid">
-          <div class="card stat span-3">
-            <div class="icon">📥</div>
+        <div class="card stat span-3">
+          <div class="icon">⭐</div>
+          <div>
+            <h3>Average Rating</h3>
+            <div class="value">4.8</div>
+          </div>
+        </div>
+
+        <div class="card span-7">
+          <div class="section-head">
             <div>
-              <h3>Pending Requests</h3>
-              <div class="value" id="statPending">0</div>
+              <h3>Latest Booking Requests</h3>
+              <p>Recent customer trip booking requests</p>
             </div>
+            <button class="btn btn-dark" onclick="showPage('requests')">View All</button>
           </div>
 
-          <div class="card stat span-3">
-            <div class="icon">🧳</div>
-            <div>
-              <h3>Active Trips</h3>
-              <div class="value" id="statTrips">0</div>
-            </div>
-          </div>
-
-          <div class="card stat span-3">
-            <div class="icon">💰</div>
-            <div>
-              <h3>Wallet Balance</h3>
-              <div class="value">₹<span id="statWallet">0</span></div>
-            </div>
-          </div>
-
-          <div class="card stat span-3">
-            <div class="icon">⭐</div>
-            <div>
-              <h3>Average Rating</h3>
-              <div class="value" id="statRating">0.0</div>
-            </div>
-          </div>
-
-          <div class="card span-7">
-            <div class="section-title">
-              <div>
-                <h3>Latest Booking Requests</h3>
-                <p>Real-time incoming customer bookings</p>
+          <div class="request-list">
+            <div class="request-item">
+              <div class="row">
+                <div>
+                  <h4>Rahul Sharma</h4>
+                  <p class="muted small">Jaipur → Udaipur • 4 People</p>
+                </div>
+                <div class="chip">Pending</div>
               </div>
-              <button class="btn btn-dark" onclick="goToPage('requests')">View All</button>
-            </div>
-            <div class="request-list" id="dashboardRequests"></div>
-          </div>
-
-          <div class="card span-5">
-            <div class="section-title">
-              <div>
-                <h3>Agent Status</h3>
-                <p>Approval, KYC and profile completion</p>
+              <div class="chips">
+                <div class="chip">Trip: Udaipur Family Trip</div>
+                <div class="chip">Budget: ₹16000</div>
+                <div class="chip">Date: 15 Apr</div>
+              </div>
+              <div style="height:14px;"></div>
+              <div class="row">
+                <span class="muted small">2 min ago</span>
+                <div style="display:flex;gap:10px;">
+                  <button class="btn btn-green">Accept</button>
+                  <button class="btn btn-red">Reject</button>
+                </div>
               </div>
             </div>
 
+            <div class="request-item">
+              <div class="row">
+                <div>
+                  <h4>Priya Mehta</h4>
+                  <p class="muted small">Delhi → Manali • 2 People</p>
+                </div>
+                <div class="chip">Pending</div>
+              </div>
+              <div class="chips">
+                <div class="chip">Trip: Manali Honeymoon</div>
+                <div class="chip">Budget: ₹22000</div>
+                <div class="chip">Date: 20 Apr</div>
+              </div>
+              <div style="height:14px;"></div>
+              <div class="row">
+                <span class="muted small">15 min ago</span>
+                <div style="display:flex;gap:10px;">
+                  <button class="btn btn-green">Accept</button>
+                  <button class="btn btn-red">Reject</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card span-5">
+          <div class="section-head">
+            <div>
+              <h3>Quick Status</h3>
+              <p>Agent profile and business status</p>
+            </div>
+          </div>
+
+          <div class="chips">
+            <div class="chip">Approval: Verified</div>
+            <div class="chip">Trips: 8</div>
+            <div class="chip">Unread Chats: 3</div>
+          </div>
+
+          <div style="height:18px;"></div>
+
+          <div class="upload-box">
+            <div style="font-size:42px;">🪪</div>
+            <h4 style="margin-top:10px;">KYC Completed</h4>
+            <p class="muted small" style="margin-top:6px;">Your documents are verified and your profile is active.</p>
+            <div style="height:14px;"></div>
+            <button class="btn btn-blue" onclick="showPage('profile')">View Profile</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REQUESTS -->
+    <section class="page hidden" id="requestsPage">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h3>Booking Requests</h3>
+            <p>Manage all customer requests</p>
+          </div>
+        </div>
+
+        <div class="request-list">
+          <div class="request-item">
+            <div class="row">
+              <div>
+                <h4>Vikas Singh</h4>
+                <p class="muted small">Mumbai → Goa • 5 People</p>
+              </div>
+              <div class="chip">Pending</div>
+            </div>
             <div class="chips">
-              <div class="chip" id="chipApproval">Approval: Pending</div>
-              <div class="chip" id="chipTrips">Trips: 0</div>
-              <div class="chip" id="chipChat">Unread Chats: 0</div>
+              <div class="chip">Trip: Goa Beach Tour</div>
+              <div class="chip">Budget: ₹30000</div>
+              <div class="chip">Date: 25 Apr</div>
             </div>
-
-            <div style="height:16px"></div>
-
-            <div class="upload-box">
-              <div style="font-size:40px;">🪪</div>
-              <h4 style="margin-top:8px;">Complete KYC Faster</h4>
-              <p class="muted small" style="margin-top:6px;">Upload Aadhaar / PAN / Travel docs to get approved quickly.</p>
-              <div style="height:14px"></div>
-              <button class="btn btn-blue" onclick="goToPage('profile')">Open KYC</button>
+            <p class="muted small" style="margin-top:12px;">Need hotel + sightseeing + pickup.</p>
+            <div style="height:14px;"></div>
+            <div class="row">
+              <span class="muted small">Today, 4:10 PM</span>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button class="btn btn-green">Accept</button>
+                <button class="btn btn-red">Reject</button>
+                <button class="btn btn-dark" onclick="showPage('chat')">Chat</button>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- REQUESTS -->
-      <section class="page hidden" id="requestsPage">
-        <div class="card">
-          <div class="section-title">
+    <!-- ADD TRIP -->
+    <section class="page hidden" id="addTripPage">
+      <div class="grid">
+        <div class="card span-7">
+          <div class="section-head">
             <div>
-              <h3>Customer Booking Requests</h3>
-              <p>Accept or reject live trip requests</p>
+              <h3>Add New Trip</h3>
+              <p>Create a new premium trip package</p>
             </div>
           </div>
-          <div class="request-list" id="requestsList"></div>
-        </div>
-      </section>
 
-      <!-- ADD TRIP -->
-      <section class="page hidden" id="addTripPage">
-        <div class="grid">
-          <div class="card span-7">
-            <div class="section-title">
-              <div>
-                <h3>Add New Trip Package</h3>
-                <p>Create premium trip listings for customers</p>
-              </div>
-            </div>
-
-            <div class="form-grid">
-              <div class="field">
-                <label>Trip Title</label>
-                <input id="tripTitle" type="text" placeholder="e.g. Udaipur Family Trip">
-              </div>
-
-              <div class="field">
-                <label>Price (₹)</label>
-                <input id="tripPrice" type="number" placeholder="e.g. 16000">
-              </div>
-
-              <div class="field">
-                <label>Pickup City</label>
-                <input id="tripPickup" type="text" placeholder="e.g. Jaipur">
-              </div>
-
-              <div class="field">
-                <label>Destination</label>
-                <input id="tripDestination" type="text" placeholder="e.g. Udaipur">
-              </div>
-
-              <div class="field">
-                <label>Duration</label>
-                <input id="tripDuration" type="text" placeholder="e.g. 2 Days / 1 Night">
-              </div>
-
-              <div class="field">
-                <label>Seats / People</label>
-                <input id="tripSeats" type="number" placeholder="e.g. 4">
-              </div>
-
-              <div class="field" style="grid-column:1/-1;">
-                <label>Description</label>
-                <textarea id="tripDescription" placeholder="Hotel, food, cab, sightseeing etc..."></textarea>
-              </div>
-            </div>
-
-            <div style="height:14px"></div>
-
-          
+          <div class="form-grid">
+            <div class="field">
+              <label>Trip Title</l

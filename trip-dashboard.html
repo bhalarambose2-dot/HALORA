@@ -48,10 +48,9 @@
       margin:auto;
       min-height:100vh;
       position:relative;
-      padding-bottom:95px;
+      padding-bottom:100px;
     }
 
-    /* TOP BAR */
     .topbar{
       position:sticky;
       top:0;
@@ -72,14 +71,14 @@
     }
 
     .logo{
-      width:48px;
-      height:48px;
-      border-radius:16px;
+      width:52px;
+      height:52px;
+      border-radius:18px;
       background:linear-gradient(135deg,var(--cyan),var(--blue));
       display:grid;
       place-items:center;
       font-weight:800;
-      font-size:22px;
+      font-size:24px;
       color:#001018;
       box-shadow:0 12px 30px rgba(0,234,255,0.25);
     }
@@ -94,15 +93,10 @@
       color:var(--muted);
     }
 
-    .top-actions{
-      display:flex;
-      gap:10px;
-    }
-
     .icon-btn{
-      width:42px;
-      height:42px;
-      border-radius:14px;
+      width:46px;
+      height:46px;
+      border-radius:16px;
       border:none;
       background:var(--card);
       border:1px solid var(--line);
@@ -114,10 +108,16 @@
     .page{
       display:none;
       padding:16px;
+      animation:fade 0.28s ease;
     }
 
     .page.active{
       display:block;
+    }
+
+    @keyframes fade{
+      from{opacity:0; transform:translateY(8px);}
+      to{opacity:1; transform:translateY(0);}
     }
 
     .page-title{
@@ -148,9 +148,9 @@
     }
 
     .profile-mini img{
-      width:62px;
-      height:62px;
-      border-radius:18px;
+      width:70px;
+      height:70px;
+      border-radius:20px;
       object-fit:cover;
       border:2px solid rgba(255,255,255,0.12);
       background:#111;
@@ -197,14 +197,14 @@
     }
 
     .stat .icon{
-      width:50px;
-      height:50px;
+      width:52px;
+      height:52px;
       border-radius:16px;
       background:rgba(255,255,255,0.08);
       border:1px solid var(--line);
       display:grid;
       place-items:center;
-      font-size:22px;
+      font-size:24px;
       margin-bottom:12px;
     }
 
@@ -363,25 +363,20 @@
       margin-top:8px;
     }
 
-    .profile-grid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:18px;
-    }
-
-    .profile-grid img{
-      width:120px;
-      height:120px;
-      border-radius:26px;
-      object-fit:cover;
-      border:2px solid rgba(255,255,255,0.12);
-      background:#111;
-    }
-
     .upload-wrap{
       display:flex;
       align-items:center;
       gap:14px;
+      margin-bottom:18px;
+    }
+
+    .upload-wrap img{
+      width:110px;
+      height:110px;
+      border-radius:24px;
+      object-fit:cover;
+      border:2px solid rgba(255,255,255,0.12);
+      background:#111;
     }
 
     .switch{
@@ -401,7 +396,6 @@
       transform:scale(1.2);
     }
 
-    /* BOTTOM NAV */
     .bottom-nav{
       position:fixed;
       left:50%;
@@ -466,7 +460,7 @@
 
 <div class="app">
 
-  <!-- TOP BAR -->
+  <!-- TOP -->
   <div class="topbar">
     <div class="brand">
       <div class="logo">H</div>
@@ -475,10 +469,7 @@
         <p>Trip Agent Dashboard</p>
       </div>
     </div>
-
-    <div class="top-actions">
-      <button class="icon-btn" onclick="renderAll()">⟳</button>
-    </div>
+    <button class="icon-btn" onclick="renderAll()">⟳</button>
   </div>
 
   <!-- HOME -->
@@ -540,7 +531,6 @@
       <h2>My Bookings</h2>
       <p>Accepted bookings appear here automatically.</p>
     </div>
-
     <div class="booking-list" id="myBookingsList"></div>
   </section>
 
@@ -591,77 +581,75 @@
     </div>
 
     <div class="card">
-      <div class="profile-grid">
-        <div class="upload-wrap">
-          <img src="https://via.placeholder.com/300x300.png?text=Agent" id="profilePreview">
-          <div style="flex:1;">
-            <div class="field">
-              <label>Profile Photo</label>
-              <input type="file" id="profileInput" accept="image/*">
-            </div>
+      <div class="upload-wrap">
+        <img src="https://via.placeholder.com/300x300.png?text=Agent" id="profilePreview">
+        <div style="flex:1;">
+          <div class="field">
+            <label>Profile Photo</label>
+            <input type="file" id="profileInput" accept="image/*">
           </div>
         </div>
-
-        <div class="form-grid">
-          <div class="field">
-            <label>Full Name</label>
-            <input type="text" id="fullName" value="Bhala Ram">
-          </div>
-          <div class="field">
-            <label>Email</label>
-            <input type="email" id="email" value="agent@halora.com">
-          </div>
-          <div class="field">
-            <label>Phone</label>
-            <input type="text" id="phone" value="8769930595">
-          </div>
-          <div class="field">
-            <label>City</label>
-            <input type="text" id="city" value="Jodhpur">
-          </div>
-          <div class="field">
-            <label>Agency Name</label>
-            <input type="text" id="agency" value="HALORA Trips">
-          </div>
-          <div class="field">
-            <label>Experience</label>
-            <input type="text" id="experience" value="2 Years">
-          </div>
-
-          <div class="field">
-            <label>Aadhaar Number</label>
-            <input type="text" id="aadhaarNo" placeholder="XXXX-XXXX-XXXX">
-          </div>
-          <div class="field">
-            <label>PAN Number</label>
-            <input type="text" id="panNo" placeholder="ABCDE1234F">
-          </div>
-
-          <div class="field">
-            <label>Account Holder Name</label>
-            <input type="text" id="bankName" placeholder="Account Holder Name">
-          </div>
-          <div class="field">
-            <label>Bank Name</label>
-            <input type="text" id="bankBank" placeholder="State Bank of India">
-          </div>
-          <div class="field">
-            <label>Account Number</label>
-            <input type="text" id="bankAcc" placeholder="XXXXXXXXXXXX">
-          </div>
-          <div class="field">
-            <label>IFSC Code</label>
-            <input type="text" id="bankIfsc" placeholder="SBIN0000000">
-          </div>
-          <div class="field">
-            <label>UPI ID</label>
-            <input type="text" id="upiId" placeholder="yourupi@okaxis">
-          </div>
-        </div>
-
-        <div style="height:14px;"></div>
-        <button class="btn btn-green" onclick="saveProfile()">Save Profile</button>
       </div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" id="fullName" value="Bhala Ram">
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="email" value="agent@halora.com">
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input type="text" id="phone" value="8769930595">
+        </div>
+        <div class="field">
+          <label>City</label>
+          <input type="text" id="city" value="Jodhpur">
+        </div>
+        <div class="field">
+          <label>Agency Name</label>
+          <input type="text" id="agency" value="HALORA Trips">
+        </div>
+        <div class="field">
+          <label>Experience</label>
+          <input type="text" id="experience" value="2 Years">
+        </div>
+
+        <div class="field">
+          <label>Aadhaar Number</label>
+          <input type="text" id="aadhaarNo" placeholder="XXXX-XXXX-XXXX">
+        </div>
+        <div class="field">
+          <label>PAN Number</label>
+          <input type="text" id="panNo" placeholder="ABCDE1234F">
+        </div>
+
+        <div class="field">
+          <label>Account Holder Name</label>
+          <input type="text" id="bankName" placeholder="Account Holder Name">
+        </div>
+        <div class="field">
+          <label>Bank Name</label>
+          <input type="text" id="bankBank" placeholder="State Bank of India">
+        </div>
+        <div class="field">
+          <label>Account Number</label>
+          <input type="text" id="bankAcc" placeholder="XXXXXXXXXXXX">
+        </div>
+        <div class="field">
+          <label>IFSC Code</label>
+          <input type="text" id="bankIfsc" placeholder="SBIN0000000">
+        </div>
+        <div class="field">
+          <label>UPI ID</label>
+          <input type="text" id="upiId" placeholder="yourupi@okaxis">
+        </div>
+      </div>
+
+      <div style="height:14px;"></div>
+      <button class="btn btn-green" onclick="saveProfile()">Save Profile</button>
     </div>
   </section>
 
@@ -671,7 +659,6 @@
       <h2>Booking History</h2>
       <p>Accepted, rejected and completed bookings.</p>
     </div>
-
     <div class="history-list" id="historyList"></div>
   </section>
 
@@ -707,6 +694,14 @@
         <input type="checkbox" checked>
       </div>
 
+      <div class="switch">
+        <div>
+          <h4>Open Booking History</h4>
+          <p class="muted small">See accepted, rejected and completed trips</p>
+        </div>
+        <button class="btn btn-dark" onclick="showPage('history')" style="width:auto;padding:10px 14px;">Open</button>
+      </div>
+
       <div style="height:18px;"></div>
       <button class="btn btn-yellow" onclick="showToast('Settings saved')">Save Settings</button>
     </div>
@@ -726,6 +721,9 @@
 <div class="toast" id="toast">Saved successfully</div>
 
 <script>
+  // =========================
+  // DEMO DATA
+  // =========================
   let requests = [
     {
       id: 1,
@@ -750,6 +748,18 @@
       travelDate: "20 Apr 2026",
       notes: "Honeymoon package with private cab",
       status: "pending"
+    },
+    {
+      id: 3,
+      customerName: "Vikas Singh",
+      phone: "9876511111",
+      pickup: "Mumbai",
+      destination: "Goa",
+      people: 5,
+      budget: 30000,
+      travelDate: "25 Apr 2026",
+      notes: "Hotel + breakfast + beach tour",
+      status: "pending"
     }
   ];
 
@@ -761,19 +771,35 @@
     total: 128000
   };
 
+  // =========================
+  // PAGE NAVIGATION
+  // =========================
   function showPage(page){
-    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-    document.getElementById(page + "Page").classList.add("active");
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    const currentPage = document.getElementById(page + "Page");
+    if(currentPage) currentPage.classList.add("active");
 
-    document.querySelectorAll(".tab-btn").forEach(btn=>btn.classList.remove("active"));
-    const labels = ["home","myBookings","wallet","profile","settings"];
-    const index = labels.indexOf(page);
-    if(index > -1) document.querySelectorAll(".tab-btn")[index].classList.add("active");
+    document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+
+    const map = {
+      home: 0,
+      myBookings: 1,
+      wallet: 2,
+      profile: 3,
+      settings: 4
+    };
+
+    const tabs = document.querySelectorAll(".tab-btn");
+    if(tabs[map[page]]) tabs[map[page]].classList.add("active");
   }
 
+  // =========================
+  // HOME REQUESTS
+  // =========================
   function renderRequests(){
     const box = document.getElementById("requestList");
     const pending = requests.filter(r => r.status === "pending");
+
     document.getElementById("pendingCount").textContent = pending.length;
 
     if(!pending.length){
@@ -794,27 +820,4 @@
         <div class="chips">
           <div class="chip">${r.people} People</div>
           <div class="chip">₹${r.budget}</div>
-          <div class="chip">${r.travelDate}</div>
-        </div>
-
-        <p class="muted small" style="margin-top:12px;">${r.notes}</p>
-
-        <div class="btn-row">
-          <button class="btn btn-green btn-half" onclick="acceptBooking(${r.id})">Accept</button>
-          <button class="btn btn-red btn-half" onclick="rejectBooking(${r.id})">Reject</button>
-        </div>
-      </div>
-    `).join("");
-  }
-
-  function acceptBooking(id){
-    const booking = requests.find(r => r.id === id);
-    if(!booking) return;
-
-    booking.status = "accepted";
-    booking.acceptedAt = new Date().toLocaleString();
-
-    myBookings.unshift({...booking});
-    bookingHistory.unshift({...booking});
-
-    wallet.av
+          <div cl

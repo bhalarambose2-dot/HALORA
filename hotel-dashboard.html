@@ -445,7 +445,27 @@
       font-size: 15px;
       margin-bottom: 20px;
     }
+    .profile-actions {
+     margin-top: 20px;
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 12px;
+    }
+    .action-btn {
+     background: #18233a;
+     color: #fff;
+     padding: 14px;
+     border-radius: 12px;
+     text-align: center;
+     font-weight: 500;
+     cursor: pointer;  
+     transition: 0.3s;
+    }
 
+    .action-btn:hover {
+     background: #2563eb;
+     transform: scale(1.05);
+    }
     .tabs {
       position: fixed;
       bottom: 0;
@@ -716,6 +736,10 @@
       <div class="section-title">Hotel Profile</div>
       <div class="profile-card profile-box">
        <div class="profile-actions">
+        <div class="profile-avatar" id="profileAvatar">H</div>
+        <div class="profile-name" id="profileHotelName">HALORA HOTEL</div>
+        <div class="profile-email" id="profileEmail">Loading...</div>
+        <div class="profile-actions">
 
   <div class="action-btn" onclick="openEditProfile()">
     ✏️ Edit Profile
@@ -743,11 +767,8 @@
 
   <div class="action-btn" onclick="openNotifications()">
     🔔 Notifications
-       </div>
-        <div class="profile-avatar" id="profileAvatar">H</div>
-        <div class="profile-name" id="profileHotelName">HALORA HOTEL</div>
-        <div class="profile-email" id="profileEmail">Loading...</div>
-      </div>
+  </div>
+
     </div>
 
   </div>

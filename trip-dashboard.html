@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>HALORA Trip Agent Dashboard</title>
+  <title>HALORA Trip Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -21,7 +21,6 @@
       --bg:#070b14;
       --bg2:#0d1322;
       --card:rgba(255,255,255,0.06);
-      --card2:rgba(255,255,255,0.04);
       --line:rgba(255,255,255,0.08);
       --text:#ffffff;
       --muted:#a8b3cf;
@@ -30,8 +29,8 @@
       --green:#00ff99;
       --yellow:#ffd84d;
       --red:#ff5f7e;
-      --shadow:0 15px 50px rgba(0,0,0,0.35);
-      --radius:24px;
+      --shadow:0 15px 40px rgba(0,0,0,0.35);
+      --radius:22px;
     }
 
     body{
@@ -45,54 +44,95 @@
     }
 
     .app{
-      display:flex;
+      max-width:480px;
+      margin:auto;
       min-height:100vh;
+      position:relative;
+      padding-bottom:95px;
     }
 
-    /* SIDEBAR */
-    .sidebar{
-      width:290px;
-      background:rgba(255,255,255,0.05);
-      border-right:1px solid var(--line);
+    /* TOP BAR */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      padding:16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:rgba(7,11,20,0.75);
       backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
-      padding:20px;
-      position:fixed;
-      inset:0 auto 0 0;
-      z-index:100;
-      box-shadow:var(--shadow);
+      border-bottom:1px solid var(--line);
     }
 
     .brand{
       display:flex;
       align-items:center;
-      gap:14px;
-      margin-bottom:25px;
+      gap:12px;
     }
 
     .logo{
-      width:58px;
-      height:58px;
-      border-radius:18px;
+      width:48px;
+      height:48px;
+      border-radius:16px;
       background:linear-gradient(135deg,var(--cyan),var(--blue));
       display:grid;
       place-items:center;
-      font-size:26px;
       font-weight:800;
+      font-size:22px;
       color:#001018;
       box-shadow:0 12px 30px rgba(0,234,255,0.25);
     }
 
     .brand h1{
-      font-size:24px;
+      font-size:20px;
       font-weight:800;
-      line-height:1.1;
     }
 
     .brand p{
       font-size:12px;
       color:var(--muted);
-      margin-top:4px;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+    }
+
+    .icon-btn{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:none;
+      background:var(--card);
+      border:1px solid var(--line);
+      color:#fff;
+      font-size:18px;
+      cursor:pointer;
+    }
+
+    .page{
+      display:none;
+      padding:16px;
+    }
+
+    .page.active{
+      display:block;
+    }
+
+    .page-title{
+      margin-bottom:18px;
+    }
+
+    .page-title h2{
+      font-size:28px;
+      font-weight:800;
+    }
+
+    .page-title p{
+      color:var(--muted);
+      font-size:14px;
+      margin-top:5px;
     }
 
     .profile-mini{
@@ -103,19 +143,21 @@
       display:flex;
       align-items:center;
       gap:14px;
-      margin-bottom:20px;
+      margin-bottom:18px;
+      box-shadow:var(--shadow);
     }
 
     .profile-mini img{
-      width:58px;
-      height:58px;
+      width:62px;
+      height:62px;
       border-radius:18px;
       object-fit:cover;
-      border:2px solid rgba(255,255,255,0.15);
+      border:2px solid rgba(255,255,255,0.12);
+      background:#111;
     }
 
     .profile-mini h3{
-      font-size:15px;
+      font-size:16px;
       font-weight:700;
     }
 
@@ -138,145 +180,42 @@
       border:1px solid rgba(0,255,153,0.18);
     }
 
-    .menu{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .menu button{
-      border:none;
-      background:transparent;
-      color:#dce6ff;
-      padding:14px 16px;
-      border-radius:18px;
-      text-align:left;
-      font-size:15px;
-      font-weight:600;
-      cursor:pointer;
-      transition:0.25s ease;
-      border:1px solid transparent;
-    }
-
-    .menu button:hover,
-    .menu button.active{
-      background:rgba(255,255,255,0.08);
-      border-color:var(--line);
-      transform:translateX(4px);
-    }
-
-    .logout{
-      position:absolute;
-      bottom:20px;
-      left:20px;
-      right:20px;
-      border:none;
-      padding:14px;
-      border-radius:18px;
-      background:linear-gradient(135deg,#17233b,#10192c);
-      color:#fff;
-      font-weight:700;
-      cursor:pointer;
-      border:1px solid var(--line);
-    }
-
-    /* MAIN */
-    .main{
-      margin-left:290px;
-      width:calc(100% - 290px);
-      padding:22px 22px 110px;
-    }
-
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      margin-bottom:20px;
-      flex-wrap:wrap;
-    }
-
-    .topbar h2{
-      font-size:30px;
-      font-weight:800;
-    }
-
-    .topbar p{
-      color:var(--muted);
-      font-size:14px;
-      margin-top:4px;
-    }
-
-    .top-actions{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-
-    .glass-btn{
-      border:none;
-      background:var(--card);
-      border:1px solid var(--line);
-      color:#fff;
-      padding:14px 18px;
-      border-radius:18px;
-      font-weight:700;
-      cursor:pointer;
-      box-shadow:var(--shadow);
-    }
-
-    .grid{
+    .stats-grid{
       display:grid;
-      grid-template-columns:repeat(12,1fr);
-      gap:18px;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-bottom:18px;
     }
 
     .card{
       background:var(--card);
       border:1px solid var(--line);
       border-radius:var(--radius);
-      padding:18px;
-      backdrop-filter:blur(16px);
-      -webkit-backdrop-filter:blur(16px);
+      padding:16px;
       box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-
-    .span-3{grid-column:span 3;}
-    .span-4{grid-column:span 4;}
-    .span-5{grid-column:span 5;}
-    .span-6{grid-column:span 6;}
-    .span-7{grid-column:span 7;}
-    .span-8{grid-column:span 8;}
-    .span-12{grid-column:span 12;}
-
-    .stat{
-      min-height:145px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
+      backdrop-filter:blur(14px);
     }
 
     .stat .icon{
-      width:54px;
-      height:54px;
-      border-radius:18px;
+      width:50px;
+      height:50px;
+      border-radius:16px;
       background:rgba(255,255,255,0.08);
       border:1px solid var(--line);
       display:grid;
       place-items:center;
-      font-size:24px;
+      font-size:22px;
+      margin-bottom:12px;
     }
 
     .stat h3{
-      font-size:15px;
+      font-size:14px;
       color:var(--muted);
-      margin-top:14px;
       font-weight:600;
     }
 
     .stat .value{
-      font-size:32px;
+      font-size:30px;
       font-weight:800;
       margin-top:8px;
     }
@@ -301,38 +240,17 @@
       margin-top:4px;
     }
 
-    .btn{
-      border:none;
-      padding:12px 16px;
-      border-radius:16px;
-      font-weight:700;
-      cursor:pointer;
-      transition:0.2s ease;
-    }
-
-    .btn:hover{ transform:translateY(-2px); }
-
-    .btn-green{ background:linear-gradient(135deg,#00ff99,#00d97f); color:#00170f; }
-    .btn-red{ background:linear-gradient(135deg,#ff5f7e,#ff355e); color:#fff; }
-    .btn-blue{ background:linear-gradient(135deg,#4d7fff,#2e6df2); color:#fff; }
-    .btn-dark{ background:#10192b; color:#fff; border:1px solid var(--line); }
-    .btn-yellow{ background:linear-gradient(135deg,#ffd84d,#ffbe2f); color:#222; }
-
     .request-list,
-    .trip-list,
-    .review-list,
+    .booking-list,
     .history-list{
       display:grid;
       gap:14px;
     }
 
-    .request-item,
-    .trip-item,
-    .review-item,
-    .history-item{
+    .item{
       background:rgba(255,255,255,0.05);
       border:1px solid var(--line);
-      border-radius:22px;
+      border-radius:20px;
       padding:16px;
     }
 
@@ -340,12 +258,9 @@
       display:flex;
       justify-content:space-between;
       align-items:center;
-      gap:12px;
+      gap:10px;
       flex-wrap:wrap;
     }
-
-    .muted{ color:var(--muted); }
-    .small{ font-size:12px; }
 
     .chips{
       display:flex;
@@ -363,9 +278,40 @@
       color:#dce6ff;
     }
 
+    .muted{ color:var(--muted); }
+    .small{ font-size:12px; }
+
+    .btn-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    .btn{
+      border:none;
+      padding:12px 16px;
+      border-radius:16px;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.2s ease;
+      width:100%;
+    }
+
+    .btn-half{
+      flex:1;
+      width:auto;
+    }
+
+    .btn-green{ background:linear-gradient(135deg,#00ff99,#00d97f); color:#00170f; }
+    .btn-red{ background:linear-gradient(135deg,#ff5f7e,#ff355e); color:#fff; }
+    .btn-blue{ background:linear-gradient(135deg,#4d7fff,#2e6df2); color:#fff; }
+    .btn-dark{ background:#10192b; color:#fff; border:1px solid var(--line); }
+    .btn-yellow{ background:linear-gradient(135deg,#ffd84d,#ffbe2f); color:#222; }
+
     .form-grid{
       display:grid;
-      grid-template-columns:repeat(2,1fr);
+      grid-template-columns:1fr;
       gap:14px;
     }
 
@@ -381,7 +327,7 @@
       color:#dce6ff;
     }
 
-    input, textarea, select{
+    input, textarea{
       width:100%;
       background:#0d1525;
       color:#fff;
@@ -394,13 +340,14 @@
 
     textarea{
       resize:none;
-      min-height:120px;
+      min-height:110px;
     }
 
     .wallet-grid{
       display:grid;
-      grid-template-columns:repeat(3,1fr);
+      grid-template-columns:1fr;
       gap:14px;
+      margin-bottom:18px;
     }
 
     .wallet-box{
@@ -411,71 +358,30 @@
     }
 
     .wallet-box .value{
-      font-size:24px;
+      font-size:26px;
       font-weight:800;
       margin-top:8px;
     }
 
     .profile-grid{
       display:grid;
-      grid-template-columns:160px 1fr;
+      grid-template-columns:1fr;
       gap:18px;
-      align-items:start;
     }
 
     .profile-grid img{
-      width:160px;
-      height:160px;
-      border-radius:28px;
+      width:120px;
+      height:120px;
+      border-radius:26px;
       object-fit:cover;
       border:2px solid rgba(255,255,255,0.12);
-      background:#101828;
+      background:#111;
     }
 
-    .upload-box{
-      border:2px dashed rgba(255,255,255,0.14);
-      background:rgba(255,255,255,0.04);
-      border-radius:22px;
-      padding:18px;
-      text-align:center;
-    }
-
-    .trip-preview{
-      width:100%;
-      max-height:220px;
-      object-fit:cover;
-      border-radius:18px;
-      margin-top:12px;
-      display:none;
-      border:1px solid var(--line);
-    }
-
-    .hidden{ display:none !important; }
-
-    .toast{
-      position:fixed;
-      right:20px;
-      bottom:20px;
-      background:#0d1525;
-      border:1px solid var(--line);
-      color:#fff;
-      padding:14px 16px;
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      z-index:999;
-      opacity:0;
-      transform:translateY(16px);
-      transition:0.25s ease;
-      max-width:320px;
-    }
-
-    .toast.show{
-      opacity:1;
-      transform:translateY(0);
-    }
-
-    .mobile-nav{
-      display:none;
+    .upload-wrap{
+      display:flex;
+      align-items:center;
+      gap:14px;
     }
 
     .switch{
@@ -492,61 +398,67 @@
 
     .switch input{
       width:auto;
-      transform:scale(1.3);
+      transform:scale(1.2);
     }
 
-    @media(max-width:1180px){
-      .span-3,.span-4,.span-5,.span-6,.span-7,.span-8{grid-column:span 12;}
+    /* BOTTOM NAV */
+    .bottom-nav{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:12px;
+      width:min(460px, calc(100% - 20px));
+      z-index:100;
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:8px;
+      background:rgba(10,16,31,0.88);
+      border:1px solid var(--line);
+      backdrop-filter:blur(16px);
+      border-radius:24px;
+      padding:10px;
+      box-shadow:var(--shadow);
     }
 
-    @media(max-width:920px){
-      .sidebar{
-        transform:translateX(-100%);
-        transition:0.25s ease;
-      }
-      .sidebar.open{ transform:translateX(0); }
+    .bottom-nav button{
+      border:none;
+      background:transparent;
+      color:#dce6ff;
+      padding:10px 6px;
+      border-radius:18px;
+      font-size:11px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+      cursor:pointer;
+    }
 
-      .main{
-        margin-left:0;
-        width:100%;
-        padding-bottom:110px;
-      }
+    .bottom-nav button.active{
+      background:rgba(255,255,255,0.08);
+      color:#fff;
+    }
 
-      .form-grid,
-      .wallet-grid,
-      .profile-grid{
-        grid-template-columns:1fr;
-      }
+    .toast{
+      position:fixed;
+      right:14px;
+      bottom:92px;
+      background:#0d1525;
+      border:1px solid var(--line);
+      color:#fff;
+      padding:14px 16px;
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      z-index:999;
+      opacity:0;
+      transform:translateY(16px);
+      transition:0.25s ease;
+      max-width:300px;
+    }
 
-      .mobile-nav{
-        position:fixed;
-        left:12px;
-        right:12px;
-        bottom:12px;
-        z-index:100;
-        display:grid;
-        grid-template-columns:repeat(5,1fr);
-        gap:10px;
-        background:rgba(10,16,31,0.85);
-        border:1px solid var(--line);
-        backdrop-filter:blur(16px);
-        border-radius:24px;
-        padding:10px;
-        box-shadow:var(--shadow);
-      }
-
-      .mobile-nav button{
-        border:none;
-        background:transparent;
-        color:#dce6ff;
-        padding:12px 8px;
-        border-radius:18px;
-        font-size:12px;
-      }
-
-      .mobile-nav button.active{
-        background:rgba(255,255,255,0.08);
-      }
+    .toast.show{
+      opacity:1;
+      transform:translateY(0);
     }
   </style>
 </head>
@@ -554,8 +466,8 @@
 
 <div class="app">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
+  <!-- TOP BAR -->
+  <div class="topbar">
     <div class="brand">
       <div class="logo">H</div>
       <div>
@@ -564,8 +476,20 @@
       </div>
     </div>
 
+    <div class="top-actions">
+      <button class="icon-btn" onclick="renderAll()">⟳</button>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <section class="page active" id="homePage">
+    <div class="page-title">
+      <h2>Home</h2>
+      <p>Manage your bookings, wallet and trip requests.</p>
+    </div>
+
     <div class="profile-mini">
-      <img src="https://via.placeholder.com/100x100.png?text=A" id="agentAvatar" alt="Agent">
+      <img src="https://via.placeholder.com/120x120.png?text=A" id="agentAvatar">
       <div>
         <h3 id="agentName">Bhala Ram</h3>
         <p id="agentEmail">agent@halora.com</p>
@@ -573,240 +497,324 @@
       </div>
     </div>
 
-    <div class="menu">
-      <button class="nav-btn active" data-page="home">🏠 Home</button>
-      <button class="nav-btn" data-page="myBookings">📘 My Bookings</button>
-      <button class="nav-btn" data-page="history">🕘 Booking History</button>
-      <button class="nav-btn" data-page="wallet">💰 Wallet</button>
-      <button class="nav-btn" data-page="profile">👤 Profile</button>
-      <button class="nav-btn" data-page="settings">⚙️ Settings</button>
+    <div class="stats-grid">
+      <div class="card stat">
+        <div class="icon">📥</div>
+        <h3>Pending</h3>
+        <div class="value" id="pendingCount">0</div>
+      </div>
+
+      <div class="card stat">
+        <div class="icon">📘</div>
+        <h3>Bookings</h3>
+        <div class="value" id="myBookingsCount">0</div>
+      </div>
+
+      <div class="card stat">
+        <div class="icon">💰</div>
+        <h3>Wallet</h3>
+        <div class="value">₹<span id="walletBalance">25800</span></div>
+      </div>
+
+      <div class="card stat">
+        <div class="icon">⭐</div>
+        <h3>Rating</h3>
+        <div class="value" id="ratingValue">4.8</div>
+      </div>
     </div>
 
-    <button class="logout" onclick="showToast('Logged out (demo)')">Logout</button>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main">
-
-    <div class="topbar">
-      <div>
-        <h2 id="pageTitle">Home</h2>
-        <p id="pageSub">Manage your trips, booking requests, wallet and profile.</p>
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <h3>New Trip Requests</h3>
+          <p>Accept or reject customer bookings</p>
+        </div>
       </div>
-      <div class="top-actions">
-        <button class="glass-btn" id="menuBtn">☰ Menu</button>
-        <button class="glass-btn" onclick="renderAll()">⟳ Refresh</button>
+      <div class="request-list" id="requestList"></div>
+    </div>
+  </section>
+
+  <!-- MY BOOKINGS -->
+  <section class="page" id="myBookingsPage">
+    <div class="page-title">
+      <h2>My Bookings</h2>
+      <p>Accepted bookings appear here automatically.</p>
+    </div>
+
+    <div class="booking-list" id="myBookingsList"></div>
+  </section>
+
+  <!-- WALLET -->
+  <section class="page" id="walletPage">
+    <div class="page-title">
+      <h2>Wallet</h2>
+      <p>Track earnings and withdraw your balance.</p>
+    </div>
+
+    <div class="wallet-grid">
+      <div class="wallet-box">
+        <div class="muted">Available Balance</div>
+        <div class="value">₹<span id="walletAvailable">25800</span></div>
+      </div>
+      <div class="wallet-box">
+        <div class="muted">Pending Amount</div>
+        <div class="value">₹<span id="walletPending">4500</span></div>
+      </div>
+      <div class="wallet-box">
+        <div class="muted">Total Earned</div>
+        <div class="value">₹<span id="walletTotal">128000</span></div>
       </div>
     </div>
 
-    <!-- HOME -->
-    <section class="page" id="homePage">
-      <div class="grid">
-
-        <div class="card stat span-3">
-          <div class="icon">📥</div>
-          <div>
-            <h3>Pending Requests</h3>
-            <div class="value" id="pendingCount">0</div>
-          </div>
+    <div class="card">
+      <div class="form-grid">
+        <div class="field">
+          <label>Withdraw Amount</label>
+          <input type="number" id="withdrawAmount" placeholder="Enter amount">
         </div>
-
-        <div class="card stat span-3">
-          <div class="icon">📘</div>
-          <div>
-            <h3>My Bookings</h3>
-            <div class="value" id="myBookingsCount">0</div>
-          </div>
+        <div class="field">
+          <label>UPI / Bank Detail</label>
+          <input type="text" id="withdrawMethod" placeholder="yourupi@okaxis">
         </div>
+      </div>
 
-        <div class="card stat span-3">
-          <div class="icon">💰</div>
-          <div>
-            <h3>Wallet Balance</h3>
-            <div class="value">₹<span id="walletBalance">25800</span></div>
-          </div>
-        </div>
+      <div style="height:14px;"></div>
+      <button class="btn btn-blue" onclick="requestWithdraw()">Request Withdraw</button>
+    </div>
+  </section>
 
-        <div class="card stat span-3">
-          <div class="icon">⭐</div>
-          <div>
-            <h3>Rating</h3>
-            <div class="value" id="ratingValue">4.8</div>
-          </div>
-        </div>
+  <!-- PROFILE -->
+  <section class="page" id="profilePage">
+    <div class="page-title">
+      <h2>Profile</h2>
+      <p>Manage your profile, KYC and bank details.</p>
+    </div>
 
-        <div class="card span-8">
-          <div class="section-head">
-            <div>
-              <h3>New Trip Requests</h3>
-              <p>Accept or reject customer bookings</p>
+    <div class="card">
+      <div class="profile-grid">
+        <div class="upload-wrap">
+          <img src="https://via.placeholder.com/300x300.png?text=Agent" id="profilePreview">
+          <div style="flex:1;">
+            <div class="field">
+              <label>Profile Photo</label>
+              <input type="file" id="profileInput" accept="image/*">
             </div>
           </div>
-          <div class="request-list" id="requestList"></div>
         </div>
-
-        <div class="card span-4">
-          <div class="section-head">
-            <div>
-              <h3>Quick Status</h3>
-              <p>Business summary</p>
-            </div>
-          </div>
-
-          <div class="chips">
-            <div class="chip" id="statusTripsChip">Trips: 0</div>
-            <div class="chip" id="statusAcceptedChip">Accepted: 0</div>
-            <div class="chip">KYC: Verified</div>
-          </div>
-
-          <div style="height:18px;"></div>
-
-          <div class="upload-box">
-            <div style="font-size:42px;">🚘</div>
-            <h4 style="margin-top:10px;">Trip Agent Active</h4>
-            <p class="muted small" style="margin-top:6px;">You can now accept customer trip bookings and manage them from My Bookings.</p>
-            <div style="height:14px;"></div>
-            <button class="btn btn-blue" onclick="showPage('myBookings')">Open My Bookings</button>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- MY BOOKINGS -->
-    <section class="page hidden" id="myBookingsPage">
-      <div class="card">
-        <div class="section-head">
-          <div>
-            <h3>My Bookings</h3>
-            <p>Accepted bookings automatically appear here</p>
-          </div>
-        </div>
-        <div class="trip-list" id="myBookingsList"></div>
-      </div>
-    </section>
-
-    <!-- HISTORY -->
-    <section class="page hidden" id="historyPage">
-      <div class="card">
-        <div class="section-head">
-          <div>
-            <h3>Booking History</h3>
-            <p>Accepted, rejected and completed bookings</p>
-          </div>
-        </div>
-        <div class="history-list" id="historyList"></div>
-      </div>
-    </section>
-
-    <!-- WALLET -->
-    <section class="page hidden" id="walletPage">
-      <div class="card">
-        <div class="section-head">
-          <div>
-            <h3>Wallet</h3>
-            <p>Track earnings and request withdrawals</p>
-          </div>
-        </div>
-
-        <div class="wallet-grid">
-          <div class="wallet-box">
-            <div class="muted">Available Balance</div>
-            <div class="value">₹<span id="walletAvailable">25800</span></div>
-          </div>
-          <div class="wallet-box">
-            <div class="muted">Pending Amount</div>
-            <div class="value">₹<span id="walletPending">4500</span></div>
-          </div>
-          <div class="wallet-box">
-            <div class="muted">Total Earned</div>
-            <div class="value">₹<span id="walletTotal">128000</span></div>
-          </div>
-        </div>
-
-        <div style="height:20px;"></div>
 
         <div class="form-grid">
           <div class="field">
-            <label>Withdraw Amount</label>
-            <input type="number" id="withdrawAmount" placeholder="e.g. 5000">
+            <label>Full Name</label>
+            <input type="text" id="fullName" value="Bhala Ram">
           </div>
           <div class="field">
-            <label>UPI / Bank Detail</label>
-            <input type="text" id="withdrawMethod" placeholder="yourupi@okaxis">
+            <label>Email</label>
+            <input type="email" id="email" value="agent@halora.com">
+          </div>
+          <div class="field">
+            <label>Phone</label>
+            <input type="text" id="phone" value="8769930595">
+          </div>
+          <div class="field">
+            <label>City</label>
+            <input type="text" id="city" value="Jodhpur">
+          </div>
+          <div class="field">
+            <label>Agency Name</label>
+            <input type="text" id="agency" value="HALORA Trips">
+          </div>
+          <div class="field">
+            <label>Experience</label>
+            <input type="text" id="experience" value="2 Years">
+          </div>
+
+          <div class="field">
+            <label>Aadhaar Number</label>
+            <input type="text" id="aadhaarNo" placeholder="XXXX-XXXX-XXXX">
+          </div>
+          <div class="field">
+            <label>PAN Number</label>
+            <input type="text" id="panNo" placeholder="ABCDE1234F">
+          </div>
+
+          <div class="field">
+            <label>Account Holder Name</label>
+            <input type="text" id="bankName" placeholder="Account Holder Name">
+          </div>
+          <div class="field">
+            <label>Bank Name</label>
+            <input type="text" id="bankBank" placeholder="State Bank of India">
+          </div>
+          <div class="field">
+            <label>Account Number</label>
+            <input type="text" id="bankAcc" placeholder="XXXXXXXXXXXX">
+          </div>
+          <div class="field">
+            <label>IFSC Code</label>
+            <input type="text" id="bankIfsc" placeholder="SBIN0000000">
+          </div>
+          <div class="field">
+            <label>UPI ID</label>
+            <input type="text" id="upiId" placeholder="yourupi@okaxis">
           </div>
         </div>
 
         <div style="height:14px;"></div>
-        <button class="btn btn-blue" onclick="requestWithdraw()">Request Withdraw</button>
+        <button class="btn btn-green" onclick="saveProfile()">Save Profile</button>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- PROFILE -->
-    <section class="page hidden" id="profilePage">
-      <div class="grid">
+  <!-- HISTORY -->
+  <section class="page" id="historyPage">
+    <div class="page-title">
+      <h2>Booking History</h2>
+      <p>Accepted, rejected and completed bookings.</p>
+    </div>
 
-        <div class="card span-12">
-          <div class="section-head">
-            <div>
-              <h3>Profile</h3>
-              <p>Agent details, KYC and bank information</p>
-            </div>
+    <div class="history-list" id="historyList"></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="page" id="settingsPage">
+    <div class="page-title">
+      <h2>Settings</h2>
+      <p>Notifications and app preferences.</p>
+    </div>
+
+    <div class="card">
+      <div class="switch">
+        <div>
+          <h4>Booking Notifications</h4>
+          <p class="muted small">Get alert for new booking requests</p>
+        </div>
+        <input type="checkbox" checked>
+      </div>
+
+      <div class="switch">
+        <div>
+          <h4>Wallet Alerts</h4>
+          <p class="muted small">Notify when withdrawal is processed</p>
+        </div>
+        <input type="checkbox" checked>
+      </div>
+
+      <div class="switch">
+        <div>
+          <h4>Dark Mode</h4>
+          <p class="muted small">Premium dark dashboard appearance</p>
+        </div>
+        <input type="checkbox" checked>
+      </div>
+
+      <div style="height:18px;"></div>
+      <button class="btn btn-yellow" onclick="showToast('Settings saved')">Save Settings</button>
+    </div>
+  </section>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="tab-btn active" onclick="showPage('home')">🏠<span>Home</span></button>
+  <button class="tab-btn" onclick="showPage('myBookings')">📘<span>Bookings</span></button>
+  <button class="tab-btn" onclick="showPage('wallet')">💰<span>Wallet</span></button>
+  <button class="tab-btn" onclick="showPage('profile')">👤<span>Profile</span></button>
+  <button class="tab-btn" onclick="showPage('settings')">⚙️<span>Settings</span></button>
+</div>
+
+<div class="toast" id="toast">Saved successfully</div>
+
+<script>
+  let requests = [
+    {
+      id: 1,
+      customerName: "Rahul Sharma",
+      phone: "9876543210",
+      pickup: "Jaipur",
+      destination: "Udaipur",
+      people: 4,
+      budget: 16000,
+      travelDate: "15 Apr 2026",
+      notes: "Need hotel + cab + sightseeing",
+      status: "pending"
+    },
+    {
+      id: 2,
+      customerName: "Priya Mehta",
+      phone: "9876500000",
+      pickup: "Delhi",
+      destination: "Manali",
+      people: 2,
+      budget: 22000,
+      travelDate: "20 Apr 2026",
+      notes: "Honeymoon package with private cab",
+      status: "pending"
+    }
+  ];
+
+  let myBookings = [];
+  let bookingHistory = [];
+  let wallet = {
+    available: 25800,
+    pending: 4500,
+    total: 128000
+  };
+
+  function showPage(page){
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    document.getElementById(page + "Page").classList.add("active");
+
+    document.querySelectorAll(".tab-btn").forEach(btn=>btn.classList.remove("active"));
+    const labels = ["home","myBookings","wallet","profile","settings"];
+    const index = labels.indexOf(page);
+    if(index > -1) document.querySelectorAll(".tab-btn")[index].classList.add("active");
+  }
+
+  function renderRequests(){
+    const box = document.getElementById("requestList");
+    const pending = requests.filter(r => r.status === "pending");
+    document.getElementById("pendingCount").textContent = pending.length;
+
+    if(!pending.length){
+      box.innerHTML = `<div class="item"><p class="muted">No pending requests right now.</p></div>`;
+      return;
+    }
+
+    box.innerHTML = pending.map(r => `
+      <div class="item">
+        <div class="row">
+          <div>
+            <h4>${r.customerName}</h4>
+            <p class="muted small">${r.pickup} → ${r.destination}</p>
           </div>
+          <div class="chip">${r.status}</div>
+        </div>
 
-          <div class="profile-grid">
-            <div>
-              <img src="https://via.placeholder.com/300x300.png?text=Agent" id="profilePreview" alt="Profile">
-              <div style="height:12px;"></div>
-              <input type="file" id="profileInput" accept="image/*">
-            </div>
+        <div class="chips">
+          <div class="chip">${r.people} People</div>
+          <div class="chip">₹${r.budget}</div>
+          <div class="chip">${r.travelDate}</div>
+        </div>
 
-            <div>
-              <div class="form-grid">
-                <div class="field">
-                  <label>Full Name</label>
-                  <input type="text" id="fullName" value="Bhala Ram">
-                </div>
-                <div class="field">
-                  <label>Email</label>
-                  <input type="email" id="email" value="agent@halora.com">
-                </div>
-                <div class="field">
-                  <label>Phone</label>
-                  <input type="text" id="phone" value="8769930595">
-                </div>
-                <div class="field">
-                  <label>City</label>
-                  <input type="text" id="city" value="Jodhpur">
-                </div>
-                <div class="field">
-                  <label>Agency Name</label>
-                  <input type="text" id="agency" value="HALORA Trips">
-                </div>
-                <div class="field">
-                  <label>Experience</label>
-                  <input type="text" id="experience" value="2 Years">
-                </div>
-              </div>
+        <p class="muted small" style="margin-top:12px;">${r.notes}</p>
 
-              <div style="height:18px;"></div>
+        <div class="btn-row">
+          <button class="btn btn-green btn-half" onclick="acceptBooking(${r.id})">Accept</button>
+          <button class="btn btn-red btn-half" onclick="rejectBooking(${r.id})">Reject</button>
+        </div>
+      </div>
+    `).join("");
+  }
 
-              <h3 style="margin-bottom:12px;">KYC Details</h3>
-              <div class="form-grid">
-                <div class="field">
-                  <label>Aadhaar Number</label>
-                  <input type="text" id="aadhaarNo" placeholder="XXXX-XXXX-XXXX">
-                </div>
-                <div class="field">
-                  <label>PAN Number</label>
-                  <input type="text" id="panNo" placeholder="ABCDE1234F">
-                </div>
-                <div class="field">
-                  <label>Aadhaar Upload</label>
-                  <input type="file" id="aadhaarFile">
-                </div>
-                <div class="field">
-                  <label>PAN Upload</label>
-                  <input type="file" id="panFile">
-                </div>
-         
+  function acceptBooking(id){
+    const booking = requests.find(r => r.id === id);
+    if(!booking) return;
+
+    booking.status = "accepted";
+    booking.acceptedAt = new Date().toLocaleString();
+
+    myBookings.unshift({...booking});
+    bookingHistory.unshift({...booking});
+
+    wallet.av

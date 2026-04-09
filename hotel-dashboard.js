@@ -1,185 +1,399 @@
-import { auth, db } from "./js/firebase-config.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { db, auth } from "./js/firebase-config.js";
+
 import {
-  doc,
-  getDoc,
-  setDoc,
   collection,
   getDocs,
   query,
   where,
-  updateDoc
+  doc,
+  updateDoc,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ==============================
-// Elements
-// ==============================
-const hotelName = document.getElementById("hotelName");
-const hotelCity = document.getElementById("hotelCity");
-const roomPrice = document.getElementById("roomPrice");
-const hotelDescription = document.getElementById("hotelDescription");
-const hotelStatus = document.getElementById("hotelStatus");
-const hotelImage = document.getElementById("hotelImage");
-const saveHotelBtn = document.getElementById("saveHotelBtn");
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const totalHotelBookings = document.getElementById("totalHotelBookings");
-const activeHotelStatus = document.getElementById("activeHotelStatus");
-const roomPriceView = document.getElementById("roomPriceView");
-const hotelCityView = document.getElementById("hotelCityView");
-const hotelBookingsList = document.getElementById("hotelBookingsList");
+// ==========================
+// ELEMENTS
+// ==========================
+const editHotelName = document.getElementById("editHotelName");
+const editCity = document.getElementById("editCity");
+const editContact = document.getElementById("editContact");
+const editRooms = document.getElementById("editRooms");
+const editCheckIn = document.getElementById("editCheckIn");
+const editCheckOut = document.getElementById("editCheckOut");
+const editImage = document.getElementById("editImage");
+const hotelAvailabilityToggle = document.getElementById("hotelAvailabilityToggle");
+const newRoomPrice = document.getElementById("newRoomPrice");
 
+const heroHotelImage = document.getElementById("heroHotelImage");
+const totalBookingsEl = document.getElementById("totalBookings");
+const roomPriceEl = document.getElementById("roomPrice");
+const monthlyEarningsEl = document.getElementById("monthlyEarnings");
+const todayBookingsEl = document.getElementById("todayBookings");
+
+const bookingsContainer = document.getElementById("bookingsContainer");
+const globalSearch = document.getElementById("globalSearch");
+const bookingSearch = document.getElementById("bookingSearch");
+
+// ==========================
+// GLOBAL
+// ==========================
 let currentUser = null;
+let hotelDocId = null;
+let hotelData = null;
+let allBookings = [];
 
-// ==============================
-// Protect + Load
-// ==============================
+// ==========================
+// AUTH
+// ==========================
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    alert("Please login first");
     window.location.href = "./login.html";
     return;
   }
 
   currentUser = user;
-  await loadHotelData(user.uid);
-  await loadHotelBookings(user.uid);
+  await loadHotelData();
+  await loadBookings();
 });
 
-// ==============================
-// Load Hotel Data
-// ==============================
-async function loadHotelData(uid) {
+// ==========================
+// LOAD HOTEL DATA
+// ==========================
+async function loadHotelData() {
   try {
-    const hotelRef = doc(db, "hotels", uid);
-    const hotelSnap = await getDoc(hotelRef);
+    const q = query(collection(db, "hotels"), where("uid", "==", currentUser.uid));
+    const snapshot = await getDocs(q);
 
-    if (hotelSnap.exists()) {
-      const data = hotelSnap.data();
-
-      hotelName.value = data.hotelName || "";
-      hotelCity.value = data.city || "";
-      roomPrice.value = data.roomPrice || "";
-      hotelDescription.value = data.description || "";
-      hotelStatus.value = data.status || "Inactive";
-      hotelImage.value = data.image || "";
-
-      activeHotelStatus.innerText = data.status || "Inactive";
-      roomPriceView.innerText = data.roomPrice || 0;
-      hotelCityView.innerText = data.city || "-";
-    }
-  } catch (error) {
-    console.error("Load hotel error:", error);
-    alert(error.message);
-  }
-}
-
-// ==============================
-// Save Hotel Data
-// ==============================
-saveHotelBtn.addEventListener("click", async () => {
-  if (!currentUser) return;
-
-  try {
-    await setDoc(doc(db, "hotels", currentUser.uid), {
-      uid: currentUser.uid,
-      hotelName: hotelName.value.trim(),
-      city: hotelCity.value.trim(),
-      roomPrice: Number(roomPrice.value || 0),
-      description: hotelDescription.value.trim(),
-      status: hotelStatus.value,
-      image: hotelImage.value.trim(),
-      updatedAt: Date.now()
-    }, { merge: true });
-
-    alert("Hotel details saved successfully!");
-
-    activeHotelStatus.innerText = hotelStatus.value;
-    roomPriceView.innerText = roomPrice.value || 0;
-    hotelCityView.innerText = hotelCity.value || "-";
-  } catch (error) {
-    console.error("Save hotel error:", error);
-    alert(error.message);
-  }
-});
-
-// ==============================
-// Load Hotel Bookings
-// ==============================
-async function loadHotelBookings(uid) {
-  try {
-    hotelBookingsList.innerHTML = "<p>Loading bookings...</p>";
-
-    const q = query(collection(db, "hotelBookings"), where("hotelOwnerId", "==", uid));
-    const snap = await getDocs(q);
-
-    hotelBookingsList.innerHTML = "";
-    totalHotelBookings.innerText = snap.size;
-
-    if (snap.empty) {
-      hotelBookingsList.innerHTML = "<p>No hotel bookings yet.</p>";
+    if (snapshot.empty) {
+      alert("No hotel found for this account");
       return;
     }
 
-    snap.forEach((docSnap) => {
-      const booking = docSnap.data();
+    const docSnap = snapshot.docs[0];
+    hotelDocId = docSnap.id;
+    hotelData = docSnap.data();
 
-      hotelBookingsList.innerHTML += `
-        <div class="booking-card">
-          <h4>${booking.hotelName || "Hotel Booking"}</h4>
-          <p><strong>Guest:</strong> ${booking.userName || "User"}</p>
-          <p><strong>City:</strong> ${booking.city || "-"}</p>
-          <p><strong>Room Price:</strong> ₹${booking.roomPrice || 0}</p>
-          <p><strong>Check-in:</strong> ${booking.checkin || "-"}</p>
-          <p><strong>Status:</strong> 
-            <span class="badge ${String(booking.status || "pending").toLowerCase()}">
-              ${booking.status || "Pending"}
-            </span>
-          </p>
+    editHotelName.value = hotelData.hotelName || "";
+    editCity.value = hotelData.city || "";
+    editContact.value = hotelData.contact || "";
+    editRooms.value = hotelData.availableRooms || "";
+    editCheckIn.value = convertToTimeInput(hotelData.checkIn || "12:00 PM");
+    editCheckOut.value = convertToTimeInput(hotelData.checkOut || "11:00 AM");
+    editImage.value = hotelData.image || hotelData.hotelImage || "";
+    newRoomPrice.value = hotelData.roomPrice || "";
 
-          <div class="grid-2">
-            <button class="main-btn" onclick="approveHotelBooking('${docSnap.id}')">Approve</button>
-            <button class="main-btn" onclick="cancelHotelBooking('${docSnap.id}')">Cancel</button>
-          </div>
-        </div>
-      `;
-    });
+    heroHotelImage.src =
+      hotelData.image ||
+      hotelData.hotelImage ||
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop";
+
+    roomPriceEl.innerText = `₹${hotelData.roomPrice || 0}`;
+    hotelAvailabilityToggle.checked = hotelData.status === "Active";
 
   } catch (error) {
-    console.error("Load hotel bookings error:", error);
-    hotelBookingsList.innerHTML = "<p>Error loading bookings</p>";
+    console.error("Load Hotel Error:", error);
+    alert("Error loading hotel data");
   }
 }
 
-// ==============================
-// Approve Booking
-// ==============================
-window.approveHotelBooking = async function (bookingId) {
+// ==========================
+// LOAD BOOKINGS
+// ==========================
+async function loadBookings() {
   try {
-    await updateDoc(doc(db, "hotelBookings", bookingId), {
-      status: "Approved",
-      updatedAt: Date.now()
+    const q = query(collection(db, "hotelBookings"), where("hotelOwnerId", "==", currentUser.uid));
+    const snapshot = await getDocs(q);
+
+    allBookings = [];
+    snapshot.forEach((docSnap) => {
+      allBookings.push({
+        id: docSnap.id,
+        ...docSnap.data()
+      });
     });
 
-    alert("Booking approved");
-    loadHotelBookings(currentUser.uid);
+    allBookings.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+    renderBookings(allBookings);
+    calculateStats(allBookings);
+
   } catch (error) {
-    alert(error.message);
+    console.error("Load Bookings Error:", error);
+    bookingsContainer.innerHTML = `<div class="booking-card">Error loading bookings</div>`;
+  }
+}
+
+// ==========================
+// RENDER BOOKINGS
+// ==========================
+function renderBookings(bookings) {
+  bookingsContainer.innerHTML = "";
+
+  if (!bookings.length) {
+    bookingsContainer.innerHTML = `
+      <div class="booking-card">
+        <div class="booking-details">No bookings yet.</div>
+      </div>
+    `;
+    return;
+  }
+
+  bookings.forEach((booking) => {
+    let statusClass = "pending";
+    if (booking.status === "Confirmed") statusClass = "confirmed";
+    if (booking.status === "Rejected") statusClass = "rejected";
+
+    bookingsContainer.innerHTML += `
+      <div class="booking-card">
+        <div class="booking-top">
+          <div class="booking-name">${booking.customerName || booking.userEmail || "Guest"}</div>
+          <div class="booking-status ${statusClass}">${booking.status || "Pending"}</div>
+        </div>
+        <div class="booking-details">
+          Room: ${booking.roomType || "Standard Room"}<br>
+          Check-in: ${booking.checkInDate || "-"}<br>
+          Nights: ${booking.nights || 1}<br>
+          Guests: ${booking.guests || 1}<br>
+          Phone: ${booking.customerPhone || "-"}
+        </div>
+        <div class="booking-actions">
+          <button class="approve-btn" onclick="updateBookingStatus('${booking.id}','Confirmed')">Approve</button>
+          <button class="reject-btn" onclick="updateBookingStatus('${booking.id}','Rejected')">Reject</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+// ==========================
+// CALCULATE STATS
+// ==========================
+function calculateStats(bookings) {
+  const totalBookings = bookings.length;
+
+  const today = new Date().toISOString().split("T")[0];
+  const todayBookings = bookings.filter(b => b.checkInDate === today).length;
+
+  const confirmedBookings = bookings.filter(b => b.status === "Confirmed");
+  const monthlyEarnings = confirmedBookings.reduce((sum, b) => {
+    return sum + ((b.roomPrice || 0) * (b.nights || 1));
+  }, 0);
+
+  totalBookingsEl.innerText = totalBookings;
+  todayBookingsEl.innerText = todayBookings;
+  monthlyEarningsEl.innerText = `₹${monthlyEarnings}`;
+}
+
+// ==========================
+// SAVE HOTEL DETAILS
+// ==========================
+window.saveHotelDetails = async function () {
+  if (!hotelDocId) return alert("Hotel not found");
+
+  try {
+    const updatedData = {
+      hotelName: editHotelName.value.trim(),
+      city: editCity.value.trim(),
+      contact: editContact.value.trim(),
+      availableRooms: Number(editRooms.value) || 0,
+      checkIn: convertToAMPM(editCheckIn.value),
+      checkOut: convertToAMPM(editCheckOut.value),
+      image: editImage.value.trim()
+    };
+
+    await updateDoc(doc(db, "hotels", hotelDocId), updatedData);
+
+    heroHotelImage.src =
+      updatedData.image ||
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop";
+
+    alert("Hotel details updated successfully!");
+    await loadHotelData();
+  } catch (error) {
+    console.error("Save Hotel Error:", error);
+    alert("Failed to update hotel details");
   }
 };
 
-// ==============================
-// Cancel Booking
-// ==============================
-window.cancelHotelBooking = async function (bookingId) {
+// ==========================
+// UPDATE ROOM PRICE
+// ==========================
+window.updateRoomPrice = async function () {
+  if (!hotelDocId) return alert("Hotel not found");
+
+  const price = Number(newRoomPrice.value);
+  if (!price) return alert("Enter valid room price");
+
   try {
-    await updateDoc(doc(db, "hotelBookings", bookingId), {
-      status: "Cancelled",
-      updatedAt: Date.now()
+    await updateDoc(doc(db, "hotels", hotelDocId), {
+      roomPrice: price
     });
 
-    alert("Booking cancelled");
-    loadHotelBookings(currentUser.uid);
+    roomPriceEl.innerText = `₹${price}`;
+    alert("Room price updated successfully!");
+    await loadHotelData();
   } catch (error) {
-    alert(error.message);
+    console.error("Update Price Error:", error);
+    alert("Failed to update room price");
   }
 };
+
+// ==========================
+// TOGGLE HOTEL STATUS
+// ==========================
+window.toggleHotelStatus = async function () {
+  if (!hotelDocId) return;
+
+  try {
+    const newStatus = hotelAvailabilityToggle.checked ? "Active" : "Inactive";
+
+    await updateDoc(doc(db, "hotels", hotelDocId), {
+      status: newStatus
+    });
+  } catch (error) {
+    console.error("Status Update Error:", error);
+    alert("Failed to update hotel status");
+  }
+};
+
+// ==========================
+// UPDATE BOOKING STATUS
+// ==========================
+window.updateBookingStatus = async function (bookingId, status) {
+  try {
+    const bookingRef = doc(db, "hotelBookings", bookingId);
+    const bookingSnap = await getDoc(bookingRef);
+
+    if (!bookingSnap.exists()) {
+      alert("Booking not found");
+      return;
+    }
+
+    const bookingData = bookingSnap.data();
+
+    // Agar already same status hai to repeat na kare
+    if (bookingData.status === status) {
+      alert(`Booking already ${status}`);
+      return;
+    }
+
+    // Pehle booking status update
+    await updateDoc(bookingRef, {
+      status
+    });
+
+    // Agar approve hua to rooms aur earnings auto update karo
+    if (status === "Confirmed" && hotelDocId) {
+      const hotelRef = doc(db, "hotels", hotelDocId);
+      const hotelSnap = await getDoc(hotelRef);
+
+      if (hotelSnap.exists()) {
+        const hotel = hotelSnap.data();
+
+        const currentRooms = Number(hotel.availableRooms || 0);
+        const currentEarnings = Number(hotel.monthlyEarnings || 0);
+
+        const bookingAmount =
+          Number(bookingData.roomPrice || hotel.roomPrice || 0) *
+          Number(bookingData.nights || 1);
+
+        const updatedRooms = currentRooms > 0 ? currentRooms - 1 : 0;
+        const updatedEarnings = currentEarnings + bookingAmount;
+
+        await updateDoc(hotelRef, {
+          availableRooms: updatedRooms,
+          monthlyEarnings: updatedEarnings
+        });
+      }
+    }
+
+    alert(`Booking ${status}`);
+    await loadHotelData();
+    await loadBookings();
+
+  } catch (error) {
+    console.error("Booking Status Error:", error);
+    alert("Failed to update booking status");
+  }
+};
+
+// ==========================
+// SEARCH BOOKINGS
+// ==========================
+function searchBookings() {
+  const globalText = (globalSearch?.value || "").toLowerCase().trim();
+  const bookingText = (bookingSearch?.value || "").toLowerCase().trim();
+  const searchText = `${globalText} ${bookingText}`.trim();
+
+  const filtered = allBookings.filter((booking) => {
+    const text = `
+      ${booking.customerName || ""}
+      ${booking.userEmail || ""}
+      ${booking.roomType || ""}
+      ${booking.customerPhone || ""}
+      ${booking.status || ""}
+      ${booking.checkInDate || ""}
+    `.toLowerCase();
+
+    return text.includes(searchText);
+  });
+
+  renderBookings(filtered);
+}
+
+if (globalSearch) globalSearch.addEventListener("input", searchBookings);
+if (bookingSearch) bookingSearch.addEventListener("input", searchBookings);
+
+// ==========================
+// TAB SWITCHING
+// ==========================
+window.openTab = function (panelId, btn) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+
+  document.getElementById(panelId).classList.add("active");
+  btn.classList.add("active");
+};
+
+// ==========================
+// LOGOUT
+// ==========================
+window.logout = async function () {
+  try {
+    await signOut(auth);
+    window.location.href = "./login.html";
+  } catch (error) {
+    console.error("Logout Error:", error);
+    alert("Logout failed");
+  }
+};
+
+// ==========================
+// TIME CONVERTERS
+// ==========================
+function convertToAMPM(time24) {
+  if (!time24) return "";
+  let [hours, minutes] = time24.split(":");
+  hours = parseInt(hours);
+
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+
+  return `${hours}:${minutes} ${ampm}`;
+}
+
+function convertToTimeInput(time12h) {
+  if (!time12h) return "";
+  const [time, modifier] = time12h.split(" ");
+  let [hours, minutes] = time.split(":");
+  hours = parseInt(hours);
+
+  if (modifier === "PM" && hours < 12) hours += 12;
+  if (modifier === "AM" && hours === 12) hours = 0;
+
+  return `${String(hours).padStart(2, "0")}:${minutes}`;
+      }

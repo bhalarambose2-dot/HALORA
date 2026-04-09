@@ -464,3 +464,30 @@ function convertToTimeInput(time12h) {
   if (modifier === "AM" && hours === 12) hours = 0;
   return `${String(hours).padStart(2, "0")}:${minutes}`;
       }
+function openEditProfile(){
+  window.location.href = "hotel-edit-profile.html";
+}
+
+function openSettings(){
+  window.location.href = "hotel-settings.html";
+}
+
+function openCustomers(){
+  window.location.href = "hotel-customers.html";
+}
+
+function openKYC(){
+  window.location.href = "hotel-kyc.html";
+}
+
+function openPayments(){
+  window.location.href = "hotel-payments.html";
+}
+
+function openHistory(){
+  window.location.href = "hotel-history.html";
+}
+
+function openNotifications(){
+  window.location.href = "hotel-notifications.html";
+}

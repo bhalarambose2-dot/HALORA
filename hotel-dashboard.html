@@ -72,6 +72,7 @@
       padding: 12px 18px;
       font-weight: 800;
       cursor: pointer;
+      box-shadow: 0 10px 24px rgba(37,99,235,0.18);
     }
 
     .search-wrap {
@@ -162,6 +163,8 @@
       font-size: 14px;
     }
 
+    .hero-btn i { margin-right: 8px; }
+
     .primary-btn {
       background: white;
       color: #2563eb;
@@ -223,7 +226,7 @@
     .panel { display: none; }
     .panel.active { display: block; }
 
-    .input-field {
+    .input-field, textarea {
       width: 100%;
       padding: 16px 18px;
       margin-bottom: 14px;
@@ -233,6 +236,22 @@
       color: #0f172a;
       font-size: 15px;
       outline: none;
+    }
+
+    .image-preview-box {
+      width: 100%;
+      height: 190px;
+      border-radius: 22px;
+      overflow: hidden;
+      margin: 8px 0 18px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+    }
+
+    .image-preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .save-btn, .price-btn, .back-btn {
@@ -246,6 +265,177 @@
       margin-top: 10px;
       background: linear-gradient(135deg, #2563eb, #60a5fa);
       color: white;
+      box-shadow: 0 10px 24px rgba(37,99,235,0.18);
+    }
+
+    .toggle-wrap {
+      margin-top: 20px;
+      background: #f8fbff;
+      padding: 18px 20px;
+      border-radius: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #dbeafe;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 58px;
+      height: 32px;
+    }
+
+    .switch input { display: none; }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #cbd5e1;
+      border-radius: 999px;
+      transition: .3s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      width: 24px;
+      height: 24px;
+      left: 4px;
+      top: 4px;
+      background: white;
+      border-radius: 50%;
+      transition: .3s;
+    }
+
+    .switch input:checked + .slider { background: #2563eb; }
+    .switch input:checked + .slider:before { transform: translateX(26px); }
+
+    .booking-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .booking-avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .booking-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .booking-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .booking-sub {
+      color: #64748b;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .booking-status {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .pending { background: #fef3c7; color: #d97706; }
+    .confirmed { background: #dcfce7; color: #16a34a; }
+    .rejected { background: #fee2e2; color: #dc2626; }
+
+    .booking-details {
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .booking-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .approve-btn, .reject-btn {
+      border: none;
+      border-radius: 18px;
+      padding: 14px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .approve-btn { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+    .reject-btn { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+
+    .filter-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0 18px;
+    }
+
+    .filter-btn {
+      border: none;
+      background: #e0ecff;
+      color: #2563eb;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .filter-btn.active-filter {
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      color: white;
+    }
+
+    .stats-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .mini-stat-card {
+      background: rgba(255,255,255,0.94);
+      border: 1px solid #dbeafe;
+      border-radius: 20px;
+      padding: 16px 14px;
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(15,23,42,0.04);
+    }
+
+    .mini-value {
+      font-size: 24px;
+      font-weight: 900;
+      color: #2563eb;
+      margin-bottom: 6px;
+    }
+
+    .mini-label {
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 600;
     }
 
     .profile-box { text-align: center; }
@@ -261,12 +451,14 @@
       font-size: 36px;
       font-weight: 900;
       margin: 0 auto 14px;
+      box-shadow: 0 12px 28px rgba(37,99,235,0.18);
     }
 
     .profile-name {
       font-size: 24px;
       font-weight: 900;
       margin-bottom: 6px;
+      color: #0f172a;
     }
 
     .profile-email {
@@ -290,21 +482,28 @@
       text-align: center;
       font-weight: 700;
       cursor: pointer;
+      transition: 0.25s;
+      box-shadow: 0 10px 20px rgba(24,35,58,0.10);
+    }
+
+    .action-btn:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
     }
 
     .tabs {
-      position: fixed !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
       max-width: 520px;
       margin: auto;
-      background: rgba(255,255,255,0.98);
+      background: rgba(255,255,255,0.96);
       backdrop-filter: blur(18px);
-      display: grid !important;
+      display: grid;
       grid-template-columns: repeat(4, 1fr);
       border-top: 1px solid #e2e8f0;
-      z-index: 99999 !important;
+      z-index: 99999;
       padding: 8px 6px 14px;
       box-shadow: 0 -8px 30px rgba(15,23,42,0.08);
     }
@@ -329,6 +528,18 @@
     .tab-btn.active {
       color: #2563eb;
       background: #eff6ff;
+    }
+
+    canvas {
+      width: 100% !important;
+      max-width: 100%;
+    }
+
+    @media (max-width: 430px) {
+      .hero { min-height: 300px; }
+      .hero-content { width: 65%; padding: 24px 18px; }
+      .hero h1 { font-size: 24px; }
+      .hero img { width: 50%; }
     }
   </style>
 </head>
@@ -358,42 +569,90 @@
           <h1>Manage your hotel with HALORA</h1>
           <p>Update hotel details, room prices, room availability and booking requests easily.</p>
           <div class="hero-actions">
-            <button class="hero-btn primary-btn" onclick="openTab('managementPanel', document.getElementById('tabManage'))">Edit Hotel</button>
-            <button class="hero-btn secondary-btn" onclick="openTab('bookingsPanel', document.getElementById('tabBookings'))">Bookings</button>
-            <button class="hero-btn secondary-btn" onclick="openTab('managementPanel', document.getElementById('tabManage'))">Price</button>
+            <button class="hero-btn primary-btn" onclick="openTab('managementPanel', document.getElementById('tabManage'))">
+              <i class="fa-solid fa-pen-to-square"></i> Edit Hotel
+            </button>
+            <button class="hero-btn secondary-btn" onclick="openTab('bookingsPanel', document.getElementById('tabBookings'))">
+              <i class="fa-solid fa-calendar-check"></i> Bookings
+            </button>
+            <button class="hero-btn secondary-btn" onclick="openTab('managementPanel', document.getElementById('tabManage'))">
+              <i class="fa-solid fa-indian-rupee-sign"></i> Price
+            </button>
           </div>
         </div>
       </div>
 
       <div class="stats-grid">
-        <div class="stat-card"><div class="stat-value" id="totalBookings">0</div><div class="stat-label">Total Bookings</div></div>
-        <div class="stat-card"><div class="stat-value" id="roomPrice">₹0</div><div class="stat-label">Room Price</div></div>
-        <div class="stat-card"><div class="stat-value" id="monthlyEarnings">₹0</div><div class="stat-label">Monthly Earnings</div></div>
-        <div class="stat-card"><div class="stat-value" id="todayBookings">0</div><div class="stat-label">Today Bookings</div></div>
+        <div class="stat-card">
+          <div class="stat-value" id="totalBookings">0</div>
+          <div class="stat-label">Total Bookings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="roomPrice">₹0</div>
+          <div class="stat-label">Room Price</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="monthlyEarnings">₹0</div>
+          <div class="stat-label">Monthly Earnings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="todayBookings">0</div>
+          <div class="stat-label">Today Bookings</div>
+        </div>
       </div>
 
       <div class="section-title">Performance Overview</div>
       <div class="management-card">
-        <div style="height:220px;"></div>
+        <canvas id="earningsChart" height="180"></canvas>
       </div>
     </div>
 
     <!-- BOOKINGS -->
     <div id="bookingsPanel" class="panel">
-      <div class="section-title">Bookings</div>
-      <div class="management-card">Booking panel working ✅</div>
+      <div class="section-title">Recent Booking Requests</div>
+
+      <div class="search-wrap">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="bookingSearch" class="searchbar" placeholder="Search booking by guest, room, phone..." />
+      </div>
+
+      <div class="filter-row">
+        <button class="filter-btn active-filter" onclick="filterBookings('All', this)">All</button>
+        <button class="filter-btn" onclick="filterBookings('Pending', this)">Pending</button>
+        <button class="filter-btn" onclick="filterBookings('Confirmed', this)">Confirmed</button>
+        <button class="filter-btn" onclick="filterBookings('Rejected', this)">Rejected</button>
+      </div>
+
+      <div class="stats-mini-grid">
+        <div class="mini-stat-card">
+          <div class="mini-value" id="pendingCount">0</div>
+          <div class="mini-label">Pending</div>
+        </div>
+        <div class="mini-stat-card">
+          <div class="mini-value" id="confirmedCount">0</div>
+          <div class="mini-label">Confirmed</div>
+        </div>
+        <div class="mini-stat-card">
+          <div class="mini-value" id="rejectedCount">0</div>
+          <div class="mini-label">Rejected</div>
+        </div>
+      </div>
+
+      <div id="bookingsContainer"></div>
     </div>
 
     <!-- MANAGEMENT -->
     <div id="managementPanel" class="panel">
       <div class="section-title">Hotel Management</div>
+
       <div class="management-card">
         <input type="text" id="editHotelName" class="input-field" placeholder="Hotel Name">
         <input type="text" id="editCity" class="input-field" placeholder="City">
         <input type="text" id="editContact" class="input-field" placeholder="Contact Number">
         <input type="number" id="editRooms" class="input-field" placeholder="Available Rooms">
         <input type="number" id="newRoomPrice" class="input-field" placeholder="Enter New Room Price">
-        <button class="save-btn">Save Hotel Details</button>
+        <button class="save-btn" onclick="saveHotelDetails()">Save Hotel Details</button>
+        <button class="price-btn" onclick="updateRoomPrice()">Update Room Price</button>
       </div>
     </div>
 
@@ -417,90 +676,50 @@
       </div>
     </div>
 
+    <!-- EDIT PROFILE PANEL -->
     <div id="editProfilePanel" class="panel">
       <div class="section-title">Edit Profile</div>
       <div class="management-card">
-        <input type="text" class="input-field" placeholder="Hotel Name">
-        <input type="text" class="input-field" placeholder="City">
-        <input type="text" class="input-field" placeholder="Contact Number">
-        <button class="save-btn">Save</button>
-        <button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">Back</button>
+        <input type="text" id="profileEditHotelName" class="input-field" placeholder="Hotel Name">
+        <input type="text" id="profileEditCity" class="input-field" placeholder="City">
+        <input type="text" id="profileEditContact" class="input-field" placeholder="Contact Number">
+        <button class="save-btn" onclick="saveProfile()">Save Profile</button>
+        <button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">⬅ Back</button>
       </div>
     </div>
 
+    <!-- SETTINGS PANEL -->
     <div id="settingsPanel" class="panel">
       <div class="section-title">Settings</div>
-      <div class="management-card"><button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">Back</button></div>
+      <div class="management-card">
+        <div style="font-weight:800; margin-bottom:10px;">⚙️ App Settings</div>
+        <p style="color:#64748b;">Dark mode, alerts, preferences etc.</p>
+        <button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">⬅ Back</button>
+      </div>
     </div>
 
+    <!-- CUSTOMERS PANEL -->
     <div id="customersPanel" class="panel">
       <div class="section-title">Customers</div>
-      <div class="management-card"><button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">Back</button></div>
+      <div class="management-card">
+        <div id="customersList">No customers yet.</div>
+        <button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">⬅ Back</button>
+      </div>
     </div>
 
+    <!-- KYC PANEL -->
     <div id="kycPanel" class="panel">
-      <div class="section-title">KYC</div>
-      <div class="management-card"><button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">Back</button></div>
+      <div class="section-title">KYC Verification</div>
+      <div class="management-card">
+        <input type="text" id="kycAadhar" class="input-field" placeholder="Aadhar Number">
+        <input type="text" id="kycPan" class="input-field" placeholder="PAN Number">
+        <button class="save-btn" onclick="saveKYC()">Submit KYC</button>
+        <button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">⬅ Back</button>
+      </div>
     </div>
 
+    <!-- PAYMENTS PANEL -->
     <div id="paymentsPanel" class="panel">
-      <div class="section-title">Payments</div>
-      <div class="management-card"><button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">Back</button></div>
-    </div>
-
-    <div id="historyPanel" class="panel">
-      <div class="section-title">History</div>
-      <div class="management-card"><button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">Back</button></div>
-    </div>
-
-    <div id="notificationsPanel" class="panel">
-      <div class="section-title">Notifications</div>
-      <div class="management-card"><button class="back-btn" onclick="openTab('profilePanel', document.getElementById('tabProfile'))">Back</button></div>
-    </div>
-
-  </div>
-
-  <!-- BOTTOM NAV -->
-  <div class="tabs">
-    <button id="tabHome" class="tab-btn active" onclick="openTab('homePanel', this)">
-      <i class="fa-solid fa-house"></i><span>Home</span>
-    </button>
-    <button id="tabBookings" class="tab-btn" onclick="openTab('bookingsPanel', this)">
-      <i class="fa-solid fa-calendar-check"></i><span>Bookings</span>
-    </button>
-    <button id="tabManage" class="tab-btn" onclick="openTab('managementPanel', this)">
-      <i class="fa-solid fa-hotel"></i><span>Manage</span>
-    </button>
-    <button id="tabProfile" class="tab-btn" onclick="openTab('profilePanel', this)">
-      <i class="fa-solid fa-user"></i><span>Profile</span>
-    </button>
-  </div>
-
-  <script>
-    function openTab(panelId, btn) {
-      document.querySelectorAll(".panel").forEach(panel => panel.classList.remove("active"));
-      document.getElementById(panelId)?.classList.add("active");
-
-      document.querySelectorAll(".tab-btn").forEach(tab => tab.classList.remove("active"));
-
-      const profilePanels = [
-        "profilePanel","editProfilePanel","settingsPanel","customersPanel",
-        "kycPanel","paymentsPanel","historyPanel","notificationsPanel"
-      ];
-
-      if (btn && btn.classList.contains("tab-btn")) {
-        btn.classList.add("active");
-      } else if (profilePanels.includes(panelId)) {
-        document.getElementById("tabProfile")?.classList.add("active");
-      }
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function logout() {
-      alert("Logout working ✅");
-    }
-  </script>
-      <script type="module" src="./hotel-dashboard.js"></script>
-</body>
-</html>
+      <div class="section-title">Payments / UPI</div>
+      <div class="management-card">
+ 

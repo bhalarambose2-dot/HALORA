@@ -1,700 +1,167 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HALORA HOTEL Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:'Poppins',sans-serif;
-    }
+<!-- ADD THIS INSIDE BODY TOP (HEADER UPGRADE) -->
 
-    body{
-      background: linear-gradient(180deg,#020617,#030b22,#000814);
-      color:#fff;
-      min-height:100vh;
-      padding-bottom:40px;
-    }
-
-    .container{
-      width:100%;
-      max-width:520px;
-      margin:auto;
-      padding:18px;
-    }
-
-    .header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:18px 0 10px;
-    }
-
-    .brand h1{
-      font-size:30px;
-      font-weight:800;
-      background: linear-gradient(90deg,#ffffff,#ffb300);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-
-    .brand p{
-      color:#cbd5e1;
-      font-size:14px;
-      margin-top:4px;
-    }
-
-    .logout-btn{
-      background: linear-gradient(135deg,#ffb300,#ff8c00);
-      color:#111827;
-      border:none;
-      padding:13px 20px;
-      border-radius:18px;
-      font-weight:700;
-      font-size:15px;
-      box-shadow:0 8px 25px rgba(255,179,0,0.35);
-      cursor:pointer;
-    }
-
-    .hero{
-      margin-top:20px;
-      background: linear-gradient(135deg,rgba(15,23,42,0.95),rgba(30,41,59,0.92));
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:28px;
-      padding:24px;
-      position:relative;
-      overflow:hidden;
-      box-shadow:0 20px 50px rgba(0,0,0,0.35);
-    }
-
-    .hero::before{
-      content:'';
-      position:absolute;
-      top:-40px;
-      right:-40px;
-      width:170px;
-      height:170px;
-      background:rgba(255,255,255,0.08);
-      border-radius:50%;
-    }
-
-    .hero::after{
-      content:'';
-      position:absolute;
-      bottom:-50px;
-      right:30px;
-      width:130px;
-      height:130px;
-      background:rgba(255,255,255,0.06);
-      border-radius:50%;
-    }
-
-    .hero h2{
-      font-size:34px;
-      line-height:1.1;
-      font-weight:800;
-      margin-bottom:14px;
-      max-width:320px;
-      position:relative;
-      z-index:2;
-    }
-
-    .hero p{
-      color:#e2e8f0;
-      font-size:16px;
-      line-height:1.7;
-      max-width:330px;
-      position:relative;
-      z-index:2;
-    }
-
-    .hero-buttons{
-      display:flex;
-      gap:12px;
-      margin-top:24px;
-      flex-wrap:wrap;
-      position:relative;
-      z-index:2;
-    }
-
-    .hero-buttons button{
-      border:none;
-      border-radius:14px;
-      padding:12px 18px;
-      font-size:14px;
-      font-weight:600;
-      cursor:pointer;
-    }
-
-    .primary-btn{
-      background:linear-gradient(135deg,#ffb300,#ff8c00);
-      color:#111827;
-    }
-
-    .secondary-btn{
-      background:rgba(255,255,255,0.08);
-      color:#fff;
-      border:1px solid rgba(255,255,255,0.08);
-    }
-
-    .hotel-profile{
-      margin-top:22px;
-      background:rgba(15,23,42,0.75);
-      border:1px solid rgba(255,255,255,0.07);
-      border-radius:24px;
-      padding:20px;
-      display:flex;
-      gap:16px;
-      align-items:center;
-    }
-
-    .hotel-avatar{
-      width:72px;
-      height:72px;
-      border-radius:20px;
-      background:linear-gradient(135deg,#ffb300,#ff8c00);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:30px;
-      font-weight:800;
-      color:#111827;
-      overflow:hidden;
-    }
-
-    .hotel-avatar img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .hotel-info h3{
-      font-size:22px;
-      font-weight:700;
-    }
-
-    .hotel-info p{
-      color:#cbd5e1;
-      margin-top:4px;
-      font-size:14px;
-    }
-
-    .badge{
-      display:inline-block;
-      margin-top:10px;
-      padding:6px 12px;
-      background:rgba(34,197,94,0.15);
-      color:#22c55e;
-      border-radius:999px;
-      font-size:13px;
-      font-weight:600;
-    }
-
-    .inactive-badge{
-      background:rgba(239,68,68,0.15);
-      color:#ef4444;
-    }
-
-    .section-title{
-      font-size:20px;
-      font-weight:700;
-      margin:28px 0 14px;
-      color:#f8fafc;
-    }
-
-    .stats-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-
-    .stat-card{
-      background:rgba(15,23,42,0.82);
-      border:1px solid rgba(255,255,255,0.06);
-      border-radius:24px;
-      padding:22px 18px;
-    }
-
-    .stat-value{
-      font-size:34px;
-      font-weight:800;
-      color:#ffb300;
-      margin-bottom:8px;
-    }
-
-    .stat-label{
-      color:#cbd5e1;
-      font-size:15px;
-    }
-
-    .details-card,.booking-card{
-      margin-top:14px;
-      background:rgba(15,23,42,0.82);
-      border:1px solid rgba(255,255,255,0.06);
-      border-radius:24px;
-      padding:20px;
-    }
-
-    .detail-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:14px 0;
-      border-bottom:1px solid rgba(255,255,255,0.06);
-    }
-
-    .detail-row:last-child{
-      border-bottom:none;
-    }
-
-    .detail-label{
-      color:#94a3b8;
-      font-size:15px;
-    }
-
-    .detail-value{
-      font-weight:600;
-      color:#fff;
-      font-size:15px;
-      text-align:right;
-      max-width:180px;
-    }
-
-    .edit-input{
-      width:100%;
-      padding:14px;
-      margin-top:12px;
-      border:none;
-      border-radius:14px;
-      outline:none;
-      background:#0f172a;
-      color:#fff;
-      font-size:15px;
-      border:1px solid rgba(255,255,255,0.08);
-    }
-
-    .save-btn{
-      margin-top:14px;
-      width:100%;
-      background:linear-gradient(135deg,#ffb300,#ff8c00);
-      border:none;
-      color:#111827;
-      font-weight:700;
-      padding:14px;
-      border-radius:16px;
-      cursor:pointer;
-      font-size:16px;
-    }
-
-    .toggle-wrap{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-top:15px;
-      padding:16px;
-      background:rgba(255,255,255,0.03);
-      border-radius:16px;
-    }
-
-    .switch{
-      position:relative;
-      display:inline-block;
-      width:56px;
-      height:30px;
-    }
-
-    .switch input{
-      opacity:0;
-      width:0;
-      height:0;
-    }
-
-    .slider{
-      position:absolute;
-      cursor:pointer;
-      top:0; left:0; right:0; bottom:0;
-      background:#475569;
-      transition:.4s;
-      border-radius:999px;
-    }
-
-    .slider:before{
-      position:absolute;
-      content:"";
-      height:22px;
-      width:22px;
-      left:4px;
-      bottom:4px;
-      background:white;
-      transition:.4s;
-      border-radius:50%;
-    }
-
-    input:checked + .slider{
-      background:#22c55e;
-    }
-
-    input:checked + .slider:before{
-      transform:translateX(26px);
-    }
-
-    .booking-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:12px;
-    }
-
-    .booking-name{
-      font-size:18px;
-      font-weight:700;
-    }
-
-    .booking-status{
-      padding:6px 12px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:700;
-    }
-
-    .pending{
-      background:rgba(245,158,11,0.15);
-      color:#f59e0b;
-    }
-
-    .confirmed{
-      background:rgba(34,197,94,0.15);
-      color:#22c55e;
-    }
-
-    .rejected{
-      background:rgba(239,68,68,0.15);
-      color:#ef4444;
-    }
-
-    .booking-details{
-      color:#cbd5e1;
-      font-size:14px;
-      line-height:1.8;
-    }
-
-    .booking-actions{
-      display:flex;
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .approve-btn,.reject-btn{
-      flex:1;
-      border:none;
-      padding:12px;
-      border-radius:14px;
-      font-weight:700;
-      cursor:pointer;
-      font-size:14px;
-    }
-
-    .approve-btn{
-      background:rgba(34,197,94,0.15);
-      color:#22c55e;
-      border:1px solid rgba(34,197,94,0.25);
-    }
-
-    .reject-btn{
-      background:rgba(239,68,68,0.15);
-      color:#ef4444;
-      border:1px solid rgba(239,68,68,0.25);
-    }
-  </style>
-</head>
-<body>
-
-<div class="container">
-
-  <div class="header">
-    <div class="brand">
-      <h1>HALORA HOTEL</h1>
-      <p>Hotel Partner Dashboard</p>
-    </div>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </div>
-
-  <div class="hero">
-    <h2>Manage your hotel with HALORA</h2>
-    <p>Update hotel details, room prices, bookings, and earnings — all in one premium dashboard.</p>
-    <div class="hero-buttons">
-      <button class="primary-btn">Edit Hotel</button>
-      <button class="secondary-btn">Add Room</button>
-      <button class="secondary-btn">View Bookings</button>
-    </div>
-  </div>
-
-  <div class="hotel-profile">
-    <div class="hotel-avatar" id="hotelAvatar">H</div>
-    <div class="hotel-info">
-      <h3 id="hotelName">Loading...</h3>
-      <p id="hotelCity">Loading city...</p>
-      <span class="badge" id="hotelStatus">● Loading...</span>
-    </div>
-  </div>
-
-  <h3 class="section-title">Dashboard Overview</h3>
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-value" id="totalBookings">0</div>
-      <div class="stat-label">Total Bookings</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" id="todayBookings">0</div>
-      <div class="stat-label">Today Bookings</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" id="monthlyEarnings">₹0</div>
-      <div class="stat-label">Monthly Earnings</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" id="roomPrice">₹0</div>
-      <div class="stat-label">Room Price</div>
-    </div>
-  </div>
-
-  <h3 class="section-title">Hotel Information</h3>
-  <div class="details-card">
-    <div class="detail-row"><div class="detail-label">Hotel Name</div><div class="detail-value" id="detailHotelName">-</div></div>
-    <div class="detail-row"><div class="detail-label">City</div><div class="detail-value" id="detailCity">-</div></div>
-    <div class="detail-row"><div class="detail-label">Available Rooms</div><div class="detail-value" id="availableRooms">-</div></div>
-    <div class="detail-row"><div class="detail-label">Check-in</div><div class="detail-value" id="checkIn">-</div></div>
-    <div class="detail-row"><div class="detail-label">Check-out</div><div class="detail-value" id="checkOut">-</div></div>
-    <div class="detail-row"><div class="detail-label">Contact</div><div class="detail-value" id="contact">-</div></div>
-  </div>
-
-  <h3 class="section-title">Edit Hotel Details</h3>
-  <div class="details-card">
-    <input type="text" id="editHotelName" class="edit-input" placeholder="Hotel Name">
-    <input type="text" id="editCity" class="edit-input" placeholder="City">
-    <input type="text" id="editContact" class="edit-input" placeholder="Contact Number">
-    <input type="number" id="editRooms" class="edit-input" placeholder="Available Rooms">
-    <input type="time" id="editCheckIn" class="edit-input">
-    <input type="time" id="editCheckOut" class="edit-input">
-    <input type="text" id="editImage" class="edit-input" placeholder="Hotel Image URL">
-    <button class="save-btn" onclick="saveHotelDetails()">Save Hotel Details</button>
-
-    <div class="toggle-wrap">
-      <span>Hotel Availability</span>
-      <label class="switch">
-        <input type="checkbox" id="hotelAvailabilityToggle" onchange="toggleHotelStatus()">
-        <span class="slider"></span>
-      </label>
-    </div>
-  </div>
-
-  <h3 class="section-title">Update Room Price</h3>
-  <div class="details-card">
-    <input type="number" id="newRoomPrice" class="edit-input" placeholder="Enter new room price">
-    <button class="save-btn" onclick="updateRoomPrice()">Save New Price</button>
-  </div>
-
-  <h3 class="section-title">Recent Booking Requests</h3>
-  <div id="bookingsContainer"></div>
-
+<div class="topbar">
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  <input type="text" id="searchInput" placeholder="Search bookings, guests..." onkeyup="searchData()">
 </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-  import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<!-- SIDE MENU -->
+<div id="sideMenu" class="side-menu">
+  <h3>HALORA MENU</h3>
+  <button onclick="showSection('dashboard')">🏠 Dashboard</button>
+  <button onclick="showSection('bookings')">📅 Bookings</button>
+  <button onclick="showSection('settings')">⚙️ Settings</button>
+  <button onclick="logout()">🚪 Logout</button>
+</div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDJnOh92AYUzFeWtuLMtDciETdpCQ7-MNs",
-    authDomain: "halorebook.firebaseapp.com",
-    databaseURL: "https://halorebook-default-rtdb.firebaseio.com",
-    projectId: "halorebook",
-    storageBucket: "halorebook.firebasestorage.app",
-    messagingSenderId: "58132767978",
-    appId: "1:58132767978:web:2165ca8a94fb0cfe5a6393",
-    measurementId: "G-2MX4YC3ESQ"
-  };
+<!-- MAIN SECTIONS -->
+<div id="dashboardSection">
+  <!-- EXISTING DASHBOARD CONTENT -->
+</div>
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const auth = getAuth(app);
+<div id="bookingsSection" style="display:none;">
+  <h3 class="section-title">All Bookings</h3>
+  <div id="allBookings"></div>
+</div>
 
-  const hotelId = "hotel_001";
+<div id="settingsSection" style="display:none;">
+  <h3 class="section-title">Settings</h3>
+  <p style="color:#aaa">Hotel settings & controls</p>
+</div>
 
-  async function loadHotelData() {
-    const hotelRef = ref(db, 'hotels/' + hotelId);
-    const snapshot = await get(hotelRef);
+<!-- BOTTOM NAVIGATION -->
+<div class="bottom-nav">
+  <div onclick="showSection('dashboard')">🏠</div>
+  <div onclick="showSection('bookings')">📅</div>
+  <div onclick="showSection('settings')">⚙️</div>
+</div>
 
-    if (snapshot.exists()) {
-      const data = snapshot.val();
+<style>
+/* TOP BAR */
+.topbar{
+  display:flex;
+  gap:10px;
+  margin-bottom:10px;
+}
 
-      document.getElementById("hotelName").innerText = data.hotelName || "HALORA Hotel";
-      document.getElementById("detailHotelName").innerText = data.hotelName || "-";
-      document.getElementById("hotelCity").innerText = data.city || "-";
-      document.getElementById("detailCity").innerText = data.city || "-";
-      document.getElementById("availableRooms").innerText = (data.availableRooms || 0) + " Rooms";
-      document.getElementById("checkIn").innerText = data.checkIn || "-";
-      document.getElementById("checkOut").innerText = data.checkOut || "-";
-      document.getElementById("contact").innerText = data.contact || "-";
-      document.getElementById("roomPrice").innerText = "₹" + (data.roomPrice || 0);
-      document.getElementById("monthlyEarnings").innerText = "₹" + (data.monthlyEarnings || 0);
-      document.getElementById("todayBookings").innerText = data.todayBookings || 0;
-      document.getElementById("totalBookings").innerText = data.totalBookings || 0;
+.menu-btn{
+  font-size:22px;
+  cursor:pointer;
+}
 
-      document.getElementById("editHotelName").value = data.hotelName || "";
-      document.getElementById("editCity").value = data.city || "";
-      document.getElementById("editContact").value = data.contact || "";
-      document.getElementById("editRooms").value = data.availableRooms || "";
-      document.getElementById("editCheckIn").value = convertToTimeInput(data.checkIn || "12:00 PM");
-      document.getElementById("editCheckOut").value = convertToTimeInput(data.checkOut || "11:00 AM");
-      document.getElementById("editImage").value = data.hotelImage || "";
+#searchInput{
+  flex:1;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  background:#0f172a;
+  color:#fff;
+}
 
-      const status = data.status || "Inactive";
-      const statusEl = document.getElementById("hotelStatus");
-      statusEl.innerText = "● " + status;
-      document.getElementById("hotelAvailabilityToggle").checked = status === "Active";
+/* SIDE MENU */
+.side-menu{
+  position:fixed;
+  top:0;
+  left:-250px;
+  width:240px;
+  height:100%;
+  background:#020617;
+  padding:20px;
+  transition:0.3s;
+  z-index:999;
+}
 
-      if(status === "Active"){
-        statusEl.className = "badge";
-      } else {
-        statusEl.className = "badge inactive-badge";
-      }
+.side-menu.active{
+  left:0;
+}
 
-      const avatar = document.getElementById("hotelAvatar");
-      if(data.hotelImage){
-        avatar.innerHTML = `<img src="${data.hotelImage}" alt="Hotel">`;
-      } else {
-        avatar.innerText = (data.hotelName || "H").charAt(0).toUpperCase();
-      }
-    }
-  }
+.side-menu button{
+  display:block;
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  background:#0f172a;
+  color:#fff;
+  border-radius:10px;
+  text-align:left;
+}
 
-  async function loadBookings() {
-    const bookingsRef = ref(db, 'hotelBookings/' + hotelId);
-    const snapshot = await get(bookingsRef);
-    const container = document.getElementById("bookingsContainer");
-    container.innerHTML = "";
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+  background:#020617;
+  padding:10px 0;
+  border-top:1px solid rgba(255,255,255,0.1);
+}
 
-    if (snapshot.exists()) {
-      const bookings = snapshot.val();
+.bottom-nav div{
+  font-size:20px;
+  cursor:pointer;
+}
+</style>
 
-      Object.entries(bookings).reverse().forEach(([bookingId, booking]) => {
-        let statusClass = "pending";
-        if(booking.status === "Confirmed") statusClass = "confirmed";
-        if(booking.status === "Rejected") statusClass = "rejected";
+<script>
+// MENU
+function toggleMenu(){
+  document.getElementById("sideMenu").classList.toggle("active");
+}
 
-        container.innerHTML += `
-          <div class="booking-card">
-            <div class="booking-top">
-              <div class="booking-name">${booking.name || "Guest"}</div>
-              <div class="booking-status ${statusClass}">${booking.status || "Pending"}</div>
-            </div>
-            <div class="booking-details">
-              Room: ${booking.roomType || "Standard"}<br>
-              Check-in: ${booking.checkInDate || "-"}<br>
-              Nights: ${booking.nights || 1}<br>
-              Guests: ${booking.guests || 1}
-            </div>
-            <div class="booking-actions">
-              <button class="approve-btn" onclick="updateBookingStatus('${bookingId}','Confirmed')">Approve</button>
-              <button class="reject-btn" onclick="updateBookingStatus('${bookingId}','Rejected')">Reject</button>
-            </div>
-          </div>
-        `;
-      });
-    } else {
-      container.innerHTML = `<div class="booking-card"><div class="booking-details">No bookings yet.</div></div>`;
-    }
-  }
+// SECTION SWITCH
+function showSection(section){
+  document.getElementById("dashboardSection").style.display="none";
+  document.getElementById("bookingsSection").style.display="none";
+  document.getElementById("settingsSection").style.display="none";
 
-  window.updateRoomPrice = async function () {
-    const newPrice = document.getElementById("newRoomPrice").value;
-    if (!newPrice) return alert("Enter new room price");
+  document.getElementById(section+"Section").style.display="block";
+}
 
-    await update(ref(db, 'hotels/' + hotelId), {
-      roomPrice: Number(newPrice)
+// SEARCH SYSTEM
+function searchData(){
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let cards = document.querySelectorAll(".booking-card");
+
+  cards.forEach(card=>{
+    let text = card.innerText.toLowerCase();
+    card.style.display = text.includes(input) ? "block" : "none";
+  });
+}
+
+// LOAD BOOKINGS ALSO IN ALL BOOKINGS PAGE
+async function loadBookings() {
+  const bookingsRef = ref(db, 'hotelBookings/' + hotelId);
+  const snapshot = await get(bookingsRef);
+
+  const container = document.getElementById("bookingsContainer");
+  const allContainer = document.getElementById("allBookings");
+
+  container.innerHTML = "";
+  allContainer.innerHTML = "";
+
+  if (snapshot.exists()) {
+    const bookings = snapshot.val();
+
+    Object.entries(bookings).forEach(([id, booking]) => {
+
+      const card = `
+      <div class="booking-card">
+        <div class="booking-top">
+          <div class="booking-name">${booking.name}</div>
+          <div class="booking-status">${booking.status}</div>
+        </div>
+        <div class="booking-details">
+          ${booking.roomType} | ${booking.checkInDate}
+        </div>
+      </div>`;
+
+      container.innerHTML += card;
+      allContainer.innerHTML += card;
     });
-
-    alert("Room price updated successfully!");
-    loadHotelData();
-    document.getElementById("newRoomPrice").value = "";
   }
-
-  window.saveHotelDetails = async function () {
-    const hotelName = document.getElementById("editHotelName").value;
-    const city = document.getElementById("editCity").value;
-    const contact = document.getElementById("editContact").value;
-    const availableRooms = document.getElementById("editRooms").value;
-    const checkIn = document.getElementById("editCheckIn").value;
-    const checkOut = document.getElementById("editCheckOut").value;
-    const hotelImage = document.getElementById("editImage").value;
-
-    await update(ref(db, 'hotels/' + hotelId), {
-      hotelName,
-      city,
-      contact,
-      availableRooms: Number(availableRooms),
-      checkIn: convertToAMPM(checkIn),
-      checkOut: convertToAMPM(checkOut),
-      hotelImage
-    });
-
-    alert("Hotel details updated successfully!");
-    loadHotelData();
-  }
-
-  window.toggleHotelStatus = async function () {
-    const isActive = document.getElementById("hotelAvailabilityToggle").checked;
-    await update(ref(db, 'hotels/' + hotelId), {
-      status: isActive ? "Active" : "Inactive"
-    });
-
-    loadHotelData();
-  }
-
-  window.updateBookingStatus = async function (bookingId, status) {
-    await update(ref(db, 'hotelBookings/' + hotelId + '/' + bookingId), {
-      status: status
-    });
-
-    alert("Booking " + status);
-    loadBookings();
-  }
-
-  window.logout = async function () {
-    await signOut(auth);
-    alert("Logged out successfully");
-    window.location.href = "hotel-login.html";
-  }
-
-  function convertToAMPM(time24) {
-    if (!time24) return "";
-    let [hours, minutes] = time24.split(':');
-    hours = parseInt(hours);
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12 || 12;
-    return `${hours}:${minutes} ${ampm}`;
-  }
-
-  function convertToTimeInput(time12h) {
-    if (!time12h) return "";
-    const [time, modifier] = time12h.split(' ');
-    let [hours, minutes] = time.split(':');
-    hours = parseInt(hours);
-
-    if (modifier === 'PM' && hours < 12) hours += 12;
-    if (modifier === 'AM' && hours === 12) hours = 0;
-
-    return `${String(hours).padStart(2, '0')}:${minutes}`;
-  }
-
-  loadHotelData();
-  loadBookings();
+}
 </script>
-
-</body>
-</html>

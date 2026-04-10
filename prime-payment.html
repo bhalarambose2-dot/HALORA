@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prime Payment</title>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <style>
+    body{
+      font-family: Arial;
+      background:#0b0f19;
+      color:white;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+    }
+
+    .box{
+      background:#131b2d;
+      padding:25px;
+      border-radius:15px;
+      width:320px;
+      text-align:center;
+    }
+
+    h2{
+      margin-bottom:10px;
+    }
+
+    .price{
+      font-size:28px;
+      color:gold;
+      margin:15px 0;
+    }
+
+    button{
+      width:100%;
+      padding:12px;
+      background:gold;
+      border:none;
+      border-radius:10px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>🚀 Prime Partner</h2>
+  <p>Unlock all features & start earning</p>
+
+  <div class="price">₹299</div>
+
+  <button onclick="payNow()">Pay & Continue</button>
+</div>
+
+<script>
+
+function payNow(){
+
+  var options = {
+    "key": "YOUR_RAZORPAY_KEY", // 🔑 replace
+    "amount": 299.00,
+    "currency": "INR",
+    "name": "HALORA",
+    "description": "Prime Partner Plan ₹299",
+
+    "handler": function (response){
+
+      // ✅ Save payment success
+      localStorage.setItem("paymentStatus", "paid");
+      localStorage.setItem("paymentId", response.razorpay_payment_id);
+
+      // 🔥 Get selected partner type
+      let type = localStorage.getItem("partnerType");
+
+      // 👉 Redirect based on type
+      if(type === "driver"){
+        window.location.href = "driver.html";
+      }
+
+      if(type === "hotel"){
+        window.location.href = "hotel-partner.html";
+      }
+
+      if(type === "trip"){
+        window.location.href = "trip-partner.html";
+      }
+
+    },
+
+    "theme": {
+      "color": "#FFD700"
+    }
+  };
+
+  var rzp = new Razorpay(options);
+  rzp.open();
+}
+
+</script>
+
+</body>
+</html>

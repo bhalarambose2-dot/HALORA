@@ -1,91 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BR Trip Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HALORA Trips</title>
 
-  <style>
-    body{
-      margin:0;
-      font-family:Poppins;
-      background:#0b0f19;
-      color:#fff;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Poppins;
+  background:#0b0f19;
+  color:#fff;
+}
 
-    header{
-      padding:15px;
-      text-align:center;
-      background:#111827;
-      font-size:20px;
-      font-weight:bold;
-    }
+/* HEADER */
+header{
+  padding:15px;
+  text-align:center;
+  background:#111827;
+  font-size:20px;
+}
 
-    .container{
-      padding:15px;
-    }
+/* SEARCH */
+.trip-search-box{
+  display:flex;
+  background:#131b2d;
+  padding:10px;
+  border-radius:10px;
+  margin:10px;
+}
 
-    .btn{
-      padding:10px;
-      border:none;
-      border-radius:8px;
-      background:#00c896;
-      color:#fff;
-      cursor:pointer;
-      margin:5px 0;
-    }
+.trip-search-box input{
+  flex:1;
+  border:none;
+  background:none;
+  color:#fff;
+  outline:none;
+}
 
-    .card{
-      background:#131b2d;
-      padding:15px;
-      border-radius:12px;
-      margin-bottom:10px;
-    }
+/* FILTER */
+.trip-filters{
+  display:flex;
+  overflow:auto;
+  gap:8px;
+  padding:10px;
+}
 
-    input{
-      width:100%;
-      padding:10px;
-      margin:5px 0;
-      border-radius:8px;
-      border:none;
-    }
+.trip-filter-btn{
+  padding:8px 12px;
+  border:none;
+  border-radius:20px;
+  background:#1f2937;
+  color:#fff;
+  cursor:pointer;
+}
 
-    .hidden{
-      display:none;
-    }
+.trip-filter-btn.active{
+  background:#00c896;
+}
 
-  </style>
+/* GRID */
+#tripGrid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+  padding:10px;
+}
+
+/* CARD */
+.trip-card{
+  background:#131b2d;
+  border-radius:12px;
+  overflow:hidden;
+  position:relative;
+}
+
+.trip-img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+
+.trip-heart-btn{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:#000;
+  border:none;
+  color:#fff;
+  padding:5px 8px;
+  border-radius:50%;
+}
+
+.trip-content{
+  padding:10px;
+}
+
+.trip-title-row{
+  display:flex;
+  justify-content:space-between;
+}
+
+.trip-budget-badge{
+  background:#00c896;
+  padding:5px;
+  border-radius:6px;
+  font-size:12px;
+}
+
+.trip-meta{
+  display:flex;
+  gap:10px;
+  font-size:12px;
+  margin:5px 0;
+}
+
+.trip-places{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+}
+
+.trip-place-chip{
+  background:#1f2937;
+  padding:4px 8px;
+  border-radius:10px;
+  font-size:12px;
+}
+
+.trip-card-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.trip-btn{
+  flex:1;
+  padding:8px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.trip-btn-outline{
+  background:transparent;
+  border:1px solid #00c896;
+  color:#00c896;
+}
+
+.trip-btn-primary{
+  background:#00c896;
+  color:#fff;
+}
+
+/* EMPTY */
+#tripEmptyState{
+  text-align:center;
+  display:none;
+}
+
+/* MODAL */
+#tripModal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  display:none;
+}
+
+#tripModal.show{
+  display:block;
+}
+
+.trip-modal-img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+
+.trip-modal-body{
+  padding:15px;
+}
+
+.trip-modal-close{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:red;
+  border:none;
+  color:#fff;
+  padding:5px;
+}
+
+.trip-modal-section{
+  margin-top:10px;
+}
+
+.trip-modal-list span{
+  display:inline-block;
+  background:#1f2937;
+  margin:3px;
+  padding:5px;
+  border-radius:6px;
+}
+
+.trip-modal-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+</style>
+
 </head>
 
 <body>
 
-<header>✈️ BR Trip Dashboard</header>
+<header>✈️ HALORA Trips</header>
 
-<div class="container">
-
-  <!-- ADD TRIP -->
-  <h3>Add New Trip</h3>
-  <input type="text" id="title" placeholder="Trip Title">
-  <input type="text" id="price" placeholder="Price">
-  <input type="text" id="location" placeholder="Location">
-  <button class="btn" onclick="addTrip()">Add Trip</button>
-
-  <hr>
-
-  <!-- TRIP LIST -->
-  <h3>Available Trips</h3>
-  <div id="tripList"></div>
-
-  <hr>
-
-  <!-- BOOKINGS -->
-  <h3>Bookings</h3>
-  <div id="bookingList"></div>
-
+<!-- SEARCH -->
+<div class="trip-search-box">
+  🔍
+  <input type="text" id="tripSearchInput" placeholder="Search trips...">
 </div>
 
-<!-- Firebase -->
-<script type="module" src="trip.js"></script>
+<!-- FILTER -->
+<div class="trip-filters">
+  <button class="trip-filter-btn active" data-filter="All">All</button>
+  <button class="trip-filter-btn" data-filter="Couple">Couple</button>
+  <button class="trip-filter-btn" data-filter="Family">Family</button>
+  <button class="trip-filter-btn" data-filter="Adventure">Adventure</button>
+  <button class="trip-filter-btn" data-filter="Religious">Religious</button>
+  <button class="trip-filter-btn" data-filter="Hill">Hill</button>
+  <button class="trip-filter-btn" data-filter="Beach">Beach</button>
+</div>
+
+<!-- GRID -->
+<div id="tripGrid"></div>
+
+<!-- EMPTY -->
+<div id="tripEmptyState">No Trips Found 😢</div>
+
+<!-- MODAL -->
+<div id="tripModal">
+  <div id="tripModalContent"></div>
+</div>
+
+<!-- 🔥 YOUR JS -->
+<script>
+/* 👉 YAHAN APNA FULL JS PASTE KARO (jo tumne bheja) */
+</script>
 
 </body>
 </html>

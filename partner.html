@@ -15,6 +15,12 @@
 
     <h2 class="section-title">Earn with HALORA</h2>
 
+    <!-- 🔥 Prime Plan Banner -->
+    <div style="background:gold; padding:15px; border-radius:12px; margin-bottom:20px; color:black; text-align:center;">
+      <h3>🚀 Prime Partner Plan - ₹299 Only</h3>
+      <p>Mandatory for all partners • Earn More • Get Verified</p>
+    </div>
+
     <div class="partner-grid">
 
       <!-- Bike Rider -->
@@ -26,7 +32,9 @@
             <p>Earn per ride</p>
           </div>
         </div>
-        <button class="apply-btn" onclick="openPartner('driver')">Apply</button>
+        <button class="apply-btn" onclick="openPartner('driver')">
+          Apply & Get Prime ₹299
+        </button>
       </div>
 
       <!-- Hotel Owner -->
@@ -38,7 +46,9 @@
             <p>List your hotel</p>
           </div>
         </div>
-        <button class="apply-btn" onclick="openPartner('hotel')">Apply</button>
+        <button class="apply-btn" onclick="openPartner('hotel')">
+          Apply & Get Prime ₹299
+        </button>
       </div>
 
       <!-- Trip Agent -->
@@ -50,7 +60,9 @@
             <p>Sell packages</p>
           </div>
         </div>
-        <button class="apply-btn" onclick="openPartner('trip')">Apply</button>
+        <button class="apply-btn" onclick="openPartner('trip')">
+          Apply & Get Prime ₹299
+        </button>
       </div>
 
     </div>
@@ -59,17 +71,12 @@
 
   <script>
     function openPartner(type) {
-      if (type === "driver") {
-        window.location.href = "driver.html";
-      }
 
-      if (type === "hotel") {
-        window.location.href = "hotel-partner.html";
-      }
+      // 🔥 Save selected partner type
+      localStorage.setItem("partnerType", type);
 
-      if (type === "trip") {
-        window.location.href = "trip-partner.html";
-      }
+      // 👉 Redirect to payment page
+      window.location.href = "prime-payment.html";
     }
   </script>
 

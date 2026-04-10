@@ -1,38 +1,91 @@
-<!-- HALORA TRIPS SECTION -->
-<section id="tripsSection" class="page-section" style="display:none;">
-  <div class="trips-hero">
-    <h2>Explore Trips ✈️</h2>
-    <p>All India budget trips under ₹10,000 per person</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BR Trip Dashboard</title>
 
-    <div class="trip-search-box">
-      <span>🔍</span>
-      <input type="text" id="tripSearchInput" placeholder="Search Goa, Jaipur, Kashmir..." />
-    </div>
-  </div>
+  <style>
+    body{
+      margin:0;
+      font-family:Poppins;
+      background:#0b0f19;
+      color:#fff;
+    }
 
-  <div class="trips-wrapper">
-    <div class="trips-title-row">
-      <h3>Where You Should Go Next?</h3>
-      <button onclick="scrollTripsTop()">View All</button>
-    </div>
+    header{
+      padding:15px;
+      text-align:center;
+      background:#111827;
+      font-size:20px;
+      font-weight:bold;
+    }
 
-    <div id="tripFilters">
-      <button class="trip-filter-btn active" data-filter="All">All</button>
-      <button class="trip-filter-btn" data-filter="Hill">Hill</button>
-      <button class="trip-filter-btn" data-filter="Religious">Religious</button>
-      <button class="trip-filter-btn" data-filter="Couple">Couple</button>
-      <button class="trip-filter-btn" data-filter="Family">Family</button>
-      <button class="trip-filter-btn" data-filter="Beach">Beach</button>
-      <button class="trip-filter-btn" data-filter="Heritage">Heritage</button>
-      <button class="trip-filter-btn" data-filter="Adventure">Adventure</button>
-    </div>
+    .container{
+      padding:15px;
+    }
 
-    <div id="tripGrid"></div>
-    <div id="tripEmptyState" style="display:none;">No trips found 😕</div>
-  </div>
-</section>
+    .btn{
+      padding:10px;
+      border:none;
+      border-radius:8px;
+      background:#00c896;
+      color:#fff;
+      cursor:pointer;
+      margin:5px 0;
+    }
 
-<!-- TRIP DETAILS MODAL -->
-<div id="tripModal" style="display:none;">
-  <div id="tripModalContent"></div>
+    .card{
+      background:#131b2d;
+      padding:15px;
+      border-radius:12px;
+      margin-bottom:10px;
+    }
+
+    input{
+      width:100%;
+      padding:10px;
+      margin:5px 0;
+      border-radius:8px;
+      border:none;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>✈️ BR Trip Dashboard</header>
+
+<div class="container">
+
+  <!-- ADD TRIP -->
+  <h3>Add New Trip</h3>
+  <input type="text" id="title" placeholder="Trip Title">
+  <input type="text" id="price" placeholder="Price">
+  <input type="text" id="location" placeholder="Location">
+  <button class="btn" onclick="addTrip()">Add Trip</button>
+
+  <hr>
+
+  <!-- TRIP LIST -->
+  <h3>Available Trips</h3>
+  <div id="tripList"></div>
+
+  <hr>
+
+  <!-- BOOKINGS -->
+  <h3>Bookings</h3>
+  <div id="bookingList"></div>
+
 </div>
+
+<!-- Firebase -->
+<script type="module" src="trip.js"></script>
+
+</body>
+</html>

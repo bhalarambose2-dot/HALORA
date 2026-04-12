@@ -2,31 +2,68 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HALORA RIDE</title>
+
   <link rel="stylesheet" href="./style.css" />
   <link rel="icon" type="image/png" href="./assets/halora-icon.png">
-  <link rel="apple-touch-icon" href="./assets/halora-icon.png">
-  <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#ff7a00">
+
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: #0b0f19;
+      color: white;
+      font-family: Arial;
+    }
+
+    .hero-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #111827;
+      font-size: 14px;
+    }
+
+    footer a {
+      color: #00d4ff;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+  </style>
 </head>
+
 <body>
 
-  <header class="topbar">
-    <div class="logo">HALORA RIDE</div>
-    <a href="./login.html" class="logout-btn">Get Started</a>
-  </header>
+<header class="topbar">
+  <div class="logo">HALORA RIDE</div>
+  <a href="./login.html" class="logout-btn">Get Started</a>
+</header>
 
-  <main class="hero-center">
-    <div class="hero-box">
-      <div class="floating-logo">H</div>
-      <h1 class="hero-title">HALORA RIDE</h1>
-      <p class="hero-sub">Smart Ride, Taxi, Auto & Hotel Booking Platform</p>
-      <a href="./login.html" class="main-btn">Get Started</a>
-    </div>
-  </main>
- <a href="privacy.html">Privacy Policy</a>
- <a href="terms.html">Terms & Conditions</a>
- <a href="refund.html">Refund Policy</a>
+<main class="hero-center">
+  <div class="hero-box">
+    <div class="floating-logo">H</div>
+    <h1 class="hero-title">HALORA RIDE</h1>
+    <p class="hero-sub">Smart Ride, Taxi, Auto & Hotel Booking Platform</p>
+    <a href="./login.html" class="main-btn">Get Started</a>
+  </div>
+</main>
+
+<!-- ✅ FIXED FOOTER -->
+<footer>
+  <p>© 2026 HALORA</p>
+  <a href="privacy.html">Privacy Policy</a>
+  <a href="terms.html">Terms</a>
+  <a href="refund.html">Refund</a>
+</footer>
+
 </body>
 </html>

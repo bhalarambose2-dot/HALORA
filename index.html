@@ -5,59 +5,134 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HALORA RIDE</title>
 
-  <link rel="stylesheet" href="./style.css" />
   <link rel="icon" type="image/png" href="./assets/halora-icon.png">
 
   <style>
-    body {
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      background: #0b0f19;
-      color: white;
-      font-family: Arial;
+    /* RESET */
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
     }
 
-    .hero-center {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    body{
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
     }
 
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #111827;
-      font-size: 14px;
+    /* 🔥 TOPBAR */
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 20px;
+      background:rgba(10,15,30,0.8);
+      backdrop-filter: blur(10px);
+      position:sticky;
+      top:0;
+      z-index:100;
     }
 
-    footer a {
-      color: #00d4ff;
-      margin: 0 10px;
-      text-decoration: none;
+    .logo{
+      font-size:22px;
+      font-weight:700;
+      background: linear-gradient(45deg, #ffffff, #ff7a00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* 🔥 BUTTON */
+    .btn{
+      padding:12px 24px;
+      border-radius:30px;
+      background: linear-gradient(45deg, #ff7a00, #ffae00);
+      color:#fff;
+      font-weight:600;
+      text-decoration:none;
+      box-shadow: 0 4px 15px rgba(255,122,0,0.4);
+      transition:0.3s;
+    }
+
+    .btn:hover{
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(255,122,0,0.6);
+    }
+
+    .btn:active{
+      transform: scale(0.95);
+    }
+
+    /* HERO */
+    .hero{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:20px;
+    }
+
+    .hero-box{
+      max-width:500px;
+    }
+
+    .hero-title{
+      font-size:36px;
+      font-weight:800;
+      margin-bottom:10px;
+    }
+
+    .hero-sub{
+      color:#ccc;
+      margin-bottom:25px;
+      font-size:16px;
+    }
+
+    /* FOOTER */
+    footer{
+      text-align:center;
+      padding:15px;
+      background:#111827;
+      font-size:14px;
+    }
+
+    footer a{
+      color:#00d4ff;
+      margin:0 10px;
+      text-decoration:none;
+    }
+
+    footer a:hover{
+      text-decoration:underline;
     }
   </style>
 </head>
 
 <body>
 
+<!-- 🔥 HEADER -->
 <header class="topbar">
   <div class="logo">HALORA RIDE</div>
-  <a href="./login.html" class="logout-btn">Get Started</a>
+  <a href="./login.html" class="btn">Get Started</a>
 </header>
 
-<main class="hero-center">
+<!-- 🚀 HERO -->
+<main class="hero">
   <div class="hero-box">
-    <div class="floating-logo">H</div>
     <h1 class="hero-title">HALORA RIDE</h1>
-    <p class="hero-sub">Smart Ride, Taxi, Auto & Hotel Booking Platform</p>
-    <a href="./login.html" class="main-btn">Get Started</a>
+    <p class="hero-sub">
+      Smart Ride, Taxi, Auto & Hotel Booking Platform
+    </p>
+
+    <a href="./login.html" class="btn">🚀 Get Started</a>
   </div>
 </main>
 
-<!-- ✅ FIXED FOOTER -->
+<!-- ✅ FOOTER -->
 <footer>
   <p>© 2026 HALORA</p>
   <a href="privacy.html">Privacy Policy</a>

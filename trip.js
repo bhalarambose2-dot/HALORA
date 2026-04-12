@@ -1,176 +1,128 @@
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  addDoc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+/* =========================
+HALORA TRIPS JS (FULL SYSTEM)
+========================= */
 
-// 🔥 Firebase Config
-const firebaseConfig = {
-  apiKey: "AIzaSyDJnOh92AYUzFeWtuLMtDciETdpCQ7-MNs",
-  authDomain: "halorebook.firebaseapp.com",
-  projectId: "halorebook",
-  storageBucket: "halorebook.firebasestorage.app",
-  messagingSenderId: "58132767978",
-  appId: "1:58132767978:web:2165ca8a94fb0cfe5a6393"
-};
+/* 🔥 50 TRIPS DATA */
+const trips = [
+{name:"Golden Triangle", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?tajmahal"},
+{name:"Rajasthan Tour", price:"₹8,000+", img:"https://source.unsplash.com/400x300/?jaipur"},
+{name:"Varanasi", price:"₹1,600+", img:"https://source.unsplash.com/400x300/?varanasi"},
+{name:"Amritsar", price:"₹1,800+", img:"https://source.unsplash.com/400x300/?golden-temple"},
+{name:"Manali", price:"₹4,500+", img:"https://source.unsplash.com/400x300/?manali"},
+{name:"Shimla", price:"₹3,800+", img:"https://source.unsplash.com/400x300/?shimla"},
+{name:"Nainital", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?nainital"},
+{name:"Mussoorie", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?mussoorie"},
+{name:"Rishikesh", price:"₹2,500+", img:"https://source.unsplash.com/400x300/?rishikesh"},
+{name:"Leh Ladakh", price:"₹12,000+", img:"https://source.unsplash.com/400x300/?ladakh"},
+{name:"Kashmir", price:"₹10,000+", img:"https://source.unsplash.com/400x300/?kashmir"},
+{name:"Dharamshala", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?dharamshala"},
+{name:"Mathura", price:"₹1,800+", img:"https://source.unsplash.com/400x300/?mathura"},
+{name:"Ayodhya", price:"₹1,800+", img:"https://source.unsplash.com/400x300/?ayodhya"},
+{name:"Char Dham", price:"₹53,000+", img:"https://source.unsplash.com/400x300/?kedarnath"},
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+{name:"Darjeeling", price:"₹5,000+", img:"https://source.unsplash.com/400x300/?darjeeling"},
+{name:"Gangtok", price:"₹6,000+", img:"https://source.unsplash.com/400x300/?gangtok"},
+{name:"Shillong", price:"₹8,000+", img:"https://source.unsplash.com/400x300/?meghalaya"},
+{name:"Kaziranga", price:"₹6,000+", img:"https://source.unsplash.com/400x300/?kaziranga"},
+{name:"Tawang", price:"₹12,000+", img:"https://source.unsplash.com/400x300/?tawang"},
+{name:"Ziro Valley", price:"₹8,000+", img:"https://source.unsplash.com/400x300/?ziro"},
+{name:"Majuli", price:"₹5,000+", img:"https://source.unsplash.com/400x300/?majuli"},
+{name:"Meghalaya Caves", price:"₹9,000+", img:"https://source.unsplash.com/400x300/?cave"},
+{name:"Nagaland", price:"₹12,000+", img:"https://source.unsplash.com/400x300/?nagaland"},
+{name:"Sikkim", price:"₹12,000+", img:"https://source.unsplash.com/400x300/?sikkim"},
 
-// ================= DOM =================
-const tripGrid = document.getElementById("tripGrid");
-const tripSearchInput = document.getElementById("tripSearchInput");
-const tripFilterButtons = document.querySelectorAll(".trip-filter-btn");
-const tripEmptyState = document.getElementById("tripEmptyState");
-const tripModal = document.getElementById("tripModal");
-const tripModalContent = document.getElementById("tripModalContent");
+{name:"Goa North", price:"₹4,500+", img:"https://source.unsplash.com/400x300/?goa"},
+{name:"Goa South", price:"₹5,000+", img:"https://source.unsplash.com/400x300/?beach"},
+{name:"Mumbai", price:"₹3,000+", img:"https://source.unsplash.com/400x300/?mumbai"},
+{name:"Mahabaleshwar", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?mahabaleshwar"},
+{name:"Gujarat", price:"₹6,000+", img:"https://source.unsplash.com/400x300/?dwarka"},
+{name:"Rann of Kutch", price:"₹7,000+", img:"https://source.unsplash.com/400x300/?kutch"},
+{name:"Diu", price:"₹5,500+", img:"https://source.unsplash.com/400x300/?diu"},
+{name:"Nashik", price:"₹2,500+", img:"https://source.unsplash.com/400x300/?nashik"},
+{name:"Aurangabad", price:"₹4,000+", img:"https://source.unsplash.com/400x300/?ellora"},
+{name:"Daman", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?daman"},
 
-let allTrips = [];
-let currentTripFilter = "All";
+{name:"Kerala", price:"₹6,000+", img:"https://source.unsplash.com/400x300/?kerala"},
+{name:"Munnar", price:"₹4,500+", img:"https://source.unsplash.com/400x300/?munnar"},
+{name:"Ooty", price:"₹4,000+", img:"https://source.unsplash.com/400x300/?ooty"},
+{name:"Kodaikanal", price:"₹4,000+", img:"https://source.unsplash.com/400x300/?kodaikanal"},
+{name:"Mysore", price:"₹5,500+", img:"https://source.unsplash.com/400x300/?mysore"},
+{name:"Hampi", price:"₹4,000+", img:"https://source.unsplash.com/400x300/?hampi"},
+{name:"Pondicherry", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?pondicherry"},
+{name:"Chennai", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?chennai"},
+{name:"Kanyakumari", price:"₹3,000+", img:"https://source.unsplash.com/400x300/?kanyakumari"},
+{name:"Andaman", price:"₹15,000+", img:"https://source.unsplash.com/400x300/?andaman"},
 
-// ================= LOAD FIREBASE =================
-async function loadTrips() {
-  const snap = await getDocs(collection(db, "trips"));
-  allTrips = [];
+{name:"Khajuraho", price:"₹4,000+", img:"https://source.unsplash.com/400x300/?khajuraho"},
+{name:"Bandhavgarh", price:"₹5,500+", img:"https://source.unsplash.com/400x300/?tiger"},
+{name:"Kanha", price:"₹5,500+", img:"https://source.unsplash.com/400x300/?forest"},
+{name:"Puri", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?puri"},
+{name:"Bodhgaya", price:"₹3,000+", img:"https://source.unsplash.com/400x300/?bodhgaya"}
+];
 
-  snap.forEach(doc => {
-    allTrips.push(doc.data());
-  });
-
-  console.log("Trips:", allTrips);
-
-  renderTripsSection();
-}
-
-// ================= RENDER =================
-function renderTripsSection() {
-  const searchValue = tripSearchInput.value.toLowerCase();
-
-  const filtered = allTrips.filter(dest => {
-    const categories = Array.isArray(dest.category)
-      ? dest.category
-      : [dest.category];
-
-    return (
-      dest.name?.toLowerCase().includes(searchValue) &&
-      (currentTripFilter === "All" || categories.includes(currentTripFilter))
-    );
-  });
-
-  tripGrid.innerHTML = "";
-
-  if (filtered.length === 0) {
-    tripEmptyState.style.display = "block";
-    return;
-  } else {
-    tripEmptyState.style.display = "none";
-  }
-
-  filtered.forEach(dest => {
-    const card = document.createElement("div");
-    card.className = "trip-card";
-
-    card.innerHTML = `
-      <img class="trip-img" src="${dest.image || 'https://via.placeholder.com/400'}">
-      <button class="trip-heart-btn">♡</button>
-
-      <div class="trip-content">
-        <div class="trip-title-row">
-          <div>${dest.name}</div>
-          <div class="trip-budget-badge">${dest.budget}</div>
-        </div>
-
-        <div class="trip-meta">
-          <span>🗓 ${dest.days}</span>
-          <span>🌤 ${dest.bestTime}</span>
-        </div>
-
-        <div class="trip-card-buttons">
-          <button class="trip-btn trip-btn-outline details-btn">Details</button>
-          <button class="trip-btn trip-btn-primary book-btn">Book</button>
+/* 🔥 LOAD TRIPS */
+function loadTrips(data){
+  let html="";
+  data.forEach(t=>{
+    html+=`
+      <div class="card">
+        <img src="${t.img}">
+        <div class="card-content">
+          <h3>${t.name}</h3>
+          <p>${t.price}</p>
+          <button class="btn" onclick="openBooking('${t.name}')">Book Now</button>
         </div>
       </div>
     `;
-
-    // ❤️ Heart
-    const heartBtn = card.querySelector(".trip-heart-btn");
-    heartBtn.onclick = () => {
-      heartBtn.textContent = heartBtn.textContent === "♡" ? "❤️" : "♡";
-    };
-
-    // 📄 Details
-    card.querySelector(".details-btn").onclick = () => openTripModal(dest);
-
-    // 📦 Booking
-    card.querySelector(".book-btn").onclick = () => bookTrip(dest);
-
-    tripGrid.appendChild(card);
   });
+  document.getElementById("tripList").innerHTML=html;
 }
 
-// ================= BOOK =================
-async function bookTrip(dest) {
-  await addDoc(collection(db, "bookings"), {
-    tripName: dest.name,
-    price: dest.budget,
-    status: "pending",
-    time: new Date()
-  });
+/* INITIAL LOAD */
+loadTrips(trips);
 
-  alert("Booking Successful 🎉");
-}
-
-// ================= MODAL =================
-function openTripModal(dest) {
-  tripModalContent.innerHTML = `
-    <div style="position:relative;">
-      <img class="trip-modal-img" src="${dest.image}">
-      <button class="trip-modal-close" onclick="closeTripModal()">✕</button>
-    </div>
-
-    <div class="trip-modal-body">
-      <h2>${dest.name}</h2>
-      <p>${dest.budget}</p>
-      <p>${dest.days}</p>
-
-      <button class="trip-btn trip-btn-primary" onclick="bookTripNow('${dest.name}')">
-        Book Now
-      </button>
-    </div>
-  `;
-
-  tripModal.classList.add("show");
-}
-
-window.closeTripModal = function () {
-  tripModal.classList.remove("show");
-};
-
-window.bookTripNow = async function (name) {
-  await addDoc(collection(db, "bookings"), {
-    tripName: name,
-    status: "pending"
-  });
-
-  alert("Booked 🚀");
-};
-
-// ================= FILTER =================
-tripFilterButtons.forEach(btn => {
-  btn.onclick = () => {
-    document.querySelector(".trip-filter-btn.active").classList.remove("active");
-    btn.classList.add("active");
-    currentTripFilter = btn.dataset.filter;
-    renderTripsSection();
-  };
+/* 🔍 SEARCH */
+document.getElementById("search").addEventListener("input", e=>{
+  let val=e.target.value.toLowerCase();
+  let filtered=trips.filter(t=>t.name.toLowerCase().includes(val));
+  loadTrips(filtered);
 });
 
-// ================= SEARCH =================
-tripSearchInput.oninput = renderTripsSection;
+/* 📦 BOOKING SYSTEM */
+let selectedTrip="";
 
-// INIT
-loadTrips();
-</script>
+function openBooking(name){
+  selectedTrip=name;
+  document.getElementById("tripName").innerText="Book: "+name;
+  document.getElementById("bookingPopup").style.display="flex";
+}
+
+function closePopup(){
+  document.getElementById("bookingPopup").style.display="none";
+}
+
+function confirmBooking(){
+  let name=document.getElementById("name").value;
+  let phone=document.getElementById("phone").value;
+  let address=document.getElementById("address").value;
+
+  if(!name || !phone || !address){
+    alert("Fill all details!");
+    return;
+  }
+
+  let booking={
+    trip:selectedTrip,
+    name,
+    phone,
+    address,
+    date:new Date().toLocaleString()
+  };
+
+  let all=JSON.parse(localStorage.getItem("bookings"))||[];
+  all.push(booking);
+  localStorage.setItem("bookings",JSON.stringify(all));
+
+  alert("Booking Successful ✅");
+  closePopup();
+}

@@ -1,121 +1,433 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HALORA Trips</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>India Trip Explorer - 50+ Tours</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#020617;
-  color:#fff;
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-.header{
-  text-align:center;
-  padding:15px;
-  background:#0f172a;
-  font-size:20px;
-}
+        /* Header */
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
 
-.search-box{
-  margin:15px;
-}
-.search-box input{
-  width:100%;
-  padding:12px;
-  border-radius:25px;
-  border:none;
-  background:#111827;
-  color:#fff;
-}
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
 
-.trips{
-  padding:10px;
-}
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
 
-.card{
-  background:#111827;
-  margin-bottom:15px;
-  border-radius:12px;
-  overflow:hidden;
-}
+        /* Filter Bar */
+        .filter-bar {
+            background: white;
+            border-radius: 50px;
+            padding: 10px 20px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
 
-.card img{
-  width:100%;
-  height:160px;
-  object-fit:cover;
-}
+        .filter-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: #f0f0f0;
+            color: #333;
+        }
 
-.card-content{
-  padding:10px;
-}
+        .filter-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
 
-.btn{
-  background:#ff7a00;
-  padding:10px 15px;
-  border:none;
-  border-radius:20px;
-  color:#fff;
-  margin-top:10px;
-}
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
 
-#bookingPopup{
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.8);
-  justify-content:center;
-  align-items:center;
-}
+        /* Search Box */
+        .search-box {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-.popup-box{
-  background:#111827;
-  padding:20px;
-  border-radius:10px;
-  width:90%;
-  max-width:400px;
-}
+        .search-box input {
+            width: 80%;
+            max-width: 400px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            outline: none;
+        }
 
-.popup-box input{
-  width:100%;
-  padding:10px;
-  margin:5px 0;
-}
-</style>
+        /* Trip Grid */
+        .trip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Trip Card */
+        .trip-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .trip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Image Placeholder */
+        .trip-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .region-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .price-tag {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Card Content */
+        .trip-content {
+            padding: 20px;
+        }
+
+        .trip-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .trip-duration {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .trip-destinations {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .price-item {
+            text-align: center;
+            flex: 1;
+            padding: 8px;
+            border-radius: 10px;
+            background: #f8f8f8;
+        }
+
+        .price-label {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .price-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .price-value.budget { color: #28a745; }
+        .price-value.mid { color: #ff9800; }
+        .price-value.luxury { color: #9c27b0; }
+
+        .book-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .book-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            padding: 50px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .trip-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-bar {
+                border-radius: 20px;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="header">✈️ HALORA Trips</div>
+<div class="header">
+    <h1>🇮🇳 India Trip Explorer</h1>
+    <p>50+ Handcrafted Tours | Best Prices | Solo Travel Friendly</p>
+</div>
+
+<div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All Trips</button>
+    <button class="filter-btn" data-filter="North">🏛️ North India</button>
+    <button class="filter-btn" data-filter="Hill">🏔️ Hill Stations</button>
+    <button class="filter-btn" data-filter="West">🌊 Beaches & West</button>
+    <button class="filter-btn" data-filter="South">🌴 South India</button>
+    <button class="filter-btn" data-filter="East">🐅 Central & East</button>
+</div>
 
 <div class="search-box">
-  <input type="text" id="search" placeholder="Search trips...">
+    <input type="text" id="searchInput" placeholder="🔍 Search trip by name or destination...">
 </div>
 
-<div class="trips" id="tripList"></div>
-
-<!-- POPUP -->
-<div id="bookingPopup">
-  <div class="popup-box">
-    <h3 id="tripName"></h3>
-
-    <input type="text" id="name" placeholder="Your Name">
-    <input type="text" id="phone" placeholder="Phone Number">
-    <input type="text" id="address" placeholder="Address">
-
-    <button class="btn" onclick="confirmBooking()">Confirm</button>
-    <button class="btn" onclick="closePopup()">Cancel</button>
-  </div>
+<div class="trip-grid" id="tripGrid">
+    <!-- Trips will be loaded here via JavaScript -->
 </div>
 
-<!-- ✅ ONLY THIS JS LINK -->
-<script src="trips.js"></script>
+<div class="footer">
+    <p>✨ Prices are per person (2 Nights/3 Days package) | Taxes extra | Best season: Oct-Mar</p>
+</div>
 
-</body>
-</html>
+<!-- Modal -->
+<div id="tripModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-header">
+            <h2 id="modalTitle">Trip Details</h2>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <!-- Dynamic content -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Complete 50 Trips Database
+    const tripsData = [
+        // NORTH INDIA (1-15)
+        { id: 1, name: "Golden Triangle Express", region: "North", duration: "3N/4D", budget: 3500, mid: 7000, luxury: 18000, destinations: "Delhi → Agra → Jaipur", photo: "🏛️", bestFor: "First time visitors, History lovers" },
+        { id: 2, name: "Royal Rajasthan Tour", region: "North", duration: "6N/7D", budget: 8000, mid: 16000, luxury: 45000, destinations: "Jaipur → Jodhpur → Udaipur → Jaisalmer", photo: "👑", bestFor: "Heritage, Royal culture" },
+        { id: 3, name: "Spiritual Varanasi", region: "North", duration: "1N/2D", budget: 1600, mid: 4800, luxury: 11000, destinations: "Varanasi, Sarnath, Ganga Aarti", photo: "🕉️", bestFor: "Spiritual seekers" },
+        { id: 4, name: "Amritsar Devotion", region: "North", duration: "1N/2D", budget: 1800, mid: 5000, luxury: 12000, destinations: "Golden Temple, Wagah Border", photo: "🙏", bestFor: "Pilgrimage, Patriotism" },
+        { id: 5, name: "Himalayan Manali", region: "North", duration: "3N/4D", budget: 4500, mid: 8000, luxury: 18000, destinations: "Manali, Solang Valley, Hadimba", photo: "🏔️", bestFor: "Adventure, Honeymoon" },
+        { id: 6, name: "Shimla Kufri", region: "North", duration: "2N/3D", budget: 3800, mid: 7000, luxury: 15000, destinations: "Shimla, Kufri, Mall Road", photo: "🚂", bestFor: "Family, Couples" },
+        { id: 7, name: "Nainital Mukteshwar", region: "North", duration: "2N/3D", budget: 3500, mid: 6500, luxury: 14000, destinations: "Naini Lake, Naina Devi", photo: "🌊", bestFor: "Weekend getaway" },
+        { id: 8, name: "Mussoorie Dhanaulti", region: "North", duration: "2N/3D", budget: 3500, mid: 6500, luxury: 14000, destinations: "Mall Road, Kempty Falls", photo: "⛰️", bestFor: "Nature lovers" },
+        { id: 9, name: "Haridwar Rishikesh", region: "North", duration: "2N/3D", budget: 2500, mid: 5500, luxury: 13000, destinations: "Ganga Aarti, Ram Jhula, Rafting", photo: "🚣", bestFor: "Spirituality + Adventure" },
+        { id: 10, name: "Leh Ladakh Adventure", region: "North", duration: "6N/7D", budget: 12000, mid: 25000, luxury: 55000, destinations: "Pangong Lake, Khardung La", photo: "🏍️", bestFor: "Bikers, Photographers" },
+        { id: 11, name: "Kashmir Paradise", region: "North", duration: "5N/6D", budget: 10000, mid: 20000, luxury: 45000, destinations: "Srinagar, Gulmarg, Pahalgam", photo: "🌸", bestFor: "Honeymoon, Nature" },
+        { id: 12, name: "Dharamshala Mcleodganj", region: "North", duration: "2N/3D", budget: 3500, mid: 7000, luxury: 15000, destinations: "Dalai Lama Temple, Bhagsu Falls", photo: "🏯", bestFor: "Peace, Meditation" },
+        { id: 13, name: "Mathura Vrindavan", region: "North", duration: "1N/2D", budget: 1800, mid: 4500, luxury: 10000, destinations: "Krishna Janmabhoomi, Banke Bihari", photo: "🪈", bestFor: "Devotees" },
+        { id: 14, name: "Ayodhya Pilgrimage", region: "North", duration: "1N/2D", budget: 1800, mid: 4500, luxury: 10000, destinations: "Ram Janmabhoomi, Hanuman Garhi", photo: "🏛️", bestFor: "Religious tour" },
+        { id: 15, name: "Prayagraj Kumbh", region: "North", duration: "1N/2D", budget: 1600, mid: 4000, luxury: 9500, destinations: "Triveni Sangam", photo: "🌊", bestFor: "Holy dip" },
+
+        // HILL STATIONS & NORTH-EAST (16-25)
+        { id: 16, name: "Darjeeling Delight", region: "Hill", duration: "3N/4D", budget: 5000, mid: 9000, luxury: 20000, destinations: "Tiger Hill, Toy Train", photo: "🚂", bestFor: "Tea lovers" },
+        { id: 17, name: "Gangtok Tsomgo Lake", region: "Hill", duration: "3N/4D", budget: 6000, mid: 11000, luxury: 25000, destinations: "MG Marg, Tsomgo Lake", photo: "🏞️", bestFor: "Mountain views" },
+        { id: 18, name: "Shillong Cherrapunji", region: "Hill", duration: "4N/5D", budget: 8000, mid: 15000, luxury: 32000, destinations: "Living Roots Bridge", photo: "🌿", bestFor: "Waterfalls" },
+        { id: 19, name: "Kaziranga Wildlife", region: "Hill", duration: "2N/3D", budget: 6000, mid: 12000, luxury: 28000, destinations: "One-horned Rhino", photo: "🦏", bestFor: "Wildlife" },
+        { id: 20, name: "Tawang Monastery", region: "Hill", duration: "5N/6D", budget: 12000, mid: 22000, luxury: 48000, destinations: "Tawang Monastery, Sela Pass", photo: "🏯", bestFor: "Buddhist culture" },
+        { id: 21, name: "Ziro Valley", region: "Hill", duration: "3N/4D", budget: 8000, mid: 15000, luxury: 32000, destinations: "Apatani Tribe", photo: "🎭", bestFor: "Tribal culture" },
+        { id: 22, name: "Majuli Island", region: "Hill", duration: "2N/3D", budget: 5000, mid: 10000, luxury: 22000, destinations: "River island", photo: "🏝️", bestFor: "Peace" },
+        { id: 23, name: "Meghalaya Caves", region: "Hill", duration: "4N/5D", budget: 9000, mid: 17000, luxury: 35000, destinations: "Mawsmai Cave", photo: "🕳️", bestFor: "Adventure" },
+        { id: 24, name: "Nagaland Hornbill", region: "Hill", duration: "5N/6D", budget: 12000, mid: 22000, luxury: 50000, destinations: "Kohima Festival", photo: "🦜", bestFor: "Festival" },
+        { id: 25, name: "Sikkim Complete", region: "Hill", duration: "6N/7D", budget: 12000, mid: 24000, luxury: 50000, destinations: "Gangtok, Pelling", photo: "🏔️", bestFor: "Complete tour" },
+
+        // WEST INDIA & BEACHES (26-35)
+        { id: 26, name: "North Goa Party", region: "West", duration: "3N/4D", budget: 4500, mid: 9000, luxury: 22000, destinations: "Baga, Calangute, Anjuna", photo: "🎉", bestFor: "Party lovers" },
+        { id: 27, name: "South Goa Relax", region: "West", duration: "3N/4D", budget: 5000, mid: 10000, luxury: 25000, destinations: "Palolem, Colva", photo: "🏖️", bestFor: "Relaxation" },
+        { id: 28, name: "Mumbai Darshan", region: "West", duration: "2N/3D", budget: 3000, mid: 7000, luxury: 18000, destinations: "Gateway of India, Marine Drive", photo: "🌉", bestFor: "City tour" },
+        { id: 29, name: "Pune Mahabaleshwar", region: "West", duration: "2N/3D", budget: 3500, mid: 7000, luxury: 16000, destinations: "Sinhagad, Lonavala", photo: "🍓", bestFor: "Weekend" },
+        { id: 30, name: "Gujarat Heritage", region: "West", duration: "4N/5D", budget: 6000, mid: 12000, luxury: 28000, destinations: "Somnath, Dwarka", photo: "🛕", bestFor: "Pilgrimage" },
+        { id: 31, name: "Rann of Kutch", region: "West", duration: "3N/4D", budget: 7000, mid: 14000, luxury: 32000, destinations: "White Rann", photo: "🏜️", bestFor: "Photography" },
+        { id: 32, name: "Diu Somnath", region: "West", duration: "3N/4D", budget: 5500, mid: 11000, luxury: 25000, destinations: "Diu Fort", photo: "🏰", bestFor: "Beach + Temple" },
+        { id: 33, name: "Nashik Grape Tour", region: "West", duration: "1N/2D", budget: 2500, mid: 5500, luxury: 12000, destinations: "Sula Vineyards", photo: "🍇", bestFor: "Wine tasting" },
+        { id: 34, name: "Aurangabad Ellora", region: "West", duration: "2N/3D", budget: 4000, mid: 8000, luxury: 18000, destinations: "Ajanta & Ellora Caves", photo: "🗿", bestFor: "History" },
+        { id: 35, name: "Daman Beach Escape", region: "West", duration: "2N/3D", budget: 3500, mid: 7000, luxury: 16000, destinations: "Jampore Beach", photo: "🏖️", bestFor: "Weekend" },
+
+        // SOUTH INDIA (36-45)
+        { id: 36, name: "Kerala Backwaters", region: "South", duration: "3N/4D", budget: 6000, mid: 12000, luxury: 28000, destinations: "Alleppey Houseboat", photo: "🛶", bestFor: "Romantic" },
+        { id: 37, name: "Munnar Hill Station", region: "South", duration: "2N/3D", budget: 4500, mid: 9000, luxury: 20000, destinations: "Tea Gardens", photo: "🍃", bestFor: "Nature" },
+        { id: 38, name: "Ooty Coonoor", region: "South", duration: "2N/3D", budget: 4000, mid: 8500, luxury: 19000, destinations: "Ooty Lake, Toy Train", photo: "🚂", bestFor: "Family" },
+        { id: 39, name: "Kodaikanal", region: "South", duration: "2N/3D", budget: 4000, mid: 8500, luxury: 19000, destinations: "Coaker's Walk", photo: "🌲", bestFor: "Honeymoon" },
+        { id: 40, name: "Mysore Coorg", region: "South", duration: "3N/4D", budget: 5500, mid: 11000, luxury: 25000, destinations: "Mysore Palace", photo: "🏰", bestFor: "Coffee lovers" },
+        { id: 41, name: "Hampi Badami", region: "South", duration: "2N/3D", budget: 4000, mid: 8000, luxury: 18000, destinations: "Stone Chariot", photo: "🗿", bestFor: "History" },
+        { id: 42, name: "Pondicherry", region: "South", duration: "2N/3D", budget: 3500, mid: 7500, luxury: 17000, destinations: "Promenade Beach", photo: "🇫🇷", bestFor: "French vibe" },
+        { id: 43, name: "Chennai Mahabs", region: "South", duration: "2N/3D", budget: 3500, mid: 7000, luxury: 16000, destinations: "Shore Temple", photo: "🏛️", bestFor: "Heritage" },
+        { id: 44, name: "Kanyakumari", region: "South", duration: "2N/3D", budget: 3000, mid: 6000, luxury: 14000, destinations: "Vivekananda Rock", photo: "🌅", bestFor: "Sunset view" },
+        { id: 45, name: "Andaman Islands", region: "South", duration: "5N/6D", budget: 15000, mid: 30000, luxury: 65000, destinations: "Radhanagar Beach", photo: "🏝️", bestFor: "Beach paradise" },
+
+        // CENTRAL & EAST INDIA (46-50)
+        { id: 46, name: "Khajuraho Orchha", region: "East", duration: "2N/3D", budget: 4000, mid: 8500, luxury: 19000, destinations: "Khajuraho Temples", photo: "🛕", bestFor: "Architecture" },
+        { id: 47, name: "Bandhavgarh Tiger", region: "East", duration: "2N/3D", budget: 5500, mid: 11000, luxury: 26000, destinations: "Tiger Safari", photo: "🐅", bestFor: "Wildlife" },
+        { id: 48, name: "Kanha National Park", region: "East", duration: "2N/3D", budget: 5500, mid: 11000, luxury: 26000, destinations: "Jungle Safari", photo: "🦌", bestFor: "Wildlife" },
+        { id: 49, name: "Konark Puri", region: "East", duration: "2N/3D", budget: 3500, mid: 7000, luxury: 16000, destinations: "Sun Temple", photo: "☀️", bestFor: "Pilgrimage" },
+        { id: 50, name: "Bodhgaya Gaya", region: "East", duration: "2N/3D", budget: 3000, mid: 6500, luxury: 15000, destinations: "Mahabodhi Temple", photo: "🪷", bestFor: "Buddhist" }
+    ];
+
+    let currentFilter = "all";
+    let currentSearch = "";
+
+    function renderTrips() {
+        const grid = document.getElementById("tripGrid");
+        let filteredTrips = tripsData;
+
+        // Apply filter
+        if (currentFilter !== "all") {
+            filteredTrips = filteredTrips.filter(trip => trip.region === currentFilter);
+        }
+
+        // Apply search
+        if (currentSearch.trim() !== "") {
+            const searchTerm = currentSearch.toLowerCase();
+            filteredTrips = filteredTrips.filter(trip => 
+                trip.name.toLowerCase().includes(searchTerm) || 
+                trip.destinations.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        if (filteredTrips.length === 0) {
+            grid.innerHTML = '<div class="no-results">❌ No trips found. Try another search!</div>';
+            return;
+        }
+
+        grid.innerHTML = filteredTrips.map(trip => `
+            <div class="trip-card" onclick="showTripDetails(${trip.id})">
+                <div class="trip-image" style="background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 60px;">
+                    ${trip.photo}
+                </div>
+                <div class="trip-content">
+           

@@ -1,128 +1,48 @@
-/* =========================
-HALORA TRIPS JS (FULL SYSTEM)
-========================= */
-
-/* 🔥 50 TRIPS DATA */
 const trips = [
-{name:"Golden Triangle", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?tajmahal"},
-{name:"Rajasthan Tour", price:"₹8,000+", img:"https://source.unsplash.com/400x300/?jaipur"},
-{name:"Varanasi", price:"₹1,600+", img:"https://source.unsplash.com/400x300/?varanasi"},
-{name:"Amritsar", price:"₹1,800+", img:"https://source.unsplash.com/400x300/?golden-temple"},
-{name:"Manali", price:"₹4,500+", img:"https://source.unsplash.com/400x300/?manali"},
-{name:"Shimla", price:"₹3,800+", img:"https://source.unsplash.com/400x300/?shimla"},
-{name:"Nainital", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?nainital"},
-{name:"Mussoorie", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?mussoorie"},
-{name:"Rishikesh", price:"₹2,500+", img:"https://source.unsplash.com/400x300/?rishikesh"},
-{name:"Leh Ladakh", price:"₹12,000+", img:"https://source.unsplash.com/400x300/?ladakh"},
-{name:"Kashmir", price:"₹10,000+", img:"https://source.unsplash.com/400x300/?kashmir"},
-{name:"Dharamshala", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?dharamshala"},
-{name:"Mathura", price:"₹1,800+", img:"https://source.unsplash.com/400x300/?mathura"},
-{name:"Ayodhya", price:"₹1,800+", img:"https://source.unsplash.com/400x300/?ayodhya"},
-{name:"Char Dham", price:"₹53,000+", img:"https://source.unsplash.com/400x300/?kedarnath"},
 
-{name:"Darjeeling", price:"₹5,000+", img:"https://source.unsplash.com/400x300/?darjeeling"},
-{name:"Gangtok", price:"₹6,000+", img:"https://source.unsplash.com/400x300/?gangtok"},
-{name:"Shillong", price:"₹8,000+", img:"https://source.unsplash.com/400x300/?meghalaya"},
-{name:"Kaziranga", price:"₹6,000+", img:"https://source.unsplash.com/400x300/?kaziranga"},
-{name:"Tawang", price:"₹12,000+", img:"https://source.unsplash.com/400x300/?tawang"},
-{name:"Ziro Valley", price:"₹8,000+", img:"https://source.unsplash.com/400x300/?ziro"},
-{name:"Majuli", price:"₹5,000+", img:"https://source.unsplash.com/400x300/?majuli"},
-{name:"Meghalaya Caves", price:"₹9,000+", img:"https://source.unsplash.com/400x300/?cave"},
-{name:"Nagaland", price:"₹12,000+", img:"https://source.unsplash.com/400x300/?nagaland"},
-{name:"Sikkim", price:"₹12,000+", img:"https://source.unsplash.com/400x300/?sikkim"},
+/* NORTH INDIA */
+{name:"Golden Triangle Express", days:"3N/4D", price:"₹3,500 - ₹18,000", place:"Delhi, Agra, Jaipur", img:"https://images.unsplash.com/photo-1564507592333-c60657eea523"},
+{name:"Royal Rajasthan Tour", days:"6N/7D", price:"₹8,000 - ₹45,000", place:"Jaipur, Jodhpur, Udaipur", img:"https://images.unsplash.com/photo-1599661046827-dacff0c0f09a"},
+{name:"Spiritual Varanasi", days:"2D", price:"₹1,600 - ₹11,000", place:"Varanasi", img:"https://images.unsplash.com/photo-1561361513-2d000a50f0dc"},
+{name:"Amritsar Devotion", days:"2D", price:"₹1,800 - ₹12,000", place:"Golden Temple", img:"https://images.unsplash.com/photo-1588072432836-e10032774350"},
+{name:"Himalayan Manali", days:"4D", price:"₹4,500 - ₹18,000", place:"Manali", img:"https://images.unsplash.com/photo-1626621341517-bbf3d9990a23"},
+{name:"Shimla Kufri", days:"3D", price:"₹3,800 - ₹15,000", place:"Shimla", img:"https://images.unsplash.com/photo-1622308644420-b20142dc993c"},
+{name:"Nainital Tour", days:"3D", price:"₹3,500 - ₹14,000", place:"Nainital", img:"https://images.unsplash.com/photo-1501785888041-af3ef285b470"},
+{name:"Mussoorie Trip", days:"3D", price:"₹3,500 - ₹14,000", place:"Mussoorie", img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"},
+{name:"Rishikesh Adventure", days:"3D", price:"₹2,500 - ₹13,000", place:"Rishikesh", img:"https://images.unsplash.com/photo-1549880338-65ddcdfd017b"},
+{name:"Leh Ladakh", days:"7D", price:"₹12,000 - ₹55,000", place:"Ladakh", img:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429"},
+{name:"Kashmir Paradise", days:"6D", price:"₹10,000 - ₹45,000", place:"Srinagar", img:"https://images.unsplash.com/photo-1506744038136-46273834b3fb"},
+{name:"Dharamshala", days:"3D", price:"₹3,500 - ₹15,000", place:"Himachal", img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e"},
+{name:"Mathura Vrindavan", days:"2D", price:"₹1,800 - ₹10,000", place:"Mathura", img:"https://images.unsplash.com/photo-1501785888041-af3ef285b470"},
+{name:"Ayodhya Tour", days:"2D", price:"₹1,800 - ₹10,000", place:"Ayodhya", img:"https://images.unsplash.com/photo-1518684079-3c830dcef090"},
+{name:"Char Dham Yatra", days:"11D", price:"₹53,000", place:"Uttarakhand", img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"},
 
-{name:"Goa North", price:"₹4,500+", img:"https://source.unsplash.com/400x300/?goa"},
-{name:"Goa South", price:"₹5,000+", img:"https://source.unsplash.com/400x300/?beach"},
-{name:"Mumbai", price:"₹3,000+", img:"https://source.unsplash.com/400x300/?mumbai"},
-{name:"Mahabaleshwar", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?mahabaleshwar"},
-{name:"Gujarat", price:"₹6,000+", img:"https://source.unsplash.com/400x300/?dwarka"},
-{name:"Rann of Kutch", price:"₹7,000+", img:"https://source.unsplash.com/400x300/?kutch"},
-{name:"Diu", price:"₹5,500+", img:"https://source.unsplash.com/400x300/?diu"},
-{name:"Nashik", price:"₹2,500+", img:"https://source.unsplash.com/400x300/?nashik"},
-{name:"Aurangabad", price:"₹4,000+", img:"https://source.unsplash.com/400x300/?ellora"},
-{name:"Daman", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?daman"},
+/* NORTH EAST */
+{name:"Darjeeling Delight", days:"4D", price:"₹5,000 - ₹20,000", place:"Darjeeling", img:"https://images.unsplash.com/photo-1501785888041-af3ef285b470"},
+{name:"Gangtok Tour", days:"4D", price:"₹6,000 - ₹25,000", place:"Sikkim", img:"https://images.unsplash.com/photo-1506744038136-46273834b3fb"},
+{name:"Shillong Trip", days:"5D", price:"₹8,000 - ₹32,000", place:"Meghalaya", img:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429"},
+{name:"Kaziranga Safari", days:"3D", price:"₹6,000 - ₹28,000", place:"Assam", img:"https://images.unsplash.com/photo-1472214103451-9374bd1c798e"},
+{name:"Tawang Monastery", days:"6D", price:"₹12,000 - ₹48,000", place:"Arunachal", img:"https://images.unsplash.com/photo-1501785888041-af3ef285b470"},
 
-{name:"Kerala", price:"₹6,000+", img:"https://source.unsplash.com/400x300/?kerala"},
-{name:"Munnar", price:"₹4,500+", img:"https://source.unsplash.com/400x300/?munnar"},
-{name:"Ooty", price:"₹4,000+", img:"https://source.unsplash.com/400x300/?ooty"},
-{name:"Kodaikanal", price:"₹4,000+", img:"https://source.unsplash.com/400x300/?kodaikanal"},
-{name:"Mysore", price:"₹5,500+", img:"https://source.unsplash.com/400x300/?mysore"},
-{name:"Hampi", price:"₹4,000+", img:"https://source.unsplash.com/400x300/?hampi"},
-{name:"Pondicherry", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?pondicherry"},
-{name:"Chennai", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?chennai"},
-{name:"Kanyakumari", price:"₹3,000+", img:"https://source.unsplash.com/400x300/?kanyakumari"},
-{name:"Andaman", price:"₹15,000+", img:"https://source.unsplash.com/400x300/?andaman"},
+/* WEST INDIA */
+{name:"Goa North", days:"4D", price:"₹4,500 - ₹22,000", place:"Goa", img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e"},
+{name:"Goa South", days:"4D", price:"₹5,000 - ₹25,000", place:"Goa", img:"https://images.unsplash.com/photo-1500375592092-40eb2168fd21"},
+{name:"Mumbai Darshan", days:"3D", price:"₹3,000 - ₹18,000", place:"Mumbai", img:"https://images.unsplash.com/photo-1567157577867-05ccb1388e66"},
+{name:"Mahabaleshwar", days:"3D", price:"₹3,500 - ₹16,000", place:"Maharashtra", img:"https://images.unsplash.com/photo-1501785888041-af3ef285b470"},
+{name:"Gujarat Tour", days:"5D", price:"₹6,000 - ₹28,000", place:"Dwarka", img:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429"},
 
-{name:"Khajuraho", price:"₹4,000+", img:"https://source.unsplash.com/400x300/?khajuraho"},
-{name:"Bandhavgarh", price:"₹5,500+", img:"https://source.unsplash.com/400x300/?tiger"},
-{name:"Kanha", price:"₹5,500+", img:"https://source.unsplash.com/400x300/?forest"},
-{name:"Puri", price:"₹3,500+", img:"https://source.unsplash.com/400x300/?puri"},
-{name:"Bodhgaya", price:"₹3,000+", img:"https://source.unsplash.com/400x300/?bodhgaya"}
+/* SOUTH INDIA */
+{name:"Kerala Backwaters", days:"4D", price:"₹6,000 - ₹28,000", place:"Kerala", img:"https://images.unsplash.com/photo-1602216056096-3b40cc0c9944"},
+{name:"Munnar Hills", days:"3D", price:"₹4,500 - ₹20,000", place:"Munnar", img:"https://images.unsplash.com/photo-1506744038136-46273834b3fb"},
+{name:"Ooty Tour", days:"3D", price:"₹4,000 - ₹19,000", place:"Ooty", img:"https://images.unsplash.com/photo-1501785888041-af3ef285b470"},
+{name:"Kodaikanal", days:"3D", price:"₹4,000 - ₹19,000", place:"Tamil Nadu", img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"},
+{name:"Andaman Islands", days:"6D", price:"₹15,000 - ₹65,000", place:"Andaman", img:"https://images.unsplash.com/photo-1500375592092-40eb2168fd21"},
+
+/* CENTRAL INDIA */
+{name:"Khajuraho Orchha", days:"3D", price:"₹4,000 - ₹19,000", place:"MP", img:"https://images.unsplash.com/photo-1501785888041-af3ef285b470"},
+{name:"Bandhavgarh Tiger", days:"3D", price:"₹5,500 - ₹26,000", place:"MP", img:"https://images.unsplash.com/photo-1472214103451-9374bd1c798e"},
+{name:"Kanha National Park", days:"3D", price:"₹5,500 - ₹26,000", place:"MP", img:"https://images.unsplash.com/photo-1472214103451-9374bd1c798e"},
+{name:"Puri Konark", days:"3D", price:"₹3,500 - ₹16,000", place:"Odisha", img:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429"},
+{name:"Bodhgaya", days:"3D", price:"₹3,000 - ₹15,000", place:"Bihar", img:"https://images.unsplash.com/photo-1501785888041-af3ef285b470"}
+
 ];
-
-/* 🔥 LOAD TRIPS */
-function loadTrips(data){
-  let html="";
-  data.forEach(t=>{
-    html+=`
-      <div class="card">
-        <img src="${t.img}">
-        <div class="card-content">
-          <h3>${t.name}</h3>
-          <p>${t.price}</p>
-          <button class="btn" onclick="openBooking('${t.name}')">Book Now</button>
-        </div>
-      </div>
-    `;
-  });
-  document.getElementById("tripList").innerHTML=html;
-}
-
-/* INITIAL LOAD */
-loadTrips(trips);
-
-/* 🔍 SEARCH */
-document.getElementById("search").addEventListener("input", e=>{
-  let val=e.target.value.toLowerCase();
-  let filtered=trips.filter(t=>t.name.toLowerCase().includes(val));
-  loadTrips(filtered);
-});
-
-/* 📦 BOOKING SYSTEM */
-let selectedTrip="";
-
-function openBooking(name){
-  selectedTrip=name;
-  document.getElementById("tripName").innerText="Book: "+name;
-  document.getElementById("bookingPopup").style.display="flex";
-}
-
-function closePopup(){
-  document.getElementById("bookingPopup").style.display="none";
-}
-
-function confirmBooking(){
-  let name=document.getElementById("name").value;
-  let phone=document.getElementById("phone").value;
-  let address=document.getElementById("address").value;
-
-  if(!name || !phone || !address){
-    alert("Fill all details!");
-    return;
-  }
-
-  let booking={
-    trip:selectedTrip,
-    name,
-    phone,
-    address,
-    date:new Date().toLocaleString()
-  };
-
-  let all=JSON.parse(localStorage.getItem("bookings"))||[];
-  all.push(booking);
-  localStorage.setItem("bookings",JSON.stringify(all));
-
-  alert("Booking Successful ✅");
-  closePopup();
-}

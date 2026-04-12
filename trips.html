@@ -450,4 +450,195 @@
         // SOUTH INDIA (36-45)
         {id:36, name:"Kerala Backwaters", region:"South", duration:"3N/4D", budget:6000, mid:12000, luxury:28000, destinations:"Alleppey Houseboat", photoKeyword:"kerala-backwaters-houseboat", regionTag:"🛶 God's Own Country", bestFor:"Romantic"},
         {id:37, name:"Munnar", region:"South", duration:"2N/3D", budget:4500, mid:9000, luxury:20000, destinations:"Tea Gardens, Mattupetty", photoKeyword:"munnar-tea-plantations", regionTag:"🍃 Hill Station", bestFor:"Nature lovers"},
-        {id:38, name:"Ooty", region:"South", duration:"2N/3D", budget:4000, m
+        {id:38, name:"Ooty", region:"South", duration:"2N/3D", budget:4000, mid:8500, luxury:19000, destinations:"Ooty Lake, Toy Train", photoKeyword:"ooty-nilgiris-toy-train", regionTag:"🚂 Queen of Hills", bestFor:"Families"},
+        {id:39, name:"Kodaikanal", region:"South", duration:"2N/3D", budget:4000, mid:8500, luxury:19000, destinations:"Coaker's Walk, Bryant Park", photoKeyword:"kodaikanal-lake-view", regionTag:"🌲 Princess of Hills", bestFor:"Honeymooners"},
+        {id:40, name:"Mysore Coorg", region:"South", duration:"3N/4D", budget:5500, mid:11000, luxury:25000, destinations:"Mysore Palace, Abbey Falls", photoKeyword:"mysore-palace-coorg", regionTag:"🏰 Coffee", bestFor:"Coffee lovers"},
+        {id:41, name:"Hampi", region:"South", duration:"2N/3D", budget:4000, mid:8000, luxury:18000, destinations:"Stone Chariot, Virupaksha", photoKeyword:"hampi-stone-chariot", regionTag:"🗿 Ruins", bestFor:"History lovers"},
+        {id:42, name:"Pondicherry", region:"South", duration:"2N/3D", budget:3500, mid:7500, luxury:17000, destinations:"Promenade Beach, Auroville", photoKeyword:"pondicherry-french-quarter", regionTag:"🇫🇷 French", bestFor:"French vibe"},
+        {id:43, name:"Chennai Mahabs", region:"South", duration:"2N/3D", budget:3500, mid:7000, luxury:16000, destinations:"Shore Temple, Marina", photoKeyword:"mahabalipuram-shore-temple", regionTag:"🏛️ Heritage", bestFor:"Temple lovers"},
+        {id:44, name:"Kanyakumari", region:"South", duration:"2N/3D", budget:3000, mid:6000, luxury:14000, destinations:"Vivekananda Rock", photoKeyword:"kanyakumari-sunset", regionTag:"🌅 3 Seas", bestFor:"Sunset views"},
+        {id:45, name:"Andaman", region:"South", duration:"5N/6D", budget:15000, mid:30000, luxury:65000, destinations:"Radhanagar Beach, Havelock", photoKeyword:"andaman-radhanagar-beach", regionTag:"🏝️ Tropical", bestFor:"Beach paradise"},
+
+        // CENTRAL & EAST INDIA (46-50)
+        {id:46, name:"Khajuraho", region:"East", duration:"2N/3D", budget:4000, mid:8500, luxury:19000, destinations:"Western & Eastern Temples", photoKeyword:"khajuraho-temples-sculpture", regionTag:"🛕 UNESCO", bestFor:"Architecture"},
+        {id:47, name:"Bandhavgarh", region:"East", duration:"2N/3D", budget:5500, mid:11000, luxury:26000, destinations:"Tiger Safari, Fort", photoKeyword:"bandhavgarh-tiger-safari", regionTag:"🐅 Tiger", bestFor:"Wildlife"},
+        {id:48, name:"Kanha", region:"East", duration:"2N/3D", budget:5500, mid:11000, luxury:26000, destinations:"Jungle Safari, Bamni Dadar", photoKeyword:"kanha-national-park", regionTag:"🦌 Wildlife", bestFor:"Jungle lovers"},
+        {id:49, name:"Konark Puri", region:"East", duration:"2N/3D", budget:3500, mid:7000, luxury:16000, destinations:"Sun Temple, Jagannath Temple", photoKeyword:"konark-sun-temple-chariot", regionTag:"☀️ Pilgrimage", bestFor:"Pilgrims"},
+        {id:50, name:"Bodhgaya", region:"East", duration:"2N/3D", budget:3000, mid:6500, luxury:15000, destinations:"Mahabodhi Temple", photoKeyword:"bodhgaya-mahabodhi-temple", regionTag:"🪷 Buddhist", bestFor:"Buddhist pilgrims"}
+    ];
+
+    // State variables
+    let currentFilter = "all";
+    let currentSearch = "";
+    let maxPrice = 50000;
+
+    // DOM elements
+    const tripGrid = document.getElementById("tripGrid");
+    const searchInput = document.getElementById("searchInput");
+    const priceSlider = document.getElementById("priceSlider");
+    const priceValueSpan = document.getElementById("priceValue");
+
+    // HD Photo URL generator using Unsplash (HD quality: 800x450)
+    function getHDPhotoUrl(keyword, width = 800, height = 450) {
+        const encodedKeyword = encodeURIComponent(keyword);
+        return `https://source.unsplash.com/featured/${width}x${height}/?${encodedKeyword},india,travel`;
+    }
+
+    // Filter trips based on region, search, and max price
+    function getFilteredTrips() {
+        let filtered = tripsData;
+        if (currentFilter !== "all") {
+            filtered = filtered.filter(trip => trip.region === currentFilter);
+        }
+        if (currentSearch.trim() !== "") {
+            const term = currentSearch.toLowerCase();
+            filtered = filtered.filter(trip => 
+                trip.name.toLowerCase().includes(term) || 
+                trip.destinations.toLowerCase().includes(term)
+            );
+        }
+        filtered = filtered.filter(trip => trip.mid <= maxPrice);
+        return filtered;
+    }
+
+    // Render trips to grid
+    function renderTrips() {
+        const filtered = getFilteredTrips();
+        
+        if (filtered.length === 0) {
+            tripGrid.innerHTML = '<div class="no-results">❌ No trips found. Try adjusting filters or search!</div>';
+            return;
+        }
+
+        tripGrid.innerHTML = filtered.map(trip => `
+            <div class="trip-card" data-id="${trip.id}">
+                <div class="trip-image" style="background-image: url('${getHDPhotoUrl(trip.photoKeyword)}'); background-size: cover; background-position: center;">
+                    <div class="region-badge">${trip.regionTag}</div>
+                    <div class="price-badge">⭐ ${trip.bestFor}</div>
+                </div>
+                <div class="trip-content">
+                    <div class="trip-title">${trip.name}</div>
+                    <div class="trip-duration">📅 ${trip.duration}</div>
+                    <div class="trip-destinations">📍 ${trip.destinations}</div>
+                    <div class="price-row">
+                        <div class="price-item">
+                            <div class="price-label">🎒 BUDGET</div>
+                            <div class="price-value budget">₹${trip.budget.toLocaleString()}</div>
+                        </div>
+                        <div class="price-item">
+                            <div class="price-label">⭐ MID-RANGE</div>
+                            <div class="price-value mid">₹${trip.mid.toLocaleString()}</div>
+                        </div>
+                        <div class="price-item">
+                            <div class="price-label">✨ LUXURY</div>
+                            <div class="price-value luxury">₹${trip.luxury.toLocaleString()}</div>
+                        </div>
+                    </div>
+                    <button class="book-btn" data-id="${trip.id}">📅 Book This Trip</button>
+                </div>
+            </div>
+        `).join("");
+
+        // Attach event listeners to book buttons
+        document.querySelectorAll('.book-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.getAttribute('data-id'));
+                openBookingModal(id);
+            });
+        });
+    }
+
+    // Booking Modal Functions
+    const modal = document.getElementById("bookingModal");
+    const closeModalSpan = document.querySelector(".close-modal");
+    const bookingForm = document.getElementById("bookingForm");
+    const modalTripName = document.getElementById("modalTripName");
+    const bookTripId = document.getElementById("bookTripId");
+
+    function openBookingModal(tripId) {
+        const trip = tripsData.find(t => t.id === tripId);
+        if (!trip) return;
+        modalTripName.innerText = `Book: ${trip.name}`;
+        bookTripId.value = tripId;
+        modal.style.display = "flex";
+        document.getElementById("bookingMessage").innerHTML = "";
+        // Reset form
+        document.getElementById("userName").value = "";
+        document.getElementById("userEmail").value = "";
+        document.getElementById("userPhone").value = "";
+        document.getElementById("travelers").value = "1";
+        document.getElementById("travelDate").value = "";
+        document.getElementById("priceTier").value = "budget";
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    function getTripPrice(trip, tier) {
+        if (tier === "budget") return trip.budget;
+        if (tier === "mid") return trip.mid;
+        return trip.luxury;
+    }
+
+    bookingForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const tripId = parseInt(bookTripId.value);
+        const trip = tripsData.find(t => t.id === tripId);
+        const name = document.getElementById("userName").value.trim();
+        const email = document.getElementById("userEmail").value.trim();
+        const phone = document.getElementById("userPhone").value.trim();
+        const travelers = parseInt(document.getElementById("travelers").value);
+        const date = document.getElementById("travelDate").value;
+        const tier = document.getElementById("priceTier").value;
+        const price = getTripPrice(trip, tier);
+        const total = price * travelers;
+
+        if (!name || !email || !phone) {
+            document.getElementById("bookingMessage").innerHTML = "❌ Please fill all required fields!";
+            document.getElementById("bookingMessage").style.color = "#dc3545";
+            return;
+        }
+
+        document.getElementById("bookingMessage").innerHTML = `✅ Thank you ${name}! Your booking for ${trip.name} (${travelers} traveler(s)) is confirmed. Total: ₹${total.toLocaleString()}. We'll contact you at ${email}.`;
+        document.getElementById("bookingMessage").style.color = "#28a745";
+        
+        setTimeout(() => {
+            closeModal();
+        }, 3000);
+    });
+
+    closeModalSpan.onclick = closeModal;
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+
+    // Event Listeners for Filters
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentFilter = btn.getAttribute("data-filter");
+            renderTrips();
+        });
+    });
+
+    searchInput.addEventListener("input", (e) => {
+        currentSearch = e.target.value;
+        renderTrips();
+    });
+
+    priceSlider.addEventListener("input", function() {
+        maxPrice = parseInt(this.value);
+        priceValueSpan.innerText = maxPrice === 50000 ? "₹50,000+" : `₹${maxPrice.toLocaleString()}`;
+        renderTrips();
+    });
+
+    // Initial render
+    renderTrips();
+</script>
+</body>
+</html>

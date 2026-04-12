@@ -46,3 +46,66 @@ const trips = [
 {name:"Bodhgaya", days:"3D", price:"₹3,000 - ₹15,000", place:"Bihar", img:"https://images.unsplash.com/photo-1501785888041-af3ef285b470"}
 
 ];
+function loadTrips(data){
+  let html = "";
+
+  data.forEach(t=>{
+    html += `
+      <div class="card">
+        <img src="${t.img}">
+        <div class="card-content">
+          <h3>${t.name}</h3>
+          <p>📍 ${t.place}</p>
+          <p>🕒 ${t.days}</p>
+          <p>💰 ${t.price}</p>
+          <button class="btn" onclick="openBooking('${t.name}')">Book Now</button>
+        </div>
+      </div>
+    `;
+  });
+
+  document.getElementById("tripList").innerHTML = html;
+}
+
+/* PAGE LOAD */
+loadTrips(trips);
+
+/* SEARCH */
+document.getElementById("search").addEventListener("input", e=>{
+  let val = e.target.value.toLowerCase();
+  let filtered = trips.filter(t=>t.name.toLowerCase().includes(val));
+  loadTrips(filtered);
+});
+
+/* BOOKING */
+let selectedTrip = "";
+
+function openBooking(name){
+  selectedTrip = name;
+  document.getElementById("tripName").innerText = "Book: " + name;
+  document.getElementById("bookingPopup").style.display = "flex";
+}
+
+function closePopup(){
+  document.getElementById("bookingPopup").style.display = "none";
+}
+
+function confirmBooking(){
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
+  let address = document.getElementById("address").value;
+
+  if(!name || !phone || !address){
+    alert("Fill all details!");
+    return;
+  }
+
+  let booking = {trip:selectedTrip, name, phone, address};
+
+  let all = JSON.parse(localStorage.getItem("bookings")) || [];
+  all.push(booking);
+  localStorage.setItem("bookings", JSON.stringify(all));
+
+  alert("Booking Successful ✅");
+  closePopup();
+}

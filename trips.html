@@ -290,7 +290,7 @@
             margin-top: 8px;
         }
 
-        /* Modal */
+        /* Trip Details Modal */
         .modal {
             display: none;
             position: fixed;
@@ -298,19 +298,32 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            overflow-y: auto;
         }
 
         .modal-content {
             background: white;
             border-radius: 25px;
-            max-width: 400px;
+            max-width: 450px;
             width: 90%;
-            max-height: 85vh;
+            max-height: 90vh;
             overflow-y: auto;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .modal-header {
@@ -318,16 +331,131 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border-radius: 25px 25px 0 0;
+            position: relative;
+        }
+
+        .modal-header h2 {
+            font-size: 1.2rem;
+            padding-right: 30px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
         }
 
         .modal-body {
             padding: 20px;
         }
 
-        .close-modal {
-            float: right;
-            font-size: 24px;
+        /* Trip Details Styles */
+        .detail-section {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .detail-title {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .detail-highlight {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+        }
+
+        .price-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .price-detail:last-child {
+            border-bottom: none;
+        }
+
+        .inclusion-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .inclusion-list li {
+            padding: 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .inclusion-list li::before {
+            content: "✅";
+        }
+
+        .itenary-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .itenary-day {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .itenary-text {
+            flex: 1;
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        .submit-booking {
+            background: #28a745;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            width: 100%;
+            font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .booking-form {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .booking-form h4 {
+            margin-bottom: 15px;
+            color: #333;
         }
 
         input, select {
@@ -337,18 +465,6 @@
             border: 1px solid #ddd;
             border-radius: 10px;
             font-size: 0.85rem;
-        }
-
-        .submit-booking {
-            background: #28a745;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 12px;
-            width: 100%;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
         }
 
         .no-results {
@@ -422,52 +538,211 @@
     ✨ Prices are per person | Taxes extra | Best season: Oct-Mar
 </div>
 
-<!-- Booking Modal -->
-<div id="bookingModal" class="modal">
+<!-- Trip Details Modal -->
+<div id="tripDetailModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <span class="close-modal">&times;</span>
-            <h2 id="modalTripName">Book Your Trip</h2>
+            <h2 id="modalTripName">Trip Details</h2>
         </div>
-        <div class="modal-body">
-            <form id="bookingForm">
-                <input type="hidden" id="bookTripId">
-                <input type="text" id="userName" placeholder="Full Name" required>
-                <input type="email" id="userEmail" placeholder="Email Address" required>
-                <input type="tel" id="userPhone" placeholder="Phone Number" required>
-                <input type="number" id="travelers" placeholder="Number of Travelers" min="1" value="1">
-                <input type="date" id="travelDate">
-                <select id="priceTier">
-                    <option value="budget">🎒 Budget</option>
-                    <option value="mid">⭐ Mid-Range</option>
-                    <option value="luxury">✨ Luxury</option>
-                </select>
-                <button type="submit" class="submit-booking">✅ Confirm Booking</button>
-            </form>
-            <p id="bookingMessage" style="margin-top:12px; text-align:center;"></p>
+        <div class="modal-body" id="modalBody">
+            <!-- Dynamic details will be loaded here -->
         </div>
     </div>
 </div>
 
 <script>
-    // ==================== 15 TRIPS DATABASE ====================
+    // ==================== TRIPS DATABASE WITH DETAILS ====================
     const tripsData = [
-        {id:1, name:"Rajasthan Royal Tour", category:"Popular", duration:"5N/6D", budget:4999, mid:9999, luxury:24999, destinations:"Jaipur → Jodhpur → Udaipur → Jaisalmer", photoKeyword:"rajasthan-amber-fort", regionTag:"🏛️ Heritage", bestFor:"Royal Experience"},
-        {id:2, name:"Goa Beach Paradise", category:"Beach", duration:"3N/4D", budget:6999, mid:12999, luxury:29999, destinations:"North Goa → South Goa → Dudhsagar", photoKeyword:"goa-beach-party", regionTag:"🏖️ Beach", bestFor:"Party & Relax"},
-        {id:3, name:"Kerala Backwaters", category:"Popular", duration:"4N/5D", budget:8999, mid:16999, luxury:39999, destinations:"Alleppey → Munnar → Kochi", photoKeyword:"kerala-backwaters-houseboat", regionTag:"🌴 God's Own", bestFor:"Romantic"},
-        {id:4, name:"Manali Adventure", category:"Hill", duration:"4N/5D", budget:5999, mid:11999, luxury:27999, destinations:"Manali → Solang → Rohtang", photoKeyword:"manali-snow-mountains", regionTag:"🏔️ Adventure", bestFor:"Nature Lovers"},
-        {id:5, name:"Varanasi Spiritual", category:"Spiritual", duration:"2N/3D", budget:2999, mid:5999, luxury:14999, destinations:"Varanasi → Sarnath → Ganga Aarti", photoKeyword:"varanasi-ganga-aarti", regionTag:"🕉️ Spiritual", bestFor:"Soul Seekers"},
-        {id:6, name:"Shimla Manali", category:"Hill", duration:"6N/7D", budget:8999, mid:16999, luxury:39999, destinations:"Shimla → Kufri → Manali", photoKeyword:"shimla-hill-station", regionTag:"🏔️ Queen of Hills", bestFor:"Family"},
-        {id:7, name:"Kashmir Paradise", category:"Popular", duration:"5N/6D", budget:12999, mid:24999, luxury:59999, destinations:"Srinagar → Gulmarg → Pahalgam", photoKeyword:"kashmir-gulmarg-snow", regionTag:"🌸 Heaven", bestFor:"Honeymoon"},
-        {id:8, name:"Ooty Coonoor", category:"Hill", duration:"3N/4D", budget:4999, mid:9999, luxury:19999, destinations:"Ooty Lake → Coonoor → Toy Train", photoKeyword:"ooty-toy-train", regionTag:"🚂 Nilgiris", bestFor:"Weekend"},
-        {id:9, name:"Mumbai Goa", category:"Beach", duration:"6N/7D", budget:9999, mid:19999, luxury:49999, destinations:"Mumbai → Alibaug → Goa", photoKeyword:"mumbai-gateway-india", regionTag:"🌉 Coastal", bestFor:"Road Trip"},
-        {id:10, name:"Amritsar Wagah", category:"Spiritual", duration:"2N/3D", budget:3499, mid:6999, luxury:15999, destinations:"Golden Temple → Wagah Border", photoKeyword:"golden-temple-amritsar", regionTag:"🙏 Devotion", bestFor:"Patriotism"},
-        {id:11, name:"Leh Ladakh", category:"Popular", duration:"7N/8D", budget:15999, mid:29999, luxury:69999, destinations:"Leh → Pangong → Nubra", photoKeyword:"leh-ladakh-pangong-lake", regionTag:"🏍️ Adventure", bestFor:"Bikers"},
-        {id:12, name:"Darjeeling Gangtok", category:"Hill", duration:"5N/6D", budget:8999, mid:16999, luxury:39999, destinations:"Darjeeling → Gangtok → Tsomgo", photoKeyword:"darjeeling-toy-train-hills", regionTag:"🚂 Tea Gardens", bestFor:"Peace"},
-        {id:13, name:"Andaman Nicobar", category:"Beach", duration:"5N/6D", budget:14999, mid:29999, luxury:69999, destinations:"Port Blair → Havelock → Neil", photoKeyword:"andaman-radhanagar-beach", regionTag:"🏝️ Tropical", bestFor:"Beach Paradise"},
-        {id:14, name:"Khajuraho Orchha", category:"Heritage", duration:"3N/4D", budget:5999, mid:11999, luxury:27999, destinations:"Khajuraho → Orchha", photoKeyword:"khajuraho-temples-sculpture", regionTag:"🛕 UNESCO", bestFor:"Architecture"},
-        {id:15, name:"Rishikesh Haridwar", category:"Spiritual", duration:"3N/4D", budget:3999, mid:7999, luxury:18999, destinations:"Rishikesh → Haridwar", photoKeyword:"rishikesh-ganga-rafting", regionTag:"🚣 Yoga", bestFor:"Spirituality"}
+        {
+            id: 1, 
+            name: "Rajasthan Royal Tour", 
+            category: "Popular", 
+            duration: "5 Nights / 6 Days", 
+            budget: 4999, 
+            mid: 9999, 
+            luxury: 24999, 
+            destinations: "Jaipur → Jodhpur → Udaipur → Jaisalmer", 
+            photoKeyword: "rajasthan-amber-fort", 
+            regionTag: "🏛️ Heritage", 
+            bestFor: "Royal Experience",
+            fullDescription: "Experience the royal charm of Rajasthan with this 6-day tour covering the most beautiful cities - Jaipur, Jodhpur, Udaipur and Jaisalmer. Enjoy palace stays, desert safaris, and cultural performances.",
+            inclusions: [
+                "4-star hotel accommodations",
+                "Daily breakfast and dinner",
+                "AC vehicle for sightseeing",
+                "Professional guide",
+                "Desert safari in Jaisalmer",
+                "Palace entry tickets"
+            ],
+            exclusions: [
+                "Flight/train tickets",
+                "Personal expenses",
+                "Travel insurance",
+                "Tips and gratuities"
+            ],
+            itinerary: [
+                { day: 1, text: "Arrive in Jaipur. Check-in and relax. Evening visit to local markets." },
+                { day: 2, text: "Jaipur sightseeing: Amber Fort, City Palace, Hawa Mahal, Jantar Mantar." },
+                { day: 3, text: "Drive to Jodhpur. Visit Mehrangarh Fort and Jaswant Thada." },
+                { day: 4, text: "Drive to Udaipur. Evening boat ride at Lake Pichola." },
+                { day: 5, text: "Udaipur sightseeing: City Palace, Jag Mandir, Sahelion Ki Bari." },
+                { day: 6, text: "Drive to Jaisalmer. Desert safari and cultural evening. Departure." }
+            ],
+            bestTime: "October to March",
+            languages: "English, Hindi"
+        },
+        {
+            id: 2, 
+            name: "Goa Beach Paradise", 
+            category: "Beach", 
+            duration: "3 Nights / 4 Days", 
+            budget: 6999, 
+            mid: 12999, 
+            luxury: 29999, 
+            destinations: "North Goa → South Goa → Dudhsagar", 
+            photoKeyword: "goa-beach-party", 
+            regionTag: "🏖️ Beach", 
+            bestFor: "Party & Relax",
+            fullDescription: "Enjoy the best of Goa with this 4-day beach tour. Visit famous beaches, try water sports, experience nightlife, and relax on the golden sands.",
+            inclusions: [
+                "Beachfront hotel stays",
+                "Daily breakfast",
+                "Scooter rental for 3 days",
+                "Water sports activities",
+                "Sunset cruise"
+            ],
+            exclusions: [
+                "Flight/train tickets",
+                "Lunch and dinner",
+                "Personal expenses",
+                "Club entry fees"
+            ],
+            itinerary: [
+                { day: 1, text: "Arrive in Goa. Check-in. Evening at Baga Beach and Tito's Lane." },
+                { day: 2, text: "North Goa beaches: Calangute, Candolim, Anjuna. Visit Chapora Fort." },
+                { day: 3, text: "South Goa beaches: Palolem, Colva. Water sports activities." },
+                { day: 4, text: "Visit Dudhsagar Waterfalls. Departure." }
+            ],
+            bestTime: "November to February",
+            languages: "English, Hindi, Konkani"
+        },
+        {
+            id: 3, 
+            name: "Kerala Backwaters", 
+            category: "Popular", 
+            duration: "4 Nights / 5 Days", 
+            budget: 8999, 
+            mid: 16999, 
+            luxury: 39999, 
+            destinations: "Alleppey → Munnar → Kochi", 
+            photoKeyword: "kerala-backwaters-houseboat", 
+            regionTag: "🌴 God's Own", 
+            bestFor: "Romantic",
+            fullDescription: "Experience the serene backwaters of Kerala with this 5-day romantic tour. Stay in a traditional houseboat, explore tea gardens in Munnar, and visit historic Fort Kochi.",
+            inclusions: [
+                "Premium houseboat stay (1 night)",
+                "Hill resort in Munnar (2 nights)",
+                "All meals on houseboat",
+                "Tea garden visit",
+                "Kathakali performance"
+            ],
+            exclusions: [
+                "Flight/train tickets",
+                "Personal expenses",
+                "Ayurvedic treatments"
+            ],
+            itinerary: [
+                { day: 1, text: "Arrive in Kochi. Visit Fort Kochi and Chinese Fishing Nets." },
+                { day: 2, text: "Drive to Munnar. Enroute visit Cheeyappara Waterfalls." },
+                { day: 3, text: "Munnar sightseeing: Tea Museum, Mattupetty Dam, Echo Point." },
+                { day: 4, text: "Drive to Alleppey. Evening houseboat cruise with dinner." },
+                { day: 5, text: "Disembark from houseboat. Departure from Kochi." }
+            ],
+            bestTime: "September to March",
+            languages: "English, Hindi, Malayalam"
+        },
+        {
+            id: 4, 
+            name: "Manali Adventure", 
+            category: "Hill", 
+            duration: "4 Nights / 5 Days", 
+            budget: 5999, 
+            mid: 11999, 
+            luxury: 27999, 
+            destinations: "Manali → Solang → Rohtang", 
+            photoKeyword: "manali-snow-mountains", 
+            regionTag: "🏔️ Adventure", 
+            bestFor: "Nature Lovers",
+            fullDescription: "Adventure awaits in Manali! Enjoy snow activities, river rafting, trekking, and beautiful mountain views on this 5-day tour.",
+            inclusions: [
+                "Mountain view hotel",
+                "Daily breakfast and dinner",
+                "Adventure activities (paragliding, rafting)",
+                "Rohtang Pass permit",
+                "Bonfire evening"
+            ],
+            exclusions: [
+                "Flight/train tickets",
+                "Lunch",
+                "Personal expenses",
+                "Snow gear rental"
+            ],
+            itinerary: [
+                { day: 1, text: "Arrive in Manali. Check-in. Evening at Mall Road." },
+                { day: 2, text: "Manali sightseeing: Hadimba Temple, Vashisht Hot Springs." },
+                 { day: 3, text: "Day trip to Solang Valley. Paragliding and zorbing." },
+                { day: 4, text: "Rohtang Pass (weather permitting). Snow activities." },
+                { day: 5, text: "Visit Old Manali cafes. Departure." }
+            ],
+            bestTime: "April to June (Summer) | December to February (Snow)",
+            languages: "English, Hindi"
+        },
+        {
+            id: 5, 
+            name: "Varanasi Spiritual", 
+            category: "Spiritual", 
+            duration: "2 Nights / 3 Days", 
+            budget: 2999, 
+            mid: 5999, 
+            luxury: 14999, 
+            destinations: "Varanasi → Sarnath → Ganga Aarti", 
+            photoKeyword: "varanasi-ganga-aarti", 
+            regionTag: "🕉️ Spiritual", 
+            bestFor: "Soul Seekers",
+            fullDescription: "Experience the spiritual heart of India with this Varanasi tour. Witness Ganga Aarti, visit ancient temples, and explore Sarnath where Buddha gave his first sermon.",
+            inclusions: [
+                "Hotel near Ganga ghat",
+                "Daily breakfast",
+                "Boat ride on Ganges",
+                "Ganga Aarti VIP seating",
+                "Sarnath excursion"
+            ],
+            exclusions: [
+                "Train/flight tickets",
+                "Lunch and dinner",
+                "Personal expenses",
+                "Camera fees"
+            ],
+            itinerary: [
+                { day: 1, text: "Arrive in Varanasi. Evening Ganga Aarti at Dashashwamedh Ghat." },
+                { day: 2, text: "Early morning boat ride. Visit Kashi Vishwanath Temple." },
+                { day: 3, text: "Day trip to Sarnath. Visit Dhamek Stupa and museum. Departure." }
+            ],
+            bestTime: "October to March",
+            languages: "English, Hindi"
+        }
     ];
+
+    // Additional trips (shortened for brevity - add more as needed)
+    const moreTrips = [
+        {id:6, name:"Shimla Manali", category:"Hill", duration:"6 Nights / 7 Days", budget:8999, mid:16999, luxury:39999, destinations:"Shimla → Kufri → Manali", photoKeyword:"shimla-hill-station", regionTag:"🏔️ Queen of Hills", bestFor:"Family", fullDescription:"Combine the best of Shimla and Manali on this week-long Himalayan adventure."},
+        {id:7, name:"Kashmir Paradise", category:"Popular", duration:"5 Nights / 6 Days", budget:12999, mid:24999, luxury:59999, destinations:"Srinagar → Gulmarg → Pahalgam", photoKeyword:"kashmir-gulmarg-snow", regionTag:"🌸 Heaven", bestFor:"Honeymoon", fullDescription:"Experience the paradise on earth with this Kashmir tour including houseboat stay and gondola ride."},
+        {id:8, name:"Leh Ladakh", category:"Popular", duration:"7 Nights / 8 Days", budget:15999, mid:29999, luxury:69999, destinations:"Leh → Pangong → Nubra", photoKeyword:"leh-ladakh-pangong-lake", regionTag:"🏍️ Adventure", bestFor:"Bikers", fullDescription:"The ultimate adventure tour covering high altitude lakes and monasteries."}
+    ];
+
+    // Merge all trips
+    const allTrips = [...tripsData, ...moreTrips];
 
     // State variables
     let currentFilter = "all";
@@ -480,21 +755,17 @@
     const priceSlider = document.getElementById("priceSlider");
     const priceValueSpan = document.getElementById("priceValue");
 
-    // HD Photo URL generator using Unsplash
+    // HD Photo URL generator
     function getPhotoUrl(keyword, width = 400, height = 200) {
         return `https://source.unsplash.com/featured/${width}x${height}/?${keyword},india,travel`;
     }
 
-    // Filter trips based on category, search, and max price
+    // Filter trips
     function getFilteredTrips() {
-        let filtered = tripsData;
-        
-        // Category filter
+        let filtered = allTrips;
         if (currentFilter !== "all") {
             filtered = filtered.filter(trip => trip.category === currentFilter);
         }
-        
-        // Search filter
         if (currentSearch.trim() !== "") {
             const term = currentSearch.toLowerCase();
             filtered = filtered.filter(trip => 
@@ -502,25 +773,22 @@
                 trip.destinations.toLowerCase().includes(term)
             );
         }
-        
-        // Price filter (using mid-range price)
         filtered = filtered.filter(trip => trip.mid <= maxPrice);
-        
         return filtered;
     }
 
-    // Render trips to the grid
+    // Render trips
     function renderTrips() {
         const filtered = getFilteredTrips();
         
         if (filtered.length === 0) {
-            tripsList.innerHTML = '<div class="no-results">❌ No trips found. Try adjusting filters or search!</div>';
+            tripsList.innerHTML = '<div class="no-results">❌ No trips found. Try adjusting filters!</div>';
             return;
         }
 
         tripsList.innerHTML = filtered.map(trip => `
-            <div class="trip-card" onclick="openBookingModal(${trip.id})">
-                <div class="trip-img" style="background-image: url('${getPhotoUrl(trip.photoKeyword)}');">
+            <div class="trip-card">
+                <div class="trip-img" style="background-image: url('${getPhotoUrl(trip.photoKeyword)}'); background-size: cover; background-position: center;">
                     <div class="trip-category-badge">${trip.regionTag}</div>
                     <div class="trip-price-badge">${trip.category}</div>
                 </div>
@@ -542,14 +810,171 @@
                             <div class="price-value luxury">₹${trip.luxury.toLocaleString()}</div>
                         </div>
                     </div>
-                    <button class="book-btn">📅 Book Now</button>
+                    <button class="book-btn" onclick="showTripDetails(${trip.id})">📅 View Details & Book</button>
                 </div>
             </div>
         `).join("");
     }
 
-    // ==================== FILTER EVENT LISTENERS ====================
-    
+    // ==================== SHOW TRIP DETAILS FUNCTION ====================
+    function showTripDetails(tripId) {
+        const trip = allTrips.find(t => t.id === tripId);
+        if (!trip) return;
+
+        const modal = document.getElementById("tripDetailModal");
+        const modalTitle = document.getElementById("modalTripName");
+        const modalBody = document.getElementById("modalBody");
+
+        modalTitle.innerHTML = `${trip.name} - Details`;
+
+        // Generate trip details HTML
+        modalBody.innerHTML = `
+            <!-- Trip Overview -->
+            <div class="detail-section">
+                <div class="detail-title">📋 OVERVIEW</div>
+                <div class="detail-value">${trip.fullDescription || "Experience the best of " + trip.name + " with this carefully curated tour package."}</div>
+            </div>
+
+            <div class="detail-highlight">
+                <div class="detail-title">📍 DESTINATIONS COVERED</div>
+                <div class="detail-value">${trip.destinations}</div>
+            </div>
+
+            <!-- Quick Info -->
+            <div class="detail-section">
+                <div class="detail-title">⏱️ DURATION</div>
+                <div class="detail-value">${trip.duration}</div>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-title">🎯 BEST FOR</div>
+                <div class="detail-value">${trip.bestFor}</div>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-title">📅 BEST TIME TO VISIT</div>
+                <div class="detail-value">${trip.bestTime || "October to March"}</div>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-title">🗣️ LANGUAGES</div>
+                <div class="detail-value">${trip.languages || "English, Hindi"}</div>
+            </div>
+
+            <!-- Price Details -->
+            <div class="detail-section">
+                <div class="detail-title">💰 PRICE BREAKDOWN (Per Person)</div>
+                <div class="detail-highlight">
+                    <div class="price-detail">
+                        <span>🎒 Budget Package</span>
+                        <span style="color:#28a745; font-weight:bold;">₹${trip.budget.toLocaleString()}</span>
+                    </div>
+                    <div class="price-detail">
+                        <span>⭐ Mid-Range Package</span>
+                        <span style="color:#ff9800; font-weight:bold;">₹${trip.mid.toLocaleString()}</span>
+                    </div>
+                    <div class="price-detail">
+                        <span>✨ Luxury Package</span>
+                        <span style="color:#9c27b0; font-weight:bold;">₹${trip.luxury.toLocaleString()}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inclusions -->
+            <div class="detail-section">
+                <div class="detail-title">✅ WHAT'S INCLUDED</div>
+                <ul class="inclusion-list">
+                    ${(trip.inclusions || [
+                        "Accommodation as per package",
+                        "Daily breakfast",
+                        "Sightseeing as per itinerary",
+                        "All transfers",
+                        "Professional guide"
+                    ]).map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            </div>
+
+            <!-- Exclusions -->
+            <div class="detail-section">
+                <div class="detail-title">❌ WHAT'S EXCLUDED</div>
+                <ul class="inclusion-list">
+                    ${(trip.exclusions || [
+                        "Flight/train tickets",
+                        "Personal expenses",
+                        "Travel insurance",
+                        "Tips and gratuities"
+                    ]).map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            </div>
+
+            <!-- Itinerary -->
+            <div class="detail-section">
+                <div class="detail-title">📅 SAMPLE ITINERARY</div>
+                ${(trip.itinerary || [
+                    { day: 1, text: "Arrival and check-in. Evening free for leisure." },
+                    { day: 2, text: "Full day sightseeing tour." },
+                    { day: 3, text: "Morning sightseeing. Evening departure." }
+                ]).map(item => `
+                    <div class="itenary-item">
+                        <div class="itenary-day">${item.day}</div>
+                        <div class="itenary-text">${item.text}</div>
+                    </div>
+                `).join('')}
+            </div>
+
+            <!-- Booking Form -->
+            <div class="booking-form">
+                <h4>📞 Book This Trip</h4>
+                <input type="text" id="detailName" placeholder="Full Name" required>
+                <input type="email" id="detailEmail" placeholder="Email Address" required>
+                <input type="tel" id="detailPhone" placeholder="Phone Number" required>
+                <input type="number" id="detailTravelers" placeholder="Number of Travelers" min="1" value="1">
+                <input type="date" id="detailDate">
+                <select id="detailTier">
+                    <option value="budget">🎒 Budget - ₹${trip.budget.toLocaleString()}</option>
+                    <option value="mid">⭐ Mid-Range - ₹${trip.mid.toLocaleString()}</option>
+                    <option value="luxury">✨ Luxury - ₹${trip.luxury.toLocaleString()}</option>
+                </select>
+                <button class="submit-booking" onclick="confirmBooking(${trip.id})">✅ Confirm Booking</button>
+                <p id="bookingConfirmMsg" style="margin-top:12px; text-align:center; color:#28a745;"></p>
+            </div>
+        `;
+
+        modal.style.display = "flex";
+    }
+
+    // Confirm booking function
+    function confirmBooking(tripId) {
+        const trip = allTrips.find(t => t.id === tripId);
+        const name = document.getElementById("detailName")?.value.trim();
+        const travelers = document.getElementById("detailTravelers")?.value || 1;
+        const tier = document.getElementById("detailTier")?.value;
+        
+        let price = trip.budget;
+        if (tier === "mid") price = trip.mid;
+        if (tier === "luxury") price = trip.luxury;
+        
+        const total = price * parseInt(travelers);
+
+        if (!name) {
+            alert("Please enter your name!");
+            return;
+        }
+
+        const msg = document.getElementById("bookingConfirmMsg");
+        msg.innerHTML = `✅ Thank you ${name}! Booking confirmed for ${trip.name}. Total: ₹${total.toLocaleString()}. We'll contact you soon.`;
+        
+        setTimeout(() => {
+            closeModal();
+        }, 3000);
+    }
+
+    // Close modal
+    function closeModal() {
+        const modal = document.getElementById("tripDetailModal");
+        modal.style.display = "none";
+    }
+
     // Filter chips
     document.querySelectorAll(".filter-chip").forEach(chip => {
         chip.addEventListener("click", () => {
@@ -560,7 +985,7 @@
         });
     });
 
-    // Search input
+    // Search
     searchInput.addEventListener("input", (e) => {
         currentSearch = e.target.value;
         renderTrips();
@@ -569,84 +994,14 @@
     // Price slider
     priceSlider.addEventListener("input", function() {
         maxPrice = parseInt(this.value);
-        if (maxPrice === 50000) {
-            priceValueSpan.innerText = "₹50,000+";
-        } else {
-            priceValueSpan.innerText = `₹${maxPrice.toLocaleString()}`;
-        }
+        priceValueSpan.innerText = maxPrice === 50000 ? "₹50,000+" : `₹${maxPrice.toLocaleString()}`;
         renderTrips();
     });
 
-    // ==================== BOOKING MODAL FUNCTIONS ====================
-    
-    const modal = document.getElementById("bookingModal");
-    const closeModalSpan = document.querySelector(".close-modal");
-    const bookingForm = document.getElementById("bookingForm");
-    const modalTripName = document.getElementById("modalTripName");
-    const bookTripId = document.getElementById("bookTripId");
-
-    function openBookingModal(tripId) {
-        const trip = tripsData.find(t => t.id === tripId);
-        if (!trip) return;
-        
-        modalTripName.innerText = `Book: ${trip.name}`;
-        bookTripId.value = tripId;
-        modal.style.display = "flex";
-        document.getElementById("bookingMessage").innerHTML = "";
-        
-        // Reset form
-        document.getElementById("userName").value = "";
-        document.getElementById("userEmail").value = "";
-        document.getElementById("userPhone").value = "";
-        document.getElementById("travelers").value = "1";
-        document.getElementById("travelDate").value = "";
-        document.getElementById("priceTier").value = "budget";
-    }
-
-    function closeModal() {
-        modal.style.display = "none";
-    }
-
-    function getTripPrice(trip, tier) {
-        if (tier === "budget") return trip.budget;
-        if (tier === "mid") return trip.mid;
-        return trip.luxury;
-    }
-
-    // Booking form submission
-    bookingForm.addEventListener("submit", function(e) {
-        e.preventDefault();
-        
-        const tripId = parseInt(bookTripId.value);
-        const trip = tripsData.find(t => t.id === tripId);
-        const name = document.getElementById("userName").value.trim();
-        const email = document.getElementById("userEmail").value.trim();
-        const phone = document.getElementById("userPhone").value.trim();
-        const travelers = parseInt(document.getElementById("travelers").value);
-        const travelDate = document.getElementById("travelDate").value;
-        const tier = document.getElementById("priceTier").value;
-        
-        const price = getTripPrice(trip, tier);
-        const total = price * travelers;
-        
-        if (!name || !email || !phone) {
-            document.getElementById("bookingMessage").innerHTML = "❌ Please fill all required fields!";
-            document.getElementById("bookingMessage").style.color = "#dc3545";
-            return;
-        }
-        
-        document.getElementById("bookingMessage").innerHTML = `✅ Thank you ${name}! Your booking for ${trip.name} (${travelers} traveler(s)) is confirmed. Total: ₹${total.toLocaleString()}. We'll contact you at ${email}.`;
-        document.getElementById("bookingMessage").style.color = "#28a745";
-        
-        // Auto close modal after 3 seconds
-        setTimeout(() => {
-            closeModal();
-        }, 3000);
-    });
-
-    // Close modal events
-    closeModalSpan.onclick = closeModal;
+    // Close modal when clicking X or outside
+    document.querySelector(".close-modal")?.addEventListener("click", closeModal);
     window.onclick = function(event) {
+        const modal = document.getElementById("tripDetailModal");
         if (event.target === modal) {
             closeModal();
         }

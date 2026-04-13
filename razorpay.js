@@ -1,6 +1,6 @@
 window.startRazorpayPayment = function (amount, successCallback) {
   const options = {
-    key: "YOUR_RAZORPAY_KEY_ID",
+    key: "rzp_test_ScrS9eJ3YGRoRg",
     amount: amount * 100,
     currency: "INR",
     name: "HALORA",

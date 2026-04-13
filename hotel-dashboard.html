@@ -2,131 +2,148 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HALORA – Hotel Dashboard (Working)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>HALORA – Partner Dashboard (Mobile)</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
+
         body {
             background: #f1f5f9;
-            padding: 20px;
+            padding: 12px;
+            padding-bottom: 80px; /* space for bottom nav */
         }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        /* Header */
+
+        /* Header with back button */
         .header {
             background: linear-gradient(135deg, #ff6b35, #ff8c5a);
             color: white;
-            padding: 24px 32px;
+            padding: 16px 20px;
             border-radius: 28px;
-            margin-bottom: 28px;
+            margin-bottom: 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 12px;
             flex-wrap: wrap;
+            position: relative;
         }
-        .header h1 { font-size: 1.8rem; }
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 1.6rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .back-btn:active { background: rgba(255,255,255,0.4); }
+        .header h1 {
+            font-size: 1.4rem;
+            flex: 1;
+        }
         .partner-info {
             background: rgba(255,255,255,0.2);
-            padding: 8px 18px;
+            padding: 6px 14px;
             border-radius: 40px;
-            font-size: 0.9rem;
+            font-size: 0.75rem;
+            text-align: center;
         }
-        /* Stats Grid */
+
+        /* Stats cards */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 32px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
         }
         .stat-card {
             background: white;
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border: 1px solid #e9eef3;
-            transition: 0.2s;
+            border-radius: 20px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #eef2f6;
         }
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: 800;
             color: #ff6b35;
         }
         .stat-label {
+            font-size: 0.75rem;
             color: #475569;
-            margin-top: 8px;
-            font-weight: 500;
+            margin-top: 4px;
         }
-        /* Buttons row */
-        .action-buttons {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-bottom: 28px;
-        }
-        .btn {
-            padding: 12px 28px;
-            border: none;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.95rem;
-        }
-        .btn-primary { background: #ff6b35; color: white; }
-        .btn-primary:hover { background: #e55a2b; transform: scale(0.97); }
-        .btn-outline { background: white; border: 1px solid #cbd5e1; color: #1e293b; }
-        .btn-outline:hover { background: #f8fafc; }
-        .btn-danger { background: #fee2e2; color: #b91c1c; }
-        .btn-danger:hover { background: #fecaca; }
-        /* Form panel */
-        .form-panel {
+
+        /* Panels */
+        .panel {
             background: white;
             border-radius: 28px;
-            padding: 28px;
-            margin-bottom: 28px;
+            padding: 20px;
+            margin-bottom: 20px;
             border: 1px solid #eef2f6;
             display: none;
         }
-        .form-panel.show { display: block; }
+        .panel.active {
+            display: block;
+        }
+        .panel-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Form */
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
         .form-group label {
-            display: block;
             font-weight: 600;
+            display: block;
             margin-bottom: 6px;
-            color: #0f172a;
+            font-size: 0.85rem;
         }
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 12px 16px;
+            padding: 14px;
             border: 1px solid #cbd5e1;
             border-radius: 24px;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            background: white;
         }
-        /* Hotels grid */
+        button {
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:active { transform: scale(0.97); }
+
+        /* Hotels grid (mobile) */
         .hotels-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
-            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
         .hotel-card {
             background: white;
             border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             border: 1px solid #eef2f6;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
         }
         .hotel-img {
-            height: 180px;
+            height: 160px;
             background-size: cover;
             background-position: center;
             position: relative;
@@ -136,33 +153,82 @@
             top: 12px;
             right: 12px;
             padding: 4px 12px;
-            border-radius: 40px;
-            font-size: 12px;
+            border-radius: 30px;
+            font-size: 11px;
             font-weight: bold;
             background: white;
         }
         .status-active { background: #10b981; color: white; }
         .status-inactive { background: #ef4444; color: white; }
-        .hotel-info { padding: 18px; }
-        .hotel-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
-        .hotel-location { color: #5b6e8c; font-size: 0.85rem; margin-bottom: 10px; }
-        .price { font-size: 1.5rem; font-weight: 800; color: #ff6b35; margin: 10px 0; }
+        .hotel-info {
+            padding: 16px;
+        }
+        .hotel-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .hotel-location {
+            color: #5b6e8c;
+            font-size: 0.8rem;
+            margin: 6px 0;
+        }
+        .price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ff6b35;
+            margin: 8px 0;
+        }
         .card-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 14px;
+            gap: 12px;
+            margin-top: 12px;
         }
         .card-actions button {
             flex: 1;
-            padding: 8px;
+            padding: 10px;
             border-radius: 40px;
-            border: none;
             font-weight: 600;
-            cursor: pointer;
+            border: none;
+            font-size: 0.8rem;
         }
         .edit-btn { background: #fef3c7; color: #b45309; }
         .toggle-btn { background: #e0f2fe; color: #0369a1; }
         .delete-btn { background: #fee2e2; color: #b91c1c; }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 16px 20px;
+            border-top: 1px solid #e9eef3;
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.7rem;
+            color: #64748b;
+            padding: 6px 12px;
+            border-radius: 30px;
+        }
+        .nav-btn.active {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        .nav-btn span:first-child {
+            font-size: 1.4rem;
+        }
+
         /* Modal */
         .modal {
             display: none;
@@ -172,91 +238,112 @@
             background: rgba(0,0,0,0.5);
             align-items: center;
             justify-content: center;
-            z-index: 1000;
+            z-index: 200;
         }
         .modal-card {
             background: white;
-            max-width: 500px;
             width: 90%;
+            max-width: 400px;
             border-radius: 32px;
-            padding: 28px;
+            padding: 24px;
         }
-        .table-wrapper { overflow-x: auto; background: white; border-radius: 24px; padding: 16px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px 8px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-        @media (max-width: 700px) {
-            .header { flex-direction: column; gap: 12px; text-align: center; }
+
+        /* Tables scroll */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        th, td {
+            padding: 10px 6px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .btn-primary {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            width: 100%;
+            font-size: 1rem;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>🏨 HALORA – Hotel Dashboard</h1>
-        <div class="partner-info" id="partnerDisplay">Partner: Loading...</div>
-    </div>
 
-    <!-- Stats Cards -->
-    <div class="stats-grid">
-        <div class="stat-card"><div class="stat-number" id="totalHotels">0</div><div class="stat-label">Total Hotels</div></div>
-        <div class="stat-card"><div class="stat-number" id="activeHotels">0</div><div class="stat-label">Active Hotels</div></div>
-        <div class="stat-card"><div class="stat-number" id="totalBookingsStat">0</div><div class="stat-label">Total Bookings</div></div>
-        <div class="stat-card"><div class="stat-number" id="totalEarningsStat">₹0</div><div class="stat-label">Estimated Earnings</div></div>
-    </div>
+<div class="header">
+    <button class="back-btn" id="backButton">←</button>
+    <h1>🏨 HALORA</h1>
+    <div class="partner-info" id="partnerDisplay">Partner: --</div>
+</div>
 
-    <!-- Action Buttons (ALL ACTIVE) -->
-    <div class="action-buttons">
-        <button class="btn btn-primary" id="showHotelsBtn">🏨 My Hotels</button>
-        <button class="btn btn-primary" id="showAddHotelBtn">➕ Add New Hotel</button>
-        <button class="btn btn-primary" id="showBookingsBtn">📅 Bookings</button>
-        <button class="btn btn-primary" id="showEarningsBtn">💰 Earnings</button>
-        <button class="btn btn-outline" id="logoutBtn">🚪 Logout</button>
-    </div>
+<!-- Stats (shown always on top) -->
+<div class="stats-grid">
+    <div class="stat-card"><div class="stat-number" id="totalHotels">0</div><div class="stat-label">Hotels</div></div>
+    <div class="stat-card"><div class="stat-number" id="activeHotels">0</div><div class="stat-label">Active</div></div>
+    <div class="stat-card"><div class="stat-number" id="totalBookingsStat">0</div><div class="stat-label">Bookings</div></div>
+    <div class="stat-card"><div class="stat-number" id="totalEarningsStat">₹0</div><div class="stat-label">Earnings</div></div>
+</div>
 
-    <!-- Add Hotel Form Panel -->
-    <div id="addHotelPanel" class="form-panel">
-        <h2 style="margin-bottom: 20px;">➕ Add Hotel</h2>
-        <form id="addHotelForm">
-            <div class="form-group"><label>Hotel Name *</label><input type="text" id="hotelName" required></div>
-            <div class="form-group"><label>City *</label><select id="city" required><option>Mumbai</option><option>Delhi</option><option>Bangalore</option><option>Chennai</option><option>Kolkata</option><option>Jaipur</option><option>Goa</option></select></div>
-            <div class="form-group"><label>Full Address *</label><input type="text" id="location" required></div>
-            <div class="form-group"><label>Price per night (₹) *</label><input type="number" id="price" required></div>
-            <div class="form-group"><label>Image URL *</label><input type="url" id="image" placeholder="https://..." required></div>
-            <div class="form-group"><label>Amenities (comma separated)</label><textarea id="amenities" rows="2" placeholder="WiFi, Pool, Parking"></textarea></div>
-            <button type="submit" class="btn btn-primary" style="width:auto; padding:12px 32px;">🚀 Add Hotel</button>
-        </form>
-    </div>
+<!-- Panel: Hotels List -->
+<div id="hotelsPanel" class="panel active">
+    <div class="panel-title">🏨 My Hotels</div>
+    <div id="hotelsList" class="hotels-grid">Loading...</div>
+</div>
 
-    <!-- Hotels List Panel -->
-    <div id="hotelsPanel">
-        <div id="hotelsList" class="hotels-grid">Loading hotels...</div>
-    </div>
+<!-- Panel: Add Hotel -->
+<div id="addPanel" class="panel">
+    <div class="panel-title">➕ Add Hotel</div>
+    <form id="addHotelForm">
+        <div class="form-group"><label>Hotel Name</label><input type="text" id="hotelName" required></div>
+        <div class="form-group"><label>City</label><select id="city"><option>Mumbai</option><option>Delhi</option><option>Bangalore</option><option>Chennai</option><option>Kolkata</option><option>Jaipur</option><option>Goa</option></select></div>
+        <div class="form-group"><label>Address</label><input type="text" id="location" required></div>
+        <div class="form-group"><label>Price (₹/night)</label><input type="number" id="price" required></div>
+        <div class="form-group"><label>Image URL</label><input type="url" id="image" placeholder="https://..." required></div>
+        <div class="form-group"><label>Amenities (comma)</label><textarea id="amenities" rows="2"></textarea></div>
+        <button type="submit" class="btn-primary">➕ Add Hotel</button>
+    </form>
+</div>
 
-    <!-- Bookings Panel (hidden initially) -->
-    <div id="bookingsPanel" class="form-panel">
-        <h2>📋 Booking Requests</h2>
-        <div id="bookingsList" class="table-wrapper">Loading bookings...</div>
-    </div>
+<!-- Panel: Bookings -->
+<div id="bookingsPanel" class="panel">
+    <div class="panel-title">📅 Bookings</div>
+    <div id="bookingsList" class="table-wrapper">Loading...</div>
+</div>
 
-    <!-- Earnings Panel (hidden initially) -->
-    <div id="earningsPanel" class="form-panel">
-        <h2>💰 Earnings Overview</h2>
-        <div id="earningsDetails" style="margin-top: 20px;"></div>
-    </div>
+<!-- Panel: Earnings -->
+<div id="earningsPanel" class="panel">
+    <div class="panel-title">💰 Earnings</div>
+    <div id="earningsDetails"></div>
+</div>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+    <button class="nav-btn" data-panel="hotels"><span>🏨</span><span>Hotels</span></button>
+    <button class="nav-btn" data-panel="add"><span>➕</span><span>Add</span></button>
+    <button class="nav-btn" data-panel="bookings"><span>📅</span><span>Bookings</span></button>
+    <button class="nav-btn" data-panel="earnings"><span>💰</span><span>Earnings</span></button>
+    <button class="nav-btn" id="logoutMobileBtn"><span>🚪</span><span>Logout</span></button>
 </div>
 
 <!-- Edit Modal -->
 <div id="editModal" class="modal">
     <div class="modal-card">
-        <h2 style="margin-bottom: 20px;">✏️ Edit Hotel</h2>
+        <h3 style="margin-bottom: 16px;">✏️ Edit Hotel</h3>
         <form id="editHotelForm">
             <input type="hidden" id="editId">
-            <div class="form-group"><label>Hotel Name</label><input type="text" id="editName" required></div>
-            <div class="form-group"><label>Price (₹/night)</label><input type="number" id="editPrice" required></div>
+            <div class="form-group"><label>Name</label><input type="text" id="editName" required></div>
+            <div class="form-group"><label>Price</label><input type="number" id="editPrice" required></div>
             <div class="form-group"><label>Image URL</label><input type="url" id="editImage" required></div>
-            <div style="display: flex; gap: 12px; margin-top: 24px;">
-                <button type="submit" class="btn btn-primary" style="background:#28a745;">💾 Save</button>
-                <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+            <div style="display: flex; gap: 12px; margin-top: 20px;">
+                <button type="submit" style="background:#28a745; color:white; border:none; padding:10px; border-radius:40px; flex:1;">Save</button>
+                <button type="button" onclick="closeModal()" style="background:#e2e8f0; border:none; flex:1;">Cancel</button>
             </div>
         </form>
     </div>
@@ -266,7 +353,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, query, where, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // ==================== FIREBASE CONFIG ====================
     const firebaseConfig = {
         apiKey: "AIzaSyDJnOh92AYUzFeWtuLMtDciETdpCQ7-MNs",
         authDomain: "halorebook.firebaseapp.com",
@@ -280,136 +366,94 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // ==================== PARTNER CONTACT ====================
-    // 🔥 Agar aapke login system ne already set kiya hai to theek, warna manual entry ke liye prompt
     let PARTNER_CONTACT = localStorage.getItem("partnerContact");
     if (!PARTNER_CONTACT) {
-        PARTNER_CONTACT = prompt("Enter your registered mobile number (Partner Contact):", "9876543210");
+        PARTNER_CONTACT = prompt("Enter your registered mobile number:", "9876543210");
         if (PARTNER_CONTACT) localStorage.setItem("partnerContact", PARTNER_CONTACT);
         else PARTNER_CONTACT = "9876543210";
     }
-    document.getElementById("partnerDisplay").innerText = `Partner: ${PARTNER_CONTACT}`;
+    document.getElementById("partnerDisplay").innerText = `📞 ${PARTNER_CONTACT}`;
 
     let allHotels = [];
 
-    // ==================== LOAD HOTELS ====================
     async function loadHotels() {
-        try {
-            const q = query(collection(db, "hotels"), where("contact", "==", PARTNER_CONTACT));
-            const snapshot = await getDocs(q);
-            allHotels = [];
-            snapshot.forEach(doc => allHotels.push({ id: doc.id, ...doc.data() }));
-            renderHotels();
-            updateStats();
-        } catch (err) {
-            console.error(err);
-            document.getElementById("hotelsList").innerHTML = `<div style="background:white; padding:40px; border-radius:24px;">❌ Firebase error: ${err.message}. Check rules.</div>`;
-        }
+        const q = query(collection(db, "hotels"), where("contact", "==", PARTNER_CONTACT));
+        const snap = await getDocs(q);
+        allHotels = [];
+        snap.forEach(doc => allHotels.push({ id: doc.id, ...doc.data() }));
+        renderHotels();
+        updateStats();
     }
 
     function renderHotels() {
         const container = document.getElementById("hotelsList");
         if (!allHotels.length) {
-            container.innerHTML = `<div style="background:white; padding:60px; border-radius:32px; text-align:center;">🏨 No hotels yet. Click "Add New Hotel".</div>`;
+            container.innerHTML = `<div style="text-align:center; padding:40px;">🏨 No hotels yet.<br>Tap "Add" to create one.</div>`;
             return;
         }
         container.innerHTML = allHotels.map(hotel => `
             <div class="hotel-card">
                 <div class="hotel-img" style="background-image: url('${hotel.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400'}')">
                     <div class="status-badge ${hotel.available !== false ? 'status-active' : 'status-inactive'}">
-                        ${hotel.available !== false ? '● Active' : '○ Inactive'}
+                        ${hotel.available !== false ? 'Active' : 'Inactive'}
                     </div>
                 </div>
                 <div class="hotel-info">
                     <div class="hotel-name">${escapeHtml(hotel.name)}</div>
                     <div class="hotel-location">📍 ${escapeHtml(hotel.location)}, ${escapeHtml(hotel.city)}</div>
-                    <div class="price">₹${Number(hotel.price).toLocaleString()}<span style="font-size:0.8rem;"> / night</span></div>
+                    <div class="price">₹${Number(hotel.price).toLocaleString()}/night</div>
                     <div class="card-actions">
                         <button class="edit-btn" data-id="${hotel.id}">✏️ Edit</button>
-                        <button class="toggle-btn" data-id="${hotel.id}" data-status="${hotel.available !== false}">
-                            ${hotel.available !== false ? '🔴 Deactivate' : '🟢 Activate'}
-                        </button>
-                        <button class="delete-btn" data-id="${hotel.id}">🗑️ Delete</button>
+                        <button class="toggle-btn" data-id="${hotel.id}" data-status="${hotel.available !== false}">${hotel.available !== false ? '🔴 Off' : '🟢 On'}</button>
+                        <button class="delete-btn" data-id="${hotel.id}">🗑️ Del</button>
                     </div>
                 </div>
             </div>
         `).join('');
-
-        // Attach event listeners to dynamically created buttons
-        document.querySelectorAll('.edit-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const id = btn.getAttribute('data-id');
-                editHotelById(id);
-            });
-        });
-        document.querySelectorAll('.toggle-btn').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                e.stopPropagation();
-                const id = btn.getAttribute('data-id');
-                const currentStatus = btn.getAttribute('data-status') === 'true';
-                await toggleHotelStatus(id, !currentStatus);
-            });
-        });
-        document.querySelectorAll('.delete-btn').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                e.stopPropagation();
-                const id = btn.getAttribute('data-id');
-                if (confirm("Delete permanently?")) await deleteHotelById(id);
-            });
-        });
+        // attach events
+        document.querySelectorAll('.edit-btn').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); editHotelById(btn.dataset.id); }));
+        document.querySelectorAll('.toggle-btn').forEach(btn => btn.addEventListener('click', async (e) => { e.stopPropagation(); const newStatus = btn.dataset.status === 'true' ? false : true; await toggleHotel(btn.dataset.id, newStatus); }));
+        document.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', async (e) => { e.stopPropagation(); if(confirm("Delete?")) await deleteHotel(btn.dataset.id); }));
     }
 
     function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-    // Stats + Bookings + Earnings
     async function updateStats() {
         document.getElementById("totalHotels").innerText = allHotels.length;
-        const activeCount = allHotels.filter(h => h.available !== false).length;
-        document.getElementById("activeHotels").innerText = activeCount;
-        try {
-            const qBook = query(collection(db, "bookings"), where("partnerContact", "==", PARTNER_CONTACT));
-            const snapBook = await getDocs(qBook);
-            const bookingsCount = snapBook.size;
-            document.getElementById("totalBookingsStat").innerText = bookingsCount;
-            let totalEarn = 0;
-            snapBook.forEach(d => { totalEarn += (d.data().amount || 0); });
-            document.getElementById("totalEarningsStat").innerHTML = `₹${totalEarn.toLocaleString()}`;
-        } catch(e) { console.warn("Bookings error", e); }
+        document.getElementById("activeHotels").innerText = allHotels.filter(h=>h.available!==false).length;
+        const q = query(collection(db, "bookings"), where("partnerContact", "==", PARTNER_CONTACT));
+        const snap = await getDocs(q);
+        document.getElementById("totalBookingsStat").innerText = snap.size;
+        let total=0; snap.forEach(d=>total+=(d.data().amount||0));
+        document.getElementById("totalEarningsStat").innerHTML = `₹${total.toLocaleString()}`;
     }
 
-    // ========== ADD HOTEL ==========
+    // Add hotel
     document.getElementById("addHotelForm").addEventListener("submit", async (e) => {
         e.preventDefault();
-        const amenitiesRaw = document.getElementById("amenities").value;
-        const amenities = amenitiesRaw ? amenitiesRaw.split(",").map(a=>a.trim()) : [];
-        const newHotel = {
+        const amenities = document.getElementById("amenities").value.split(",").map(a=>a.trim());
+        await addDoc(collection(db, "hotels"), {
             name: document.getElementById("hotelName").value,
             city: document.getElementById("city").value,
             location: document.getElementById("location").value,
             price: parseInt(document.getElementById("price").value),
             image: document.getElementById("image").value,
-            amenities: amenities,
-            contact: PARTNER_CONTACT,
-            partner: "Hotel Partner",
-            available: true,
-            createdAt: new Date().toISOString()
-        };
-        await addDoc(collection(db, "hotels"), newHotel);
-        alert("✅ Hotel added! Customers can see it now.");
+            amenities, contact: PARTNER_CONTACT, available: true, createdAt: new Date().toISOString()
+        });
+        alert("Hotel added!");
         document.getElementById("addHotelForm").reset();
         await loadHotels();
         showPanel("hotels");
     });
 
-    // ========== EDIT HOTEL ==========
+    // Edit, delete, toggle
     function editHotelById(id) {
-        const hotel = allHotels.find(h => h.id === id);
-        if (!hotel) return;
+        const h = allHotels.find(h=>h.id===id);
+        if(!h) return;
         document.getElementById("editId").value = id;
-        document.getElementById("editName").value = hotel.name;
-        document.getElementById("editPrice").value = hotel.price;
-        document.getElementById("editImage").value = hotel.image;
+        document.getElementById("editName").value = h.name;
+        document.getElementById("editPrice").value = h.price;
+        document.getElementById("editImage").value = h.image;
         document.getElementById("editModal").style.display = "flex";
     }
     document.getElementById("editHotelForm").addEventListener("submit", async (e) => {
@@ -420,42 +464,43 @@
             price: parseInt(document.getElementById("editPrice").value),
             image: document.getElementById("editImage").value
         });
-        alert("Hotel updated.");
         closeModal();
         await loadHotels();
     });
-    window.closeModal = () => document.getElementById("editModal").style.display = "none";
-
-    async function toggleHotelStatus(id, newStatus) {
+    async function toggleHotel(id, newStatus) {
         await updateDoc(doc(db, "hotels", id), { available: newStatus });
         await loadHotels();
     }
-    async function deleteHotelById(id) {
+    async function deleteHotel(id) {
         await deleteDoc(doc(db, "hotels", id));
         await loadHotels();
     }
+    window.closeModal = () => document.getElementById("editModal").style.display = "none";
 
-    // ========== BOOKINGS ==========
+    // Bookings & Earnings
     async function loadBookings() {
         const container = document.getElementById("bookingsList");
-        container.innerHTML = "Loading bookings...";
-        try {
-            const q = query(collection(db, "bookings"), where("partnerContact", "==", PARTNER_CONTACT));
-            const snapshot = await getDocs(q);
-            if (snapshot.empty) {
-                container.innerHTML = "<div style='text-align:center; padding:40px;'>📭 No bookings yet.</div>";
-                return;
-            }
-            let html = `<table><thead><tr><th>Customer</th><th>Hotel</th><th>Check-in</th><th>Status</th><th>Amount</th></tr></thead><tbody>`;
-            snapshot.forEach(doc => {
-                const b = doc.data();
-                html += `<tr><td>${escapeHtml(b.customerName || 'Guest')}</td><td>${escapeHtml(b.hotelName || '—')}</td><td>${b.checkIn || '—'}</td><td><span style="background:#fef3c7; padding:4px 12px; border-radius:40px;">${b.status || 'Pending'}</span></td><td>₹${b.amount || 0}</td></tr>`;
-            });
-            html += `</tbody></table>`;
-            container.innerHTML = html;
-        } catch(e) { container.innerHTML = "Error loading bookings."; }
+        const q = query(collection(db, "bookings"), where("partnerContact", "==", PARTNER_CONTACT));
+        const snap = await getDocs(q);
+        if(snap.empty) { container.innerHTML = "<div style='padding:40px; text-align:center'>No bookings</div>"; return; }
+        let html = `§ <thead><tr><th>Customer</th><th>Hotel</th><th>Date</th><th>Amount</th></tr></thead><tbody>`;
+        snap.forEach(d=>{ const b=d.data(); html+=`<tr><td>${escapeHtml(b.customerName||'Guest')}</td><td>${escapeHtml(b.hotelName||'')}</td><td>${b.checkIn||''}</td><td>₹${b.amount||0}</td></tr>`; });
+        html+=`</tbody>§`;
+        container.innerHTML = html;
+    }
+    async function showEarnings() {
+        const q = query(collection(db, "bookings"), where("partnerContact", "==", PARTNER_CONTACT));
+        const snap = await getDocs(q);
+        let total=0; snap.forEach(d=>total+=(d.data().amount||0));
+        document.getElementById("earningsDetails").innerHTML = `<div style="background:#f8fafc; border-radius:24px; padding:20px; text-align:center"><div style="font-size:2rem; font-weight:800; color:#ff6b35;">₹${total.toLocaleString()}</div><p>Total from ${snap.size} bookings</p><hr style="margin:12px 0"><p>Your share (85%): <strong>₹${Math.floor(total*0.85).toLocaleString()}</strong></p></div>`;
     }
 
-    async function showEarnings() {
-        const container = document.getElementById("earningsDetails");
-        const q = query(collection(db, "bookings"), where("partnerContact", "==", PARTNER
+    // Panel switching with back button support
+    let panelHistory = ["hotels"];
+    function showPanel(panelId, addToHistory = true) {
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(`${panelId}Panel`).classList.add('active');
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        const activeNav = document.querySelector(`.nav-btn[data-panel="${panelId}"]`);
+        if(activeNav) activeNav.classList.add('active');
+        if(addToHistory && panelHis

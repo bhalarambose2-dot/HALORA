@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HALORA HOTELS - Live Partners</title>
+    <title>HALORA HOTELS - Live Booking</title>
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         
-        body { background: #f5f5f5; }
+        body {
+            background: #f5f5f5;
+        }
         
+        /* Header */
         .header {
             background: linear-gradient(135deg, #ff6b35, #ff8c5a);
             color: white;
@@ -28,8 +37,23 @@
             border-radius: 20px;
             cursor: pointer;
             font-weight: bold;
+            transition: transform 0.2s;
         }
         
+        .partner-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .header h1 {
+            font-size: 28px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        /* Search Section */
         .search-section {
             padding: 20px;
             background: white;
@@ -59,13 +83,18 @@
             padding: 12px 25px;
             border-radius: 25px;
             cursor: pointer;
+            font-weight: bold;
+        }
+        
+        /* Hotels Grid */
+        .hotels-container {
+            padding: 0 20px 20px 20px;
         }
         
         .hotels-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 20px;
-            padding: 20px;
         }
         
         .hotel-card {
@@ -73,14 +102,17 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
         }
         
-        .hotel-card:hover { transform: translateY(-5px); }
+        .hotel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
         
         .hotel-image {
-            height: 180px;
+            height: 200px;
             background-size: cover;
             background-position: center;
             position: relative;
@@ -97,18 +129,59 @@
             font-weight: bold;
         }
         
-        .hotel-info { padding: 15px; }
-        .hotel-name { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
-        .hotel-location { color: #666; font-size: 14px; margin-bottom: 8px; }
+        .hotel-info {
+            padding: 15px;
+        }
+        
+        .hotel-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
         .partner-badge {
             background: #28a745;
             color: white;
             padding: 2px 8px;
             border-radius: 12px;
             font-size: 10px;
-            display: inline-block;
-            margin-left: 8px;
         }
+        
+        .hotel-location {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .hotel-rating {
+            display: inline-block;
+            background: #ffc107;
+            color: #333;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .hotel-amenities {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .amenity {
+            font-size: 11px;
+            background: #f0f0f0;
+            padding: 3px 8px;
+            border-radius: 12px;
+            color: #555;
+        }
+        
         .book-btn {
             width: 100%;
             padding: 10px;
@@ -118,12 +191,40 @@
             border-radius: 10px;
             margin-top: 12px;
             cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
         }
         
-        .loading { text-align: center; padding: 50px; color: #666; }
+        .book-btn:hover {
+            background: #ff5722;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            font-size: 16px;
+        }
+        
+        /* Stats */
+        .stats {
+            text-align: center;
+            padding: 10px;
+            color: #666;
+            font-size: 14px;
+        }
         
         @media (max-width: 768px) {
-            .hotels-grid { grid-template-columns: 1fr; }
+            .hotels-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -131,121 +232,109 @@
 
 <div class="header">
     <h1>🏨 HALORA HOTELS</h1>
-    <p>Live hotel partners across India</p>
+    <p>Premium stays across India</p>
     <button class="partner-btn" onclick="window.location.href='partner.html'">➕ Become a Partner</button>
 </div>
 
 <div class="search-section">
     <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search hotel or city..." onkeyup="loadHotels()">
-        <button onclick="loadHotels()">🔍 Search</button>
+        <input type="text" id="searchInput" placeholder="Search hotel or city..." onkeyup="filterHotels()">
+        <button onclick="filterHotels()">🔍 Search</button>
     </div>
 </div>
 
-<div id="hotelsGrid" class="hotels-grid">
-    <div class="loading">🔄 Loading hotels from partners...</div>
+<div class="hotels-container">
+    <div id="hotelsGrid" class="hotels-grid">
+        <div class="loading">🔄 Loading hotels from Firebase...</div>
+    </div>
+    <div class="stats" id="stats"></div>
 </div>
 
-<script>
-    // 🔥 REAL-TIME DATABASE (LocalStorage + Demo)
-    let hotels = [];
+<!-- Firebase SDK -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, query, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     
-    // Load hotels from storage
-    function loadHotels() {
-        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-        
-        // Get hotels from localStorage (partners add karte hain)
-        const storedHotels = localStorage.getItem('halora_hotels');
-        
-        if(storedHotels) {
-            hotels = JSON.parse(storedHotels);
-        } else {
-            // Demo hotels (agar koi partner nahi hai toh)
-            hotels = [
-                {
-                    id: 1,
-                    name: "Taj Mahal Palace",
-                    city: "Mumbai",
-                    location: "Colaba",
-                    price: 15000,
-                    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
-                    partner: "HALORA Official",
-                    contact: "partner@halora.com",
-                    available: true
-                },
-                {
-                    id: 2,
-                    name: "Oberoi Grand",
-                    city: "Kolkata",
-                    location: "Chowringhee",
-                    price: 11000,
-                    image: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=400",
-                    partner: "HALORA Official",
-                    contact: "partner@halora.com",
-                    available: true
-                }
-            ];
-            saveHotels();
-        }
-        
-        // Filter hotels
-        let filtered = hotels.filter(h => h.available === true);
-        
-        if(searchTerm) {
-            filtered = filtered.filter(h => 
-                h.name.toLowerCase().includes(searchTerm) || 
-                h.city.toLowerCase().includes(searchTerm) ||
-                h.location.toLowerCase().includes(searchTerm)
-            );
-        }
-        
-        displayHotels(filtered);
-    }
+    // Your Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyDJnOh92AYUzFeWtuLMtDciETdpCQ7-MNs",
+        authDomain: "halorebook.firebaseapp.com",
+        databaseURL: "https://halorebook-default-rtdb.firebaseio.com",
+        projectId: "halorebook",
+        storageBucket: "halorebook.firebasestorage.app",
+        messagingSenderId: "58132767978",
+        appId: "1:58132767978:web:2165ca8a94fb0cfe5a6393",
+        measurementId: "G-2MX4YC3ESQ"
+    };
     
-    // Display hotels
-    function displayHotels(hotelsList) {
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    let allHotels = [];
+    
+    // Real-time listener for hotels
+    const q = query(collection(db, "hotels"));
+    
+    onSnapshot(q, (snapshot) => {
+        allHotels = [];
+        snapshot.forEach((doc) => {
+            allHotels.push({ id: doc.id, ...doc.data() });
+        });
+        displayHotels(allHotels);
+        document.getElementById('stats').innerHTML = `🏨 ${allHotels.length} hotels available`;
+    }, (error) => {
+        console.error("Error loading hotels:", error);
+        document.getElementById('hotelsGrid').innerHTML = '<div class="loading">❌ Error loading hotels. Please refresh.</div>';
+    });
+    
+    function displayHotels(hotels) {
         const grid = document.getElementById('hotelsGrid');
         
-        if(hotelsList.length === 0) {
-            grid.innerHTML = '<div class="loading">❌ No hotels found. Be the first partner!</div>';
+        if(hotels.length === 0) {
+            grid.innerHTML = '<div class="no-results">🏨 No hotels yet.<br><br>Be the first partner by clicking "Become a Partner" above!</div>';
             return;
         }
         
-        grid.innerHTML = hotelsList.map(hotel => `
-            <div class="hotel-card" onclick="bookHotel(${hotel.id})">
-                <div class="hotel-image" style="background-image: url('${hotel.image}')">
-                    <div class="hotel-price">₹${hotel.price.toLocaleString()}/night</div>
+        grid.innerHTML = hotels.map(hotel => `
+            <div class="hotel-card" onclick="bookHotel('${hotel.id}', '${hotel.name}')">
+                <div class="hotel-image" style="background-image: url('${hotel.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400'}')">
+                    <div class="hotel-price">₹${(hotel.price || 5000).toLocaleString()}/night</div>
                 </div>
                 <div class="hotel-info">
                     <div class="hotel-name">
-                        ${hotel.name}
-                        <span class="partner-badge">👥 ${hotel.partner}</span>
+                        ${hotel.name || 'Hotel Name'}
+                        <span class="partner-badge">👥 ${hotel.partner || 'Partner'}</span>
                     </div>
-                    <div class="hotel-location">📍 ${hotel.location}, ${hotel.city}</div>
+                    <div class="hotel-location">📍 ${hotel.location || 'Location'}, ${hotel.city || 'City'}</div>
+                    <div class="hotel-rating">⭐ ${(hotel.rating || 4.0).toFixed(1)}</div>
+                    <div class="hotel-amenities">
+                        ${hotel.amenities ? hotel.amenities.slice(0, 3).map(a => `<span class="amenity">${a}</span>`).join('') : '<span class="amenity">WiFi</span><span class="amenity">Parking</span>'}
+                    </div>
                     <button class="book-btn">Book Now →</button>
                 </div>
             </div>
         `).join('');
     }
     
-    // Save hotels to storage
-    function saveHotels() {
-        localStorage.setItem('halora_hotels', JSON.stringify(hotels));
-    }
+    window.filterHotels = function() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        if(!searchTerm) {
+            displayHotels(allHotels);
+            return;
+        }
+        
+        const filtered = allHotels.filter(hotel => 
+            (hotel.name && hotel.name.toLowerCase().includes(searchTerm)) ||
+            (hotel.city && hotel.city.toLowerCase().includes(searchTerm)) ||
+            (hotel.location && hotel.location.toLowerCase().includes(searchTerm))
+        );
+        displayHotels(filtered);
+    };
     
-    // Book hotel
-    function bookHotel(hotelId) {
-        const hotel = hotels.find(h => h.id === hotelId);
-        alert(`🏨 Booking Request Sent!\n\nHotel: ${hotel.name}\nPartner: ${hotel.partner}\n\nYou will receive confirmation shortly.`);
-    }
-    
-    // Auto-refresh every 5 seconds (real-time update)
-    setInterval(() => {
-        loadHotels();
-    }, 5000);
-    
-    // Initial load
-    loadHotels();
+    window.bookHotel = function(hotelId, hotelName) {
+        alert(`🏨 Booking Request Sent!\n\nHotel: ${hotelName}\n\n✅ Our team will contact you within 30 minutes.\n📞 Please keep your phone handy.`);
+    };
 </script>
 </body>
 </html>

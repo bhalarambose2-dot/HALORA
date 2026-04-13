@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Rapido Clone | Ride Booking</title>
-    <!-- Google Fonts + simple reset -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <title>RideFlow | Book · OTP · Live Map Navigation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -15,294 +14,234 @@
         }
 
         body {
-            background: #f2f4f7;
+            background: #111214;
             font-family: 'Inter', sans-serif;
-            padding: 20px 16px 40px;
+            padding: 16px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
-        /* main card */
-        .ride-container {
+        /* main app container */
+        .app-container {
             max-width: 480px;
             width: 100%;
             margin: 0 auto;
-            background: white;
-            border-radius: 32px;
-            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15);
+            background: #ffffff;
+            border-radius: 36px;
             overflow: hidden;
-            transition: all 0.2s ease;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
+            position: relative;
         }
 
-        /* header */
-        .app-header {
-            padding: 20px 20px 8px 20px;
+        /* screens */
+        .screen {
+            padding: 20px;
+            transition: 0.2s;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* header with back & title */
+        .header-bar {
             display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
         }
-        .logo h1 {
-            font-size: 26px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #0b3b2f, #1e7b4b);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.5px;
+        .back-btn {
+            background: #f1f3f5;
+            width: 40px;
+            height: 40px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.2s;
         }
-        .logo span {
-            font-size: 12px;
-            font-weight: 500;
-            color: #6c757d;
-            display: block;
-            margin-top: 2px;
-        }
-        .safety-badge {
-            background: #e9f5ef;
-            padding: 6px 12px;
-            border-radius: 40px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #1e7b4b;
+        .back-btn:active { background: #e2e6ea; }
+        .screen-title {
+            font-size: 22px;
+            font-weight: 700;
         }
 
-        /* service pills (bike, auto, taxi) */
-        .service-section {
-            padding: 12px 20px 8px;
-        }
+        /* booking form elements (rapido style) */
         .service-pills {
             display: flex;
             gap: 12px;
             background: #f8f9fc;
             padding: 6px;
             border-radius: 60px;
-            border: 1px solid #e9ecef;
+            margin-bottom: 24px;
         }
         .pill {
             flex: 1;
             text-align: center;
-            padding: 12px 0;
+            padding: 10px 0;
             border-radius: 50px;
             font-weight: 600;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
             cursor: pointer;
-            transition: 0.2s;
             background: transparent;
-            color: #5a6e7c;
-        }
-        .pill i {
-            font-size: 18px;
         }
         .pill.active {
             background: #1e7b4b;
             color: white;
-            box-shadow: 0 4px 10px rgba(30, 123, 75, 0.2);
-        }
-
-        /* location inputs */
-        .locations {
-            padding: 8px 20px 0px;
         }
         .loc-card {
-            background: #ffffff;
+            background: #f9fafc;
             border-radius: 24px;
-            border: 1px solid #edf2f7;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            padding: 12px;
+            margin-bottom: 20px;
         }
-        .input-group {
+        .input-row {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 14px 16px;
-            border-bottom: 1px solid #f0f2f5;
+            padding: 12px 0;
+            border-bottom: 1px solid #eef2f6;
         }
-        .input-group:last-child {
-            border-bottom: none;
-        }
-        .input-icon {
-            width: 36px;
-            font-size: 20px;
-            text-align: center;
-        }
-        .pickup-icon { color: #1e7b4b; }
-        .drop-icon { color: #e67e22; }
+        .input-row:last-child { border: none; }
+        .loc-icon { width: 32px; font-size: 18px; }
         .input-field {
             flex: 1;
         }
         .input-field input {
             width: 100%;
             border: none;
-            outline: none;
+            background: transparent;
             font-size: 16px;
             font-weight: 500;
-            background: transparent;
-            padding: 6px 0;
+            outline: none;
             font-family: 'Inter', sans-serif;
         }
-        .input-field input::placeholder {
-            color: #a0afbe;
-            font-weight: 400;
-        }
-        .loc-label {
-            font-size: 12px;
-            color: #7c8b9c;
-            margin-bottom: 4px;
-        }
         .swap-btn {
-            background: #f1f5f9;
+            background: #eef2fa;
+            padding: 8px 12px;
             border-radius: 40px;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             cursor: pointer;
-            transition: 0.2s;
         }
-        .swap-btn:hover {
-            background: #e2e8f0;
-        }
-
-        /* quick action chips */
-        .quick-actions {
-            padding: 16px 20px 8px;
+        .chip-group {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+            margin: 16px 0;
         }
         .chip {
             background: #f1f5f9;
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 40px;
             font-size: 13px;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
             cursor: pointer;
-            transition: 0.2s;
-            color: #1f2a3e;
         }
-        .chip i {
-            font-size: 12px;
-            color: #1e7b4b;
-        }
-        .chip-loc {
-            background: #eef2ff;
-        }
-        .use-my-loc {
-            background: #e9f5ef;
-            color: #1e7b4b;
+        .book-main-btn {
+            background: #1e7b4b;
+            padding: 16px;
+            border-radius: 60px;
+            text-align: center;
+            color: white;
+            font-weight: 800;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
         }
 
-        /* map mock */
-        .map-mock {
-            margin: 16px 20px;
-            background: #eef3fc;
-            border-radius: 24px;
-            height: 150px;
+        /* OTP screen */
+        .otp-box {
+            background: #f9fafc;
+            border-radius: 32px;
+            padding: 24px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .otp-digits {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .otp-digit {
+            width: 60px;
+            height: 70px;
+            font-size: 32px;
+            text-align: center;
+            font-weight: 700;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            background: white;
+        }
+        .verify-btn {
+            background: #1e7b4b;
+            padding: 14px;
+            border-radius: 60px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* tracking map section */
+        .track-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .map-container {
+            background: #eef2f6;
+            border-radius: 28px;
+            height: 380px;
             position: relative;
             overflow: hidden;
-            border: 1px solid #e2edf7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            color: #3b5c7a;
-            font-size: 13px;
-            background-image: radial-gradient(circle at 30% 40%, rgba(30,123,75,0.08) 2%, transparent 2.5%);
-            background-size: 28px 28px;
-            cursor: pointer;
-            transition: 0.2s;
+            margin-bottom: 16px;
+            border: 1px solid #dce3ec;
         }
-        .map-mock i {
-            font-size: 32px;
-            margin-bottom: 6px;
-            color: #1e7b4b;
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            background: #d9e2ef;
         }
-        .map-mock span {
-            font-weight: 500;
+        .trip-info {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 12px;
         }
-
-        /* fare card */
-        .fare-card {
-            background: #fafcff;
-            margin: 8px 20px 20px;
-            border-radius: 28px;
-            padding: 16px 20px;
-            border: 1px solid #eef2fa;
-            box-shadow: 0 6px 12px -8px rgba(0,0,0,0.05);
-        }
-        .fare-header {
+        .eta-card {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
         }
-        .fare-header p {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        .price {
-            font-size: 24px;
-            font-weight: 800;
-            color: #1e7b4b;
-        }
-        .price small {
-            font-size: 14px;
-            font-weight: 500;
-            color: #6b7c93;
-        }
-        .fare-break {
-            font-size: 12px;
-            color: #7c8ea0;
-            border-top: 1px dashed #e2e8f0;
-            padding-top: 10px;
-            margin-top: 6px;
-        }
-
-        /* book button */
-        .book-btn {
-            margin: 8px 20px 24px;
-            background: #1e7b4b;
-            padding: 16px;
-            border-radius: 60px;
+        .driver-card {
+            background: #f1f5f9;
+            border-radius: 20px;
+            padding: 12px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 8px 18px rgba(30,123,75,0.25);
+            gap: 12px;
         }
-        .book-btn:hover {
-            background: #166b40;
-            transform: scale(0.98);
-        }
-        .book-left {
-            color: white;
-            font-weight: 700;
-            font-size: 18px;
-        }
-        .book-left small {
-            font-size: 12px;
-            font-weight: 400;
-            opacity: 0.8;
-        }
-        .book-right {
-            background: rgba(255,255,255,0.2);
+        .status-badge {
+            background: #e9f5ef;
+            color: #1e7b4b;
             padding: 6px 14px;
-            border-radius: 40px;
-            color: white;
+            border-radius: 30px;
             font-weight: 600;
+            font-size: 13px;
         }
-
-        /* toast message */
+        .complete-btn {
+            background: #1e7b4b;
+            padding: 14px;
+            text-align: center;
+            border-radius: 60px;
+            color: white;
+            font-weight: bold;
+            margin-top: 12px;
+            cursor: pointer;
+        }
         .toast-msg {
             position: fixed;
             bottom: 30px;
@@ -310,279 +249,451 @@
             transform: translateX(-50%);
             background: #1e293b;
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 60px;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 1000;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            font-size: 13px;
             opacity: 0;
             transition: 0.2s;
             pointer-events: none;
-            white-space: nowrap;
-        }
-        @media (max-width: 500px) {
-            .toast-msg { white-space: normal; max-width: 85%; text-align: center; }
-            .chip { font-size: 12px; padding: 6px 12px; }
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
-
-<div class="ride-container">
-    <div class="app-header">
-        <div class="logo">
-            <h1>rapido<span style="font-size:18px;">⚡</span></h1>
-            <span>ride faster · smarter</span>
+<div class="app-container" id="appRoot">
+    <!-- SCREEN 1: BOOKING -->
+    <div id="bookingScreen" class="screen">
+        <div class="header-bar">
+            <div class="back-btn" id="backFromBooking"><i class="fas fa-arrow-left"></i></div>
+            <div class="screen-title">Book Ride</div>
         </div>
-        <div class="safety-badge"><i class="fas fa-shield-alt"></i> Safety first</div>
-    </div>
-
-    <!-- Service selection -->
-    <div class="service-section">
-        <div class="service-pills">
-            <div class="pill" data-ride="bike"><i class="fas fa-motorcycle"></i> Bike</div>
-            <div class="pill" data-ride="auto"><i class="fas fa-truck-pickup"></i> Auto</div>
-            <div class="pill active" data-ride="taxi"><i class="fas fa-car"></i> Taxi</div>
+        <div class="service-pills" id="servicePills">
+            <div class="pill" data-ride="bike">🛵 Bike</div>
+            <div class="pill" data-ride="auto">🛺 Auto</div>
+            <div class="pill active" data-ride="taxi">🚕 Taxi</div>
         </div>
-    </div>
-
-    <!-- Pickup & Drop -->
-    <div class="locations">
         <div class="loc-card">
-            <div class="input-group">
-                <div class="input-icon pickup-icon"><i class="fas fa-circle-dot"></i></div>
-                <div class="input-field">
-                    <div class="loc-label">PICKUP LOCATION</div>
-                    <input type="text" id="pickupInput" placeholder="Current location or search" value="Koramangala, Bengaluru">
-                </div>
-                <div class="swap-btn" id="swapBtn"><i class="fas fa-arrow-down-up"></i></div>
+            <div class="input-row">
+                <div class="loc-icon"><i class="fas fa-circle-dot" style="color:#1e7b4b"></i></div>
+                <div class="input-field"><input type="text" id="pickupInput" placeholder="Pickup location" value="Koramangala, Bengaluru"></div>
+                <div class="swap-btn" id="swapLocBtn"><i class="fas fa-arrow-down-up"></i></div>
             </div>
-            <div class="input-group">
-                <div class="input-icon drop-icon"><i class="fas fa-location-dot"></i></div>
-                <div class="input-field">
-                    <div class="loc-label">DROP LOCATION</div>
-                    <input type="text" id="dropInput" placeholder="Where to go?" value="MG Road, Bengaluru">
-                </div>
+            <div class="input-row">
+                <div class="loc-icon"><i class="fas fa-location-dot" style="color:#e67e22"></i></div>
+                <div class="input-field"><input type="text" id="dropInput" placeholder="Drop location" value="MG Road, Bengaluru"></div>
             </div>
         </div>
+        <div class="chip-group">
+            <div class="chip" id="useMyLocChip"><i class="fas fa-location-arrow"></i> My location</div>
+            <div class="chip" data-place="Indiranagar">Indiranagar</div>
+            <div class="chip" data-place="HSR Layout">HSR Layout</div>
+            <div class="chip" id="clearChip">Clear all</div>
+        </div>
+        <div class="book-main-btn" id="proceedToConfirmBtn">Proceed →</div>
     </div>
 
-    <!-- Quick action chips -->
-    <div class="quick-actions">
-        <div class="chip use-my-loc" id="useMyLocationBtn"><i class="fas fa-location-arrow"></i> Use my location</div>
-        <div class="chip chip-loc" data-place="HSR Layout">🏠 HSR Layout</div>
-        <div class="chip chip-loc" data-place="Indiranagar">📍 Indiranagar</div>
-        <div class="chip chip-loc" data-place="Yeshwanthpur">🚉 Yeshwanthpur</div>
-        <div class="chip chip-loc" data-place="Electronic City">💼 Electronic City</div>
-        <div class="chip" id="clearLocBtn"><i class="fas fa-eraser"></i> Clear</div>
+    <!-- SCREEN 2: CONFIRM + OTP -->
+    <div id="confirmScreen" class="screen hidden">
+        <div class="header-bar">
+            <div class="back-btn" id="backFromConfirm"><i class="fas fa-arrow-left"></i></div>
+            <div class="screen-title">Confirm Ride</div>
+        </div>
+        <div class="trip-info" style="background:#f8fafc;">
+            <div><strong>🚖 Ride:</strong> <span id="confirmRideType">Taxi</span></div>
+            <div><strong>📍 Pickup:</strong> <span id="confirmPickup">-</span></div>
+            <div><strong>🏁 Drop:</strong> <span id="confirmDrop">-</span></div>
+            <div><strong>💰 Fare:</strong> ₹<span id="confirmFare">0</span></div>
+        </div>
+        <div class="otp-box">
+            <i class="fas fa-shield-alt" style="font-size: 32px; color:#1e7b4b;"></i>
+            <p style="margin: 12px 0;">Enter 4-digit OTP sent to your number</p>
+            <div class="otp-digits">
+                <input type="text" maxlength="1" class="otp-digit" data-idx="0">
+                <input type="text" maxlength="1" class="otp-digit" data-idx="1">
+                <input type="text" maxlength="1" class="otp-digit" data-idx="2">
+                <input type="text" maxlength="1" class="otp-digit" data-idx="3">
+            </div>
+            <div class="verify-btn" id="verifyOtpBtn">Verify OTP & Start Trip</div>
+            <p style="font-size:12px; margin-top:12px;">Demo OTP: <strong>1234</strong></p>
+        </div>
     </div>
 
-    <!-- Interactive Map mock -->
-    <div class="map-mock" id="mapMock">
-        <i class="fas fa-map-marked-alt"></i>
-        <span>🗺️ Tap to pick on map</span>
-        <small style="font-size: 11px; margin-top: 6px;">📍 Live traffic · fastest route</small>
-    </div>
-
-    <!-- Fare estimate -->
-    <div class="fare-card" id="fareBox">
-        <div class="fare-header">
-            <p><i class="fas fa-indian-rupee-sign"></i> ESTIMATED FARE</p>
-            <div class="price" id="fareAmount">₹ 89</div>
+    <!-- SCREEN 3: LIVE TRACKING + MAP NAVIGATION (PICKUP -> DROP) -->
+    <div id="trackScreen" class="screen hidden">
+        <div class="header-bar">
+            <div class="back-btn" id="backFromTrack"><i class="fas fa-arrow-left"></i></div>
+            <div class="screen-title">Live Tracking</div>
         </div>
-        <div class="fare-break" id="fareBreakdown">
-            🛵 Bike: ₹42 · 🛺 Auto: ₹78 · 🚕 Taxi: ₹125
+        <div class="map-container">
+            <canvas id="mapCanvas" width="400" height="380" style="width:100%; height:100%;"></canvas>
         </div>
-        <div id="rideTypeDetail" style="font-size: 12px; margin-top: 6px; color:#4a627a;">🚖 Taxi | ~4.2 km | 12 min</div>
-    </div>
-
-    <!-- Book button -->
-    <div class="book-btn" id="bookNowBtn">
-        <div class="book-left">
-            BOOK RIDE <small>• cash / UPI</small>
+        <div class="trip-info">
+            <div class="eta-card">
+                <span><i class="fas fa-motorcycle"></i> Driver: <strong>Ramesh</strong> (KA03 AB 1234)</span>
+                <span class="status-badge" id="tripStatus">🚗 heading to pickup</span>
+            </div>
+            <div id="etaMessage" style="font-size:14px; color:#2c3e50;">⏱️ ETA to pickup: 2 min</div>
+            <div id="otpVerifiedMsg" style="background:#e9f5ef; border-radius:20px; padding:8px; margin-top:8px;">✅ OTP verified · trip started</div>
         </div>
-        <div class="book-right">
-            <i class="fas fa-arrow-right"></i>
-        </div>
+        <div class="complete-btn" id="endTripBtn">Complete Drop-off & Finish</div>
     </div>
 </div>
-
-<div id="toastMsg" class="toast-msg">✨ Ride booked successfully!</div>
+<div id="globalToast" class="toast-msg"></div>
 
 <script>
-    // DOM elements
+    // ---------- STATE ----------
+    let currentRide = "taxi";
+    let pickup = "Koramangala, Bengaluru";
+    let drop = "MG Road, Bengaluru";
+    let fare = 125;
+    let bookingConfirmed = false;
+    let otpVerified = false;
+
+    // map navigation simulation: driver position (0 = start at driver origin, 1 = pickup reached, 2 = drop)
+    let driverProgress = 0;      // 0 = moving to pickup, 1 = at pickup (waiting OTP), after OTP -> 2 = moving to drop, 3 = drop finished
+    let animationFrame = null;
+    let driverLat = 0.2;   // normalized coordinates for canvas drawing (0-1 range)
+    let pickupLat = 0.35, pickupLng = 0.5;
+    let dropLat = 0.75, dropLng = 0.6;
+    let step = 0.005;
+    let tripStarted = false;   // after OTP verified, driver moves to drop
+
+    // DOM refs
+    const bookingScreen = document.getElementById('bookingScreen');
+    const confirmScreen = document.getElementById('confirmScreen');
+    const trackScreen = document.getElementById('trackScreen');
     const pickupInput = document.getElementById('pickupInput');
     const dropInput = document.getElementById('dropInput');
-    const servicePills = document.querySelectorAll('.pill');
-    const fareAmountSpan = document.getElementById('fareAmount');
-    const fareBreakdownSpan = document.getElementById('fareBreakdown');
-    const rideTypeDetailSpan = document.getElementById('rideTypeDetail');
-    const bookBtn = document.getElementById('bookNowBtn');
-    const useMyLocationBtn = document.getElementById('useMyLocationBtn');
-    const clearLocBtn = document.getElementById('clearLocBtn');
-    const swapBtn = document.getElementById('swapBtn');
-    const mapMock = document.getElementById('mapMock');
+    const confirmRideTypeSpan = document.getElementById('confirmRideType');
+    const confirmPickupSpan = document.getElementById('confirmPickup');
+    const confirmDropSpan = document.getElementById('confirmDrop');
+    const confirmFareSpan = document.getElementById('confirmFare');
+    const servicePills = document.querySelectorAll('#servicePills .pill');
+    const proceedBtn = document.getElementById('proceedToConfirmBtn');
+    const verifyBtn = document.getElementById('verifyOtpBtn');
+    const endTripBtn = document.getElementById('endTripBtn');
+    const tripStatusSpan = document.getElementById('tripStatus');
+    const etaMessageSpan = document.getElementById('etaMessage');
+    const canvas = document.getElementById('mapCanvas');
+    const ctx = canvas.getContext('2d');
 
-    let currentRide = 'taxi';   // bike, auto, taxi
-
-    // Mock fare logic (realistic + dynamic based on locations length / keywords)
-    function calculateFare() {
-        let pickup = pickupInput.value.trim() || "Koramangala";
-        let drop = dropInput.value.trim() || "MG Road";
-        let baseDistance = 4.2; // km base
-        
-        // simple dynamic: longer names = slightly more distance? fun effect
-        let nameLengthFactor = (pickup.length + drop.length) / 20;
-        let distance = baseDistance + (nameLengthFactor * 0.8);
-        distance = Math.min(distance, 12);
-        
-        let fare = 0;
-        let bikeFare = Math.round(32 + distance * 6);
-        let autoFare = Math.round(45 + distance * 8);
-        let taxiFare = Math.round(70 + distance * 12);
-        
-        if (currentRide === 'bike') fare = bikeFare;
-        else if (currentRide === 'auto') fare = autoFare;
-        else fare = taxiFare;
-        
-        // update breakdown text
-        fareBreakdownSpan.innerHTML = `🛵 Bike: ₹${bikeFare} · 🛺 Auto: ₹${autoFare} · 🚕 Taxi: ₹${taxiFare}`;
-        let rideName = currentRide === 'bike' ? '🛵 Bike' : (currentRide === 'auto' ? '🛺 Auto' : '🚕 Taxi');
-        rideTypeDetailSpan.innerHTML = `${rideName} | ~${distance.toFixed(1)} km | ${Math.round(distance * 2.8)} min`;
-        fareAmountSpan.innerText = `₹ ${fare}`;
-        return fare;
+    // helper: show toast
+    function showToast(msg, duration=2000) {
+        const toast = document.getElementById('globalToast');
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        setTimeout(() => toast.style.opacity = '0', duration);
     }
 
-    // update UI when ride type changes
-    function setActiveRide(ride) {
-        currentRide = ride;
-        servicePills.forEach(pill => {
-            if (pill.getAttribute('data-ride') === ride) {
-                pill.classList.add('active');
-            } else {
-                pill.classList.remove('active');
-            }
+    // calculate fare based on ride & locations (mock)
+    function calcFare() {
+        let base = currentRide === 'bike' ? 45 : (currentRide === 'auto' ? 78 : 125);
+        return base;
+    }
+
+    // update booking UI & fare
+    function updateBookingUI() {
+        fare = calcFare();
+        // update active pill
+        servicePills.forEach(p => {
+            if(p.getAttribute('data-ride') === currentRide) p.classList.add('active');
+            else p.classList.remove('active');
         });
-        calculateFare();
     }
 
-    // event listeners for service selection
+    // event: ride selection
     servicePills.forEach(pill => {
-        pill.addEventListener('click', (e) => {
-            const ride = pill.getAttribute('data-ride');
-            setActiveRide(ride);
+        pill.addEventListener('click', () => {
+            currentRide = pill.getAttribute('data-ride');
+            updateBookingUI();
         });
     });
 
-    // quick location chips (for pickup? for drop? let's make: chips set pickup by default, but we can implement long press? 
-    // simpler: chips fill pickup if pickup is empty or user double? But best: chip click fills the currently focused input.
-    // We'll implement: if any input is focused, fill that input, else fill pickup.
-    let lastFocused = 'pickup';
-    pickupInput.addEventListener('focus', () => lastFocused = 'pickup');
-    dropInput.addEventListener('focus', () => lastFocused = 'drop');
-    
-    document.querySelectorAll('.chip-loc').forEach(chip => {
-        chip.addEventListener('click', () => {
-            let placeName = chip.getAttribute('data-place');
-            if (lastFocused === 'pickup') {
-                pickupInput.value = placeName;
-            } else {
-                dropInput.value = placeName;
-            }
-            calculateFare();
-            showToast(`📍 ${placeName} set as ${lastFocused === 'pickup' ? 'pickup' : 'drop'}`);
-        });
-    });
-    
-    // use my location (geolocation + mock name)
-    useMyLocationBtn.addEventListener('click', () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                // In real app we'd reverse geocode. For demo we set a nice mock location name
-                pickupInput.value = "📍 Your Current Location (near Forum Mall)";
-                calculateFare();
-                showToast("📍 Pickup set to your live location");
-            }, () => {
-                pickupInput.value = "Indiranagar, Bengaluru (default)";
-                calculateFare();
-                showToast("⚠️ Location access denied. Using default area.");
-            });
-        } else {
-            pickupInput.value = "HSR Layout, Bengaluru";
-            calculateFare();
-            showToast("📍 Using approximate location");
-        }
-    });
-    
-    // clear both locations
-    clearLocBtn.addEventListener('click', () => {
-        pickupInput.value = "";
-        dropInput.value = "";
-        calculateFare();
-        showToast("🧹 Locations cleared");
-    });
-    
-    // swap pickup & drop
-    swapBtn.addEventListener('click', () => {
+    // swap locations
+    document.getElementById('swapLocBtn').addEventListener('click', () => {
         let temp = pickupInput.value;
         pickupInput.value = dropInput.value;
         dropInput.value = temp;
-        calculateFare();
-        showToast("🔄 Pickup & Drop swapped");
+        showToast("Locations swapped");
     });
-    
-    // map mock interaction: set location based on map tap (simulate picking from map)
-    mapMock.addEventListener('click', () => {
-        let fakeMapLocations = ["UB City", "Church Street", "Lavelle Road", "Richmond Circle"];
-        let randomLoc = fakeMapLocations[Math.floor(Math.random() * fakeMapLocations.length)];
-        if (lastFocused === 'pickup') {
-            pickupInput.value = randomLoc;
-            showToast(`📍 Pickup set to ${randomLoc} (via map)`);
-        } else {
-            dropInput.value = randomLoc;
-            showToast(`🏁 Drop set to ${randomLoc} (via map)`);
-        }
-        calculateFare();
+    // use my location mock
+    document.getElementById('useMyLocChip').addEventListener('click', () => {
+        pickupInput.value = "Current Location (Forum Mall)";
+        showToast("Pickup set to current location");
     });
-    
-    // book ride now
-    bookBtn.addEventListener('click', () => {
-        let pickupVal = pickupInput.value.trim();
-        let dropVal = dropInput.value.trim();
-        if (!pickupVal || !dropVal) {
-            showToast("⚠️ Please enter both pickup & drop locations", 2500);
+    // clear
+    document.getElementById('clearChip').addEventListener('click', () => {
+        pickupInput.value = "";
+        dropInput.value = "";
+        showToast("Cleared");
+    });
+    // location chips
+    document.querySelectorAll('.chip[data-place]').forEach(chip => {
+        chip.addEventListener('click', () => {
+            let place = chip.getAttribute('data-place');
+            if(document.activeElement === pickupInput || document.activeElement === dropInput) {
+                if(document.activeElement === pickupInput) pickupInput.value = place;
+                else dropInput.value = place;
+            } else {
+                pickupInput.value = place;
+            }
+            showToast(`📍 ${place} added`);
+        });
+    });
+
+    // proceed to confirm screen
+    proceedBtn.addEventListener('click', () => {
+        pickup = pickupInput.value.trim();
+        drop = dropInput.value.trim();
+        if(!pickup || !drop) {
+            showToast("Please enter pickup and drop locations", 1500);
             return;
         }
-        let rideType = currentRide === 'bike' ? 'Bike' : (currentRide === 'auto' ? 'Auto' : 'Taxi');
-        let fare = calculateFare();
-        showToast(`✅ ${rideType} booked! From ${pickupVal} → ${dropVal} | Fare ₹${fare}`, 3000);
-        // extra: simulate booking success
-        setTimeout(() => {
-            // optional animation
-        }, 200);
+        fare = calcFare();
+        confirmPickupSpan.innerText = pickup;
+        confirmDropSpan.innerText = drop;
+        confirmFareSpan.innerText = fare;
+        let rideName = currentRide === 'bike' ? '🛵 Bike' : (currentRide === 'auto' ? '🛺 Auto' : '🚕 Taxi');
+        confirmRideTypeSpan.innerText = rideName;
+        bookingScreen.classList.add('hidden');
+        confirmScreen.classList.remove('hidden');
     });
-    
-    // listen for input changes to update fare
-    pickupInput.addEventListener('input', calculateFare);
-    dropInput.addEventListener('input', calculateFare);
-    
-    // toast helper
-    function showToast(message, duration = 2000) {
-        const toast = document.getElementById('toastMsg');
-        toast.textContent = message;
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateX(-50%) translateY(0)';
-        setTimeout(() => {
-            toast.style.opacity = '0';
-        }, duration);
+
+    // back buttons
+    document.getElementById('backFromBooking').addEventListener('click', () => {
+        // just a demo back (close app effect)
+        showToast("Back button: exit app demo", 1000);
+    });
+    document.getElementById('backFromConfirm').addEventListener('click', () => {
+        confirmScreen.classList.add('hidden');
+        bookingScreen.classList.remove('hidden');
+    });
+    document.getElementById('backFromTrack').addEventListener('click', () => {
+        if(confirm("Trip in progress? Going back will cancel simulation.")) {
+            if(animationFrame) cancelAnimationFrame(animationFrame);
+            trackScreen.classList.add('hidden');
+            bookingScreen.classList.remove('hidden');
+            resetSimulation();
+        }
+    });
+
+    // OTP verification logic (demo: 1234)
+    function getOtpValue() {
+        let digits = document.querySelectorAll('.otp-digit');
+        let otp = "";
+        digits.forEach(d => otp += d.value);
+        return otp;
     }
-    
-    // initial fare calculation
-    calculateFare();
-    
-    // small extra: add nice 'recent' style on location fields
-    // all set
+    verifyBtn.addEventListener('click', () => {
+        let enteredOtp = getOtpValue();
+        if(enteredOtp === "1234") {
+            showToast("✅ OTP verified! Starting ride...");
+            otpVerified = true;
+            // move to tracking screen & start navigation from driver -> pickup then drop
+            confirmScreen.classList.add('hidden');
+            trackScreen.classList.remove('hidden');
+            startTrackingAndNavigation();
+        } else {
+            showToast("❌ Invalid OTP. Use 1234", 1500);
+        }
+    });
+
+    // auto-focus OTP inputs
+    const otpInputs = document.querySelectorAll('.otp-digit');
+    otpInputs.forEach((input, idx) => {
+        input.addEventListener('input', (e) => {
+            if(e.target.value.length === 1 && idx < 3) otpInputs[idx+1].focus();
+        });
+    });
+
+    // reset simulation state
+    function resetSimulation() {
+        if(animationFrame) cancelAnimationFrame(animationFrame);
+        driverProgress = 0;
+        tripStarted = false;
+        otpVerified = false;
+        // driver start position (away from pickup)
+        driverLat = 0.18;
+        // pickup, drop based on dynamic text (mock)
+        pickupLat = 0.35;
+        dropLat = 0.75;
+        step = 0.007;
+        if(ctx) drawMap();
+    }
+
+    // draw canvas: roads, markers
+    function drawMap() {
+        if(!ctx) return;
+        const w = canvas.clientWidth, h = canvas.clientHeight;
+        canvas.width = w; canvas.height = h;
+        ctx.clearRect(0,0,w,h);
+        // background roads
+        ctx.fillStyle = "#cbdde9";
+        ctx.fillRect(0,0,w,h);
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(0.2*w, 0.3*h);
+        ctx.lineTo(0.4*w, 0.45*h);
+        ctx.lineTo(0.7*w, 0.7*h);
+        ctx.stroke();
+        // pickup marker
+        let px = pickupLat * w, py = (1-pickupLng)*h;
+        ctx.fillStyle = "#1e7b4b";
+        ctx.beginPath();
+        ctx.arc(px, py, 12, 0, 2*Math.PI);
+        ctx.fill();
+        ctx.fillStyle = "white";
+        ctx.font = "bold 14px Inter";
+        ctx.fillText("📍 Pickup", px-25, py-5);
+        // drop marker
+        let dx = dropLat * w, dy = (1-dropLng)*h;
+        ctx.fillStyle = "#e67e22";
+        ctx.beginPath();
+        ctx.arc(dx, dy, 12, 0, 2*Math.PI);
+        ctx.fill();
+        ctx.fillStyle = "black";
+        ctx.fillText("🏁 Drop", dx-20, dy-5);
+        // driver car
+        let driverX = driverLat * w, driverY = (1 - (driverLngVal() * 0.7 + 0.3)) * h;
+        ctx.fillStyle = "#2563eb";
+        ctx.beginPath();
+        ctx.arc(driverX, driverY, 14, 0, 2*Math.PI);
+        ctx.fill();
+        ctx.fillStyle = "white";
+        ctx.font = "bold 12px Inter";
+        ctx.fillText("🚗 Driver", driverX-20, driverY-8);
+    }
+    function driverLngVal() {
+        // linear interpolation based on driverProgress
+        if(driverProgress < 1) return 0.45;
+        if(driverProgress >=1 && driverProgress<2) return 0.55;
+        return 0.65;
+    }
+
+    let animationId = null;
+    function startTrackingAndNavigation() {
+        resetSimulation();
+        driverProgress = 0;   // 0->1 = moving to pickup
+        tripStarted = true;
+        let targetPickupReached = false;
+        let targetDropReached = false;
+        function animateMove() {
+            if(!trackScreen.classList.contains('screen') || trackScreen.classList.contains('hidden')) return;
+            if(driverProgress < 1) {
+                // moving to pickup
+                driverLat += step;
+                if(driverLat >= pickupLat) {
+                    driverLat = pickupLat;
+                    driverProgress = 1;
+                    tripStatusSpan.innerText = "📍 Arrived at pickup · waiting for you";
+                    etaMessageSpan.innerText = "✅ Driver at pickup location. Get in!";
+                    showToast("Driver reached pickup point", 2000);
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                    drawMap();
+                    return;
+                }
+                let eta = Math.ceil((pickupLat - driverLat) / step * 0.5);
+                etaMessageSpan.innerText = `⏱️ ETA to pickup: ${eta} min`;
+                tripStatusSpan.innerText = "🚗 Driver en route to pickup";
+            } 
+            else if(driverProgress === 1 && otpVerified === true && !targetDropReached) {
+                // after OTP, move to drop
+                driverProgress = 1.5;
+                tripStatusSpan.innerText = "🟢 Moving towards your drop location";
+                etaMessageSpan.innerText = "🚀 On trip · heading to drop";
+                function moveToDrop() {
+                    if(driverLat < dropLat) {
+                        driverLat += step*0.8;
+                        if(driverLat >= dropLat) {
+                            driverLat = dropLat;
+                            driverProgress = 2;
+                            tripStatusSpan.innerText = "🏁 Reached drop-off point";
+                            etaMessageSpan.innerText = "You have arrived! Tap 'Complete Drop-off'";
+                            drawMap();
+                            cancelAnimationFrame(animationId);
+                            animationId = null;
+                            return;
+                        }
+                        let distLeft = ((dropLat - driverLat) / step).toFixed(0);
+                        etaMessageSpan.innerText = `🛣️ ETA to drop: ${distLeft} min`;
+                        drawMap();
+                        animationId = requestAnimationFrame(moveToDrop);
+                    } else {
+                        driverProgress = 2;
+                        drawMap();
+                    }
+                }
+                if(animationId) cancelAnimationFrame(animationId);
+                animationId = requestAnimationFrame(moveToDrop);
+                return;
+            }
+            drawMap();
+            animationId = requestAnimationFrame(animateMove);
+        }
+        if(animationId) cancelAnimationFrame(animationId);
+        animationId = requestAnimationFrame(animateMove);
+        // set OTP verified flag after 3 secs simulation? user will have verified before tracking screen
+        // but we simulate that driver waits until OTP verified; in tracking screen we need a way to "verify otp" but we already verified before entering.
+        // Actually OTP already done, so driverProgress=1, then we automatically move to drop.
+        // we add a listener: if otpVerified true and driverProgress ==1 -> start drop move.
+        const checkOtp = setInterval(() => {
+            if(otpVerified && driverProgress === 1 && animationId === null) {
+                clearInterval(checkOtp);
+                driverProgress = 1.5;
+                startDropPhase();
+            }
+        }, 500);
+        function startDropPhase() {
+            function moveDropAnim() {
+                if(driverLat < dropLat) {
+                    driverLat += step*0.7;
+                    if(driverLat >= dropLat) {
+                        driverLat = dropLat;
+                        tripStatusSpan.innerText = "Arrived at drop";
+                        etaMessageSpan.innerText = "Trip completed. Press Finish.";
+                        drawMap();
+                        cancelAnimationFrame(animationId);
+                        animationId = null;
+                        return;
+                    }
+                    let remain = Math.ceil((dropLat - driverLat)/step);
+                    etaMessageSpan.innerText = `🛣️ ETA to drop: ${remain} min`;
+                    drawMap();
+                    animationId = requestAnimationFrame(moveDropAnim);
+                }
+            }
+            animationId = requestAnimationFrame(moveDropAnim);
+        }
+        drawMap();
+    }
+
+    // OTP trigger inside tracking: we need to simulate OTP already done, but we already have verify before tracking.
+    // However user might need to manually "start ride after OTP" but we do verify before entering tracking screen, so automatic.
+    // Also add end trip button
+    endTripBtn.addEventListener('click', () => {
+        if(driverProgress >= 1.9 || driverLat >= dropLat-0.02) {
+            showToast("🎉 Trip completed! Thank you for riding.");
+            if(animationId) cancelAnimationFrame(animationId);
+            trackScreen.classList.add('hidden');
+            bookingScreen.classList.remove('hidden');
+            resetSimulation();
+            // reset inputs to default
+            pickupInput.value = "Koramangala, Bengaluru";
+            dropInput.value = "MG Road, Bengaluru";
+            otpVerified = false;
+            driverProgress = 0;
+        } else {
+            showToast("Driver hasn't reached drop location yet. Wait until drop-off.", 1500);
+        }
+    });
+
+    // initial draw (blank)
+    function resizeCanvas() { if(canvas) drawMap(); }
+    window.addEventListener('resize', () => drawMap());
+    updateBookingUI();
+    drawMap();
 </script>
 </body>
 </html>

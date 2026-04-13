@@ -1,221 +1,387 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HALORA Booking</title>
-  <link rel="stylesheet" href="./style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Book Ride – बुक राइड</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+        }
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        body {
+            background: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+        }
 
-  <style>
-    .booking-hero {
-      background: linear-gradient(135deg, rgba(255,138,0,0.20), rgba(0,80,255,0.14));
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 28px;
-      padding: 22px;
-      margin-bottom: 20px;
-      box-shadow: 0 16px 36px rgba(0,0,0,0.22);
-      backdrop-filter: blur(16px);
-    }
+        /* Card */
+        .ride-card {
+            max-width: 420px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
 
-    .booking-hero h2 {
-      margin: 0 0 8px;
-      font-size: 28px;
-    }
+        /* Header with back */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px 20px 8px 20px;
+            gap: 16px;
+        }
 
-    .booking-hero p {
-      color: #dbeafe;
-      margin: 0;
-      font-size: 14px;
-    }
+        .back-btn {
+            font-size: 24px;
+            background: #f3f4f6;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #1f2937;
+            transition: 0.2s;
+        }
 
-    .service-tabs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 18px;
-    }
+        .back-btn:active {
+            background: #e5e7eb;
+        }
 
-    .service-btn {
-      border: none;
-      border-radius: 20px;
-      padding: 14px 10px;
-      font-weight: 800;
-      font-size: 14px;
-      color: white;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
-      cursor: pointer;
-    }
+        .title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #111827;
+        }
 
-    .service-btn.active {
-      background: linear-gradient(135deg, #ff8a00, #ff5e00);
-      box-shadow: 0 12px 28px rgba(255,115,0,0.30);
-    }
+        .title small {
+            font-size: 14px;
+            font-weight: normal;
+            color: #6b7280;
+            display: block;
+        }
 
-    .booking-form-card {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 28px;
-      padding: 20px;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 16px 36px rgba(0,0,0,0.25);
-      margin-top: 20px;
-    }
+        /* content padding */
+        .content {
+            padding: 8px 20px 24px 20px;
+        }
 
-    .map-box {
-      width: 100%;
-      height: 340px;
-      border-radius: 24px;
-      overflow: hidden;
-      margin-top: 18px;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.30);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
+        .tagline {
+            background: #fef9e3;
+            padding: 12px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #92400e;
+            margin: 8px 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .price-box {
-      margin-top: 16px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 22px;
-      padding: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
+        /* service buttons */
+        .service-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
 
-    .price-box h4 {
-      margin: 0 0 6px;
-      color: #cbd5e1;
-      font-size: 13px;
-      font-weight: 500;
-    }
+        .service-btn {
+            flex: 1;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 60px;
+            padding: 12px 0;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            color: #374151;
+            transition: 0.2s;
+            cursor: pointer;
+        }
 
-    .price-box h2 {
-      margin: 0;
-      font-size: 34px;
-      color: #fff;
-    }
+        .service-btn.active {
+            background: #000;
+            border-color: #000;
+            color: white;
+        }
 
-    .booking-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 16px;
-    }
+        /* location blocks */
+        .location-block {
+            margin-bottom: 24px;
+        }
 
-    .small-btn {
-      border: none;
-      border-radius: 18px;
-      padding: 14px;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      background: rgba(255,255,255,0.08);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
+        .loc-label {
+            font-weight: 600;
+            font-size: 15px;
+            color: #1f2937;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-    .book-btn-final {
-      width: 100%;
-      margin-top: 18px;
-      border: none;
-      border-radius: 20px;
-      padding: 16px;
-      font-size: 16px;
-      font-weight: 800;
-      color: white;
-      background: linear-gradient(135deg, #ff8a00, #ff5e00);
-      box-shadow: 0 12px 28px rgba(255,115,0,0.30);
-      cursor: pointer;
-    }
+        .loc-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
 
-    .booking-info-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 18px;
-    }
+        .sec-btn {
+            flex: 1;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 40px;
+            padding: 12px 0;
+            font-weight: 500;
+            font-size: 14px;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-    .booking-info-card {
-      background: rgba(255,255,255,0.06);
-      border-radius: 22px;
-      padding: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
+        .sec-btn:active {
+            background: #e5e7eb;
+        }
 
-    .booking-info-card p {
-      margin: 0;
-      color: #cbd5e1;
-      font-size: 13px;
-    }
+        .map-placeholder {
+            background: #eef2ff;
+            height: 120px;
+            border-radius: 24px;
+            margin: 16px 0 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b5563;
+            font-size: 13px;
+            border: 1px dashed #cbd5e1;
+        }
 
-    .booking-info-card h3 {
-      margin-top: 8px;
-      font-size: 22px;
-    }
-  </style>
+        .bottom-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 20px;
+        }
+
+        .bottom-btn {
+            flex: 1;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 60px;
+            padding: 12px 0;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .bottom-btn.primary {
+            background: #000;
+            border: none;
+            color: white;
+        }
+
+        hr {
+            margin: 16px 0;
+            border: 0.5px solid #f3f4f6;
+        }
+
+        .note {
+            font-size: 11px;
+            color: #9ca3af;
+            text-align: center;
+            margin-top: 16px;
+        }
+    </style>
 </head>
-<body class="premium-body">
-
-<header class="premium-topbar">
-  <div>
-    <h2 class="brand-title">Book Ride</h2>
-    <p class="brand-sub">Bike • Auto • Taxi</p>
-  </div>
-  <a href="./dashboard.html" class="logout-btn" style="text-decoration:none;">Back</a>
-</header>
-
-<main class="premium-container">
-  <section class="booking-hero">
-    <h2>Ride in minutes 🚖</h2>
-    <p>Select your service, set pickup & drop on map, and book instantly.</p>
-
-    <div class="service-tabs">
-      <button class="service-btn active" data-type="Bike">🏍️ Bike</button>
-      <button class="service-btn" data-type="Auto">🛺 Auto</button>
-      <button class="service-btn" data-type="Taxi">🚕 Taxi</button>
-    </div>
-  </section>
-
-  <section class="booking-form-card">
-    <input type="hidden" id="serviceType" value="Bike" />
-
-    <input type="text" id="pickup" placeholder="Pickup Location" readonly />
-    <input type="text" id="drop" placeholder="Drop Location" readonly />
-    <input type="hidden" id="price" />
-
-    <div class="booking-actions">
-      <button class="small-btn" id="setPickupBtn">📍 Set Pickup</button>
-      <button class="small-btn" id="setDropBtn">🏁 Set Drop</button>
+<body>
+<div class="ride-card">
+    <div class="header">
+        <div class="back-btn" id="backBtn">←</div>
+        <div class="title">
+            🚖 बुक राइड <small>Book Ride</small>
+        </div>
     </div>
 
-    <div class="booking-actions">
-      <button class="small-btn" id="useCurrentLocationBtn">📡 Use My Location</button>
-      <button class="small-btn" id="clearMapBtn">🧹 Clear</button>
+    <div class="content">
+        <div class="tagline">
+            ⚡ मिनटों में राइड | Ride in minutes
+        </div>
+
+        <!-- Service selection -->
+        <div class="service-row">
+            <div class="service-btn" data-service="bike">🛵 Bike</div>
+            <div class="service-btn" data-service="auto">🛺 Auto</div>
+            <div class="service-btn active" data-service="taxi">🚕 Taxi</div>
+        </div>
+
+        <!-- Pickup -->
+        <div class="location-block">
+            <div class="loc-label">📍 पिकअप लोकेशन <span style="font-weight:normal">(Pickup)</span></div>
+            <div class="loc-actions">
+                <button class="sec-btn" id="setPickupBtn">📍 सेट पिकअप</button>
+            </div>
+        </div>
+
+        <!-- Drop -->
+        <div class="location-block">
+            <div class="loc-label">🏁 ड्रॉप लोकेशन <span style="font-weight:normal">(Drop)</span></div>
+            <div class="loc-actions">
+                <button class="sec-btn" id="setDropBtn">🏁 सेट ड्रॉप</button>
+            </div>
+        </div>
+
+        <!-- map simulation -->
+        <div class="map-placeholder" id="mapHint">
+            🗺️ मैप पर टैप करें या बटन use करें<br>Tap map or use buttons
+        </div>
+
+        <!-- current selection info -->
+        <div style="font-size:13px; background:#fafafa; border-radius:16px; padding:8px 12px; margin:8px 0;" id="locationStatus">
+            ⚠️ पिकअप और ड्रॉप लोकेशन सेट करें
+        </div>
+
+        <div class="bottom-actions">
+            <button class="bottom-btn" id="useMyLocationBtn">📍 मेरी लोकेशन</button>
+            <button class="bottom-btn" id="clearBtn">🗑️ क्लियर</button>
+            <button class="bottom-btn primary" id="bookNowBtn">✅ बुक करें</button>
+        </div>
+        <div class="note">
+            * मैप पर टैप करें या सेट बटन से लोकेशन चुनें
+        </div>
     </div>
+</div>
 
-    <div class="map-box" id="map"></div>
+<script>
+    // simple state
+    let pickup = null;
+    let drop = null;
+    let selectedService = "taxi";   // bike, auto, taxi
 
-    <div class="price-box">
-      <h4>Estimated Fare</h4>
-      <h2>₹<span id="farePreview">0</span></h2>
-    </div>
+    // DOM elements
+    const pickupBtn = document.getElementById('setPickupBtn');
+    const dropBtn = document.getElementById('setDropBtn');
+    const useLocationBtn = document.getElementById('useMyLocationBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const bookBtn = document.getElementById('bookNowBtn');
+    const statusDiv = document.getElementById('locationStatus');
+    const mapHint = document.getElementById('mapHint');
+    const serviceBtns = document.querySelectorAll('.service-btn');
 
-    <div class="booking-info-row">
-      <div class="booking-info-card">
-        <p>Distance</p>
-        <h3><span id="distancePreview">0</span> km</h3>
-      </div>
-      <div class="booking-info-card">
-        <p>ETA</p>
-        <h3><span id="etaPreview">0</span> min</h3>
-      </div>
-    </div>
+    // helper to update UI
+    function updateStatus() {
+        let pickupText = pickup ? pickup : "❌ नहीं चुना";
+        let dropText = drop ? drop : "❌ नहीं चुना";
+        statusDiv.innerHTML = `📍 पिकअप: ${pickupText}<br>🏁 ड्रॉप: ${dropText}<br>🚖 सेवा: ${selectedService.toUpperCase()}`;
+        if(pickup && drop) {
+            statusDiv.style.background = "#e6f7e6";
+        } else {
+            statusDiv.style.background = "#fafafa";
+        }
+    }
 
-    <button class="book-btn-final" onclick="saveRideBooking()">Book Now</button>
-  </section>
-</main>
+    // mock set location (simulate map selection)
+    function setPickup() {
+        let mockLoc = "सीपी, दिल्ली (CP, Delhi)";
+        pickup = mockLoc;
+        updateStatus();
+        mapHint.innerHTML = "📍 पिकअप सेट: " + mockLoc + "<br>🗺️ ड्रॉप के लिए मैप या सेट ड्रॉप बटन दबाएँ";
+    }
 
-<script type="module" src="./booking.js"></script>
+    function setDrop() {
+        let mockLoc = "नोएडा सेक्टर 62 (Noida Sec 62)";
+        drop = mockLoc;
+        updateStatus();
+        if(pickup) {
+            mapHint.innerHTML = "✅ पिकअप: " + pickup + "<br>✅ ड्रॉप: " + drop + "<br>🎉 अब बुक करें";
+        } else {
+            mapHint.innerHTML = "🏁 ड्रॉप सेट: " + mockLoc + "<br>📍 पहले पिकअप सेट करें";
+        }
+    }
+
+    function useMyLocation() {
+        let userLoc = "आपकी करंट लोकेशन (Your current location)";
+        if(!pickup) {
+            pickup = userLoc;
+            updateStatus();
+            mapHint.innerHTML = "📍 मेरी लोकेशन पिकअप के तौर पर सेट: " + userLoc;
+        } else {
+            // if pickup already exists, ask or replace? Better to replace pickup.
+            if(confirm("पिकअप पहले से सेट है। क्या आप इसे मेरी लोकेशन से बदलना चाहते हैं?")) {
+                pickup = userLoc;
+                updateStatus();
+                mapHint.innerHTML = "📍 पिकअप अपडेट: " + userLoc;
+            }
+        }
+    }
+
+    function clearAll() {
+        pickup = null;
+        drop = null;
+        updateStatus();
+        mapHint.innerHTML = "🗺️ सब क्लियर। पिकअप और ड्रॉप फिर से सेट करें।\nTap map or use buttons";
+    }
+
+    function bookRide() {
+        if(!pickup || !drop) {
+            alert("⚠️ कृपया पिकअप और ड्रॉप लोकेशन दोनों सेट करें!\nPlease set both pickup & drop.");
+            return;
+        }
+        alert(`🚖 राइड बुक हो गई! \nसेवा: ${selectedService}\nपिकअप: ${pickup}\nड्रॉप: ${drop}\n\nआपकी राइड जल्द आ रही है।`);
+    }
+
+    // service selection
+    serviceBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            serviceBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedService = btn.getAttribute('data-service');
+            updateStatus();
+        });
+    });
+
+    // events
+    pickupBtn.addEventListener('click', setPickup);
+    dropBtn.addEventListener('click', setDrop);
+    useLocationBtn.addEventListener('click', useMyLocation);
+    clearBtn.addEventListener('click', clearAll);
+    bookBtn.addEventListener('click', bookRide);
+
+    // optional map click simulation (click on map placeholder)
+    mapHint.addEventListener('click', (e) => {
+        let msg = "🗺️ मैप पर क्लिक किया!\nक्या सेट करना है?\n1 - पिकअप\n2 - ड्रॉप";
+        let choice = prompt(msg + "\n\n1 या 2 लिखें:");
+        if(choice === "1") setPickup();
+        else if(choice === "2") setDrop();
+        else alert("कृपया 1 (पिकअप) या 2 (ड्रॉप) चुनें");
+    });
+
+    // back button simulation
+    document.getElementById('backBtn').addEventListener('click', () => {
+        alert("← पीछे जाएँ (Back) – आमतौर पर होम स्क्रीन पर ले जाएगा");
+    });
+
+    // initial status
+    updateStatus();
+</script>
 </body>
 </html>

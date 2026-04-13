@@ -503,4 +503,41 @@
         document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
         const activeNav = document.querySelector(`.nav-btn[data-panel="${panelId}"]`);
         if(activeNav) activeNav.classList.add('active');
-        if(addToHistory && panelHis
+        if(addToHistory && panelHistory[panelHistory.length-1] !== panelId) {
+            panelHistory.push(panelId);
+        }
+        if(panelId === 'bookings') loadBookings();
+        if(panelId === 'earnings') showEarnings();
+    }
+
+    // Back button logic
+    document.getElementById("backButton").addEventListener("click", () => {
+        if(panelHistory.length > 1) {
+            panelHistory.pop(); // remove current
+            const previous = panelHistory[panelHistory.length-1];
+            showPanel(previous, false);
+        } else {
+            // optional: go back in browser history
+            window.history.back();
+        }
+    });
+
+    // Bottom nav buttons
+    document.querySelectorAll('.nav-btn[data-panel]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const panel = btn.getAttribute('data-panel');
+            showPanel(panel);
+        });
+    });
+    document.getElementById("logoutMobileBtn").addEventListener("click", () => {
+        localStorage.removeItem("partnerContact");
+        alert("Logged out. Refresh to login again.");
+        location.reload();
+    });
+
+    // initial load
+    loadHotels();
+    showPanel("hotels");
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>RideFlow | Book · OTP · Live Map Navigation</title>
+    <title>RideFlow | Jaipur · Jodhpur Locations</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -23,7 +23,6 @@
             min-height: 100vh;
         }
 
-        /* main app container */
         .app-container {
             max-width: 480px;
             width: 100%;
@@ -35,7 +34,6 @@
             position: relative;
         }
 
-        /* screens */
         .screen {
             padding: 20px;
             transition: 0.2s;
@@ -45,7 +43,6 @@
             display: none;
         }
 
-        /* header with back & title */
         .header-bar {
             display: flex;
             align-items: center;
@@ -70,7 +67,6 @@
             font-weight: 700;
         }
 
-        /* booking form elements (rapido style) */
         .service-pills {
             display: flex;
             gap: 12px;
@@ -130,6 +126,9 @@
             flex-wrap: wrap;
             gap: 10px;
             margin: 16px 0;
+            max-height: 140px;
+            overflow-y: auto;
+            padding: 4px;
         }
         .chip {
             background: #f1f5f9;
@@ -137,6 +136,15 @@
             border-radius: 40px;
             font-size: 13px;
             cursor: pointer;
+            transition: 0.2s;
+        }
+        .chip:active { background: #e2e8f0; }
+        .city-section {
+            font-weight: 700;
+            font-size: 14px;
+            margin: 12px 0 6px 0;
+            color: #1e7b4b;
+            width: 100%;
         }
         .book-main-btn {
             background: #1e7b4b;
@@ -149,8 +157,6 @@
             cursor: pointer;
             margin-top: 20px;
         }
-
-        /* OTP screen */
         .otp-box {
             background: #f9fafc;
             border-radius: 32px;
@@ -181,13 +187,6 @@
             color: white;
             font-weight: bold;
             cursor: pointer;
-        }
-
-        /* tracking map section */
-        .track-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
         }
         .map-container {
             background: #eef2f6;
@@ -275,18 +274,65 @@
         <div class="loc-card">
             <div class="input-row">
                 <div class="loc-icon"><i class="fas fa-circle-dot" style="color:#1e7b4b"></i></div>
-                <div class="input-field"><input type="text" id="pickupInput" placeholder="Pickup location" value="Koramangala, Bengaluru"></div>
+                <div class="input-field"><input type="text" id="pickupInput" placeholder="Pickup location" value="Jaipur Railway Station"></div>
                 <div class="swap-btn" id="swapLocBtn"><i class="fas fa-arrow-down-up"></i></div>
             </div>
             <div class="input-row">
                 <div class="loc-icon"><i class="fas fa-location-dot" style="color:#e67e22"></i></div>
-                <div class="input-field"><input type="text" id="dropInput" placeholder="Drop location" value="MG Road, Bengaluru"></div>
+                <div class="input-field"><input type="text" id="dropInput" placeholder="Drop location" value="Hawa Mahal, Jaipur"></div>
             </div>
         </div>
-        <div class="chip-group">
+        
+        <!-- Jaipur & Jodhpur Locations Chips (All major places) -->
+        <div class="chip-group" id="locationChips">
+            <div class="city-section">📍 JAIPUR</div>
+            <div class="chip" data-place="Jaipur Railway Station">🚉 Jaipur Railway Station</div>
+            <div class="chip" data-place="Jaipur Airport (JAI)">✈️ Jaipur Airport</div>
+            <div class="chip" data-place="Hawa Mahal">🏰 Hawa Mahal</div>
+            <div class="chip" data-place="Amer Fort">🏯 Amer Fort</div>
+            <div class="chip" data-place="City Palace">👑 City Palace</div>
+            <div class="chip" data-place="Jantar Mantar">🔭 Jantar Mantar</div>
+            <div class="chip" data-place="Jal Mahal">💧 Jal Mahal</div>
+            <div class="chip" data-place="Albert Hall Museum">🏛️ Albert Hall</div>
+            <div class="chip" data-place="Birla Mandir">🛕 Birla Mandir</div>
+            <div class="chip" data-place="Chokhi Dhani">🎪 Chokhi Dhani</div>
+            <div class="chip" data-place="Sanganer">🏘️ Sanganer</div>
+            <div class="chip" data-place="Mansarovar">🏙️ Mansarovar</div>
+            <div class="chip" data-place="Vaishali Nagar">🌳 Vaishali Nagar</div>
+            <div class="chip" data-place="Malviya Nagar">🏫 Malviya Nagar</div>
+            <div class="chip" data-place="C-Scheme">🏢 C-Scheme</div>
+            <div class="chip" data-place="Tonk Road">🛣️ Tonk Road</div>
+            <div class="chip" data-place="Sitapura">🏭 Sitapura</div>
+            <div class="chip" data-place="Jhotwara">🏡 Jhotwara</div>
+            <div class="chip" data-place="Vidyadhar Nagar">🌆 Vidyadhar Nagar</div>
+            <div class="chip" data-place="Kukas">🏞️ Kukas</div>
+            <div class="chip" data-place="Bani Park">🌲 Bani Park</div>
+            <div class="chip" data-place="Raja Park">🛍️ Raja Park</div>
+            <div class="chip" data-place="Gopalpura Bypass">🚦 Gopalpura Bypass</div>
+            <div class="city-section">🏜️ JODHPUR</div>
+            <div class="chip" data-place="Jodhpur Railway Station">🚂 Jodhpur Railway Station</div>
+            <div class="chip" data-place="Jodhpur Airport (JDH)">✈️ Jodhpur Airport</div>
+            <div class="chip" data-place="Mehrangarh Fort">🏰 Mehrangarh Fort</div>
+            <div class="chip" data-place="Jaswant Thada">🕌 Jaswant Thada</div>
+            <div class="chip" data-place="Umaid Bhawan Palace">🏛️ Umaid Bhawan</div>
+            <div class="chip" data-place="Kaylana Lake">💧 Kaylana Lake</div>
+            <div class="chip" data-place="Mandore Garden">🌺 Mandore Garden</div>
+            <div class="chip" data-place="Sardar Market (Clock Tower)">🕰️ Sardar Market</div>
+            <div class="chip" data-place="Ghanta Ghar">🔔 Ghanta Ghar</div>
+            <div class="chip" data-place="Rao Jodha Desert Park">🏜️ Desert Park</div>
+            <div class="chip" data-place="Balsamand Lake">🏞️ Balsamand Lake</div>
+            <div class="chip" data-place="Pal Balaji Temple">🛕 Pal Balaji</div>
+            <div class="chip" data-place="Shastri Nagar">🏘️ Shastri Nagar</div>
+            <div class="chip" data-place="Ratanada">🏡 Ratanada</div>
+            <div class="chip" data-place="Sardarpura">🛍️ Sardarpura</div>
+            <div class="chip" data-place="Chopasani Road">🛣️ Chopasani Road</div>
+            <div class="chip" data-place="Basni">🏭 Basni</div>
+            <div class="chip" data-place="Paota">🏡 Paota</div>
+            <div class="chip" data-place="Soorsagar">💧 Soorsagar</div>
+        </div>
+        
+        <div class="chip-group" style="justify-content: space-between;">
             <div class="chip" id="useMyLocChip"><i class="fas fa-location-arrow"></i> My location</div>
-            <div class="chip" data-place="Indiranagar">Indiranagar</div>
-            <div class="chip" data-place="HSR Layout">HSR Layout</div>
             <div class="chip" id="clearChip">Clear all</div>
         </div>
         <div class="book-main-btn" id="proceedToConfirmBtn">Proceed →</div>
@@ -318,7 +364,7 @@
         </div>
     </div>
 
-    <!-- SCREEN 3: LIVE TRACKING + MAP NAVIGATION (PICKUP -> DROP) -->
+    <!-- SCREEN 3: LIVE TRACKING + MAP NAVIGATION -->
     <div id="trackScreen" class="screen hidden">
         <div class="header-bar">
             <div class="back-btn" id="backFromTrack"><i class="fas fa-arrow-left"></i></div>
@@ -329,7 +375,7 @@
         </div>
         <div class="trip-info">
             <div class="eta-card">
-                <span><i class="fas fa-motorcycle"></i> Driver: <strong>Ramesh</strong> (KA03 AB 1234)</span>
+                <span><i class="fas fa-motorcycle"></i> Driver: <strong>Ramesh</strong> (RJ14 AB 1234)</span>
                 <span class="status-badge" id="tripStatus">🚗 heading to pickup</span>
             </div>
             <div id="etaMessage" style="font-size:14px; color:#2c3e50;">⏱️ ETA to pickup: 2 min</div>
@@ -343,21 +389,18 @@
 <script>
     // ---------- STATE ----------
     let currentRide = "taxi";
-    let pickup = "Koramangala, Bengaluru";
-    let drop = "MG Road, Bengaluru";
+    let pickup = "Jaipur Railway Station";
+    let drop = "Hawa Mahal, Jaipur";
     let fare = 125;
-    let bookingConfirmed = false;
     let otpVerified = false;
 
-    // map navigation simulation: driver position (0 = start at driver origin, 1 = pickup reached, 2 = drop)
-    let driverProgress = 0;      // 0 = moving to pickup, 1 = at pickup (waiting OTP), after OTP -> 2 = moving to drop, 3 = drop finished
+    let driverProgress = 0;
     let animationFrame = null;
-    let driverLat = 0.2;   // normalized coordinates for canvas drawing (0-1 range)
+    let driverLat = 0.2;
     let pickupLat = 0.35, pickupLng = 0.5;
     let dropLat = 0.75, dropLng = 0.6;
     let step = 0.005;
-    let tripStarted = false;   // after OTP verified, driver moves to drop
-
+    
     // DOM refs
     const bookingScreen = document.getElementById('bookingScreen');
     const confirmScreen = document.getElementById('confirmScreen');
@@ -375,9 +418,8 @@
     const tripStatusSpan = document.getElementById('tripStatus');
     const etaMessageSpan = document.getElementById('etaMessage');
     const canvas = document.getElementById('mapCanvas');
-    const ctx = canvas.getContext('2d');
+    let ctx = canvas.getContext('2d');
 
-    // helper: show toast
     function showToast(msg, duration=2000) {
         const toast = document.getElementById('globalToast');
         toast.textContent = msg;
@@ -385,23 +427,21 @@
         setTimeout(() => toast.style.opacity = '0', duration);
     }
 
-    // calculate fare based on ride & locations (mock)
     function calcFare() {
-        let base = currentRide === 'bike' ? 45 : (currentRide === 'auto' ? 78 : 125);
-        return base;
+        if(currentRide === 'bike') return 45;
+        if(currentRide === 'auto') return 78;
+        return 125;
     }
 
-    // update booking UI & fare
     function updateBookingUI() {
         fare = calcFare();
-        // update active pill
         servicePills.forEach(p => {
             if(p.getAttribute('data-ride') === currentRide) p.classList.add('active');
             else p.classList.remove('active');
         });
     }
 
-    // event: ride selection
+    // Service selection
     servicePills.forEach(pill => {
         pill.addEventListener('click', () => {
             currentRide = pill.getAttribute('data-ride');
@@ -409,39 +449,45 @@
         });
     });
 
-    // swap locations
+    // Swap locations
     document.getElementById('swapLocBtn').addEventListener('click', () => {
         let temp = pickupInput.value;
         pickupInput.value = dropInput.value;
         dropInput.value = temp;
         showToast("Locations swapped");
     });
-    // use my location mock
+    
+    // Use my location (mock)
     document.getElementById('useMyLocChip').addEventListener('click', () => {
-        pickupInput.value = "Current Location (Forum Mall)";
+        pickupInput.value = "Current Location (Near Jaipur)";
         showToast("Pickup set to current location");
     });
-    // clear
+    
+    // Clear all
     document.getElementById('clearChip').addEventListener('click', () => {
         pickupInput.value = "";
         dropInput.value = "";
-        showToast("Cleared");
+        showToast("Cleared all locations");
     });
-    // location chips
+    
+    // All location chips (Jaipur & Jodhpur)
     document.querySelectorAll('.chip[data-place]').forEach(chip => {
         chip.addEventListener('click', () => {
             let place = chip.getAttribute('data-place');
-            if(document.activeElement === pickupInput || document.activeElement === dropInput) {
-                if(document.activeElement === pickupInput) pickupInput.value = place;
-                else dropInput.value = place;
+            // If pickup input is focused or no focused, fill pickup by default? Better: fill whichever is empty or focused.
+            if (document.activeElement === pickupInput) {
+                pickupInput.value = place;
+            } else if (document.activeElement === dropInput) {
+                dropInput.value = place;
             } else {
+                // if none focused, fill pickup
                 pickupInput.value = place;
             }
             showToast(`📍 ${place} added`);
         });
     });
-
-    // proceed to confirm screen
+    
+    // Proceed to confirm
     proceedBtn.addEventListener('click', () => {
         pickup = pickupInput.value.trim();
         drop = dropInput.value.trim();
@@ -458,12 +504,9 @@
         bookingScreen.classList.add('hidden');
         confirmScreen.classList.remove('hidden');
     });
-
-    // back buttons
-    document.getElementById('backFromBooking').addEventListener('click', () => {
-        // just a demo back (close app effect)
-        showToast("Back button: exit app demo", 1000);
-    });
+    
+    // Back buttons
+    document.getElementById('backFromBooking').addEventListener('click', () => showToast("Back button: exit app demo", 1000));
     document.getElementById('backFromConfirm').addEventListener('click', () => {
         confirmScreen.classList.add('hidden');
         bookingScreen.classList.remove('hidden');
@@ -476,8 +519,8 @@
             resetSimulation();
         }
     });
-
-    // OTP verification logic (demo: 1234)
+    
+    // OTP logic
     function getOtpValue() {
         let digits = document.querySelectorAll('.otp-digit');
         let otp = "";
@@ -489,7 +532,6 @@
         if(enteredOtp === "1234") {
             showToast("✅ OTP verified! Starting ride...");
             otpVerified = true;
-            // move to tracking screen & start navigation from driver -> pickup then drop
             confirmScreen.classList.add('hidden');
             trackScreen.classList.remove('hidden');
             startTrackingAndNavigation();
@@ -497,37 +539,31 @@
             showToast("❌ Invalid OTP. Use 1234", 1500);
         }
     });
-
-    // auto-focus OTP inputs
+    
+    // OTP input auto-focus
     const otpInputs = document.querySelectorAll('.otp-digit');
     otpInputs.forEach((input, idx) => {
         input.addEventListener('input', (e) => {
             if(e.target.value.length === 1 && idx < 3) otpInputs[idx+1].focus();
         });
     });
-
-    // reset simulation state
+    
     function resetSimulation() {
         if(animationFrame) cancelAnimationFrame(animationFrame);
         driverProgress = 0;
-        tripStarted = false;
         otpVerified = false;
-        // driver start position (away from pickup)
         driverLat = 0.18;
-        // pickup, drop based on dynamic text (mock)
         pickupLat = 0.35;
         dropLat = 0.75;
         step = 0.007;
-        if(ctx) drawMap();
+        drawMap();
     }
-
-    // draw canvas: roads, markers
+    
     function drawMap() {
         if(!ctx) return;
         const w = canvas.clientWidth, h = canvas.clientHeight;
         canvas.width = w; canvas.height = h;
         ctx.clearRect(0,0,w,h);
-        // background roads
         ctx.fillStyle = "#cbdde9";
         ctx.fillRect(0,0,w,h);
         ctx.strokeStyle = "#ffffff";
@@ -537,7 +573,7 @@
         ctx.lineTo(0.4*w, 0.45*h);
         ctx.lineTo(0.7*w, 0.7*h);
         ctx.stroke();
-        // pickup marker
+        // Pickup marker
         let px = pickupLat * w, py = (1-pickupLng)*h;
         ctx.fillStyle = "#1e7b4b";
         ctx.beginPath();
@@ -546,7 +582,7 @@
         ctx.fillStyle = "white";
         ctx.font = "bold 14px Inter";
         ctx.fillText("📍 Pickup", px-25, py-5);
-        // drop marker
+        // Drop marker
         let dx = dropLat * w, dy = (1-dropLng)*h;
         ctx.fillStyle = "#e67e22";
         ctx.beginPath();
@@ -554,7 +590,7 @@
         ctx.fill();
         ctx.fillStyle = "black";
         ctx.fillText("🏁 Drop", dx-20, dy-5);
-        // driver car
+        // Driver car
         let driverX = driverLat * w, driverY = (1 - (driverLngVal() * 0.7 + 0.3)) * h;
         ctx.fillStyle = "#2563eb";
         ctx.beginPath();
@@ -564,24 +600,21 @@
         ctx.font = "bold 12px Inter";
         ctx.fillText("🚗 Driver", driverX-20, driverY-8);
     }
+    
     function driverLngVal() {
-        // linear interpolation based on driverProgress
         if(driverProgress < 1) return 0.45;
         if(driverProgress >=1 && driverProgress<2) return 0.55;
         return 0.65;
     }
-
-    let animationId = null;
+    
+    let animId = null;
     function startTrackingAndNavigation() {
         resetSimulation();
-        driverProgress = 0;   // 0->1 = moving to pickup
-        tripStarted = true;
-        let targetPickupReached = false;
-        let targetDropReached = false;
+        driverProgress = 0;
+        let moveInterval;
         function animateMove() {
             if(!trackScreen.classList.contains('screen') || trackScreen.classList.contains('hidden')) return;
             if(driverProgress < 1) {
-                // moving to pickup
                 driverLat += step;
                 if(driverLat >= pickupLat) {
                     driverLat = pickupLat;
@@ -589,8 +622,8 @@
                     tripStatusSpan.innerText = "📍 Arrived at pickup · waiting for you";
                     etaMessageSpan.innerText = "✅ Driver at pickup location. Get in!";
                     showToast("Driver reached pickup point", 2000);
-                    cancelAnimationFrame(animationId);
-                    animationId = null;
+                    if(animId) cancelAnimationFrame(animId);
+                    animId = null;
                     drawMap();
                     return;
                 }
@@ -598,8 +631,7 @@
                 etaMessageSpan.innerText = `⏱️ ETA to pickup: ${eta} min`;
                 tripStatusSpan.innerText = "🚗 Driver en route to pickup";
             } 
-            else if(driverProgress === 1 && otpVerified === true && !targetDropReached) {
-                // after OTP, move to drop
+            else if(driverProgress === 1 && otpVerified === true && driverProgress < 2) {
                 driverProgress = 1.5;
                 tripStatusSpan.innerText = "🟢 Moving towards your drop location";
                 etaMessageSpan.innerText = "🚀 On trip · heading to drop";
@@ -612,84 +644,73 @@
                             tripStatusSpan.innerText = "🏁 Reached drop-off point";
                             etaMessageSpan.innerText = "You have arrived! Tap 'Complete Drop-off'";
                             drawMap();
-                            cancelAnimationFrame(animationId);
-                            animationId = null;
+                            if(animId) cancelAnimationFrame(animId);
+                            animId = null;
                             return;
                         }
                         let distLeft = ((dropLat - driverLat) / step).toFixed(0);
                         etaMessageSpan.innerText = `🛣️ ETA to drop: ${distLeft} min`;
                         drawMap();
-                        animationId = requestAnimationFrame(moveToDrop);
+                        animId = requestAnimationFrame(moveToDrop);
                     } else {
                         driverProgress = 2;
                         drawMap();
                     }
                 }
-                if(animationId) cancelAnimationFrame(animationId);
-                animationId = requestAnimationFrame(moveToDrop);
+                if(animId) cancelAnimationFrame(animId);
+                animId = requestAnimationFrame(moveToDrop);
                 return;
             }
             drawMap();
-            animationId = requestAnimationFrame(animateMove);
+            animId = requestAnimationFrame(animateMove);
         }
-        if(animationId) cancelAnimationFrame(animationId);
-        animationId = requestAnimationFrame(animateMove);
-        // set OTP verified flag after 3 secs simulation? user will have verified before tracking screen
-        // but we simulate that driver waits until OTP verified; in tracking screen we need a way to "verify otp" but we already verified before entering.
-        // Actually OTP already done, so driverProgress=1, then we automatically move to drop.
-        // we add a listener: if otpVerified true and driverProgress ==1 -> start drop move.
+        if(animId) cancelAnimationFrame(animId);
+        animId = requestAnimationFrame(animateMove);
+        
         const checkOtp = setInterval(() => {
-            if(otpVerified && driverProgress === 1 && animationId === null) {
+            if(otpVerified && driverProgress === 1 && animId === null) {
                 clearInterval(checkOtp);
                 driverProgress = 1.5;
-                startDropPhase();
+                function startDrop() {
+                    if(driverLat < dropLat) {
+                        driverLat += step*0.7;
+                        if(driverLat >= dropLat) {
+                            driverLat = dropLat;
+                            tripStatusSpan.innerText = "Arrived at drop";
+                            etaMessageSpan.innerText = "Trip completed. Press Finish.";
+                            drawMap();
+                            if(animId) cancelAnimationFrame(animId);
+                            animId = null;
+                            return;
+                        }
+                        let remain = Math.ceil((dropLat - driverLat)/step);
+                        etaMessageSpan.innerText = `🛣️ ETA to drop: ${remain} min`;
+                        drawMap();
+                        animId = requestAnimationFrame(startDrop);
+                    }
+                }
+                animId = requestAnimationFrame(startDrop);
             }
         }, 500);
-        function startDropPhase() {
-            function moveDropAnim() {
-                if(driverLat < dropLat) {
-                    driverLat += step*0.7;
-                    if(driverLat >= dropLat) {
-                        driverLat = dropLat;
-                        tripStatusSpan.innerText = "Arrived at drop";
-                        etaMessageSpan.innerText = "Trip completed. Press Finish.";
-                        drawMap();
-                        cancelAnimationFrame(animationId);
-                        animationId = null;
-                        return;
-                    }
-                    let remain = Math.ceil((dropLat - driverLat)/step);
-                    etaMessageSpan.innerText = `🛣️ ETA to drop: ${remain} min`;
-                    drawMap();
-                    animationId = requestAnimationFrame(moveDropAnim);
-                }
-            }
-            animationId = requestAnimationFrame(moveDropAnim);
-        }
         drawMap();
     }
-
-    // OTP trigger inside tracking: we need to simulate OTP already done, but we already have verify before tracking.
-    // However user might need to manually "start ride after OTP" but we do verify before entering tracking screen, so automatic.
-    // Also add end trip button
+    
     endTripBtn.addEventListener('click', () => {
         if(driverProgress >= 1.9 || driverLat >= dropLat-0.02) {
-            showToast("🎉 Trip completed! Thank you for riding.");
-            if(animationId) cancelAnimationFrame(animationId);
+            showToast("🎉 Trip completed! Thank you for riding with us.");
+            if(animId) cancelAnimationFrame(animId);
             trackScreen.classList.add('hidden');
             bookingScreen.classList.remove('hidden');
             resetSimulation();
-            // reset inputs to default
-            pickupInput.value = "Koramangala, Bengaluru";
-            dropInput.value = "MG Road, Bengaluru";
+            pickupInput.value = "Jaipur Railway Station";
+            dropInput.value = "Hawa Mahal, Jaipur";
             otpVerified = false;
             driverProgress = 0;
         } else {
             showToast("Driver hasn't reached drop location yet. Wait until drop-off.", 1500);
         }
     });
-
-    // initial draw (blank)
+    
     function resizeCanvas() { if(canvas) drawMap(); }
     window.addEventListener('resize', () => drawMap());
     updateBookingUI();

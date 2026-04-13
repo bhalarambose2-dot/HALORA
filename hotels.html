@@ -1,336 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HALORA Hotels</title>
-  <link rel="stylesheet" href="./style.css" />
-  <style>
-    body {
-      background: #050816;
-      color: white;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding-bottom: 100px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 20px;
-      background: rgba(0,0,0,0.35);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 20;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    .logo small {
-      display: block;
-      font-size: 12px;
-      color: #aaa;
-      font-weight: 400;
-    }
-
-    .logout-btn {
-      background: orange;
-      color: black;
-      border: none;
-      border-radius: 14px;
-      padding: 10px 18px;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 0 18px rgba(255,140,0,0.25);
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 20px;
-    }
-
-    .hero-card {
-      background: linear-gradient(135deg, rgba(255,140,0,0.18), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 28px;
-      padding: 24px;
-      margin-bottom: 22px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.28);
-    }
-
-    .hero-card h2 {
-      margin: 0 0 8px;
-      font-size: 28px;
-    }
-
-    .hero-card p {
-      margin: 0;
-      color: #cfcfcf;
-    }
-
-    .filters {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 14px;
-      margin: 20px 0 26px;
-    }
-
-    .filters input,
-    .filters select {
-      width: 100%;
-      padding: 15px 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.04);
-      color: white;
-      font-size: 15px;
-      outline: none;
-      box-sizing: border-box;
-    }
-
-    .section-title {
-      font-size: 24px;
-      margin: 10px 0 18px;
-    }
-
-    .hotel-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 18px;
-    }
-
-    .hotel-card {
-      background: linear-gradient(145deg, rgba(14,20,45,0.96), rgba(7,10,22,0.96));
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 26px;
-      overflow: hidden;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.30);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .hotel-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 48px rgba(0,0,0,0.38);
-    }
-
-    .hotel-img {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-      background: #111827;
-    }
-
-    .hotel-content {
-      padding: 18px;
-    }
-
-    .hotel-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-
-    .hotel-name {
-      font-size: 22px;
-      font-weight: 800;
-      margin: 0;
-    }
-
-    .price-tag {
-      background: rgba(255,140,0,0.15);
-      color: orange;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .meta {
-      color: #c8c8c8;
-      font-size: 14px;
-      margin: 6px 0;
-    }
-
-    .desc {
-      color: #b8b8b8;
-      font-size: 14px;
-      margin: 12px 0 18px;
-      line-height: 1.6;
-      min-height: 46px;
-    }
-
-    .book-btn {
-      width: 100%;
-      background: orange;
-      color: black;
-      border: none;
-      border-radius: 16px;
-      padding: 14px;
-      font-weight: 800;
-      font-size: 15px;
-      cursor: pointer;
-      box-shadow: 0 0 18px rgba(255,140,0,0.22);
-    }
-
-    .empty-box {
-      text-align: center;
-      padding: 40px 20px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 22px;
-      color: #bfbfbf;
-    }
-
-    /* BOOKING MODAL */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      padding: 20px;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-box {
-      width: 100%;
-      max-width: 420px;
-      background: #0b1224;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 24px;
-      padding: 22px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-    }
-
-    .modal-box h3 {
-      margin-top: 0;
-      margin-bottom: 16px;
-      font-size: 24px;
-    }
-
-    .modal-box input,
-    .modal-box select {
-      width: 100%;
-      padding: 14px;
-      margin-top: 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.04);
-      color: white;
-      font-size: 15px;
-      outline: none;
-      box-sizing: border-box;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .cancel-btn,
-    .confirm-btn {
-      flex: 1;
-      border: none;
-      border-radius: 14px;
-      padding: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      font-size: 15px;
-    }
-
-    .cancel-btn {
-      background: rgba(255,255,255,0.08);
-      color: white;
-    }
-
-    .confirm-btn {
-      background: orange;
-      color: black;
-    }
-
-    @media (max-width: 700px) {
-      .filters {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-card h2 {
-        font-size: 24px;
-      }
-
-      .hotel-img {
-        height: 190px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HALORA HOTELS - Live Partners</title>
+    <style>
+        <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
 
-  <header class="topbar">
-    <div class="logo">
-      HALORA HOTELS
-      <small>Premium stays across India</small>
+<div class="header">
+    <h1>🏨 HALORA HOTELS</h1>
+    <p>Live hotel partners across India</p>
+    <button class="partner-btn" onclick="window.location.href='partner.html'">➕ Become a Partner</button>
+</div>
+
+<div class="search-section">
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search hotel or city..." onkeyup="loadHotels()">
+        <button onclick="loadHotels()">🔍 Search</button>
     </div>
-    <a href="./dashboard.html" class="logout-btn">Back</a>
-  </header>
+</div>
 
-  <main class="container">
+<div id="hotelsGrid" class="hotels-grid">
+    <div class="loading">🔄 Loading hotels from partners...</div>
+</div>
 
-    <section class="hero-card">
-      <h2>Find your perfect stay</h2>
-      <p>Book trusted hotels with easy check-in and premium comfort.</p>
-    </section>
-
-    <div class="filters">
-      <input type="text" id="searchInput" placeholder="Search hotel or city..." />
-      <select id="cityFilter">
-        <option value="">All Cities</option>
-      </select>
-    </div>
-
-    <h2 class="section-title">Available Hotels</h2>
-    <div id="hotelList" class="hotel-grid">Loading...</div>
-
-  </main>
-
-  <!-- BOOKING MODAL -->
-  <div class="modal" id="bookingModal">
-    <div class="modal-box">
-      <h3>Book Hotel</h3>
-      <input type="text" id="customerName" placeholder="Your Name">
-      <input type="text" id="customerPhone" placeholder="Phone Number">
-      <select id="roomType">
-        <option value="Standard Room">Standard Room</option>
-        <option value="Deluxe AC">Deluxe AC</option>
-        <option value="Luxury Suite">Luxury Suite</option>
-      </select>
-      <input type="date" id="checkInDate">
-      <input type="number" id="nights" placeholder="Number of Nights">
-      <input type="number" id="guests" placeholder="Guests">
-      <div class="modal-actions">
-        <button class="cancel-btn" onclick="closeBookingModal()">Cancel</button>
-        <button class="confirm-btn" onclick="submitBooking()">Confirm Booking</button>
-      </div>
-    </div>
-  </div>
-
-  <script type="module" src="./hotels.js"></script>
+<script>
+    // 🔥 REAL-TIME DATABASE (LocalStorage + Demo)
+    let hotels = [];
+    
+    // Load hotels from storage
+    function loadHotels() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        
+        // Get hotels from localStorage (partners add karte hain)
+        const storedHotels = localStorage.getItem('halora_hotels');
+        
+        if(storedHotels) {
+            hotels = JSON.parse(storedHotels);
+        } else {
+            // Demo hotels (agar koi partner nahi hai toh)
+            hotels = [
+                {
+                    id: 1,
+                    name: "Taj Mahal Palace",
+                    city: "Mumbai",
+                    location: "Colaba",
+                    price: 15000,
+                    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
+                    partner: "HALORA Official",
+                    contact: "partner@halora.com",
+                    available: true
+                },
+                {
+                    id: 2,
+                    name: "Oberoi Grand",
+                    city: "Kolkata",
+                    location: "Chowringhee",
+                    price: 11000,
+                    image: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=400",
+                    partner: "HALORA Official",
+                    contact: "partner@halora.com",
+                    available: true
+                }
+            ];
+            saveHotels();
+        }
+        
+        // Filter hotels
+        let filtered = hotels.filter(h => h.available === true);
+        
+        if(searchTerm) {
+            filtered = filtered.filter(h => 
+                h.name.toLowerCase().includes(searchTerm) || 
+                h.city.toLowerCase().includes(searchTerm) ||
+                h.location.toLowerCase().includes(searchTerm)
+            );
+        }
+        
+        displayHotels(filtered);
+    }
+    
+    // Display hotels
+    function displayHotels(hotelsList) {
+        const grid = document.getElementById('hotelsGrid');
+        
+        if(hotelsList.length === 0) {
+            grid.innerHTML = '<div class="loading">❌ No hotels found. Be the first partner!</div>';
+            return;
+        }
+        
+        grid.innerHTML = hotelsList.map(hotel => `
+            <div class="hotel-card" onclick="bookHotel(${hotel.id})">
+                <div class="hotel-image" style="background-image: url('${hotel.image}')">
+                    <div class="hotel-price">₹${hotel.price.toLocaleString()}/night</div>
+                </div>
+                <div class="hotel-info">
+                    <div class="hotel-name">
+                        ${hotel.name}
+                        <span class="partner-badge">👥 ${hotel.partner}</span>
+                    </div>
+                    <div class="hotel-location">📍 ${hotel.location}, ${hotel.city}</div>
+                    <button class="book-btn">Book Now →</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    // Save hotels to storage
+    function saveHotels() {
+        localStorage.setItem('halora_hotels', JSON.stringify(hotels));
+    }
+    
+    // Book hotel
+    function bookHotel(hotelId) {
+        const hotel = hotels.find(h => h.id === hotelId);
+        alert(`🏨 Booking Request Sent!\n\nHotel: ${hotel.name}\nPartner: ${hotel.partner}\n\nYou will receive confirmation shortly.`);
+    }
+    
+    // Auto-refresh every 5 seconds (real-time update)
+    setInterval(() => {
+        loadHotels();
+    }, 5000);
+    
+    // Initial load
+    loadHotels();
+</script>
 </body>
 </html>

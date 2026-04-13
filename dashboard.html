@@ -2,242 +2,490 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HALORA PRO</title>
-  <link rel="stylesheet" href="./style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>HALORA PRO – Modern Stay</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+    }
+
+    body {
+      background: #f8fafc;
+      padding-bottom: 80px;
+    }
+
+    /* Header / Topbar */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 20px;
+      background: white;
+      border-bottom: 1px solid #f0f2f5;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo small {
+      font-size: 0.7rem;
+      color: #94a3b8;
+      display: block;
+      font-weight: normal;
+    }
+    .logout-btn {
+      background: #f1f5f9;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+    }
+
+    /* Container */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Greeting */
+    .greeting h2 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+    .greeting p {
+      color: #64748b;
+      margin-bottom: 20px;
+    }
+
+    /* Search Bar */
+    .search-bar {
+      background: white;
+      border-radius: 48px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      border: 1px solid #e2e8f0;
+      margin-bottom: 20px;
+    }
+    .search-bar span {
+      font-size: 1.2rem;
+    }
+    .search-bar input {
+      border: none;
+      flex: 1;
+      font-size: 1rem;
+      outline: none;
+      background: transparent;
+    }
+
+    /* Filter Chips */
+    .filters {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .chip {
+      background: white;
+      border: 1px solid #e2e8f0;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #334155;
+    }
+    .chip.active {
+      background: #ff6b35;
+      color: white;
+      border-color: #ff6b35;
+    }
+
+    /* For you / Popular Tabs */
+    .tabs {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #eef2f6;
+    }
+    .tab {
+      padding-bottom: 8px;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+    }
+    .tab.active {
+      color: #ff6b35;
+      border-bottom: 2px solid #ff6b35;
+    }
+
+    /* Hotel Cards */
+    .hotel-card {
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      border: 1px solid #edf2f7;
+      display: flex;
+      flex-direction: column;
+    }
+    .hotel-img {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .hotel-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: white;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+    .hotel-content {
+      padding: 16px;
+    }
+    .hotel-title {
+      font-weight: 800;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .hotel-location {
+      color: #5b6e8c;
+      font-size: 0.8rem;
+      margin: 4px 0;
+    }
+    .rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #fef3c7;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+    .price {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ff6b35;
+      margin-top: 8px;
+    }
+    .view-details {
+      background: none;
+      border: none;
+      color: #ff6b35;
+      font-weight: 600;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    /* Recent Visits */
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 24px 0 12px;
+    }
+    .recent-grid {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .recent-item {
+      min-width: 100px;
+      background: white;
+      border-radius: 20px;
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #eef2f6;
+    }
+
+    /* Bottom Navigation (Explore, Trips, Saved, Settings) */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 20px 20px;
+      border-top: 1px solid #edf2f7;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.02);
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      color: #94a3b8;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+    .nav-item.active {
+      color: #ff6b35;
+    }
+    .nav-icon {
+      font-size: 1.4rem;
+    }
+
+    /* Wallet Card (small) */
+    .wallet-mini {
+      background: #f1f5f9;
+      border-radius: 24px;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+    }
+    .wallet-mini h4 {
+      font-size: 0.8rem;
+      color: #475569;
+    }
+    .recharge-btn {
+      background: #ff6b35;
+      color: white;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-weight: bold;
+    }
+
+    /* Hide old sections but keep functionality */
+    .hero-card, .balance-card, .quick-grid, .info-row, .partner-grid {
+      display: none;
+    }
+    /* Keep trips section but style as hotel cards */
+    .scroll-row {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .trip-card {
+      background: white;
+      border-radius: 28px;
+      padding: 16px;
+      border: 1px solid #edf2f7;
+    }
+    .trip-badge {
+      background: #fef3c7;
+      padding: 2px 10px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+    }
+    .trip-price {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ff6b35;
+      margin: 8px 0;
+    }
+  </style>
 </head>
 <body>
 
-  <header class="topbar">
-    <div class="logo">
-      HALORA PRO
-      <small>Ride • Hotel • Trip • Partner</small>
+<header class="topbar">
+  <div class="logo">
+    HALORA PRO
+    <small>Ride • Hotel • Trip</small>
+  </div>
+  <button class="logout-btn" onclick="logoutUser()">Logout</button>
+</header>
+
+<main class="container">
+  <!-- Greeting -->
+  <div class="greeting">
+    <h2>Hi, Emmanuel</h2>
+    <p>Where do you want to go?</p>
+  </div>
+
+  <!-- Search bar -->
+  <div class="search-bar">
+    <span>🔍</span>
+    <input type="text" placeholder="Search destination or hotel" id="searchInput" onkeyup="filterHotels()">
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <span class="chip active">Nearby</span>
+    <span class="chip">Weekend</span>
+    <span class="chip">Budget</span>
+  </div>
+
+  <!-- For you / Popular tabs -->
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('for-you')">For you</div>
+    <div class="tab" onclick="showTab('popular')">Popular</div>
+  </div>
+
+  <!-- Hotel Cards (Dynamic from Firebase trips/hotels) -->
+  <div id="hotelListContainer">
+    <!-- Will be populated dynamically with existing trip cards style but modern look -->
+  </div>
+
+  <!-- Recent Visits -->
+  <div class="section-title">Recent Visits</div>
+  <div class="recent-grid">
+    <div class="recent-item">🏨 Taj</div>
+    <div class="recent-item">🏝️ Goa</div>
+    <div class="recent-item">⛰️ Manali</div>
+  </div>
+
+  <!-- Mini wallet -->
+  <div class="wallet-mini">
+    <div>
+      <h4>Your Wallet</h4>
+      <h2>₹<span id="walletBalance">0</span></h2>
     </div>
-    <button class="logout-btn" onclick="logoutUser()">Logout</button>
-  </header>
+    <a href="./wallet.html"><button class="recharge-btn">Recharge</button></a>
+  </div>
 
-  <main class="container">
+  <!-- Original hidden sections (keep for functionality but not displayed) -->
+  <div style="display: none;">
+    <section class="hero-card"></section>
+    <section class="balance-card"></section>
+    <div class="quick-grid"></div>
+    <div class="info-row"></div>
+    <div class="partner-grid"></div>
+  </div>
 
-    <!-- HERO -->
-    <section class="hero-card">
-      <h2>Travel smarter with HALORA</h2>
-      <p>Book bikes, taxis, hotels and all India trips in one app.</p>
-      <div class="hero-actions">
-        <a href="./bike-booking.html"><button class="hero-btn primary">Book Ride</button></a>
-        <a href="./trips.html"><button class="hero-btn secondary">Explore Trips</button></a>
-      </div>
-    </section>
-
-    <!-- BALANCE -->
-    <section class="balance-card">
-      <div>
-        <h4>Your Wallet</h4>
-        <h2>₹<span id="walletBalance">0</span></h2>
-      </div>
-      <a href="./wallet.html" class="badge">Recharge</a>
-    </section>
-
-    <!-- QUICK ACTION -->
-    <h2 class="section-title">Quick Booking</h2>
-    <div class="quick-grid">
-      <a href="./bike-booking.html" class="quick-card">
-        <div class="icon">🏍️</div>
-        <div>
-          <h3>Bike Booking</h3>
-          <p>Fast local ride in minutes</p>
-        </div>
-      </a>
-
-      <a href="./bike-booking.html?type=taxi" class="quick-card">
-        <div class="icon">🚕</div>
-        <div>
-          <h3>Taxi Booking</h3>
-          <p>Comfort cab for city travel</p>
-        </div>
-      </a>
-
-      <a href="./bike-booking.html?type=auto" class="quick-card">
-        <div class="icon">🛺</div>
-        <div>
-          <h3>Auto Booking</h3>
-          <p>Affordable local commute</p>
-        </div>
-      </a>
-
-      <a href="./hotels.html" class="quick-card">
-        <div class="icon">🏨</div>
-        <div>
-          <h3>Hotels</h3>
-          <p>Stay booking with easy check-in</p>
-        </div>
-      </a>
-
-      <a href="./wallet.html" class="quick-card">
-        <div class="icon">💰</div>
-        <div>
-          <h3>Wallet</h3>
-          <p>Add money and pay instantly</p>
-        </div>
-      </a>
-
-      <a href="./kyc.html" class="quick-card">
-        <div class="icon">🪪</div>
-        <div>
-          <h3>KYC</h3>
-          <p>Verify your account securely</p>
-        </div>
-      </a>
-
-      <a href="./history.html" class="quick-card">
-        <div class="icon">📜</div>
-        <div>
-          <h3>History</h3>
-          <p>All your bookings and payments</p>
-        </div>
-      </a>
-
-      <a href="./profile-edit.html" class="quick-card">
-        <div class="icon">👤</div>
-        <div>
-          <h3>Edit Profile</h3>
-          <p>Manage personal information</p>
-        </div>
-      </a>
+  <!-- Trips section (reused as hotel cards) -->
+  <div id="tripsSection" style="display: block;">
+    <div class="section-title">✨ Explore Places</div>
+    <div class="scroll-row" id="tripsList">
+      <!-- trips injected -->
     </div>
+  </div>
+</main>
 
-    <!-- INFO -->
-    <div class="info-row">
-      <div class="info-card">
-        <h5>Saved on rides</h5>
-        <h3>₹1,240</h3>
-      </div>
-      <div class="info-card">
-        <h5>Total bookings</h5>
-        <h3>18</h3>
-      </div>
-    </div>
+<!-- Bottom Navigation (Explore, Trips, Saved, Settings) -->
+<nav class="bottom-nav">
+  <a href="#" class="nav-item active" onclick="return false;">
+    <div class="nav-icon">🏠</div>
+    <span>Explore</span>
+  </a>
+  <a href="./trips.html" class="nav-item">
+    <div class="nav-icon">🧳</div>
+    <span>Trips</span>
+  </a>
+  <a href="#" class="nav-item">
+    <div class="nav-icon">🔖</div>
+    <span>Saved</span>
+  </a>
+  <a href="./profile-edit.html" class="nav-item">
+    <div class="nav-icon">⚙️</div>
+    <span>Settings</span>
+  </a>
+</nav>
 
-    <!-- TRIPS -->
-    <h2 class="section-title">All India Trips</h2>
-    <div class="scroll-row">
-      <div class="trip-card">
-        <div class="trip-top">
-          <span class="trip-badge">Popular</span>
-          <span>📍</span>
-        </div>
-        <h3>Rajasthan Tour</h3>
-        <p>Desert safari, forts and royal city stay.</p>
-        <div class="trip-price">₹4999</div>
-        <button onclick="location.href='./trips.html'">Book Now</button>
-      </div>
+<script type="module">
+  import { auth, db } from "./js/firebase-config.js";
+  import { doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-      <div class="trip-card">
-        <div class="trip-top">
-          <span class="trip-badge">Beach</span>
-          <span>🏝️</span>
-        </div>
-        <h3>Goa Beach Trip</h3>
-        <p>Beach fun, nightlife and hotel stay.</p>
-        <div class="trip-price">₹6999</div>
-        <button onclick="location.href='./trips.html'">Book Now</button>
-      </div>
+  // Load wallet balance
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) return;
+    const snap = await getDoc(doc(db, "users", user.uid));
+    if (snap.exists()) {
+      document.getElementById("walletBalance").innerText = snap.data().wallet || 0;
+    }
+  });
 
-      <div class="trip-card">
-        <div class="trip-top">
-          <span class="trip-badge">Spiritual</span>
-          <span>🛕</span>
-        </div>
-        <h3>Kedarnath Yatra</h3>
-        <p>Temple visit and mountain journey package.</p>
-        <div class="trip-price">₹3999</div>
-        <button onclick="location.href='./trips.html'">Book Now</button>
-      </div>
-
-      <div class="trip-card">
-        <div class="trip-top">
-          <span class="trip-badge">Premium</span>
-          <span>❄️</span>
-        </div>
-        <h3>Kashmir Tour</h3>
-        <p>Snow views, valley stay and sightseeing.</p>
-        <div class="trip-price">₹9999</div>
-        <button onclick="location.href='./trips.html'">Book Now</button>
-      </div>
-    </div>
-
-    <!-- PARTNER -->
-    <h2 class="section-title">Become a Partner</h2>
-    <div class="partner-grid">
-      <div class="partner-card">
-        <div class="left">
-          <div class="icon">🏍️</div>
-          <div>
-            <h4>Bike Partner</h4>
-            <p>Earn by completing local rides</p>
+  // Load existing trips from Firebase (or use static)
+  async function loadTrips() {
+    const tripsContainer = document.getElementById("tripsList");
+    try {
+      const tripsSnap = await getDocs(collection(db, "trips"));
+      let trips = [];
+      tripsSnap.forEach(doc => trips.push({ id: doc.id, ...doc.data() }));
+      if (trips.length === 0) throw new Error("No trips");
+      tripsContainer.innerHTML = trips.map(trip => `
+        <div class="hotel-card" style="margin-bottom:16px;">
+          <div class="hotel-img" style="background-image: url('${trip.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400'}')">
+            <div class="hotel-badge">${trip.badge || 'Popular'}</div>
+          </div>
+          <div class="hotel-content">
+            <div class="hotel-title">
+              ${trip.name}
+              <span class="rating">⭐ ${trip.rating || '4.5'}</span>
+            </div>
+            <div class="hotel-location">📍 ${trip.location || 'India'}</div>
+            <div class="price">₹${trip.price}/night</div>
+            <button class="view-details" onclick="bookNow('${trip.id}')">view details →</button>
           </div>
         </div>
-        <a href="./partner.html"><button class="apply-btn">Apply</button></a>
-      </div>
-
-      <div class="partner-card">
-        <div class="left">
-          <div class="icon">🏨</div>
-          <div>
-            <h4>Hotel Partner</h4>
-            <p>List your hotel and get bookings</p>
+      `).join('');
+    } catch (error) {
+      // fallback static cards
+      tripsContainer.innerHTML = `
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400')">
+            <div class="hotel-badge">⭐ 4.8</div>
+          </div>
+          <div class="hotel-content">
+            <div class="hotel-title">Hotel de Praue</div>
+            <div class="hotel-location">Paris, France</div>
+            <div class="price">$45 <span style="font-size:0.8rem;">/night</span></div>
+            <button class="view-details" onclick="bookNow('paris')">view details →</button>
           </div>
         </div>
-        <a href="./partner.html"><button class="apply-btn">Apply</button></a>
-      </div>
-
-      <div class="partner-card">
-        <div class="left">
-          <div class="icon">🧳</div>
-          <div>
-            <h4>Trip Agent</h4>
-            <p>Sell travel packages on HALORA</p>
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400')">
+            <div class="hotel-badge">🌊 Beach</div>
+          </div>
+          <div class="hotel-content">
+            <div class="hotel-title">Goa Beach Resort</div>
+            <div class="hotel-location">Goa, India</div>
+            <div class="price">₹6,999 <span style="font-size:0.8rem;">/night</span></div>
+            <button class="view-details" onclick="bookNow('goa')">view details →</button>
           </div>
         </div>
-        <a href="./partner.html"><button class="apply-btn">Apply</button></a>
-      </div>
-    </div>
+      `;
+    }
+  }
+  loadTrips();
 
-  </main>
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-    <a href="./dashboard.html" class="active">
-      <div class="nav-icon">🏠</div>
-      <span>Home</span>
-    </a>
-    <a href="./trips.html">
-      <div class="nav-icon">🧳</div>
-      <span>Trips</span>
-    </a>
-    <a href="./partner.html">
-      <div class="nav-icon">🤝</div>
-      <span>Partner</span>
-    </a>
-    <a href="./profile-edit.html">
-      <div class="nav-icon">👤</div>
-      <span>Profile</span>
-    </a>
-  </nav>
-
-  <script type="module" src="./js/auth.js"></script>
-  <script type="module">
-    import { auth, db } from "./js/firebase-config.js";
-    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) return;
-      const snap = await getDoc(doc(db, "users", user.uid));
-      if (snap.exists()) {
-        document.getElementById("walletBalance").innerText = snap.data().wallet || 0;
-      }
+  window.filterHotels = function() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('.hotel-card');
+    cards.forEach(card => {
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(search) ? 'flex' : 'none';
     });
-  </script>
+  };
+  window.bookNow = (id) => {
+    alert(`Booking started for hotel ${id}. Complete payment in wallet.`);
+  };
+  window.showTab = (tab) => {
+    // just UI feedback
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+  };
+  window.logoutUser = () => {
+    localStorage.removeItem("partnerContact");
+    alert("Logged out");
+    location.reload();
+  };
+</script>
 
 </body>
 </html>

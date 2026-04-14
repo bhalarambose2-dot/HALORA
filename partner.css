@@ -1,0 +1,91 @@
+/* 🔥 HALORA Partner Page Style */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0b0f19, #121a2f);
+  color: white;
+  text-align: center;
+}
+
+/* Title */
+h2 {
+  margin-top: 30px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Buttons container */
+button {
+  padding: 12px 20px;
+  margin: 8px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Partner Type Buttons */
+button:nth-child(1),
+button:nth-child(2),
+button:nth-child(3) {
+  background: #1f2a44;
+  color: white;
+}
+
+button:nth-child(1):hover,
+button:nth-child(2):hover,
+button:nth-child(3):hover {
+  background: #2d3b63;
+  transform: scale(1.05);
+}
+
+/* Plan Buttons */
+button:nth-of-type(4) {
+  background: #00c853;
+  color: white;
+}
+
+button:nth-of-type(5) {
+  background: #2962ff;
+  color: white;
+}
+
+button:nth-of-type(6) {
+  background: gold;
+  color: black;
+  font-weight: bold;
+}
+
+/* Hover effect */
+button:nth-of-type(4):hover,
+button:nth-of-type(5):hover,
+button:nth-of-type(6):hover {
+  transform: scale(1.08);
+}
+
+/* Selected text */
+#selectedType,
+#selectedPlan {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #00ffcc;
+}
+
+/* Card style (optional future use) */
+.card {
+  background: #131b2d;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Responsive */
+@media(max-width:600px){
+  button{
+    width: 80%;
+  }
+}

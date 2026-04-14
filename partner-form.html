@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<title>KYC Form</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
 <style>
+
 body{
 margin:0;
-font-family:Poppins;
-background:linear-gradient(#0b0f19,#121a2f);
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#0b0f19,#121a2f);
 color:white;
 display:flex;
 justify-content:center;
@@ -16,84 +21,141 @@ height:100vh;
 
 .box{
 background:#131b2d;
-padding:20px;
+padding:25px;
 border-radius:15px;
 width:90%;
 max-width:400px;
 text-align:center;
+box-shadow:0 0 20px rgba(0,0,0,0.6);
+}
+
+h2{
+margin-bottom:15px;
 }
 
 input{
 width:90%;
-padding:10px;
-margin:8px;
+padding:12px;
+margin:8px 0;
 border:none;
-border-radius:8px;
+border-radius:10px;
 background:#1f2a44;
 color:white;
+outline:none;
+}
+
+input::placeholder{
+color:#aaa;
+}
+
+input:focus{
+border:1px solid #00ffcc;
+box-shadow:0 0 5px #00ffcc;
 }
 
 button{
-padding:12px;
 width:95%;
-background:#00c853;
+padding:12px;
+margin-top:15px;
 border:none;
 border-radius:10px;
+background:#00c853;
 color:white;
+font-size:15px;
+cursor:pointer;
+transition:0.3s;
 }
+
+button:hover{
+background:#00e676;
+transform:scale(1.05);
+}
+
 </style>
+
 </head>
 
 <body>
 
 <div class="box">
+
 <h2>KYC Form</h2>
 
 <form onsubmit="submitForm(event)">
 
-<input id="name" placeholder="Name" required>
-<input id="phone" placeholder="Phone" required>
+<input id="name" placeholder="Full Name" required>
+<input id="phone" placeholder="Mobile Number" required>
 <input id="address" placeholder="Address" required>
-<input id="aadhaar" placeholder="Aadhaar" required>
-<input id="pan" placeholder="PAN" required>
+
+<input id="aadhaar" placeholder="Aadhaar Number" required>
+<input id="pan" placeholder="PAN Number" required>
 
 <div id="extra"></div>
 
-<button>Continue</button>
+<button type="submit">Continue → Payment</button>
+
 </form>
+
 </div>
 
 <script type="module">
+
 import { db } from "./js/firebase-config.js";
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const type=localStorage.getItem("partnerType");
+const nameEl = document.getElementById("name");
+const phoneEl = document.getElementById("phone");
+const addressEl = document.getElementById("address");
+const aadhaarEl = document.getElementById("aadhaar");
+const panEl = document.getElementById("pan");
+const extra = document.getElementById("extra");
 
+const type = localStorage.getItem("partnerType");
+
+// dynamic fields
 if(type==="driver"){
-extra.innerHTML=`<input id="dl" placeholder="DL" required>`;
+  extra.innerHTML=`<input id="dl" placeholder="Driving License" required>`;
 }
 if(type==="hotel"){
-extra.innerHTML=`<input id="hotel" placeholder="License" required>`;
+  extra.innerHTML=`<input id="hotel" placeholder="Hotel License" required>`;
 }
 
-window.submitForm=async(e)=>{
-e.preventDefault();
+window.submitForm = async(e)=>{
+  e.preventDefault();
 
-const docRef=await addDoc(collection(db,"partners"),{
-name:name.value,
-phone:phone.value,
-address:address.value,
-aadhaar:aadhaar.value,
-pan:pan.value,
-partnerType:type,
-plan:localStorage.getItem("planPrice"),
-status:"KYC Done",
-createdAt:Date.now()
-});
+  try{
 
-localStorage.setItem("partnerId",docRef.id);
-window.location="prime-payment.html";
+    const data={
+      name:nameEl.value,
+      phone:phoneEl.value,
+      address:addressEl.value,
+      aadhaar:aadhaarEl.value,
+      pan:panEl.value,
+      partnerType:type,
+      plan:localStorage.getItem("planPrice"),
+      status:"KYC Done",
+      createdAt:Date.now()
+    };
+
+    if(type==="driver"){
+      data.dl=document.getElementById("dl").value;
+    }
+
+    if(type==="hotel"){
+      data.hotel=document.getElementById("hotel").value;
+    }
+
+    const docRef = await addDoc(collection(db,"partners"),data);
+
+    localStorage.setItem("partnerId",docRef.id);
+
+    window.location.href="prime-payment.html";
+
+  }catch(err){
+    alert("Error: "+err.message);
+  }
 };
+
 </script>
 
 </body>

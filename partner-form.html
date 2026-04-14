@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<body style="background:#0b0f19;color:white;text-align:center;">
+
+<h2>KYC Form</h2>
+
+<form onsubmit="submitForm(event)">
+
+<input id="name" placeholder="Name" required><br><br>
+<input id="phone" placeholder="Phone" required><br><br>
+<input id="address" placeholder="Address" required><br><br>
+
+<input id="aadhaar" placeholder="Aadhaar" required><br><br>
+<input id="pan" placeholder="PAN" required><br><br>
+
+<div id="extra"></div>
+
+<button type="submit">Continue</button>
+
+</form>
+
+<script type="module">
+
+import { db } from "./js/firebase-config.js";
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const type = localStorage.getItem("partnerType");
+const extra = document.getElementById("extra");
+
+if(type === "driver"){
+  extra.innerHTML = `<input id="dl" placeholder="Driving License" required><br><br>`;
+}
+if(type === "hotel"){
+  extra.innerHTML = `<input id="hotel" placeholder="Hotel License" required><br><br>`;
+}
+
+window.submitForm = async (e)=>{
+  e.preventDefault();
+
+  const data = {
+    name: name.value,
+    phone: phone.value,
+    address: address.value,
+    aadhaar: aadhaar.value,
+    pan: pan.value,
+    partnerType: type,
+    plan: localStorage.getItem("planPrice"),
+    status: "KYC Done",
+    createdAt: Date.now()
+  };
+
+  if(type==="driver") data.dl = dl.value;
+  if(type==="hotel") data.hotel = hotel.value;
+
+  const docRef = await addDoc(collection(db,"partners"), data);
+
+  localStorage.setItem("partnerId", docRef.id);
+
+  window.location.href = "prime-payment.html";
+};
+
+</script>
+
+</body>
+</html>

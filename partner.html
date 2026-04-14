@@ -1,36 +1,34 @@
-<script type="module">
+<!DOCTYPE html>
+<html>
+<body style="background:#0b0f19;color:white;text-align:center;">
 
-import { db } from "./js/firebase-config.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<h2>Become Partner</h2>
 
-const type = localStorage.getItem("partnerType");
+<button onclick="setType('driver')">Bike Rider</button>
+<button onclick="setType('hotel')">Hotel Owner</button>
+<button onclick="setType('trip')">Trip Agent</button>
 
-window.submitForm = async (e)=>{
-  e.preventDefault();
+<h2>Select Plan</h2>
 
-  const data = {
-    name: document.getElementById("name").value,
-    phone: document.getElementById("phone").value,
-    address: document.getElementById("address").value,
-    aadhaar: document.getElementById("aadhaar").value,
-    pan: document.getElementById("pan").value,
-    partnerType: type,
-    plan: localStorage.getItem("planPrice"),
-    status: "KYC Done",
-    createdAt: Date.now()
-  };
+<button onclick="selectPlan(299)">₹299</button>
+<button onclick="selectPlan(699)">₹699</button>
+<button onclick="selectPlan(1299)">₹1299</button>
 
-  try{
-    const docRef = await addDoc(collection(db,"partners"), data);
+<script>
+function setType(type){
+  localStorage.setItem("partnerType", type);
+}
 
-    // 🔥 MOST IMPORTANT
-    localStorage.setItem("partnerId", docRef.id);
-
-    window.location.href = "partner-from.html";
-
-  }catch(err){
-    alert("Error: " + err.message);
+function selectPlan(price){
+  if(!localStorage.getItem("partnerType")){
+    alert("Select partner type first");
+    return;
   }
-};
 
+  localStorage.setItem("planPrice", price);
+  window.location.href = "partner-form.html";
+}
 </script>
+
+</body>
+</html>

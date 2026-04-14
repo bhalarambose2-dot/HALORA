@@ -1,3 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Payment</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0b0f19, #121a2f);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .box {
+      background: #131b2d;
+      padding: 25px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    img {
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+
+    .upi {
+      font-size: 14px;
+      color: #00ffcc;
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 95%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .pay {
+      background: #00c853;
+      color: white;
+    }
+
+    .pay:hover {
+      background: #00e676;
+      transform: scale(1.03);
+    }
+
+    .done {
+      background: #2962ff;
+      color: white;
+    }
+
+    .done:hover {
+      transform: scale(1.03);
+    }
+
+    .note {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2 id="amount">Pay ₹299</h2>
+
+<img src="YOUR_QR.png" width="200">
+
+<p class="upi">UPI ID: 8769930595-2@ybl</p>
+
+<a id="payBtn">
+  <button class="pay">Pay Now via UPI</button>
+</a>
+
+<button onclick="done()" class="done">I Have Paid</button>
+
+<p class="note">
+  KYC verification ke baad account activate hoga (12–24 hrs)
+</p>
+
+</div>
+
 <script type="module">
 
 import { db } from "./js/firebase-config.js";
@@ -7,6 +114,7 @@ const amount = localStorage.getItem("planPrice") || 299;
 
 document.getElementById("amount").innerText = "Pay ₹" + amount;
 
+// 🔥 Dynamic UPI link
 document.getElementById("payBtn").href =
 `upi://pay?pa=8769930595-2@ybl&pn=HALORA&am=${amount}&cu=INR`;
 
@@ -23,7 +131,12 @@ window.done = async ()=>{
     paymentTime: Date.now()
   });
 
+  alert("Payment submitted successfully ✅");
+
   window.location.href = "pending.html";
 };
 
 </script>
+
+</body>
+</html>

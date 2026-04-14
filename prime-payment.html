@@ -1,141 +1,70 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <title>Payment</title>
+<style>
+body{
+margin:0;
+background:linear-gradient(#0b0f19,#121a2f);
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+font-family:Poppins;
+}
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+.box{
+background:#131b2d;
+padding:25px;
+border-radius:15px;
+text-align:center;
+}
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0b0f19, #121a2f);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+button{
+padding:12px;
+margin:10px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
 
-    .box {
-      background: #131b2d;
-      padding: 25px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
-    }
-
-    h2 {
-      margin-bottom: 15px;
-    }
-
-    img {
-      border-radius: 10px;
-      margin: 15px 0;
-    }
-
-    .upi {
-      font-size: 14px;
-      color: #00ffcc;
-      margin-bottom: 10px;
-    }
-
-    button {
-      width: 95%;
-      padding: 12px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 10px;
-      font-size: 15px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .pay {
-      background: #00c853;
-      color: white;
-    }
-
-    .pay:hover {
-      background: #00e676;
-      transform: scale(1.03);
-    }
-
-    .done {
-      background: #2962ff;
-      color: white;
-    }
-
-    .done:hover {
-      transform: scale(1.03);
-    }
-
-    .note {
-      font-size: 12px;
-      color: #aaa;
-      margin-top: 10px;
-    }
-
-  </style>
+.pay{background:#00c853;}
+.done{background:#2962ff;}
+</style>
 </head>
 
 <body>
 
 <div class="box">
 
-<h2 id="amount">Pay ₹299</h2>
+<h2 id="amount"></h2>
 
-<img src="YOUR_QR.png" width="200">
-
-<p class="upi">UPI ID: 8769930595-2@ybl</p>
-
-<a id="payBtn">
-  <button class="pay">Pay Now via UPI</button>
-</a>
-
-<button onclick="done()" class="done">I Have Paid</button>
-
-<p class="note">
-  KYC verification ke baad account activate hoga (12–24 hrs)
-</p>
+<button class="pay" onclick="payNow()">Pay Now</button>
+<button class="done" onclick="done()">I Have Paid</button>
 
 </div>
 
 <script type="module">
-
 import { db } from "./js/firebase-config.js";
 import { doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const amount = localStorage.getItem("planPrice") || 299;
+const amount=localStorage.getItem("planPrice")||299;
+amountEl.innerText="Pay ₹"+amount;
 
-document.getElementById("amount").innerText = "Pay ₹" + amount;
-
-// 🔥 Dynamic UPI link
-document.getElementById("payBtn").href =
-`upi://pay?pa=8769930595-2@ybl&pn=HALORA&am=${amount}&cu=INR`;
-
-window.done = async ()=>{
-  const id = localStorage.getItem("partnerId");
-
-  if(!id){
-    alert("Error: Partner ID not found");
-    return;
-  }
-
-  await updateDoc(doc(db,"partners",id),{
-    status:"KYC + Payment Pending",
-    paymentTime: Date.now()
-  });
-
-  alert("Payment submitted successfully ✅");
-
-  window.location.href = "pending.html";
+window.payNow=()=>{
+window.location=`upi://pay?pa=cedarjs@ibl&pn=HALORA&am=${amount}&cu=INR`;
 };
 
+window.done=async()=>{
+const id=localStorage.getItem("partnerId");
+
+await updateDoc(doc(db,"partners",id),{
+status:"KYC + Payment Pending",
+paymentTime:Date.now()
+});
+
+window.location="payment-success.html";
+};
 </script>
 
 </body>

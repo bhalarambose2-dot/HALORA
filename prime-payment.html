@@ -1,106 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Prime Payment</title>
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script type="module">
 
-  <style>
-    body{
-      font-family: Arial;
-      background:#0b0f19;
-      color:white;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      height:100vh;
-    }
+import { db } from "./js/firebase-config.js";
+import { doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    .box{
-      background:#131b2d;
-      padding:25px;
-      border-radius:15px;
-      width:320px;
-      text-align:center;
-    }
+const amount = localStorage.getItem("planPrice") || 299;
 
-    h2{
-      margin-bottom:10px;
-    }
+document.getElementById("amount").innerText = "Pay ₹" + amount;
 
-    .price{
-      font-size:28px;
-      color:gold;
-      margin:15px 0;
-    }
+document.getElementById("payBtn").href =
+`upi://pay?pa=8769930595-2@ybl&pn=HALORA&am=${amount}&cu=INR`;
 
-    button{
-      width:100%;
-      padding:12px;
-      background:gold;
-      border:none;
-      border-radius:10px;
-      font-weight:bold;
-      cursor:pointer;
-    }
-  </style>
-</head>
+window.done = async ()=>{
+  const id = localStorage.getItem("partnerId");
 
-<body>
+  if(!id){
+    alert("Error: Partner ID not found");
+    return;
+  }
 
-<div class="box">
-  <h2>🚀 Prime Partner</h2>
-  <p>Unlock all features & start earning</p>
+  await updateDoc(doc(db,"partners",id),{
+    status:"KYC + Payment Pending",
+    paymentTime: Date.now()
+  });
 
-  <div class="price">₹299</div>
-
-  <button onclick="payNow()">Pay & Continue</button>
-</div>
-
-<script>
-
-function payNow(){
-
-  var options = {
-    "key": "YOUR_RAZORPAY_KEY", // 🔑 replace
-    "amount": 299.00,
-    "currency": "INR",
-    "name": "HALORA",
-    "description": "Prime Partner Plan ₹299",
-
-    "handler": function (response){
-
-      // ✅ Save payment success
-      localStorage.setItem("paymentStatus", "paid");
-      localStorage.setItem("paymentId", response.razorpay_payment_id);
-
-      // 🔥 Get selected partner type
-      let type = localStorage.getItem("partnerType");
-
-      // 👉 Redirect based on type
-      if(type === "driver"){
-        window.location.href = "driver.html";
-      }
-
-      if(type === "hotel"){
-        window.location.href = "hotel-partner.html";
-      }
-
-      if(type === "trip"){
-        window.location.href = "trip-partner.html";
-      }
-
-    },
-
-    "theme": {
-      "color": "#FFD700"
-    }
-  };
-
-  var rzp = new Razorpay(options);
-  rzp.open();
-}
+  window.location.href = "pending.html";
+};
 
 </script>
-
-</body>
-</html>

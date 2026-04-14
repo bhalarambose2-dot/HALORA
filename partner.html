@@ -1,84 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Partner</title>
-  <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+<script type="module">
 
-  <header class="topbar">
-    <div class="logo">Become Partner</div>
-    <a href="./dashboard.html" class="logout-btn">Back</a>
-  </header>
+import { db } from "./js/firebase-config.js";
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  <main class="container">
+const type = localStorage.getItem("partnerType");
 
-    <h2 class="section-title">Earn with HALORA</h2>
+window.submitForm = async (e)=>{
+  e.preventDefault();
 
-    <!-- 🔥 Prime Plan Banner -->
-    <div style="background:gold; padding:15px; border-radius:12px; margin-bottom:20px; color:black; text-align:center;">
-      <h3>🚀 Prime Partner Plan - ₹299 Only</h3>
-      <p>Mandatory for all partners • Earn More • Get Verified</p>
-    </div>
+  const data = {
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    address: document.getElementById("address").value,
+    aadhaar: document.getElementById("aadhaar").value,
+    pan: document.getElementById("pan").value,
+    partnerType: type,
+    plan: localStorage.getItem("planPrice"),
+    status: "KYC Done",
+    createdAt: Date.now()
+  };
 
-    <div class="partner-grid">
+  try{
+    const docRef = await addDoc(collection(db,"partners"), data);
 
-      <!-- Bike Rider -->
-      <div class="partner-card">
-        <div class="left">
-          <div class="icon">🏍️</div>
-          <div>
-            <h4>Bike Rider</h4>
-            <p>Earn per ride</p>
-          </div>
-        </div>
-        <button class="apply-btn" onclick="openPartner('driver')">
-          Apply & Get Prime ₹299
-        </button>
-      </div>
+    // 🔥 MOST IMPORTANT
+    localStorage.setItem("partnerId", docRef.id);
 
-      <!-- Hotel Owner -->
-      <div class="partner-card">
-        <div class="left">
-          <div class="icon">🏨</div>
-          <div>
-            <h4>Hotel Owner</h4>
-            <p>List your hotel</p>
-          </div>
-        </div>
-        <button class="apply-btn" onclick="openPartner('hotel')">
-          Apply & Get Prime ₹299
-        </button>
-      </div>
+    window.location.href = "prime-payment.html";
 
-      <!-- Trip Agent -->
-      <div class="partner-card">
-        <div class="left">
-          <div class="icon">🧳</div>
-          <div>
-            <h4>Trip Agent</h4>
-            <p>Sell packages</p>
-          </div>
-        </div>
-        <button class="apply-btn" onclick="openPartner('trip')">
-          Apply & Get Prime ₹299
-        </button>
-      </div>
+  }catch(err){
+    alert("Error: " + err.message);
+  }
+};
 
-    </div>
-
-  </main>
-
-  <script>
-    function openPartner(type) {
-
-      // 🔥 Save selected partner type
-      localStorage.setItem("partnerType", type);
-
-      // 👉 Redirect to payment page
-      window.location.href = "prime-payment.html";
-    }
-  </script>
-
-</body>
-</html>
+</script>

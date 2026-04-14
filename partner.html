@@ -1,136 +1,81 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <title>Become Partner</title>
+<title>Partner</title>
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0b0f19, #121a2f);
-      color: white;
-      text-align: center;
-    }
+<style>
+body{
+margin:0;
+font-family:Poppins;
+background:linear-gradient(135deg,#0b0f19,#121a2f);
+color:white;
+text-align:center;
+}
 
-    h2 {
-      margin-top: 30px;
-      font-weight: 600;
-    }
+h2{margin-top:30px;}
 
-    .btn {
-      padding: 12px 20px;
-      margin: 8px;
-      border: none;
-      border-radius: 8px;
-      font-size: 15px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+button{
+padding:12px 20px;
+margin:10px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+}
 
-    /* Partner buttons */
-    .type-btn {
-      background: #1f2a44;
-      color: white;
-    }
+.type{background:#1f2a44;}
+.plan1{background:#00c853;}
+.plan2{background:#2962ff;}
+.plan3{background:gold;color:black;}
 
-    .type-btn:hover {
-      background: #2d3b63;
-      transform: scale(1.05);
-    }
+button:hover{transform:scale(1.08);}
 
-    /* Plan buttons */
-    .plan-299 {
-      background: #00c853;
-    }
+.active{
+border:2px solid #00ffcc;
+box-shadow:0 0 10px #00ffcc;
+}
+</style>
 
-    .plan-699 {
-      background: #2962ff;
-    }
-
-    .plan-1299 {
-      background: gold;
-      color: black;
-      font-weight: bold;
-    }
-
-    .btn:hover {
-      transform: scale(1.08);
-    }
-
-    /* Selected highlight */
-    .active {
-      border: 2px solid #00ffcc;
-      box-shadow: 0 0 10px #00ffcc;
-    }
-
-    .info {
-      margin-top: 10px;
-      color: #00ffcc;
-      font-size: 14px;
-    }
-  </style>
 </head>
 
 <body>
 
 <h2>Become Partner</h2>
 
-<button class="btn type-btn" onclick="setType(this,'driver')">Bike Rider</button>
-<button class="btn type-btn" onclick="setType(this,'hotel')">Hotel Owner</button>
-<button class="btn type-btn" onclick="setType(this,'trip')">Trip Agent</button>
-
-<p id="typeText" class="info"></p>
+<button class="type" onclick="setType(this,'driver')">Bike Rider</button>
+<button class="type" onclick="setType(this,'hotel')">Hotel Owner</button>
+<button class="type" onclick="setType(this,'trip')">Trip Agent</button>
 
 <h2>Select Plan</h2>
 
-<button class="btn plan-299" onclick="selectPlan(this,299)">₹299</button>
-<button class="btn plan-699" onclick="selectPlan(this,699)">₹699</button>
-<button class="btn plan-1299" onclick="selectPlan(this,1299)">₹1299</button>
-
-<p id="planText" class="info"></p>
+<button class="plan1" onclick="selectPlan(this,299)">₹299</button>
+<button class="plan2" onclick="selectPlan(this,699)">₹699</button>
+<button class="plan3" onclick="selectPlan(this,1299)">₹1299</button>
 
 <script>
+let tbtn,pbtn;
 
-let selectedTypeBtn = null;
-let selectedPlanBtn = null;
-
-function setType(btn, type){
-  localStorage.setItem("partnerType", type);
-
-  if(selectedTypeBtn) selectedTypeBtn.classList.remove("active");
-  btn.classList.add("active");
-  selectedTypeBtn = btn;
-
-  document.getElementById("typeText").innerText = "Selected: " + type;
+function setType(btn,type){
+localStorage.setItem("partnerType",type);
+if(tbtn)tbtn.classList.remove("active");
+btn.classList.add("active");
+tbtn=btn;
 }
 
-function selectPlan(btn, price){
-
-  const type = localStorage.getItem("partnerType");
-
-  if(!type){
-    alert("⚠️ Pehle partner type select karo");
-    return;
-  }
-
-  localStorage.setItem("planPrice", price);
-
-  if(selectedPlanBtn) selectedPlanBtn.classList.remove("active");
-  btn.classList.add("active");
-  selectedPlanBtn = btn;
-
-  document.getElementById("planText").innerText = "Plan: ₹" + price;
-
-  // 🔥 redirect after short delay
-  setTimeout(()=>{
-    window.location.href = "partner-form.html";
-  }, 500);
+function selectPlan(btn,price){
+if(!localStorage.getItem("partnerType")){
+alert("Select type first");
+return;
 }
+localStorage.setItem("planPrice",price);
+if(pbtn)pbtn.classList.remove("active");
+btn.classList.add("active");
+pbtn=btn;
 
+setTimeout(()=>window.location="partner-form.html",500);
+}
 </script>
 
 </body>

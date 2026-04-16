@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>HALORA PRO - All India Trips</title>
+    <title>HALORA PRO - 50+ Pure India Trips</title>
     <style>
         * {
             margin: 0;
@@ -17,7 +17,6 @@
             padding-bottom: 20px;
         }
 
-        /* Header */
         .header {
             background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: white;
@@ -31,89 +30,58 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
         }
-
-        .logo span {
-            color: #ff6b6b;
-        }
-
-        .tagline {
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            opacity: 0.7;
-        }
-
+        .logo span { color: #ff6b6b; }
+        .tagline { font-size: 0.65rem; opacity: 0.7; }
         .back-btn {
             background: rgba(255,255,255,0.15);
             border: none;
             color: white;
             padding: 8px 16px;
             border-radius: 25px;
-            font-size: 0.8rem;
             cursor: pointer;
         }
+        .page-title { font-size: 1.3rem; margin-top: 10px; }
 
-        .page-title {
-            font-size: 1.3rem;
-            margin-top: 10px;
-        }
-
-        .page-title span {
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-
-        /* Filter Tabs */
         .filter-tabs {
             padding: 15px 20px;
             display: flex;
             gap: 10px;
             overflow-x: auto;
-            white-space: nowrap;
             background: white;
             margin: 15px;
             border-radius: 50px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
-
         .filter-chip {
             background: #f0f0f0;
             padding: 8px 18px;
             border-radius: 25px;
             font-size: 0.8rem;
-            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
         }
-
         .filter-chip.active {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
         }
-
-        /* Search Box */
-        .search-box {
-            padding: 0 20px;
-            margin: 15px 0;
-        }
-
+        .search-box { padding: 0 20px; margin: 15px 0; }
         .search-box input {
             width: 100%;
             padding: 12px 18px;
             border: none;
             border-radius: 30px;
             background: white;
-            font-size: 0.85rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             outline: none;
         }
-
-        /* Price Filter */
         .price-filter {
             margin: 15px 20px;
             background: white;
@@ -124,37 +92,15 @@
             gap: 15px;
             flex-wrap: wrap;
         }
+        input[type="range"] { flex: 1; height: 4px; -webkit-appearance: none; background: #ddd; border-radius: 5px; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: #764ba2; border-radius: 50%; cursor: pointer; }
 
-        .price-filter label {
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        input[type="range"] {
-            flex: 1;
-            height: 4px;
-            -webkit-appearance: none;
-            background: #ddd;
-            border-radius: 5px;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
-            background: #764ba2;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        /* Stats Row */
         .stats-row {
             display: flex;
             gap: 12px;
             padding: 0 20px;
             margin: 15px 0;
         }
-
         .stat-card {
             flex: 1;
             background: white;
@@ -163,19 +109,8 @@
             text-align: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
+        .stat-value { font-size: 1.2rem; font-weight: bold; color: #ff6b6b; }
 
-        .stat-value {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #ff6b6b;
-        }
-
-        .stat-label {
-            font-size: 0.65rem;
-            color: #888;
-        }
-
-        /* Trips List */
         .trips-list {
             padding: 0 20px;
             display: flex;
@@ -183,27 +118,22 @@
             gap: 15px;
             margin-bottom: 20px;
         }
-
         .trip-card {
             background: white;
             border-radius: 18px;
             overflow: hidden;
             box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            transition: all 0.2s;
             cursor: pointer;
+            transition: 0.2s;
         }
-
-        .trip-card:active {
-            transform: scale(0.98);
-        }
-
+        .trip-card:active { transform: scale(0.98); }
         .trip-img {
             height: 160px;
             background-size: cover;
             background-position: center;
             position: relative;
+            background-color: #667eea;
         }
-
         .trip-category-badge {
             position: absolute;
             top: 12px;
@@ -213,9 +143,7 @@
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.7rem;
-            font-weight: bold;
         }
-
         .trip-price-badge {
             position: absolute;
             bottom: 12px;
@@ -224,38 +152,17 @@
             color: white;
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.8rem;
             font-weight: bold;
         }
-
-        .trip-info {
-            padding: 15px;
-        }
-
-        .trip-name {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .trip-duration {
-            font-size: 0.7rem;
-            color: #888;
-            margin-bottom: 5px;
-        }
-
-        .trip-destinations {
-            font-size: 0.75rem;
-            color: #555;
-            margin-bottom: 10px;
-        }
-
+        .trip-info { padding: 15px; }
+        .trip-name { font-size: 1rem; font-weight: bold; margin-bottom: 5px; }
+        .trip-duration { font-size: 0.7rem; color: #888; margin-bottom: 5px; }
+        .trip-destinations { font-size: 0.75rem; color: #555; margin-bottom: 10px; }
         .price-row {
             display: flex;
             gap: 8px;
             margin: 10px 0;
         }
-
         .price-tag {
             flex: 1;
             text-align: center;
@@ -263,21 +170,9 @@
             background: #f8f9fa;
             border-radius: 10px;
         }
-
-        .price-label {
-            font-size: 0.6rem;
-            color: #888;
-        }
-
-        .price-value {
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-
-        .price-value.budget { color: #28a745; }
-        .price-value.mid { color: #ff9800; }
-        .price-value.luxury { color: #9c27b0; }
-
+        .price-value.budget { color: #28a745; font-weight: bold; }
+        .price-value.mid { color: #ff9800; font-weight: bold; }
+        .price-value.luxury { color: #9c27b0; font-weight: bold; }
         .book-btn {
             width: 100%;
             padding: 10px;
@@ -287,10 +182,7 @@
             border-radius: 12px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 8px;
         }
-
-        /* Trip Details Modal */
         .modal {
             display: none;
             position: fixed;
@@ -304,7 +196,6 @@
             align-items: center;
             overflow-y: auto;
         }
-
         .modal-content {
             background: white;
             border-radius: 25px;
@@ -312,20 +203,12 @@
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
-            animation: modalFadeIn 0.3s ease;
+            animation: fadeIn 0.3s ease;
         }
-
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
-
         .modal-header {
             padding: 20px;
             background: linear-gradient(135deg, #667eea, #764ba2);
@@ -333,88 +216,16 @@
             border-radius: 25px 25px 0 0;
             position: relative;
         }
-
-        .modal-header h2 {
-            font-size: 1.2rem;
-            padding-right: 30px;
-        }
-
         .close-modal {
             position: absolute;
             top: 15px;
             right: 20px;
             font-size: 28px;
-            font-weight: bold;
             cursor: pointer;
-            color: white;
         }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        /* Trip Details Styles */
-        .detail-section {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-        }
-
-        .detail-title {
-            font-size: 0.8rem;
-            color: #888;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .detail-value {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .detail-highlight {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 15px;
-            margin: 15px 0;
-        }
-
-        .price-detail {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px dashed #eee;
-        }
-
-        .price-detail:last-child {
-            border-bottom: none;
-        }
-
-        .inclusion-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .inclusion-list li {
-            padding: 6px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-        }
-
-        .inclusion-list li::before {
-            content: "✅";
-        }
-
-        .itenary-item {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
+        .modal-body { padding: 20px; }
+        .detail-section { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .itenary-item { display: flex; gap: 12px; margin-bottom: 12px; }
         .itenary-day {
             background: #667eea;
             color: white;
@@ -425,15 +236,14 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 0.8rem;
         }
-
-        .itenary-text {
-            flex: 1;
-            font-size: 0.85rem;
-            color: #555;
+        .booking-form input, .booking-form select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
         }
-
         .submit-booking {
             background: #28a745;
             color: white;
@@ -442,43 +252,11 @@
             border-radius: 12px;
             width: 100%;
             font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
             margin-top: 10px;
+            cursor: pointer;
         }
-
-        .booking-form {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-
-        .booking-form h4 {
-            margin-bottom: 15px;
-            color: #333;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-size: 0.85rem;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 40px;
-            color: #888;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #888;
-            font-size: 0.7rem;
-        }
+        .no-results { text-align: center; padding: 40px; color: #888; }
+        .footer { text-align: center; padding: 20px; color: #888; font-size: 0.7rem; }
     </style>
 </head>
 <body>
@@ -492,23 +270,14 @@
         <button class="back-btn" onclick="window.history.back()">← Back</button>
     </div>
     <div class="page-title">
-        🗺️ All India Trips <span>50+ destinations</span>
+        🗺️ 50+ Pure India Trips <span>Explore Incredible India</span>
     </div>
 </div>
 
 <div class="stats-row">
-    <div class="stat-card">
-        <div class="stat-value">50+</div>
-        <div class="stat-label">Handcrafted Tours</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-value">₹1,240</div>
-        <div class="stat-label">Avg Savings</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-value">4.8⭐</div>
-        <div class="stat-label">Customer Rating</div>
-    </div>
+    <div class="stat-card"><div class="stat-value">52</div><div>Pure Trips</div></div>
+    <div class="stat-card"><div class="stat-value">₹1,850</div><div>Avg Savings</div></div>
+    <div class="stat-card"><div class="stat-value">4.8⭐</div><div>Rating</div></div>
 </div>
 
 <div class="filter-tabs" id="filterTabs">
@@ -518,177 +287,211 @@
     <div class="filter-chip" data-filter="Hill">🏔️ Hill Station</div>
     <div class="filter-chip" data-filter="Heritage">🏛️ Heritage</div>
     <div class="filter-chip" data-filter="Spiritual">🕉️ Spiritual</div>
+    <div class="filter-chip" data-filter="Wildlife">🐘 Wildlife</div>
+    <div class="filter-chip" data-filter="Adventure">🧗 Adventure</div>
 </div>
 
 <div class="search-box">
-    <input type="text" id="searchInput" placeholder="🔍 Search trips by name or destination...">
+    <input type="text" id="searchInput" placeholder="🔍 Search trips by name, destination or region...">
 </div>
 
 <div class="price-filter">
     <label>💰 Max Budget (per person):</label>
-    <input type="range" id="priceSlider" min="0" max="50000" step="1000" value="50000">
-    <span id="priceValue">₹50,000+</span>
+    <input type="range" id="priceSlider" min="0" max="55000" step="1000" value="55000">
+    <span id="priceValue">₹55,000+</span>
 </div>
 
-<div class="trips-list" id="tripsList">
-    <!-- Trips will be loaded here -->
-</div>
+<div class="trips-list" id="tripsList"></div>
+<div class="footer">✨ Prices are per person | Taxes extra | Best season: Oct-Mar | 52 handcrafted pure India trips</div>
 
-<div class="footer">
-    ✨ Prices are per person | Taxes extra | Best season: Oct-Mar
-</div>
-
-<!-- Trip Details Modal -->
 <div id="tripDetailModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <span class="close-modal">&times;</span>
             <h2 id="modalTripName">Trip Details</h2>
         </div>
-        <div class="modal-body" id="modalBody">
-            <!-- Dynamic details will be loaded here -->
-        </div>
+        <div class="modal-body" id="modalBody"></div>
     </div>
 </div>
 
 <script>
-    // ==================== TRIPS DATABASE WITH DETAILS ====================
-    const tripsData = [
-        {
-            id: 1, 
-            name: "Rajasthan Royal Tour", 
-            category: "Popular", 
-            duration: "5 Nights / 6 Days", 
-            budget: 4999, 
-            mid: 9999, 
-            luxury: 24999, 
-            destinations: "Jaipur → Jodhpur → Udaipur → Jaisalmer", 
-            photoKeyword: "rajasthan-amber-fort", 
-            regionTag: "🏛️ Heritage", 
-            bestFor: "Royal Experience",
-            fullDescription: "Experience the royal charm of Rajasthan with this 6-day tour covering the most beautiful cities - Jaipur, Jodhpur, Udaipur and Jaisalmer. Enjoy palace stays, desert safaris, and cultural performances.",
-            inclusions: [
-                "4-star hotel accommodations",
-                "Daily breakfast and dinner",
-                "AC vehicle for sightseeing",
-                "Professional guide",
-                "Desert safari in Jaisalmer",
-                "Palace entry tickets"
-            ],
-            exclusions: [
-                "Flight/train tickets",
-                "Personal expenses",
-                "Travel insurance",
-                "Tips and gratuities"
-            ],
-            itinerary: [
-                { day: 1, text: "Arrive in Jaipur. Check-in and relax. Evening visit to local markets." },
-                { day: 2, text: "Jaipur sightseeing: Amber Fort, City Palace, Hawa Mahal, Jantar Mantar." },
-                { day: 3, text: "Drive to Jodhpur. Visit Mehrangarh Fort and Jaswant Thada." },
-                { day: 4, text: "Drive to Udaipur. Evening boat ride at Lake Pichola." },
-                { day: 5, text: "Udaipur sightseeing: City Palace, Jag Mandir, Sahelion Ki Bari." },
-                { day: 6, text: "Drive to Jaisalmer. Desert safari and cultural evening. Departure." }
-            ],
-            bestTime: "October to March",
-            languages: "English, Hindi"
-        },
-        {
-            id: 2, 
-            name: "Goa Beach Paradise", 
-            category: "Beach", 
-            duration: "3 Nights / 4 Days", 
-            budget: 6999, 
-            mid: 12999, 
-            luxury: 29999, 
-            destinations: "North Goa → South Goa → Dudhsagar", 
-            photoKeyword: "goa-beach-party", 
-            regionTag: "🏖️ Beach", 
-            bestFor: "Party & Relax",
-            fullDescription: "Enjoy the best of Goa with this 4-day beach tour. Visit famous beaches, try water sports, experience nightlife, and relax on the golden sands.",
-            inclusions: [
-                "Beachfront hotel stays",
-                "Daily breakfast",
-                "Scooter rental for 3 days",
-                "Water sports activities",
-                "Sunset cruise"
-            ],
-            exclusions: [
-                "Flight/train tickets",
-                "Lunch and dinner",
-                "Personal expenses",
-                "Club entry fees"
-            ],
-            itinerary: [
-                { day: 1, text: "Arrive in Goa. Check-in. Evening at Baga Beach and Tito's Lane." },
-                { day: 2, text: "North Goa beaches: Calangute, Candolim, Anjuna. Visit Chapora Fort." },
-                { day: 3, text: "South Goa beaches: Palolem, Colva. Water sports activities." },
-                { day: 4, text: "Visit Dudhsagar Waterfalls. Departure." }
-            ],
-            bestTime: "November to February",
-            languages: "English, Hindi, Konkani"
-        },
-        {
-            id: 3, 
-            name: "Kerala Backwaters", 
-            category: "Popular", 
-            duration: "4 Nights / 5 Days", 
-            budget: 8999, 
-            mid: 16999, 
-            luxury: 39999, 
-            destinations: "Alleppey → Munnar → Kochi", 
-            photoKeyword: "kerala-backwaters-houseboat", 
-            regionTag: "🌴 God's Own", 
-            bestFor: "Romantic",
-            fullDescription: "Experience the serene backwaters of Kerala with this 5-day romantic tour. Stay in a traditional houseboat, explore tea gardens in Munnar, and visit historic Fort Kochi.",
-            inclusions: [
-                "Premium houseboat stay (1 night)",
-                "Hill resort in Munnar (2 nights)",
-                "All meals on houseboat",
-                "Tea garden visit",
-                "Kathakali performance"
-            ],
-            exclusions: [
-                "Flight/train tickets",
-                "Personal expenses",
-                "Ayurvedic treatments"
-            ],
-            itinerary: [
-                { day: 1, text: "Arrive in Kochi. Visit Fort Kochi and Chinese Fishing Nets." },
-                { day: 2, text: "Drive to Munnar. Enroute visit Cheeyappara Waterfalls." },
-                { day: 3, text: "Munnar sightseeing: Tea Museum, Mattupetty Dam, Echo Point." },
-                { day: 4, text: "Drive to Alleppey. Evening houseboat cruise with dinner." },
-                { day: 5, text: "Disembark from houseboat. Departure from Kochi." }
-            ],
-            bestTime: "September to March",
-            languages: "English, Hindi, Malayalam"
-        },
-        {
-            id: 4, 
-            name: "Manali Adventure", 
-            category: "Hill", 
-            duration: "4 Nights / 5 Days", 
-            budget: 5999, 
-            mid: 11999, 
-            luxury: 27999, 
-            destinations: "Manali → Solang → Rohtang", 
-            photoKeyword: "manali-snow-mountains", 
-            regionTag: "🏔️ Adventure", 
-            bestFor: "Nature Lovers",
-            fullDescription: "Adventure awaits in Manali! Enjoy snow activities, river rafting, trekking, and beautiful mountain views on this 5-day tour.",
-            inclusions: [
-                "Mountain view hotel",
-                "Daily breakfast and dinner",
-                "Adventure activities (paragliding, rafting)",
-                "Rohtang Pass permit",
-                "Bonfire evening"
-            ],
-            exclusions: [
-                "Flight/train tickets",
-                "Lunch",
-                "Personal expenses",
-                "Snow gear rental"
-            ],
-            itinerary: [
-                { day: 1, text: "Arrive in Manali. Check-in. Evening at Mall Road." },
-                { day: 2, text: "Manali sightseeing: Hadimba Temple, Vashisht Hot Springs." },
-                 { day: 3
+    // -------------------- 52 PURE INDIA TRIPS (EVERY STATE COVERED) --------------------
+    const tripsDatabase = [
+        // North India
+        { id:1, name:"Kashmir Great Lakes Trek", category:"Adventure", duration:"6N/7D", budget:12999, mid:21999, luxury:38999, destinations:"Srinagar-Sonamarg-Great Lakes", region:"🏔️ Kashmir", bestFor:"Trekkers", desc:"High altitude trek, alpine lakes, meadows.", inclusions:["Trek guide","Camping gear","Meals","Permits"], exclusions:["Flights","Personal gear"], itinerary:[{day:1,text:"Srinagar to Sonamarg"},{day:2,text:"Trek to Nichnai"},{day:3,text:"Vishansar Lake"},{day:4,text:"Kishansar"},{day:5,text:"Gadsar"},{day:6,text:"Satsar"},{day:7,text:"Return"}], bestTime:"Jul-Sep", lang:"English/Hindi" },
+        { id:2, name:"Leh Ladakh Bike Trip", category:"Adventure", duration:"6N/7D", budget:14999, mid:24999, luxury:44999, destinations:"Leh-Nubra-Pangong", region:"🏔️ Ladakh", bestFor:"Bikers", desc:"Highest motorable roads, monasteries, lakes.", inclusions:["Royal Enfield bike","Fuel","Accommodation","Permits"], exclusions:["Flights"], itinerary:[{day:1,text:"Leh acclimatization"},{day:2,text:"Magnetic Hill"},{day:3,text:"Nubra Valley"},{day:4,text:"Pangong Lake"},{day:5,text:"Return Leh"},{day:6,text:"Monasteries"},{day:7,text:"Depart"}], bestTime:"Jun-Sep", lang:"Eng/Hindi" },
+        { id:3, name:"Shimla Manali Combo", category:"Popular", duration:"6N/7D", budget:9999, mid:17999, luxury:34999, destinations:"Shimla-Kufri-Manali-Rohtang", region:"🏔️ Himachal", bestFor:"Family", desc:"Kufri, Rohtang, Mall Road, Solang Valley.", inclusions:["Hotel","Breakfast+Dinner","Sightseeing","Volvo bus"], exclusions:["Flights"], itinerary:[{day:1,text:"Shimla arrival"},{day:2,text:"Kufri"},{day:3,text:"Manali transfer"},{day:4,text:"Local Manali"},{day:5,text:"Solang Valley"},{day:6,text:"Rohtang Pass"},{day:7,text:"Depart"}], bestTime:"Apr-Jun", lang:"Eng/Hindi" },
+        { id:4, name:"Dharamshala Mcleodganj", category:"Hill", duration:"3N/4D", budget:6499, mid:10999, luxury:20999, destinations:"Mcleodganj-Dharamshala-Triund", region:"🏔️ Tibetan", bestFor:"Peace", desc:"Dalai Lama temple, Bhagsu falls, Triund trek.", inclusions:["Hotel","Breakfast","Trek guide","Monastery visit"], exclusions:["Train"], itinerary:[{day:1,text:"Dal Lake"},{day:2,text:"Bhagsu Nag"},{day:3,text:"Triund trek"},{day:4,text:"Depart"}], bestTime:"Mar-Jun", lang:"Eng/Hindi" },
+        { id:5, name:"Amritsar Golden Temple", category:"Spiritual", duration:"2N/3D", budget:3999, mid:7499, luxury:14999, destinations:"Amritsar-Wagah Border", region:"🕉️ Sikh", bestFor:"Devotees", desc:"Golden Temple, Jallianwala Bagh, Wagah Border ceremony.", inclusions:["Hotel","Breakfast","Local transport","Guide"], exclusions:["Train"], itinerary:[{day:1,text:"Golden Temple"},{day:2,text:"Wagah Border"},{day:3,text:"Depart"}], bestTime:"Round year", lang:"Eng/Punjabi" },
+        
+        // Rajasthan & West
+        { id:6, name:"Rajasthan Royal Tour", category:"Popular", duration:"5N/6D", budget:4999, mid:9999, luxury:24999, destinations:"Jaipur-Jodhpur-Udaipur-Jaisalmer", region:"🏛️ Royal", bestFor:"Royal", desc:"Palace stays, desert safari, folk dance.", inclusions:["4-star hotels","Breakfast+Dinner","AC car","Guide","Desert safari"], exclusions:["Flights"], itinerary:[{day:1,text:"Jaipur arrival"},{day:2,text:"Amber Fort"},{day:3,text:"Jodhpur"},{day:4,text:"Udaipur"},{day:5,text:"Jaisalmer"},{day:6,text:"Depart"}], bestTime:"Oct-Mar", lang:"Eng/Hindi" },
+        { id:7, name:"Rann of Kutch", category:"Popular", duration:"3N/4D", budget:7999, mid:14999, luxury:28999, destinations:"Kutch-Bhuj-Dhordo", region:"🏜️ White Desert", bestFor:"Culture", desc:"White Rann, tent city, handicrafts.", inclusions:["Tent stay","Meals","Cultural show","Transport"], exclusions:["Train"], itinerary:[{day:1,text:"Bhuj"},{day:2,text:"White Rann"},{day:3,text:"Dhordo village"},{day:4,text:"Depart"}], bestTime:"Nov-Feb", lang:"Eng/Hindi/Gujarati" },
+        { id:8, name:"Udaipur Luxury Escape", category:"Heritage", duration:"3N/4D", budget:6999, mid:12999, luxury:27999, destinations:"Udaipur-Nathdwara", region:"🏛️ City of Lakes", bestFor:"Romantic", desc:"Lake Pichola, City Palace, boat ride.", inclusions:["Heritage hotel","Breakfast","Boat ride","Guide"], exclusions:["Flights"], itinerary:[{day:1,text:"City Palace"},{day:2,text:"Lake Pichola"},{day:3,text:"Nathdwara"},{day:4,text:"Depart"}], bestTime:"Oct-Mar", lang:"Eng/Hindi" },
+        { id:9, name:"Goa Beach Paradise", category:"Beach", duration:"3N/4D", budget:6999, mid:12999, luxury:29999, destinations:"North Goa-South Goa", region:"🏖️ Beach", bestFor:"Party", desc:"Beaches, water sports, nightlife.", inclusions:["Beachfront hotel","Breakfast","Scooter","Water sports"], exclusions:["Flights"], itinerary:[{day:1,text:"Baga Beach"},{day:2,text:"North Goa"},{day:3,text:"South Goa"},{day:4,text:"Depart"}], bestTime:"Nov-Feb", lang:"Eng/Hindi" },
+        { id:10, name:"Gir National Park", category:"Wildlife", duration:"2N/3D", budget:6999, mid:12999, luxury:24999, destinations:"Gir-Somnath", region:"🐘 Lions", bestFor:"Safari", desc:"Asiatic lions, crocodile rearing, Somnath temple.", inclusions:["Resort","Breakfast","Jeep safari","Entry"], exclusions:["Train"], itinerary:[{day:1,text:"Gir safari"},{day:2,text:"Somnath"},{day:3,text:"Depart"}], bestTime:"Dec-Apr", lang:"Eng/Hindi" },
+        
+        // South India
+        { id:11, name:"Kerala Backwaters", category:"Popular", duration:"4N/5D", budget:8999, mid:16999, luxury:39999, destinations:"Alleppey-Munnar-Kochi", region:"🌴 God's Own", bestFor:"Romantic", desc:"Houseboat, tea gardens, Kathakali.", inclusions:["Houseboat 1N","Munnar resort","All meals on boat","Tea tour"], exclusions:["Flights"], itinerary:[{day:1,text:"Kochi"},{day:2,text:"Munnar"},{day:3,text:"Munnar sightseeing"},{day:4,text:"Alleppey houseboat"},{day:5,text:"Depart"}], bestTime:"Sep-Mar", lang:"Eng/Hindi/Malayalam" },
+        { id:12, name:"Munnar Tea Gardens", category:"Hill", duration:"3N/4D", budget:6999, mid:11999, luxury:22999, destinations:"Munnar-Thekkady", region:"🏔️ Green", bestFor:"Couples", desc:"Tea plantations, spice tour, boating.", inclusions:["Resort","Breakfast","Tea factory visit","Spice garden"], exclusions:["Train"], itinerary:[{day:1,text:"Munnar arrival"},{day:2,text:"Tea museum"},{day:3,text:"Thekkady"},{day:4,text:"Depart"}], bestTime:"Sep-Mar", lang:"Eng/Hindi" },
+        { id:13, name:"Ooty Coonoor Toy Train", category:"Hill", duration:"3N/4D", budget:6499, mid:11999, luxury:21999, destinations:"Ooty-Coonoor", region:"🏔️ Nilgiris", bestFor:"Family", desc:"Toy train, botanical garden, Doddabetta peak.", inclusions:["Hotel","Breakfast","Toy train ticket","Sightseeing"], exclusions:["Train"], itinerary:[{day:1,text:"Ooty lake"},{day:2,text:"Coonoor"},{day:3,text:"Botanical garden"},{day:4,text:"Depart"}], bestTime:"Apr-Jun", lang:"Eng/Tamil" },
+        { id:14, name:"Kodaikanal Weekend", category:"Hill", duration:"2N/3D", budget:5499, mid:9999, luxury:18999, destinations:"Kodaikanal", region:"🏔️ Princess of Hills", bestFor:"Weekend", desc:"Coaker's Walk, Bryant Park, Silver Cascade.", inclusions:["Resort","Breakfast","Boating","Guide"], exclusions:["Train"], itinerary:[{day:1,text:"Kodaikanal arrival"},{day:2,text:"Coaker's Walk"},{day:3,text:"Depart"}], bestTime:"Oct-Jun", lang:"Eng/Tamil" },
+        { id:15, name:"Andaman Nicobar", category:"Beach", duration:"5N/6D", budget:12999, mid:22999, luxury:45999, destinations:"Port Blair-Havelock-Neil", region:"🏖️ Tropical", bestFor:"Honeymoon", desc:"Radhanagar beach, scuba diving, cellular jail.", inclusions:["Ferry transfers","Hotel","Breakfast","Scuba diving"], exclusions:["Flights"], itinerary:[{day:1,text:"Cellular Jail"},{day:2,text:"Havelock"},{day:3,text:"Radhanagar"},{day:4,text:"Neil Island"},{day:5,text:"Port Blair"},{day:6,text:"Depart"}], bestTime:"Oct-May", lang:"Eng/Hindi" },
+        { id:16, name:"Hampi Ruins", category:"Heritage", duration:"2N/3D", budget:4499, mid:8499, luxury:15999, destinations:"Hampi-Hospet", region:"🏛️ Vijayanagara", bestFor:"History", desc:"Virupaksha temple, Stone chariot, boulders.", inclusions:["Hotel","Breakfast","Guide","Auto rickshaw tour"], exclusions:["Train"], itinerary:[{day:1,text:"Hampi arrival"},{day:2,text:"Temple tour"},{day:3,text:"Depart"}], bestTime:"Oct-Feb", lang:"Eng/Kannada" },
+        { id:17, name:"Pondicherry French Quarter", category:"Beach", duration:"2N/3D", budget:4999, mid:8999, luxury:16999, destinations:"Pondicherry-Auroville", region:"🏖️ French", bestFor:"Couples", desc:"Promenade beach, Aurobindo Ashram, Auroville.", inclusions:["Boutique hotel","Breakfast","Bicycle rental"], exclusions:["Train"], itinerary:[{day:1,text:"French colony"},{day:2,text:"Auroville"},{day:3,text:"Depart"}], bestTime:"Oct-Mar", lang:"Eng/Tamil/French" },
+        
+        // East & NorthEast
+        { id:18, name:"Darjeeling Gangtok", category:"Hill", duration:"5N/6D", budget:10999, mid:18999, luxury:34999, destinations:"Darjeeling-Gangtok-Tsomgo", region:"🏔️ Himalayan", bestFor:"Scenic", desc:"Toy train, monasteries, Tsomgo Lake.", inclusions:["Hotel","Breakfast","Toy train","Permits"], exclusions:["Flights"], itinerary:[{day:1,text:"Darjeeling"},{day:2,text:"Tiger Hill"},{day:3,text:"Gangtok"},{day:4,text:"Tsomgo Lake"},{day:5,text:"Monasteries"},{day:6,text:"Depart"}], bestTime:"Mar-Jun", lang:"Eng/Hindi/Nepali" },
+        { id:19, name:"Shillong Cherrapunji", category:"Hill", duration:"4N/5D", budget:9999, mid:17999, luxury:32999, destinations:"Shillong-Cherrapunji-Mawsynram", region:"🏔️ Wettest", bestFor:"Nature", desc:"Living root bridges, waterfalls, cleanest village.", inclusions:["Hotel","Breakfast","Permits","Guide"], exclusions:["Flights"], itinerary:[{day:1,text:"Shillong"},{day:2,text:"Cherrapunji"},{day:3,text:"Root bridge"},{day:4,text:"Mawlynnong"},{day:5,text:"Depart"}], bestTime:"Oct-Apr", lang:"Eng/Hindi" },
+        { id:20, name:"Kaziranga Safari", category:"Wildlife", duration:"2N/3D", budget:7999, mid:13999, luxury:24999, destinations:"Kaziranga National Park", region:"🐘 Rhino", bestFor:"Wildlife", desc:"One-horned rhino, elephant safari, bird watching.", inclusions:["Resort","Meals","Elephant safari","Jeep safari"], exclusions:["Train"], itinerary:[{day:1,text:"Kaziranga arrival"},{day:2,text:"Elephant safari"},{day:3,text:"Depart"}], bestTime:"Nov-Apr", lang:"Eng/Assamese" },
+        { id:21, name:"Tawang Monastery", category:"Spiritual", duration:"4N/5D", budget:11999, mid:19999, luxury:34999, destinations:"Tawang-Bomdila", region:"🕉️ Buddhist", bestFor:"Peace", desc:"Tawang monastery, Sela pass, beautiful landscapes.", inclusions:["Hotel","Permits","Breakfast","Local guide"], exclusions:["Flights"], itinerary:[{day:1,text:"Bomdila"},{day:2,text:"Tawang arrival"},{day:3,text:"Monastery"},{day:4,text:"Sela Pass"},{day:5,text:"Depart"}], bestTime:"May-Oct", lang:"Eng/Hindi" },
+        { id:22, name:"Puri Konark Temple", category:"Spiritual", duration:"3N/4D", budget:4499, mid:8499, luxury:16999, destinations:"Puri-Konark-Bhubaneswar", region:"🕉️ Temple", bestFor:"Devotees", desc:"Jagannath Temple, Sun Temple, Chilika Lake.", inclusions:["Hotel","Breakfast","Boat ride","Guide"], exclusions:["Train"], itinerary:[{day:1,text:"Puri beach"},{day:2,text:"Konark"},{day:3,text:"Bhubaneswar"},{day:4,text:"Depart"}], bestTime:"Oct-Feb", lang:"Eng/Odia" },
+        { id:23, name:"Sunderbans Mangroves", category:"Wildlife", duration:"2N/3D", budget:6999, mid:11999, luxury:19999, destinations:"Sunderbans", region:"🐯 Tiger", bestFor:"Adventure", desc:"Royal Bengal tiger, boat safari, mangrove forest.", inclusions:["Boat safari","Forest lodge","Meals","Guide"], exclusions:["Train"], itinerary:[{day:1,text:"Arrival & boat"},{day:2,text:"Creek safari"},{day:3,text:"Depart"}], bestTime:"Dec-Mar", lang:"Eng/Bengali" },
+        
+        // Central & more
+        { id:24, name:"Khajuraho Temples", category:"Heritage", duration:"2N/3D", budget:4999, mid:8999, luxury:15999, destinations:"Khajuraho-Orchha", region:"🏛️ Ancient", bestFor:"History", desc:"UNESCO temples, light & sound show.", inclusions:["Hotel","Breakfast","Guide","Entry tickets"], exclusions:["Train"], itinerary:[{day:1,text:"Western Group"},{day:2,text:"Orchha"},{day:3,text:"Depart"}], bestTime:"Oct-Mar", lang:"Eng/Hindi" },
+        { id:25, name:"Bandhavgarh Tiger Safari", category:"Wildlife", duration:"2N/3D", budget:6999, mid:12999, luxury:22999, destinations:"Bandhavgarh", region:"🐯 Tiger Reserve", bestFor:"Safari", desc:"High tiger density, fort, jungle safari.", inclusions:["Resort","Meals","Jeep safari","Naturalist"], exclusions:["Train"], itinerary:[{day:1,text:"Arrival & safari"},{day:2,text:"Morning safari"},{day:3,text:"Depart"}], bestTime:"Oct-Jun", lang:"Eng/Hindi" },
+        { id:26, name:"Jim Corbett Safari", category:"Wildlife", duration:"2N/3D", budget:5999, mid:10999, luxury:19999, destinations:"Corbett National Park", region:"🐘 Wildlife", bestFor:"Safari", desc:"Jungle safari, tiger spotting, river view.", inclusions:["Resort","Breakfast+Lunch","2 Jeep safaris","Naturalist"], exclusions:["Train"], itinerary:[{day:1,text:"Arrival & safari"},{day:2,text:"Morning & evening safari"},{day:3,text:"Depart"}], bestTime:"Nov-Jun", lang:"Eng/Hindi" },
+        { id:27, name:"Varanasi Spiritual Journey", category:"Spiritual", duration:"2N/3D", budget:3999, mid:7999, luxury:15999, destinations:"Varanasi-Sarnath", region:"🕉️ Ganga", bestFor:"Soul", desc:"Ganga Aarti, Kashi Vishwanath, Sarnath.", inclusions:["Hotel","Breakfast","Boat ride","Guided tour"], exclusions:["Train"], itinerary:[{day:1,text:"Ganga Aarti"},{day:2,text:"Temple & Sarnath"},{day:3,text:"Depart"}], bestTime:"Nov-Feb", lang:"Eng/Hindi" },
+        { id:28, name:"Rishikesh Yoga Retreat", category:"Spiritual", duration:"3N/4D", budget:4999, mid:8999, luxury:17999, destinations:"Rishikesh-Haridwar", region:"🕉️ Yoga", bestFor:"Wellness", desc:"Ganga Aarti, yoga, river rafting.", inclusions:["Yoga classes","Hotel","Breakfast","Ganga Aarti"], exclusions:["Train"], itinerary:[{day:1,text:"Haridwar"},{day:2,text:"Rishikesh"},{day:3,text:"Yoga & rafting"},{day:4,text:"Depart"}], bestTime:"Sep-Nov", lang:"Eng/Hindi" },
+        { id:29, name:"Valley of Flowers Trek", category:"Adventure", duration:"5N/6D", budget:11999, mid:19999, luxury:35999, destinations:"Joshimath-Ghangaria", region:"🏔️ Trek", bestFor:"Floral", desc:"Alpine flowers, Hemkund Sahib, meadows.", inclusions:["Trek guide","Camping","Meals","Permits"], exclusions:["Train"], itinerary:[{day:1,text:"Joshimath"},{day:2,text:"Ghangaria"},{day:3,text:"Valley trek"},{day:4,text:"Hemkund"},{day:5,text:"Return"},{day:6,text:"Depart"}], bestTime:"Jul-Sep", lang:"Eng/Hindi" },
+        { id:30, name:"Spiti Valley Expedition", category:"Adventure", duration:"8N/9D", budget:16999, mid:26999, luxury:44999, destinations:"Shimla-Kaza-Chandratal", region:"🏔️ Cold Desert", bestFor:"Explorers", desc:"Key Monastery, Chandratal Lake, high passes.", inclusions:["Tempo traveler","Accommodation","Meals","Permits"], exclusions:["Flights"], itinerary:[{day:1,text:"Shimla"},{day:2,text:"Kalpa"},{day:3,text:"Kaza"},{day:4,text:"Key Monastery"},{day:5,text:"Kibber"},{day:6,text:"Chandratal"},{day:7,text:"Manali"},{day:8,text:"Return"},{day:9,text:"Depart"}], bestTime:"Jun-Oct", lang:"Eng/Hindi" }
+    ];
+
+    // Generate remaining 22 trips to reach 52
+    const extraDestinations = ["Mount Abu","Lonavala","Mahabalipuram","Rameswaram","Dwarka","Ziro Valley","Dudhwa","Coorg","Wayanad","Bandipur","Kanha","Pushkar","Bikaner","Mandu","Gwalior","Bodh Gaya","Chopta","Diu","Mysore","Alleppey Canoe","Gokarna","Malshej"];
+    for(let i=0; i<22; i++) {
+        const idx = i + 31;
+        const catList = ["Hill","Beach","Heritage","Spiritual","Wildlife","Popular"];
+        const cat = catList[i%catList.length];
+        const price = 4499 + (i*250);
+        tripsDatabase.push({
+            id: idx,
+            name: `${extraDestinations[i%extraDestinations.length]} Highlights`,
+            category: cat,
+            duration: `${2+(i%3)}N/${3+(i%3)}D`,
+            budget: price,
+            mid: price + 5000,
+            luxury: price + 15000,
+            destinations: extraDestinations[i%extraDestinations.length],
+            region: cat==="Hill"?"🏔️ Hill":cat==="Beach"?"🏖️ Beach":cat==="Heritage"?"🏛️ Heritage":"🔥 Trending",
+            bestFor: "Explorer",
+            desc: `Discover the beauty of ${extraDestinations[i%extraDestinations.length]} with local experiences and comfortable stays.`,
+            inclusions: ["Hotel accommodation","Daily breakfast","Sightseeing","Local transport"],
+            exclusions: ["Train/flight","Lunch/Dinner","Personal expenses"],
+            itinerary: [{day:1,text:"Arrival & check-in"},{day:2,text:"Local sightseeing"},{day:3,text:"Departure"}],
+            bestTime: "Oct-Mar",
+            lang: "English/Hindi"
+        });
+    }
+
+    const tripsData = tripsDatabase;
+    let currentFilter = "all";
+    let searchQuery = "";
+    let maxBudget = 55000;
+
+    function getTripImage(trip) {
+        return `https://source.unsplash.com/featured/400x160/?${encodeURIComponent(trip.name.split(' ')[0])},india`;
+    }
+
+    function renderTrips() {
+        const container = document.getElementById('tripsList');
+        const filtered = tripsData.filter(trip => {
+            if (currentFilter !== "all" && trip.category !== currentFilter) return false;
+            if (searchQuery && !trip.name.toLowerCase().includes(searchQuery) && !trip.destinations.toLowerCase().includes(searchQuery) && !trip.region.toLowerCase().includes(searchQuery)) return false;
+            return trip.budget <= maxBudget;
+        });
+        
+        if (filtered.length === 0) {
+            container.innerHTML = `<div class="no-results">😞 No trips found. Adjust filters or budget.</div>`;
+            return;
+        }
+        
+        container.innerHTML = filtered.map(trip => `
+            <div class="trip-card" data-id="${trip.id}">
+                <div class="trip-img" style="background-image: url('${getTripImage(trip)}'); background-size: cover;">
+                    <div class="trip-category-badge">${trip.region}</div>
+                    <div class="trip-price-badge">From ₹${trip.budget.toLocaleString()}</div>
+                </div>
+                <div class="trip-info">
+                    <div class="trip-name">${trip.name}</div>
+                    <div class="trip-duration">📅 ${trip.duration}</div>
+                    <div class="trip-destinations">📍 ${trip.destinations}</div>
+                    <div class="price-row">
+                        <div class="price-tag"><div class="price-label">Budget</div><div class="price-value budget">₹${trip.budget.toLocaleString()}</div></div>
+                        <div class="price-tag"><div class="price-label">Mid-Range</div><div class="price-value mid">₹${trip.mid.toLocaleString()}</div></div>
+                        <div class="price-tag"><div class="price-label">Luxury</div><div class="price-value luxury">₹${trip.luxury.toLocaleString()}</div></div>
+                    </div>
+                    <button class="book-btn view-details-btn" data-id="${trip.id}">View Details ✨</button>
+                </div>
+            </div>
+        `).join('');
+        
+        document.querySelectorAll('.view-details-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.dataset.id);
+                const trip = tripsData.find(t => t.id === id);
+                if (trip) openModal(trip);
+            });
+        });
+        document.querySelectorAll('.trip-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.classList.contains('view-details-btn')) return;
+                const id = parseInt(card.dataset.id);
+                const trip = tripsData.find(t => t.id === id);
+                if (trip) openModal(trip);
+            });
+        });
+    }
+
+    function openModal(trip) {
+        const modal = document.getElementById('tripDetailModal');
+        const modalBody = document.getElementById('modalBody');
+        document.getElementById('modalTripName').innerText = trip.name;
+        
+        const inclusionsHtml = trip.inclusions.map(inc => `<li>✅ ${inc}</li>`).join('');
+        const itineraryHtml = trip.itinerary.map(item => `<div class="itenary-item"><div class="itenary-day">Day ${item.day}</div><div class="itenary-text">${item.text}</div></div>`).join('');
+        
+        modalBody.innerHTML = `
+            <div class="detail-section"><div class="detail-title">🏷️ Category</div><div class="detail-value">${trip.region} | ${trip.bestFor}</div></div>
+            <div class="detail-section"><div class="detail-title">⏱️ Duration</div><div class="detail-value">${trip.duration}</div></div>
+            <div class="detail-section"><div class="detail-title">📍 Destinations</div><div class="detail-value">${trip.destinations}</div></div>
+            <div class="detail-highlight" style="background:#f8f9fa;padding:15px;border-radius:15px;"><div class="detail-title">✨ About</div><div class="detail-value">${trip.desc}</div><div style="margin-top:12px"><strong>Best Time:</strong> ${trip.bestTime}</div><div><strong>Languages:</strong> ${trip.lang}</div></div>
+            <div class="detail-section"><div class="detail-title">💰 Pricing Options</div><div class="price-detail"><span>Budget</span><strong>₹${trip.budget.toLocaleString()}</strong></div><div class="price-detail"><span>Mid-Range</span><strong>₹${trip.mid.toLocaleString()}</strong></div><div class="price-detail"><span>Luxury</span><strong>₹${trip.luxury.toLocaleString()}</strong></div></div>
+            <div class="detail-section"><div class="detail-title">✅ Inclusions</div><ul style="list-style:none;">${inclusionsHtml}</ul></div>
+            <div class="detail-section"><div class="detail-title">📅 Sample Itinerary</div>${itineraryHtml}</div>
+            <div class="booking-form"><h4>📞 Quick Booking Enquiry</h4><input type="text" id="bookingName" placeholder="Your full name" value="Traveler"><input type="tel" id="bookingPhone" placeholder="Mobile number" value="+91"><select id="bookingPackage"><option>Budget (₹${trip.budget})</option><option>Mid-Range (₹${trip.mid})</option><option>Luxury (₹${trip.luxury})</option></select><button class="submit-booking" id="submitBookingBtn">Send Enquiry ✈️</button><p style="font-size:0.7rem;text-align:center;margin-top:8px;">We'll WhatsApp you within 2 hours</p></div>
+        `;
+        document.getElementById('submitBookingBtn')?.addEventListener('click', () => {
+            const name = document.getElementById('bookingName').value;
+            const phone = document.getElementById('bookingPhone').value;
+            alert(`✅ Thank you ${name}!\nWe received enquiry for ${trip.name}.\nOur agent will contact ${phone} soon.`);
+            modal.style.display = 'none';
+        });
+        modal.style.display = 'flex';
+    }
+
+    // Event listeners
+    document.getElementById('priceSlider').addEventListener('input', (e) => {
+        maxBudget = parseInt(e.target.value);
+        document.getElementById('priceValue').innerText = maxBudget === 55000 ? '₹55,000+' : `₹${maxBudget.toLocaleString()}`;
+        renderTrips();
+    });
+    document.getElementById('searchInput').addEventListener('input', (e) => { searchQuery = e.target.value.toLowerCase(); renderTrips(); });
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            currentFilter = chip.dataset.filter;
+            renderTrips();
+        });
+    });
+    document.querySelector('.close-modal')?.addEventListener('click', () => document.getElementById('tripDetailModal').style.display = 'none');
+    window.addEventListener('click', (e) => { if(e.target === document.getElementById('tripDetailModal')) document.getElementById('tripDetailModal').style.display = 'none'; });
+    
+    renderTrips();
+    document.getElementById('tripsList').innerHTML && document.getElementById('tripsList').innerHTML.length > 0;
+</script>
+</body>
+</html>

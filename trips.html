@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>HALORA PRO - 50+ Pure India Trips (Firebase)</title>
     <style>
-        /* ========== ALL YOUR ORIGINAL STYLES (keep same) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; padding-bottom: 20px; }
         .header { background: linear-gradient(135deg, #1a1a2e, #16213e); color: white; padding: 20px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; }
@@ -69,7 +68,7 @@
         </div>
         <div>
             <button class="back-btn" onclick="window.history.back()">← Back</button>
-            <button class="seed-btn" id="seedBtn" style="display:none;">🌱 Seed Database</button>
+            <button class="seed-btn" id="seedBtn">🌱 Seed Database</button>
         </div>
     </div>
     <div class="page-title">🗺️ 50+ Pure India Trips <span>Explore Incredible India (Firebase)</span></div>
@@ -120,7 +119,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
     import { getFirestore, collection, getDocs, addDoc, query, limit } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
     
-    // Your Firebase config
     const firebaseConfig = {
         apiKey: "AIzaSyDJnOh92AYUzFeWtuLMtDciETdpCQ7-MNs",
         authDomain: "halorebook.firebaseapp.com",
@@ -135,7 +133,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     
-    // ---------- COMPLETE 52 TRIPS (static backup & seed data) ----------
+    // ---------- COMPLETE 52 TRIPS (seed data) ----------
     const fullTripsDatabase = [
         // North India (5)
         { name:"Kashmir Great Lakes Trek", category:"Adventure", duration:"6N/7D", budget:12999, mid:21999, luxury:38999, destinations:"Srinagar-Sonamarg-Great Lakes", region:"🏔️ Kashmir", bestFor:"Trekkers", desc:"High altitude trek, alpine lakes, meadows.", inclusions:["Trek guide","Camping gear","Meals","Permits"], exclusions:["Flights","Personal gear"], itinerary:[{day:1,text:"Srinagar to Sonamarg"},{day:2,text:"Trek to Nichnai"},{day:3,text:"Vishansar Lake"},{day:4,text:"Kishansar"},{day:5,text:"Gadsar"},{day:6,text:"Satsar"},{day:7,text:"Return"}], bestTime:"Jul-Sep", lang:"English/Hindi" },
@@ -143,7 +141,7 @@
         { name:"Shimla Manali Combo", category:"Popular", duration:"6N/7D", budget:9999, mid:17999, luxury:34999, destinations:"Shimla-Kufri-Manali-Rohtang", region:"🏔️ Himachal", bestFor:"Family", desc:"Kufri, Rohtang, Mall Road, Solang Valley.", inclusions:["Hotel","Breakfast+Dinner","Sightseeing","Volvo bus"], exclusions:["Flights"], itinerary:[{day:1,text:"Shimla arrival"},{day:2,text:"Kufri"},{day:3,text:"Manali transfer"},{day:4,text:"Local Manali"},{day:5,text:"Solang Valley"},{day:6,text:"Rohtang Pass"},{day:7,text:"Depart"}], bestTime:"Apr-Jun", lang:"Eng/Hindi" },
         { name:"Dharamshala Mcleodganj", category:"Hill", duration:"3N/4D", budget:6499, mid:10999, luxury:20999, destinations:"Mcleodganj-Dharamshala-Triund", region:"🏔️ Tibetan", bestFor:"Peace", desc:"Dalai Lama temple, Bhagsu falls, Triund trek.", inclusions:["Hotel","Breakfast","Trek guide","Monastery visit"], exclusions:["Train"], itinerary:[{day:1,text:"Dal Lake"},{day:2,text:"Bhagsu Nag"},{day:3,text:"Triund trek"},{day:4,text:"Depart"}], bestTime:"Mar-Jun", lang:"Eng/Hindi" },
         { name:"Amritsar Golden Temple", category:"Spiritual", duration:"2N/3D", budget:3999, mid:7499, luxury:14999, destinations:"Amritsar-Wagah Border", region:"🕉️ Sikh", bestFor:"Devotees", desc:"Golden Temple, Jallianwala Bagh, Wagah Border ceremony.", inclusions:["Hotel","Breakfast","Local transport","Guide"], exclusions:["Train"], itinerary:[{day:1,text:"Golden Temple"},{day:2,text:"Wagah Border"},{day:3,text:"Depart"}], bestTime:"Round year", lang:"Eng/Punjabi" },
-        // Rajasthan & West (5 more)
+        // Rajasthan & West (5)
         { name:"Rajasthan Royal Tour", category:"Popular", duration:"5N/6D", budget:4999, mid:9999, luxury:24999, destinations:"Jaipur-Jodhpur-Udaipur-Jaisalmer", region:"🏛️ Royal", bestFor:"Royal", desc:"Palace stays, desert safari, folk dance.", inclusions:["4-star hotels","Breakfast+Dinner","AC car","Guide","Desert safari"], exclusions:["Flights"], itinerary:[{day:1,text:"Jaipur arrival"},{day:2,text:"Amber Fort"},{day:3,text:"Jodhpur"},{day:4,text:"Udaipur"},{day:5,text:"Jaisalmer"},{day:6,text:"Depart"}], bestTime:"Oct-Mar", lang:"Eng/Hindi" },
         { name:"Rann of Kutch", category:"Popular", duration:"3N/4D", budget:7999, mid:14999, luxury:28999, destinations:"Kutch-Bhuj-Dhordo", region:"🏜️ White Desert", bestFor:"Culture", desc:"White Rann, tent city, handicrafts.", inclusions:["Tent stay","Meals","Cultural show","Transport"], exclusions:["Train"], itinerary:[{day:1,text:"Bhuj"},{day:2,text:"White Rann"},{day:3,text:"Dhordo village"},{day:4,text:"Depart"}], bestTime:"Nov-Feb", lang:"Eng/Hindi/Gujarati" },
         { name:"Udaipur Luxury Escape", category:"Heritage", duration:"3N/4D", budget:6999, mid:12999, luxury:27999, destinations:"Udaipur-Nathdwara", region:"🏛️ City of Lakes", bestFor:"Romantic", desc:"Lake Pichola, City Palace, boat ride.", inclusions:["Heritage hotel","Breakfast","Boat ride","Guide"], exclusions:["Flights"], itinerary:[{day:1,text:"City Palace"},{day:2,text:"Lake Pichola"},{day:3,text:"Nathdwara"},{day:4,text:"Depart"}], bestTime:"Oct-Mar", lang:"Eng/Hindi" },
@@ -157,14 +155,14 @@
         { name:"Andaman Nicobar", category:"Beach", duration:"5N/6D", budget:12999, mid:22999, luxury:45999, destinations:"Port Blair-Havelock-Neil", region:"🏖️ Tropical", bestFor:"Honeymoon", desc:"Radhanagar beach, scuba diving, cellular jail.", inclusions:["Ferry transfers","Hotel","Breakfast","Scuba diving"], exclusions:["Flights"], itinerary:[{day:1,text:"Cellular Jail"},{day:2,text:"Havelock"},{day:3,text:"Radhanagar"},{day:4,text:"Neil Island"},{day:5,text:"Port Blair"},{day:6,text:"Depart"}], bestTime:"Oct-May", lang:"Eng/Hindi" },
         { name:"Hampi Ruins", category:"Heritage", duration:"2N/3D", budget:4499, mid:8499, luxury:15999, destinations:"Hampi-Hospet", region:"🏛️ Vijayanagara", bestFor:"History", desc:"Virupaksha temple, Stone chariot, boulders.", inclusions:["Hotel","Breakfast","Guide","Auto rickshaw tour"], exclusions:["Train"], itinerary:[{day:1,text:"Hampi arrival"},{day:2,text:"Temple tour"},{day:3,text:"Depart"}], bestTime:"Oct-Feb", lang:"Eng/Kannada" },
         { name:"Pondicherry French Quarter", category:"Beach", duration:"2N/3D", budget:4999, mid:8999, luxury:16999, destinations:"Pondicherry-Auroville", region:"🏖️ French", bestFor:"Couples", desc:"Promenade beach, Aurobindo Ashram, Auroville.", inclusions:["Boutique hotel","Breakfast","Bicycle rental"], exclusions:["Train"], itinerary:[{day:1,text:"French colony"},{day:2,text:"Auroville"},{day:3,text:"Depart"}], bestTime:"Oct-Mar", lang:"Eng/Tamil/French" },
-        // East & NorthEast (6)
+        // East & NorthEast
         { name:"Darjeeling Gangtok", category:"Hill", duration:"5N/6D", budget:10999, mid:18999, luxury:34999, destinations:"Darjeeling-Gangtok-Tsomgo", region:"🏔️ Himalayan", bestFor:"Scenic", desc:"Toy train, monasteries, Tsomgo Lake.", inclusions:["Hotel","Breakfast","Toy train","Permits"], exclusions:["Flights"], itinerary:[{day:1,text:"Darjeeling"},{day:2,text:"Tiger Hill"},{day:3,text:"Gangtok"},{day:4,text:"Tsomgo Lake"},{day:5,text:"Monasteries"},{day:6,text:"Depart"}], bestTime:"Mar-Jun", lang:"Eng/Hindi/Nepali" },
         { name:"Shillong Cherrapunji", category:"Hill", duration:"4N/5D", budget:9999, mid:17999, luxury:32999, destinations:"Shillong-Cherrapunji-Mawsynram", region:"🏔️ Wettest", bestFor:"Nature", desc:"Living root bridges, waterfalls, cleanest village.", inclusions:["Hotel","Breakfast","Permits","Guide"], exclusions:["Flights"], itinerary:[{day:1,text:"Shillong"},{day:2,text:"Cherrapunji"},{day:3,text:"Root bridge"},{day:4,text:"Mawlynnong"},{day:5,text:"Depart"}], bestTime:"Oct-Apr", lang:"Eng/Hindi" },
         { name:"Kaziranga Safari", category:"Wildlife", duration:"2N/3D", budget:7999, mid:13999, luxury:24999, destinations:"Kaziranga National Park", region:"🐘 Rhino", bestFor:"Wildlife", desc:"One-horned rhino, elephant safari, bird watching.", inclusions:["Resort","Meals","Elephant safari","Jeep safari"], exclusions:["Train"], itinerary:[{day:1,text:"Kaziranga arrival"},{day:2,text:"Elephant safari"},{day:3,text:"Depart"}], bestTime:"Nov-Apr", lang:"Eng/Assamese" },
         { name:"Tawang Monastery", category:"Spiritual", duration:"4N/5D", budget:11999, mid:19999, luxury:34999, destinations:"Tawang-Bomdila", region:"🕉️ Buddhist", bestFor:"Peace", desc:"Tawang monastery, Sela pass, beautiful landscapes.", inclusions:["Hotel","Permits","Breakfast","Local guide"], exclusions:["Flights"], itinerary:[{day:1,text:"Bomdila"},{day:2,text:"Tawang arrival"},{day:3,text:"Monastery"},{day:4,text:"Sela Pass"},{day:5,text:"Depart"}], bestTime:"May-Oct", lang:"Eng/Hindi" },
         { name:"Puri Konark Temple", category:"Spiritual", duration:"3N/4D", budget:4499, mid:8499, luxury:16999, destinations:"Puri-Konark-Bhubaneswar", region:"🕉️ Temple", bestFor:"Devotees", desc:"Jagannath Temple, Sun Temple, Chilika Lake.", inclusions:["Hotel","Breakfast","Boat ride","Guide"], exclusions:["Train"], itinerary:[{day:1,text:"Puri beach"},{day:2,text:"Konark"},{day:3,text:"Bhubaneswar"},{day:4,text:"Depart"}], bestTime:"Oct-Feb", lang:"Eng/Odia" },
         { name:"Sunderbans Mangroves", category:"Wildlife", duration:"2N/3D", budget:6999, mid:11999, luxury:19999, destinations:"Sunderbans", region:"🐯 Tiger", bestFor:"Adventure", desc:"Royal Bengal tiger, boat safari, mangrove forest.", inclusions:["Boat safari","Forest lodge","Meals","Guide"], exclusions:["Train"], itinerary:[{day:1,text:"Arrival & boat"},{day:2,text:"Creek safari"},{day:3,text:"Depart"}], bestTime:"Dec-Mar", lang:"Eng/Bengali" },
-        // Central & more (7)
+        // Central & more
         { name:"Khajuraho Temples", category:"Heritage", duration:"2N/3D", budget:4999, mid:8999, luxury:15999, destinations:"Khajuraho-Orchha", region:"🏛️ Ancient", bestFor:"History", desc:"UNESCO temples, light & sound show.", inclusions:["Hotel","Breakfast","Guide","Entry tickets"], exclusions:["Train"], itinerary:[{day:1,text:"Western Group"},{day:2,text:"Orchha"},{day:3,text:"Depart"}], bestTime:"Oct-Mar", lang:"Eng/Hindi" },
         { name:"Bandhavgarh Tiger Safari", category:"Wildlife", duration:"2N/3D", budget:6999, mid:12999, luxury:22999, destinations:"Bandhavgarh", region:"🐯 Tiger Reserve", bestFor:"Safari", desc:"High tiger density, fort, jungle safari.", inclusions:["Resort","Meals","Jeep safari","Naturalist"], exclusions:["Train"], itinerary:[{day:1,text:"Arrival & safari"},{day:2,text:"Morning safari"},{day:3,text:"Depart"}], bestTime:"Oct-Jun", lang:"Eng/Hindi" },
         { name:"Jim Corbett Safari", category:"Wildlife", duration:"2N/3D", budget:5999, mid:10999, luxury:19999, destinations:"Corbett National Park", region:"🐘 Wildlife", bestFor:"Safari", desc:"Jungle safari, tiger spotting, river view.", inclusions:["Resort","Breakfast+Lunch","2 Jeep safaris","Naturalist"], exclusions:["Train"], itinerary:[{day:1,text:"Arrival & safari"},{day:2,text:"Morning & evening safari"},{day:3,text:"Depart"}], bestTime:"Nov-Jun", lang:"Eng/Hindi" },
@@ -174,7 +172,7 @@
         { name:"Spiti Valley Expedition", category:"Adventure", duration:"8N/9D", budget:16999, mid:26999, luxury:44999, destinations:"Shimla-Kaza-Chandratal", region:"🏔️ Cold Desert", bestFor:"Explorers", desc:"Key Monastery, Chandratal Lake, high passes.", inclusions:["Tempo traveler","Accommodation","Meals","Permits"], exclusions:["Flights"], itinerary:[{day:1,text:"Shimla"},{day:2,text:"Kalpa"},{day:3,text:"Kaza"},{day:4,text:"Key Monastery"},{day:5,text:"Kibber"},{day:6,text:"Chandratal"},{day:7,text:"Manali"},{day:8,text:"Return"},{day:9,text:"Depart"}], bestTime:"Jun-Oct", lang:"Eng/Hindi" }
     ];
     
-    // Add the remaining 22 trips (as per your original logic)
+    // Add remaining 22 trips (as per your original logic)
     const extraDestinations = ["Mount Abu","Lonavala","Mahabalipuram","Rameswaram","Dwarka","Ziro Valley","Dudhwa","Coorg","Wayanad","Bandipur","Kanha","Pushkar","Bikaner","Mandu","Gwalior","Bodh Gaya","Chopta","Diu","Mysore","Alleppey Canoe","Gokarna","Malshej"];
     for(let i=0; i<22; i++) {
         const catList = ["Hill","Beach","Heritage","Spiritual","Wildlife","Popular"];
@@ -199,14 +197,13 @@
         });
     }
     
-    console.log(`Total trips in seed data: ${fullTripsDatabase.length}`); // Should be 52
+    console.log(`Total trips in seed data: ${fullTripsDatabase.length}`); // 52
     
     let tripsData = [];
     let currentFilter = "all";
     let searchQuery = "";
     let maxBudget = 55000;
     
-    // Helper: unsplash image
     function getTripImage(trip) {
         return `https://source.unsplash.com/featured/400x160/?${encodeURIComponent(trip.name.split(' ')[0])},india`;
     }
@@ -214,7 +211,7 @@
     function renderTrips() {
         const container = document.getElementById('tripsList');
         if (!tripsData.length) {
-            container.innerHTML = `<div class="no-results">😞 No trips loaded. Check console or click "Seed Database".</div>`;
+            container.innerHTML = `<div class="no-results">😞 No trips loaded. Click "Seed Database" to add 52 trips.</div>`;
             document.getElementById('totalTripsCount').innerText = '0';
             document.getElementById('avgSavings').innerHTML = '₹0';
             return;
@@ -284,12 +281,11 @@
         btn.disabled = true;
         try {
             const tripsCol = collection(db, "trips");
-            // Optional: clear existing? We'll just add missing ones.
             for (let trip of fullTripsDatabase) {
                 await addDoc(tripsCol, trip);
             }
             alert(`Successfully seeded ${fullTripsDatabase.length} trips!`);
-            await loadTrips(); // reload
+            await loadTrips();
         } catch (err) {
             console.error("Seed error:", err);
             alert("Seed failed: " + err.message);
@@ -360,7 +356,7 @@
                 alert(`✅ Thank you ${name}!\nWe received enquiry for ${trip.name}.\nOur agent will contact ${phone} soon.`);
                 modal.style.display = 'none';
             } catch(err) {
-                alert("Booking failed. Please try again.");
+                alert("Booking failed. Please try again.\n" + err.message);
             }
         });
         modal.style.display = 'flex';
@@ -384,11 +380,9 @@
     document.querySelector('.close-modal')?.addEventListener('click', () => document.getElementById('tripDetailModal').style.display = 'none');
     window.addEventListener('click', (e) => { if(e.target === document.getElementById('tripDetailModal')) document.getElementById('tripDetailModal').style.display = 'none'; });
     
-    // Show seed button only if needed (or always for admin)
     document.getElementById('seedBtn').style.display = 'inline-block';
     document.getElementById('seedBtn').addEventListener('click', seedDatabase);
     
-    // Start
     loadTrips();
 </script>
 </body>

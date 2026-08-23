@@ -1,82 +1,524 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Partner</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <title>Become a Partner | HALORA</title>
 
-<style>
-body{
-margin:0;
-font-family:Poppins;
-background:linear-gradient(135deg,#0b0f19,#121a2f);
-color:white;
-text-align:center;
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-h2{margin-top:30px;}
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-button{
-padding:12px 20px;
-margin:10px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-transition:0.3s;
-}
+    :root {
+      --bg: #090e1b;
+      --card: #121d32;
+      --card-light: #17253e;
+      --text: #ffffff;
+      --muted: #93a4c3;
+      --primary: #00c853;
+      --primary-dark: #00a844;
+      --border: rgba(255, 255, 255, 0.08);
+    }
 
-.type{background:#1f2a44;}
-.plan1{background:#00c853;}
-.plan2{background:#2962ff;}
-.plan3{background:gold;color:black;}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(41, 98, 255, 0.15), transparent 30%),
+        linear-gradient(145deg, #080c16, #111b31);
+      color: var(--text);
+      padding: 16px;
+    }
 
-button:hover{transform:scale(1.08);}
+    .container {
+      max-width: 650px;
+      margin: 0 auto;
+      padding-bottom: 30px;
+    }
 
-.active{
-border:2px solid #00ffcc;
-box-shadow:0 0 10px #00ffcc;
-}
-</style>
+    /* HEADER */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 0 22px;
+    }
 
+    .back-btn {
+      width: 46px;
+      height: 46px;
+      border: none;
+      border-radius: 14px;
+      background: var(--card);
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+
+    .brand h2 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #16284a, #101a2d);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 26px 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(0, 200, 83, 0.08);
+      right: -45px;
+      top: -45px;
+    }
+
+    .hero-icon {
+      font-size: 42px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      margin: 12px 0 7px;
+      font-size: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #aab7cf;
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 450px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* SECTION */
+    .section-title {
+      margin: 28px 0 12px;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    /* PARTNER TYPE */
+    .partner-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .partner-card {
+      background: var(--card);
+      border: 2px solid transparent;
+      border-radius: 18px;
+      padding: 18px 7px;
+      cursor: pointer;
+      transition: 0.25s ease;
+      text-align: center;
+      min-height: 112px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .partner-card:active {
+      transform: scale(0.97);
+    }
+
+    .partner-card .icon {
+      font-size: 29px;
+      margin-bottom: 9px;
+    }
+
+    .partner-card .name {
+      font-size: 11px;
+      color: #c7d1e3;
+      line-height: 1.4;
+    }
+
+    .partner-card.active {
+      border-color: var(--primary);
+      background: linear-gradient(145deg, #12352e, #12283a);
+      box-shadow: 0 8px 22px rgba(0, 200, 83, 0.12);
+    }
+
+    .partner-card.active .name {
+      color: white;
+    }
+
+    /* PLANS */
+    .plans {
+      display: grid;
+      gap: 12px;
+    }
+
+    .plan-card {
+      width: 100%;
+      margin: 0;
+      padding: 17px;
+      border-radius: 18px;
+      border: 2px solid transparent;
+      background: var(--card);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .plan-card:active {
+      transform: scale(0.98);
+    }
+
+    .plan-card:hover {
+      transform: translateY(-1px);
+    }
+
+    .plan-left {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .plan-icon {
+      width: 43px;
+      height: 43px;
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+    }
+
+    .plan-info strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .plan-info span {
+      display: block;
+      margin-top: 3px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .plan-price {
+      font-size: 19px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .plan-card.active {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, #142d2c, #15243b);
+      box-shadow: 0 8px 22px rgba(0, 200, 83, 0.1);
+    }
+
+    .plan-card.active .plan-price {
+      color: var(--primary);
+    }
+
+    /* CONTINUE */
+    .continue-btn {
+      width: 100%;
+      border: none;
+      margin: 28px 0 0;
+      padding: 17px;
+      border-radius: 17px;
+      background: #344158;
+      color: #9ca9bd;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: not-allowed;
+      transition: 0.25s ease;
+    }
+
+    .continue-btn.ready {
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      box-shadow: 0 12px 25px rgba(0, 200, 83, 0.2);
+    }
+
+    .continue-btn.ready:active {
+      transform: scale(0.98);
+    }
+
+    .note {
+      text-align: center;
+      margin: 15px auto 0;
+      max-width: 400px;
+      color: #71809a;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    /* MOBILE */
+    @media (max-width: 380px) {
+      .partner-grid {
+        gap: 7px;
+      }
+
+      .partner-card {
+        padding: 15px 4px;
+      }
+
+      .partner-card .name {
+        font-size: 9px;
+      }
+
+      .hero h1 {
+        font-size: 21px;
+      }
+
+      .plan-info span {
+        font-size: 9px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<h2>Become Partner</h2>
+  <main class="container">
 
-<button class="type" onclick="setType(this,'driver')">Bike Rider</button>
-<button class="type" onclick="setType(this,'hotel')">Hotel Owner</button>
-<button class="type" onclick="setType(this,'trip')">Trip Agent</button>
+    <!-- HEADER -->
+    <div class="header">
+      <button class="back-btn" onclick="goBack()" aria-label="Go back">
+        ←
+      </button>
 
-<h2>Select Plan</h2>
+      <div class="brand">
+        <h2>HALORA Partner</h2>
+        <p>Grow your business with HALORA</p>
+      </div>
+    </div>
 
-<button class="plan1" onclick="selectPlan(this,299)">₹299</button>
-<button class="plan2" onclick="selectPlan(this,699)">₹699</button>
-<button class="plan3" onclick="selectPlan(this,1299)">₹1299</button>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-icon">🤝</div>
+      <h1>Become a HALORA Partner</h1>
+      <p>
+        Join HALORA and connect with more customers.
+        Select your partner category and choose the plan that suits you.
+      </p>
+    </section>
 
-<script>
-let tbtn,pbtn;
+    <!-- PARTNER TYPE -->
+    <h3 class="section-title">Choose your partner type</h3>
 
-function setType(btn,type){
-localStorage.setItem("partnerType",type);
-if(tbtn)tbtn.classList.remove("active");
-btn.classList.add("active");
-tbtn=btn;
-}
+    <div class="partner-grid">
 
-function selectPlan(btn,price){
-if(!localStorage.getItem("partnerType")){
-alert("Select type first");
-return;
-}
-localStorage.setItem("planPrice",price);
-if(pbtn)pbtn.classList.remove("active");
-btn.classList.add("active");
-pbtn=btn;
+      <div class="partner-card" data-type="driver"
+           onclick="setType(this, 'driver')">
+        <div class="icon">🏍️</div>
+        <div class="name">Bike Rider</div>
+      </div>
 
-setTimeout(()=>window.location="partner-form.html",500);
-}
-</script>
+      <div class="partner-card" data-type="hotel"
+           onclick="setType(this, 'hotel')">
+        <div class="icon">🏨</div>
+        <div class="name">Hotel Partner</div>
+      </div>
+
+      <div class="partner-card" data-type="trip"
+           onclick="setType(this, 'trip')">
+        <div class="icon">🌍</div>
+        <div class="name">Trip Agent</div>
+      </div>
+
+    </div>
+
+    <!-- PLANS -->
+    <h3 class="section-title">Choose your plan</h3>
+
+    <div class="plans">
+
+      <button class="plan-card" data-price="299"
+              onclick="selectPlan(this, 299, 'Starter Plan')">
+        <div class="plan-left">
+          <div class="plan-icon">🚀</div>
+          <div class="plan-info">
+            <strong>Starter Plan</strong>
+            <span>Start your journey with HALORA</span>
+          </div>
+        </div>
+        <div class="plan-price">₹299</div>
+      </button>
+
+      <button class="plan-card" data-price="699"
+              onclick="selectPlan(this, 699, 'Business Plan')">
+        <div class="plan-left">
+          <div class="plan-icon">💼</div>
+          <div class="plan-info">
+            <strong>Business Plan</strong>
+            <span>More features for growing partners</span>
+          </div>
+        </div>
+        <div class="plan-price">₹699</div>
+      </button>
+
+      <button class="plan-card" data-price="1299"
+              onclick="selectPlan(this, 1299, 'Premium Plan')">
+        <div class="plan-left">
+          <div class="plan-icon">👑</div>
+          <div class="plan-info">
+            <strong>Premium Plan</strong>
+            <span>Priority support and premium benefits</span>
+          </div>
+        </div>
+        <div class="plan-price">₹1299</div>
+      </button>
+
+    </div>
+
+    <!-- CONTINUE -->
+    <button id="continueBtn" class="continue-btn"
+            onclick="continuePartner()" disabled>
+      Select Type & Plan to Continue
+    </button>
+
+    <p class="note">
+      By continuing, you agree to the applicable HALORA Partner terms and policies.
+    </p>
+
+  </main>
+
+  <script>
+    let selectedType = localStorage.getItem("partnerType") || null;
+    let selectedPlan = localStorage.getItem("planPrice") || null;
+    let selectedPlanName = localStorage.getItem("planName") || null;
+
+    // Restore previously selected options
+    window.addEventListener("DOMContentLoaded", function () {
+
+      if (selectedType) {
+        document.querySelectorAll(".partner-card").forEach(function (card) {
+          if (card.dataset.type === selectedType) {
+            card.classList.add("active");
+          }
+        });
+      }
+
+      if (selectedPlan) {
+        document.querySelectorAll(".plan-card").forEach(function (card) {
+          if (card.dataset.price === String(selectedPlan)) {
+            card.classList.add("active");
+          }
+        });
+      }
+
+      updateContinueButton();
+    });
+
+
+    // Select Partner Type
+    function setType(element, type) {
+
+      document.querySelectorAll(".partner-card").forEach(function (card) {
+        card.classList.remove("active");
+      });
+
+      element.classList.add("active");
+
+      selectedType = type;
+      localStorage.setItem("partnerType", type);
+
+      updateContinueButton();
+    }
+
+
+    // Select Plan
+    function selectPlan(element, price, planName) {
+
+      document.querySelectorAll(".plan-card").forEach(function (card) {
+        card.classList.remove("active");
+      });
+
+      element.classList.add("active");
+
+      selectedPlan = price;
+      selectedPlanName = planName;
+
+      localStorage.setItem("planPrice", price);
+      localStorage.setItem("planName", planName);
+
+      updateContinueButton();
+    }
+
+
+    // Enable Continue Button
+    function updateContinueButton() {
+
+      const continueBtn = document.getElementById("continueBtn");
+
+      if (selectedType && selectedPlan) {
+        continueBtn.disabled = false;
+        continueBtn.classList.add("ready");
+        continueBtn.innerHTML = "Continue →";
+      } else {
+        continueBtn.disabled = true;
+        continueBtn.classList.remove("ready");
+        continueBtn.innerHTML = "Select Type & Plan to Continue";
+      }
+    }
+
+
+    // Continue to Partner Form
+    function continuePartner() {
+
+      if (!selectedType || !selectedPlan) {
+        alert("Please select your partner type and plan first.");
+        return;
+      }
+
+      window.location.href = "partner-form.html";
+    }
+
+
+    // Back Button
+    function goBack() {
+      window.history.back();
+    }
+  </script>
 
 </body>
 </html>

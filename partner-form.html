@@ -1,161 +1,353 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-<title>KYC Form</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Application | HALORA</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+  --bg:#090e1b;
+  --card:#121d32;
+  --input:#0d1628;
+  --text:#ffffff;
+  --muted:#93a4c3;
+  --primary:#00c853;
+  --border:rgba(255,255,255,.08);
+}
 
 body{
-margin:0;
-font-family:'Poppins',sans-serif;
-background:linear-gradient(135deg,#0b0f19,#121a2f);
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+  margin:0;
+  min-height:100vh;
+  font-family:'Poppins',sans-serif;
+  background:
+    radial-gradient(circle at top right,rgba(41,98,255,.15),transparent 30%),
+    linear-gradient(145deg,#080c16,#111b31);
+  color:var(--text);
+  padding:16px;
 }
 
-.box{
-background:#131b2d;
-padding:25px;
-border-radius:15px;
-width:90%;
-max-width:400px;
-text-align:center;
-box-shadow:0 0 20px rgba(0,0,0,0.6);
+.container{
+  max-width:650px;
+  margin:auto;
+  padding-bottom:30px;
 }
 
-h2{
-margin-bottom:15px;
+.header{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:8px 0 22px;
 }
 
-input{
-width:90%;
-padding:12px;
-margin:8px 0;
-border:none;
-border-radius:10px;
-background:#1f2a44;
-color:white;
-outline:none;
+.back-btn{
+  width:46px;
+  height:46px;
+  border:none;
+  border-radius:14px;
+  background:var(--card);
+  color:white;
+  font-size:24px;
+  cursor:pointer;
 }
 
-input::placeholder{
-color:#aaa;
+.header h2{
+  margin:0;
+  font-size:19px;
 }
 
-input:focus{
-border:1px solid #00ffcc;
-box-shadow:0 0 5px #00ffcc;
+.header p{
+  margin:2px 0 0;
+  color:var(--muted);
+  font-size:11px;
 }
 
-button{
-width:95%;
-padding:12px;
-margin-top:15px;
-border:none;
-border-radius:10px;
-background:#00c853;
-color:white;
-font-size:15px;
-cursor:pointer;
-transition:0.3s;
+/* Selected Plan */
+.summary{
+  background:linear-gradient(135deg,#16284a,#111d32);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:24px;
 }
 
-button:hover{
-background:#00e676;
-transform:scale(1.05);
+.summary-title{
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:12px;
 }
 
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.partner-name{
+  font-size:18px;
+  font-weight:600;
+}
+
+.plan-badge{
+  background:rgba(0,200,83,.15);
+  color:#00e676;
+  border:1px solid rgba(0,200,83,.3);
+  padding:7px 12px;
+  border-radius:10px;
+  font-size:12px;
+}
+
+/* Form */
+.form-card{
+  background:rgba(18,29,50,.8);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:20px;
+}
+
+.section-title{
+  margin:0 0 18px;
+  font-size:17px;
+}
+
+.field{
+  margin-bottom:16px;
+}
+
+label{
+  display:block;
+  font-size:12px;
+  color:#c8d2e4;
+  margin-bottom:7px;
+}
+
+input, select, textarea{
+  width:100%;
+  border:1px solid rgba(255,255,255,.08);
+  outline:none;
+  border-radius:13px;
+  padding:14px;
+  background:var(--input);
+  color:white;
+  font-family:inherit;
+  font-size:13px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(0,200,83,.08);
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+select option{
+  background:#121d32;
+  color:white;
+}
+
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.submit-btn{
+  width:100%;
+  border:none;
+  margin-top:8px;
+  padding:16px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#00c853,#00a844);
+  color:white;
+  font-family:inherit;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.submit-btn:active{
+  transform:scale(.98);
+}
+
+.info{
+  margin-top:15px;
+  color:#71809a;
+  font-size:10px;
+  line-height:1.6;
+  text-align:center;
+}
+
+@media(max-width:420px){
+  .two-col{
+    grid-template-columns:1fr;
+  }
+}
 </style>
-
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
 
-<h2>KYC Form</h2>
+  <!-- Header -->
+  <div class="header">
+    <button class="back-btn" onclick="history.back()">←</button>
 
-<form onsubmit="submitForm(event)">
+    <div>
+      <h2>Partner Application</h2>
+      <p>Complete your details to join HALORA</p>
+    </div>
+  </div>
 
-<input id="name" placeholder="Full Name" required>
-<input id="phone" placeholder="Mobile Number" required>
-<input id="address" placeholder="Address" required>
+  <!-- Selected Partner & Plan -->
+  <div class="summary">
+    <div class="summary-title">YOUR SELECTED PARTNER PLAN</div>
 
-<input id="aadhaar" placeholder="Aadhaar Number" required>
-<input id="pan" placeholder="PAN Number" required>
+    <div class="summary-row">
+      <div>
+        <div id="partnerType" class="partner-name">Partner</div>
+        <div id="planName" style="color:#93a4c3;font-size:11px;margin-top:4px;">
+          Selected Plan
+        </div>
+      </div>
 
-<div id="extra"></div>
+      <div id="planPrice" class="plan-badge">₹0</div>
+    </div>
+  </div>
 
-<button type="submit">Continue → Payment</button>
+  <!-- Application Form -->
+  <form class="form-card" id="partnerForm">
 
-</form>
+    <h3 class="section-title">Personal Details</h3>
+
+    <div class="field">
+      <label>Full Name *</label>
+      <input type="text" id="fullName" placeholder="Enter your full name" required>
+    </div>
+
+    <div class="two-col">
+      <div class="field">
+        <label>Mobile Number *</label>
+        <input type="tel" id="phone" placeholder="10-digit number"
+               maxlength="10" required>
+      </div>
+
+      <div class="field">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="Optional">
+      </div>
+    </div>
+
+    <h3 class="section-title" style="margin-top:10px;">Business Details</h3>
+
+    <div class="field">
+      <label>City *</label>
+      <input type="text" id="city" placeholder="Enter your city" required>
+    </div>
+
+    <div class="field">
+      <label>Address *</label>
+      <textarea id="address" placeholder="Enter complete address" required></textarea>
+    </div>
+
+    <div class="field">
+      <label>Additional Information</label>
+      <textarea id="additionalInfo"
+        placeholder="Tell us about your business or experience (optional)"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">
+      Submit Application →
+    </button>
+
+    <div class="info">
+      Your application will be reviewed by the HALORA team.
+      Submitting an application does not guarantee approval.
+    </div>
+
+  </form>
 
 </div>
 
-<script type="module">
+<script>
+const partnerType = localStorage.getItem("partnerType");
+const planPrice = localStorage.getItem("planPrice");
+const planName = localStorage.getItem("planName");
 
-import { db } from "./js/firebase-config.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const nameEl = document.getElementById("name");
-const phoneEl = document.getElementById("phone");
-const addressEl = document.getElementById("address");
-const aadhaarEl = document.getElementById("aadhaar");
-const panEl = document.getElementById("pan");
-const extra = document.getElementById("extra");
-
-const type = localStorage.getItem("partnerType");
-
-// dynamic fields
-if(type==="driver"){
-  extra.innerHTML=`<input id="dl" placeholder="Driving License" required>`;
-}
-if(type==="hotel"){
-  extra.innerHTML=`<input id="hotel" placeholder="Hotel License" required>`;
+// If user opens this page directly without selecting a plan
+if(!partnerType || !planPrice){
+  alert("Please select a partner type and plan first.");
+  window.location.href = "partner.html";
 }
 
-window.submitForm = async(e)=>{
-  e.preventDefault();
-
-  try{
-
-    const data={
-      name:nameEl.value,
-      phone:phoneEl.value,
-      address:addressEl.value,
-      aadhaar:aadhaarEl.value,
-      pan:panEl.value,
-      partnerType:type,
-      plan:localStorage.getItem("planPrice"),
-      status:"KYC Done",
-      createdAt:Date.now()
-    };
-
-    if(type==="driver"){
-      data.dl=document.getElementById("dl").value;
-    }
-
-    if(type==="hotel"){
-      data.hotel=document.getElementById("hotel").value;
-    }
-
-    const docRef = await addDoc(collection(db,"partners"),data);
-
-    localStorage.setItem("partnerId",docRef.id);
-
-    window.location.href="prime-payment.html";
-
-  }catch(err){
-    alert("Error: "+err.message);
-  }
+// Partner type display names
+const partnerNames = {
+  driver: "🏍️ Bike Rider",
+  hotel: "🏨 Hotel Partner",
+  trip: "🌍 Trip Agent"
 };
 
+document.getElementById("partnerType").innerText =
+  partnerNames[partnerType] || "HALORA Partner";
+
+document.getElementById("planName").innerText =
+  planName || "Selected Partner Plan";
+
+document.getElementById("planPrice").innerText =
+  "₹" + planPrice;
+
+
+// Form submit
+document.getElementById("partnerForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const phone = document.getElementById("phone").value.trim();
+
+  // Basic Indian mobile validation
+  if(!/^[6-9][0-9]{9}$/.test(phone)){
+    alert("Please enter a valid 10-digit mobile number.");
+    return;
+  }
+
+  // Save application temporarily in localStorage
+  // Later you can replace this with Firebase Firestore.
+  const application = {
+    id: "HALORA-" + Date.now(),
+    partnerType: partnerType,
+    planName: planName,
+    planPrice: Number(planPrice),
+    fullName: document.getElementById("fullName").value.trim(),
+    phone: phone,
+    email: document.getElementById("email").value.trim(),
+    city: document.getElementById("city").value.trim(),
+    address: document.getElementById("address").value.trim(),
+    additionalInfo: document.getElementById("additionalInfo").value.trim(),
+    status: "Pending",
+    createdAt: new Date().toISOString()
+  };
+
+  localStorage.setItem(
+    "partnerApplication",
+    JSON.stringify(application)
+  );
+
+  // Go to confirmation page
+  window.location.href = "partner-confirmation.html";
+});
 </script>
 
 </body>

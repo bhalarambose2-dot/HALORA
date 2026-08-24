@@ -3,603 +3,136 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>HALORA | Travel Hub</title>
-
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
-}
-
-body{
-    background:#f5f7fb;
-    color:#1d2433;
-    padding-bottom:90px;
-}
-
-/* HEADER */
-.header{
-    background:linear-gradient(135deg,#111827,#172554,#312e81);
-    color:#fff;
-    padding:20px;
-    border-radius:0 0 28px 28px;
-}
-
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.logo{
-    font-size:24px;
-    font-weight:800;
-    letter-spacing:1px;
-}
-
-.logo span{
-    color:#60a5fa;
-}
-
-.back-btn{
-    border:none;
-    background:rgba(255,255,255,.15);
-    color:white;
-    padding:9px 15px;
-    border-radius:20px;
-    cursor:pointer;
-}
-
-.hero{
-    margin-top:25px;
-}
-
-.hero h1{
-    font-size:26px;
-    line-height:1.25;
-}
-
-.hero p{
-    margin-top:8px;
-    opacity:.75;
-    font-size:14px;
-}
-
-/* SEARCH */
-.search-area{
-    margin:20px;
-    background:white;
-    padding:8px;
-    border-radius:18px;
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
-}
-
-.search-area input{
-    width:100%;
-    padding:15px;
-    border:none;
-    outline:none;
-    font-size:15px;
-    border-radius:12px;
-    background:#f5f7fb;
-}
-
-/* SERVICE GRID */
-.services{
-    padding:0 20px;
-}
-
-.section-title{
-    font-size:20px;
-    font-weight:700;
-    margin:20px 0 14px;
-}
-
-.service-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-}
-
-.service-card{
-    background:#fff;
-    padding:16px 8px;
-    border-radius:18px;
-    text-align:center;
-    box-shadow:0 3px 12px rgba(0,0,0,.06);
-    cursor:pointer;
-    transition:.2s;
-    border:2px solid transparent;
-}
-
-.service-card:active{
-    transform:scale(.96);
-}
-
-.service-card.active{
-    border-color:#4f46e5;
-    background:#eef2ff;
-}
-
-.service-icon{
-    font-size:28px;
-    margin-bottom:7px;
-}
-
-.service-name{
-    font-size:12px;
-    font-weight:600;
-}
-
-/* FILTER */
-.filters{
-    display:flex;
-    gap:10px;
-    overflow-x:auto;
-    padding:0 20px;
-    margin:15px 0;
-}
-
-.filter{
-    white-space:nowrap;
-    border:none;
-    background:#e9edf5;
-    padding:10px 16px;
-    border-radius:25px;
-    cursor:pointer;
-    font-size:13px;
-}
-
-.filter.active{
-    background:#312e81;
-    color:white;
-}
-
-/* TRIPS */
-.trips-container{
-    padding:0 20px;
-}
-
-.trip-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:16px;
-}
-
-.trip-card{
-    background:white;
-    border-radius:20px;
-    overflow:hidden;
-    box-shadow:0 5px 18px rgba(0,0,0,.08);
-}
-
-.trip-image{
-    height:155px;
-    background:linear-gradient(135deg,#667eea,#764ba2);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:60px;
-    position:relative;
-}
-
-.badge{
-    position:absolute;
-    top:12px;
-    left:12px;
-    background:rgba(0,0,0,.65);
-    color:white;
-    padding:6px 10px;
-    border-radius:20px;
-    font-size:11px;
-}
-
-.price-badge{
-    position:absolute;
-    bottom:10px;
-    right:10px;
-    background:#16a34a;
-    color:white;
-    padding:7px 12px;
-    border-radius:20px;
-    font-weight:bold;
-    font-size:12px;
-}
-
-.trip-info{
-    padding:15px;
-}
-
-.trip-info h3{
-    font-size:18px;
-    margin-bottom:8px;
-}
-
-.trip-info p{
-    color:#64748b;
-    font-size:13px;
-    margin-bottom:10px;
-}
-
-.trip-meta{
-    display:flex;
-    justify-content:space-between;
-    font-size:12px;
-    color:#475569;
-    margin-bottom:14px;
-}
-
-.book-btn{
-    width:100%;
-    border:none;
-    padding:13px;
-    background:linear-gradient(135deg,#4f46e5,#7c3aed);
-    color:white;
-    border-radius:12px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-/* TICKET BOX */
-.ticket-section{
-    padding:0 20px;
-}
-
-.ticket-box{
-    background:white;
-    border-radius:22px;
-    padding:20px;
-    box-shadow:0 5px 18px rgba(0,0,0,.07);
-}
-
-.ticket-box h3{
-    margin-bottom:15px;
-}
-
-.ticket-box input,
-.ticket-box select{
-    width:100%;
-    padding:14px;
-    border:1px solid #e2e8f0;
-    border-radius:12px;
-    margin:7px 0;
-    outline:none;
-}
-
-.ticket-btn{
-    width:100%;
-    margin-top:10px;
-    padding:14px;
-    border:none;
-    border-radius:12px;
-    background:#16a34a;
-    color:white;
-    font-weight:bold;
-}
-
-/* VISA */
-.visa-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-.visa-card{
-    background:white;
-    padding:18px;
-    border-radius:18px;
-    box-shadow:0 4px 14px rgba(0,0,0,.07);
-    text-align:center;
-}
-
-.visa-card h4{
-    margin:8px 0;
-}
-
-.visa-card button{
-    border:none;
-    background:#312e81;
-    color:white;
-    padding:9px 13px;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-/* MODAL */
-.modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.65);
-    z-index:999;
-    padding:20px;
-    align-items:center;
-    justify-content:center;
-}
-
-.modal-content{
-    background:white;
-    width:100%;
-    max-width:480px;
-    max-height:90vh;
-    overflow-y:auto;
-    border-radius:25px;
-    padding:22px;
-    position:relative;
-}
-
-.close{
-    position:absolute;
-    right:18px;
-    top:12px;
-    font-size:28px;
-    cursor:pointer;
-}
-
-.modal-content h2{
-    padding-right:30px;
-}
-
-.detail-box{
-    margin:15px 0;
-    padding:14px;
-    background:#f8fafc;
-    border-radius:14px;
-}
-
-.detail-box p{
-    margin:7px 0;
-    font-size:14px;
-}
-
-.booking-form input,
-.booking-form select{
-    width:100%;
-    padding:13px;
-    border:1px solid #ddd;
-    border-radius:10px;
-    margin:6px 0;
-}
-
-.submit-btn{
-    width:100%;
-    padding:14px;
-    background:#16a34a;
-    border:none;
-    border-radius:12px;
-    color:white;
-    font-weight:bold;
-    margin-top:8px;
-}
-
-/* BOTTOM NAV */
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    background:white;
-    display:flex;
-    justify-content:space-around;
-    padding:12px 5px;
-    box-shadow:0 -3px 15px rgba(0,0,0,.08);
-    z-index:100;
-}
-
-.nav-item{
-    text-align:center;
-    font-size:11px;
-    color:#64748b;
-    cursor:pointer;
-}
-
-.nav-item b{
-    display:block;
-    font-size:20px;
-}
-
-.hidden{
-    display:none !important;
-}
-
-.no-results{
-    background:white;
-    padding:30px;
-    border-radius:18px;
-    text-align:center;
-    color:#64748b;
-}
-
-@media(max-width:380px){
-    .service-grid{
-        grid-template-columns:repeat(3,1fr);
-    }
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f5f7fb;color:#1d2433;padding-bottom:90px}
+.header{background:linear-gradient(135deg,#111827,#172554,#312e81);color:#fff;padding:20px;border-radius:0 0 28px 28px}
+.topbar{display:flex;justify-content:space-between;align-items:center}.logo{font-size:24px;font-weight:800}.logo span{color:#60a5fa}
+.back-btn{border:none;background:rgba(255,255,255,.15);color:white;padding:9px 15px;border-radius:20px}
+.hero{margin-top:25px}.hero h1{font-size:26px;line-height:1.25}.hero p{margin-top:8px;opacity:.75;font-size:14px}
+.search-area{margin:20px;background:white;padding:8px;border-radius:18px;box-shadow:0 5px 20px rgba(0,0,0,.08)}
+.search-area input{width:100%;padding:15px;border:none;outline:none;font-size:15px;border-radius:12px;background:#f5f7fb}
+.services,.trips-container,.ticket-section{padding:0 20px}.section-title{font-size:20px;font-weight:700;margin:20px 0 14px}
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.service-card{background:#fff;padding:16px 8px;border-radius:18px;text-align:center;box-shadow:0 3px 12px rgba(0,0,0,.06);cursor:pointer;border:2px solid transparent}
+.service-card.active{border-color:#4f46e5;background:#eef2ff}.service-icon{width:100%;height:72px;border-radius:13px;overflow:hidden;margin-bottom:8px;background:#eef2ff}.service-icon img{width:100%;height:100%;object-fit:cover;display:block}.service-name{font-size:12px;font-weight:600}
+.filters{display:flex;gap:10px;overflow-x:auto;padding:0 20px;margin:15px 0}.filter{white-space:nowrap;border:none;background:#e9edf5;padding:10px 16px;border-radius:25px;cursor:pointer}.filter.active{background:#312e81;color:white}
+.trip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.trip-card{background:white;border-radius:20px;overflow:hidden;box-shadow:0 5px 18px rgba(0,0,0,.08)}
+.trip-image{height:180px;background:#e5e7eb;position:relative;overflow:hidden}.trip-image img{width:100%;height:100%;object-fit:cover;display:block}
+.badge{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.65);color:white;padding:6px 10px;border-radius:20px;font-size:11px}
+.price-badge{position:absolute;bottom:10px;right:10px;background:#16a34a;color:white;padding:7px 12px;border-radius:20px;font-weight:bold;font-size:12px}
+.trip-info{padding:15px}.trip-info h3{font-size:18px;margin-bottom:8px}.trip-info p{color:#64748b;font-size:13px;margin-bottom:10px}.trip-meta{display:flex;justify-content:space-between;font-size:12px;color:#475569;margin-bottom:14px}
+.book-btn,.ticket-btn,.submit-btn{width:100%;border:none;padding:13px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;border-radius:12px;font-weight:bold;cursor:pointer}
+.ticket-box{background:white;border-radius:22px;padding:20px;box-shadow:0 5px 18px rgba(0,0,0,.07)}.ticket-box h3{margin-bottom:15px}
+.ticket-box input,.ticket-box select,.booking-form input,.booking-form select{width:100%;padding:14px;border:1px solid #e2e8f0;border-radius:12px;margin:7px 0;outline:none}
+.ticket-btn,.submit-btn{margin-top:10px;background:#16a34a}
+.visa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.visa-card{background:white;padding:18px;border-radius:18px;box-shadow:0 4px 14px rgba(0,0,0,.07);text-align:center}.visa-card button{border:none;background:#312e81;color:white;padding:9px 13px;border-radius:10px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:999;padding:20px;align-items:center;justify-content:center}.modal-content{background:white;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;border-radius:25px;padding:22px;position:relative}.close{position:absolute;right:18px;top:12px;font-size:28px;cursor:pointer}.detail-box{margin:15px 0;padding:14px;background:#f8fafc;border-radius:14px}.detail-box p{margin:7px 0;font-size:14px}
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:white;display:flex;justify-content:space-around;padding:12px 5px;box-shadow:0 -3px 15px rgba(0,0,0,.08);z-index:100}.nav-item{text-align:center;font-size:11px;color:#64748b;cursor:pointer}.nav-item b{display:block;font-size:20px}.hidden{display:none!important}.no-results{background:white;padding:30px;border-radius:18px;text-align:center;color:#64748b}
 </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
 <div class="header">
-    <div class="topbar">
-        <div class="logo">HALORA <span>TRAVEL</span></div>
-        <button class="back-btn" onclick="history.back()">← Back</button>
-    </div>
-
-    <div class="hero">
-        <h1>Where do you want to go? 🌍</h1>
-        <p>Trips, Flights, Trains, Buses & Visa Services — All in one place.</p>
-    </div>
+  <div class="topbar">
+    <div class="logo">HALORA <span>TRAVEL</span></div>
+    <button class="back-btn" onclick="history.back()">← Back</button>
+  </div>
+  <div class="hero">
+    <h1>Where do you want to go? 🌍</h1>
+    <p>Trips, Flights, Trains, Buses & Visa Services — All in one place.</p>
+  </div>
 </div>
 
-<!-- SEARCH -->
 <div class="search-area">
-    <input type="text" id="searchInput"
-    placeholder="🔍 Search destination, country or trip..."
-    oninput="renderTrips()">
+  <input type="text" id="searchInput" placeholder="🔍 Search destination, country or trip..." oninput="renderTrips()">
 </div>
 
-<!-- SERVICES -->
 <div class="services">
-
 <h2 class="section-title">Explore HALORA ✨</h2>
-
 <div class="service-grid">
 
 <div class="service-card active" onclick="showService('trips',this)">
-    <div class="service-icon">🇮🇳</div>
-    <div class="service-name">India Trips</div>
-</div>
+<div class="service-icon"><img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=500&q=80"></div>
+<div class="service-name">India Trips</div></div>
 
 <div class="service-card" onclick="showService('world',this)">
-    <div class="service-icon">🌍</div>
-    <div class="service-name">World Trips</div>
-</div>
+<div class="service-icon"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=500&q=80"></div>
+<div class="service-name">World Trips</div></div>
 
 <div class="service-card" onclick="showService('flight',this)">
-    <div class="service-icon">✈️</div>
-    <div class="service-name">Flights</div>
-</div>
+<div class="service-icon"><img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=500&q=80"></div>
+<div class="service-name">Flights</div></div>
 
 <div class="service-card" onclick="showService('train',this)">
-    <div class="service-icon">🚆</div>
-    <div class="service-name">Trains</div>
-</div>
+<div class="service-icon"><img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=500&q=80"></div>
+<div class="service-name">Trains</div></div>
 
 <div class="service-card" onclick="showService('bus',this)">
-    <div class="service-icon">🚌</div>
-    <div class="service-name">Bus</div>
-</div>
+<div class="service-icon"><img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=500&q=80"></div>
+<div class="service-name">Bus</div></div>
 
 <div class="service-card" onclick="showService('visa',this)">
-    <div class="service-icon">🛂</div>
-    <div class="service-name">Visa & Passport</div>
-</div>
+<div class="service-icon"><img src="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?auto=format&fit=crop&w=500&q=80"></div>
+<div class="service-name">Visa & Passport</div></div>
 
-</div>
-</div>
+</div></div>
 
-<!-- INDIA FILTERS -->
 <div id="tripFilters" class="filters">
-    <button class="filter active" onclick="setCategory('all',this)">All Trips</button>
-    <button class="filter" onclick="setCategory('Popular',this)">🔥 Popular</button>
-    <button class="filter" onclick="setCategory('Beach',this)">🏖️ Beach</button>
-    <button class="filter" onclick="setCategory('Hill',this)">🏔️ Hills</button>
-    <button class="filter" onclick="setCategory('Heritage',this)">🏛️ Heritage</button>
-    <button class="filter" onclick="setCategory('Adventure',this)">🧗 Adventure</button>
+<button class="filter active" onclick="setCategory('all',this)">All Trips</button>
+<button class="filter" onclick="setCategory('Popular',this)">🔥 Popular</button>
+<button class="filter" onclick="setCategory('Beach',this)">🏖️ Beach</button>
+<button class="filter" onclick="setCategory('Hill',this)">🏔️ Hills</button>
+<button class="filter" onclick="setCategory('Heritage',this)">🏛️ Heritage</button>
+<button class="filter" onclick="setCategory('Adventure',this)">🧗 Adventure</button>
 </div>
 
-<!-- TRIPS -->
 <div id="tripsSection" class="trips-container">
-    <h2 class="section-title" id="tripTitle">🇮🇳 Popular India Trips</h2>
-    <div id="tripGrid" class="trip-grid"></div>
+<h2 class="section-title" id="tripTitle">🇮🇳 Explore India Trips</h2>
+<div id="tripGrid" class="trip-grid"></div>
 </div>
 
-<!-- TICKET SECTION -->
 <div id="ticketSection" class="ticket-section hidden">
+<h2 class="section-title" id="ticketTitle">Book Your Ticket</h2>
+<div class="ticket-box">
+<h3 id="ticketIcon">✈️ Flight Ticket</h3>
+<input id="from" placeholder="From City">
+<input id="to" placeholder="To City">
+<input type="date" id="travelDate">
+<select id="travellers">
+<option>1 Traveller</option><option>2 Travellers</option>
+<option>3 Travellers</option><option>4+ Travellers</option>
+</select>
+<button class="ticket-btn" onclick="sendTicketEnquiry()">Search & Send Enquiry</button>
+</div></div>
 
-    <h2 class="section-title" id="ticketTitle">Book Your Ticket</h2>
-
-    <div class="ticket-box">
-        <h3 id="ticketIcon">✈️ Flight Search</h3>
-
-        <input type="text" id="from" placeholder="From City">
-        <input type="text" id="to" placeholder="To City">
-        <input type="date" id="travelDate">
-
-        <select id="travellers">
-            <option>1 Traveller</option>
-            <option>2 Travellers</option>
-            <option>3 Travellers</option>
-            <option>4+ Travellers</option>
-        </select>
-
-        <button class="ticket-btn" onclick="sendTicketEnquiry()">
-            Search & Send Enquiry
-        </button>
-    </div>
-
-</div>
-
-<!-- VISA SECTION -->
 <div id="visaSection" class="services hidden">
-
 <h2 class="section-title">🛂 Passport & Visa Services</h2>
-
 <div class="visa-grid">
+<div class="visa-card">📘<h4>New Passport</h4><p>Application assistance</p><br><button onclick="visaEnquiry('New Passport')">Apply Now</button></div>
+<div class="visa-card">🔄<h4>Passport Renewal</h4><p>Renew your passport</p><br><button onclick="visaEnquiry('Passport Renewal')">Apply Now</button></div>
+<div class="visa-card">🇦🇪<h4>Dubai Visa</h4><p>Travel assistance</p><br><button onclick="visaEnquiry('Dubai Visa')">Apply</button></div>
+<div class="visa-card">🌏<h4>Tourist Visa</h4><p>Multiple destinations</p><br><button onclick="visaEnquiry('Tourist Visa')">Check Details</button></div>
+</div></div>
 
-<div class="visa-card">
-    <div style="font-size:32px">📘</div>
-    <h4>New Passport</h4>
-    <p style="font-size:12px;color:#64748b">Application assistance</p>
-    <br>
-    <button onclick="visaEnquiry('New Passport')">Apply Now</button>
-</div>
-
-<div class="visa-card">
-    <div style="font-size:32px">🔄</div>
-    <h4>Passport Renewal</h4>
-    <p style="font-size:12px;color:#64748b">Renew your passport</p>
-    <br>
-    <button onclick="visaEnquiry('Passport Renewal')">Apply Now</button>
-</div>
-
-<div class="visa-card">
-    <div style="font-size:32px">🇦🇪</div>
-    <h4>Dubai Visa</h4>
-    <p style="font-size:12px;color:#64748b">Travel assistance</p>
-    <br>
-    <button onclick="visaEnquiry('Dubai Visa')">Apply</button>
-</div>
-
-<div class="visa-card">
-    <div style="font-size:32px">🌏</div>
-    <h4>Tourist Visa</h4>
-    <p style="font-size:12px;color:#64748b">Multiple destinations</p>
-    <br>
-    <button onclick="visaEnquiry('Tourist Visa')">Check Details</button>
-</div>
-
-</div>
-</div>
-
-<!-- MODAL -->
 <div class="modal" id="bookingModal">
 <div class="modal-content">
-
 <span class="close" onclick="closeModal()">×</span>
-
 <h2 id="modalTitle">Trip Details</h2>
-
 <div id="modalDetails"></div>
-
 <div class="booking-form">
 <h3>📩 Send Booking Enquiry</h3>
-
 <input id="customerName" placeholder="Your Full Name">
 <input id="customerPhone" type="tel" placeholder="Mobile Number">
-
 <input type="date" id="customerDate">
-
 <select id="packageType">
-<option>Budget Package</option>
-<option>Standard Package</option>
-<option>Luxury Package</option>
+<option>Budget Package</option><option>Standard Package</option><option>Luxury Package</option>
 </select>
+<button class="submit-btn" onclick="submitBooking()">Send Enquiry ✈️</button>
+</div></div></div>
 
-<button class="submit-btn" onclick="submitBooking()">
-Send Enquiry ✈️
-</button>
-</div>
-
-</div>
-</div>
-
-<!-- BOTTOM NAV -->
 <div class="bottom-nav">
 <div class="nav-item" onclick="showService('trips')"><b>🏠</b>Trips</div>
 <div class="nav-item" onclick="showService('flight')"><b>✈️</b>Tickets</div>
@@ -607,538 +140,172 @@ Send Enquiry ✈️
 <div class="nav-item"><b>👤</b>Profile</div>
 </div>
 
-
-<script type="module">
-
-/* FIREBASE */
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-
-import {
-getFirestore,
-collection,
-addDoc,
-serverTimestamp
-} from
-"https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-
-
-const firebaseConfig = {
-apiKey: "AIzaSyDJnOh92AYUzFeWtuLMtDciETdpCQ7-MNs",
-authDomain: "halorebook.firebaseapp.com",
-projectId: "halorebook",
-storageBucket: "halorebook.firebasestorage.app",
-messagingSenderId: "58132767978",
-appId: "1:58132767978:web:2165ca8a94fb0cfe5a6393"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-
-/* INDIA TRIPS */
-const indiaTrips = [
-
-{
-name:"Kashmir Paradise",
-category:"Popular",
-emoji:"🏔️",
-duration:"5N / 6D",
-price:12999,
-destination:"Srinagar • Gulmarg • Pahalgam",
-description:"Experience beautiful valleys, snow mountains and Kashmir hospitality."
-},
-
-{
-name:"Leh Ladakh Adventure",
-category:"Adventure",
-emoji:"🏍️",
-duration:"6N / 7D",
-price:14999,
-destination:"Leh • Nubra • Pangong",
-description:"An unforgettable Himalayan road trip and adventure."
-},
-
-{
-name:"Goa Beach Paradise",
-category:"Beach",
-emoji:"🏖️",
-duration:"3N / 4D",
-price:6999,
-destination:"North Goa • South Goa",
-description:"Beaches, nightlife, water sports and unforgettable sunsets."
-},
-
-{
-name:"Rajasthan Royal Tour",
-category:"Heritage",
-emoji:"🏰",
-duration:"5N / 6D",
-price:8999,
-destination:"Jaipur • Jodhpur • Udaipur",
-description:"Discover forts, palaces and the royal culture of Rajasthan."
-},
-
-{
-name:"Manali Escape",
-category:"Hill",
-emoji:"❄️",
-duration:"4N / 5D",
-price:7999,
-destination:"Manali • Solang Valley",
-description:"Snow mountains, adventure sports and peaceful valleys."
-},
-
-{
-name:"Kerala Backwaters",
-category:"Popular",
-emoji:"🌴",
-duration:"4N / 5D",
-price:9999,
-destination:"Kochi • Munnar • Alleppey",
-description:"Tea gardens, houseboats and the beauty of God's Own Country."
-},
-
-{
-name:"Andaman Island Tour",
-category:"Beach",
-emoji:"🏝️",
-duration:"5N / 6D",
-price:15999,
-destination:"Port Blair • Havelock",
-description:"Crystal clear beaches and exciting island experiences."
-},
-
-{
-name:"Varanasi Spiritual Tour",
-category:"Heritage",
-emoji:"🕉️",
-duration:"2N / 3D",
-price:4999,
-destination:"Varanasi • Sarnath",
-description:"Experience Ganga Aarti and the spiritual heart of India."
-}
-
+<script>
+const indiaTrips=[
+{name:"Kashmir Paradise",image:"https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1000&q=85",category:"Popular",duration:"5N / 6D",price:12999,destination:"Srinagar • Gulmarg • Pahalgam",description:"Beautiful valleys, snow mountains and Kashmir hospitality."},
+{name:"Leh Ladakh Adventure",image:"https://images.unsplash.com/photo-1593181629936-11c609b8db9b?auto=format&fit=crop&w=1000&q=85",category:"Adventure",duration:"6N / 7D",price:14999,destination:"Leh • Nubra • Pangong",description:"An unforgettable Himalayan adventure."},
+{name:"Goa Beach Paradise",image:"https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1000&q=85",category:"Beach",duration:"3N / 4D",price:6999,destination:"North Goa • South Goa",description:"Beaches, nightlife and water sports."},
+{name:"Rajasthan Royal Tour",image:"https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1000&q=85",category:"Heritage",duration:"5N / 6D",price:8999,destination:"Jaipur • Jodhpur • Udaipur",description:"Forts, palaces and royal culture."},
+{name:"Manali Escape",image:"https://images.unsplash.com/photo-1548021051-50e4c2f3e0e0?auto=format&fit=crop&w=1000&q=85",category:"Hill",duration:"4N / 5D",price:7999,destination:"Manali • Solang Valley",description:"Snow mountains and peaceful valleys."},
+{name:"Kerala Backwaters",image:"https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1000&q=85",category:"Popular",duration:"4N / 5D",price:9999,destination:"Kochi • Munnar • Alleppey",description:"Tea gardens and beautiful backwaters."},
+{name:"Odisha Heritage & Beach Tour",category:"Heritage",image:"https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?auto=format&fit=crop&w=1000&q=85",duration:"4N / 5D",price:8999,destination:"Bhubaneswar • Puri • Konark",description:"Ancient temples, Konark Sun Temple and Puri coastline."},
+{name:"Rishikesh Adventure Escape",category:"Adventure",image:"https://images.unsplash.com/photo-1530866495561-507c8b2f4d1e?auto=format&fit=crop&w=1000&q=85",duration:"2N / 3D",price:5999,destination:"Rishikesh • Shivpuri",description:"River rafting, Himalayan views and an exciting getaway."},
+{name:"Ayodhya & Prayagraj Tour",category:"Heritage",image:"https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=1000&q=85",duration:"3N / 4D",price:7499,destination:"Ayodhya • Prayagraj",description:"A spiritual journey through two important pilgrimage destinations."},
+{name:"Kashmir Great Lakes",category:"Adventure",image:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1000&q=85",duration:"6N / 7D",price:13999,destination:"Sonamarg • Great Lakes",description:"High-altitude trekking, alpine lakes and meadows."}
 ];
 
-
-/* WORLD TRIPS */
-const worldTrips = [
-
-{
-name:"Dubai Luxury Holiday",
-category:"Popular",
-emoji:"🇦🇪",
-duration:"4N / 5D",
-price:39999,
-destination:"Dubai • Abu Dhabi",
-description:"Desert safari, Burj Khalifa and unforgettable luxury experiences."
-},
-
-{
-name:"Thailand Escape",
-category:"Beach",
-emoji:"🇹🇭",
-duration:"5N / 6D",
-price:34999,
-destination:"Bangkok • Pattaya",
-description:"Beautiful beaches, islands, shopping and nightlife."
-},
-
-{
-name:"Bali Paradise",
-category:"Beach",
-emoji:"🇮🇩",
-duration:"5N / 6D",
-price:45999,
-destination:"Bali • Ubud",
-description:"Tropical beaches, temples and beautiful nature."
-},
-
-{
-name:"Singapore Explorer",
-category:"Popular",
-emoji:"🇸🇬",
-duration:"4N / 5D",
-price:49999,
-destination:"Singapore",
-description:"Modern attractions, Sentosa Island and family entertainment."
-},
-
-{
-name:"Europe Highlights",
-category:"Heritage",
-emoji:"🇪🇺",
-duration:"8N / 9D",
-price:129999,
-destination:"France • Switzerland • Italy",
-description:"Explore some of Europe's most iconic destinations."
-},
-
-{
-name:"Maldives Honeymoon",
-category:"Beach",
-emoji:"🇲🇻",
-duration:"4N / 5D",
-price:89999,
-destination:"Maldives",
-description:"Luxury resorts, beautiful islands and romantic experiences."
-}
-
+const worldTrips=[
+{name:"Dubai Luxury Holiday",image:"https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1000&q=85",category:"Popular",duration:"4N / 5D",price:39999,destination:"Dubai • Abu Dhabi",description:"Desert safari, Burj Khalifa and luxury experiences."},
+{name:"Thailand Escape",image:"https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=1000&q=85",category:"Beach",duration:"5N / 6D",price:34999,destination:"Bangkok • Pattaya",description:"Beaches, islands and shopping."},
+{name:"Bali Paradise",image:"https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1000&q=85",category:"Beach",duration:"5N / 6D",price:45999,destination:"Bali • Ubud",description:"Tropical beaches and temples."},
+{name:"Singapore Explorer",image:"https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1000&q=85",category:"Popular",duration:"4N / 5D",price:49999,destination:"Singapore",description:"Modern attractions and family entertainment."},
+{name:"Maldives Honeymoon",image:"https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1000&q=85",category:"Beach",duration:"4N / 5D",price:89999,destination:"Maldives",description:"Beautiful islands and luxury resorts."}
 ];
 
+let currentService="trips",currentCategory="all",selectedTrip=null;
 
-let currentService = "trips";
-let currentCategory = "all";
-let selectedTrip = null;
+function showService(service,el){
+currentService=service;
+document.querySelectorAll(".service-card").forEach(x=>x.classList.remove("active"));
+if(el)el.classList.add("active");
 
+["tripsSection","tripFilters","ticketSection","visaSection"].forEach(id=>document.getElementById(id).classList.add("hidden"));
 
-/* SHOW SERVICE */
-window.showService = function(service, element){
-
-currentService = service;
-
-document.querySelectorAll(".service-card").forEach(card=>{
-card.classList.remove("active");
-});
-
-if(element) element.classList.add("active");
-
-document.getElementById("tripsSection").classList.add("hidden");
-document.getElementById("tripFilters").classList.add("hidden");
-document.getElementById("ticketSection").classList.add("hidden");
-document.getElementById("visaSection").classList.add("hidden");
-
-if(service === "trips"){
-
+if(service==="trips"||service==="world"){
 document.getElementById("tripsSection").classList.remove("hidden");
 document.getElementById("tripFilters").classList.remove("hidden");
-document.getElementById("tripTitle").innerText="🇮🇳 Explore India Trips";
-
+document.getElementById("tripTitle").innerText=service==="world"?"🌍 Explore World Trips":"🇮🇳 Explore India Trips";
 renderTrips();
-
 }
-
-else if(service === "world"){
-
-document.getElementById("tripsSection").classList.remove("hidden");
-document.getElementById("tripFilters").classList.remove("hidden");
-document.getElementById("tripTitle").innerText="🌍 Explore World Trips";
-
-renderTrips();
-
-}
-
-else if(service === "visa"){
-
+else if(service==="visa"){
 document.getElementById("visaSection").classList.remove("hidden");
-
 }
-
 else{
-
 document.getElementById("ticketSection").classList.remove("hidden");
-
-let title = service === "flight" ? "✈️ Flight Ticket" :
-service === "train" ? "🚆 Train Ticket" :
-"🚌 Bus Ticket";
-
-document.getElementById("ticketTitle").innerText=title;
-document.getElementById("ticketIcon").innerText=title;
-
+let t=service==="flight"?"✈️ Flight Ticket":service==="train"?"🚆 Train Ticket":"🚌 Bus Ticket";
+document.getElementById("ticketTitle").innerText=t;
+document.getElementById("ticketIcon").innerText=t;
+}
 }
 
-};
-
-
-/* CATEGORY */
-window.setCategory = function(category,btn){
-
-currentCategory=category;
-
-document.querySelectorAll(".filter").forEach(b=>{
-b.classList.remove("active");
-});
-
+function setCategory(cat,btn){
+currentCategory=cat;
+document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));
 btn.classList.add("active");
-
 renderTrips();
-
-};
-
-
-/* RENDER TRIPS */
-window.renderTrips = function(){
-
-let trips = currentService === "world" ? worldTrips : indiaTrips;
-
-const search = document.getElementById("searchInput").value.toLowerCase();
-
-let filtered = trips.filter(trip=>{
-
-let categoryMatch =
-currentCategory === "all" ||
-trip.category === currentCategory;
-
-let searchMatch =
-trip.name.toLowerCase().includes(search) ||
-trip.destination.toLowerCase().includes(search);
-
-return categoryMatch && searchMatch;
-
-});
-
-const grid=document.getElementById("tripGrid");
-
-if(filtered.length===0){
-
-grid.innerHTML=`
-<div class="no-results">
-😔 No trips found.<br>
-Try another destination or category.
-</div>`;
-
-return;
-
 }
 
-grid.innerHTML=filtered.map((trip,index)=>`
+function renderTrips(){
+let trips=currentService==="world"?worldTrips:indiaTrips;
+let q=document.getElementById("searchInput").value.toLowerCase();
 
+let filtered=trips.filter(t=>
+(currentCategory==="all"||t.category===currentCategory)&&
+(t.name.toLowerCase().includes(q)||t.destination.toLowerCase().includes(q))
+);
+
+let grid=document.getElementById("tripGrid");
+
+grid.innerHTML=filtered.length?
+filtered.map((t,i)=>`
 <div class="trip-card">
-
 <div class="trip-image">
-${trip.emoji}
-
-<div class="badge">${trip.category}</div>
-
-<div class="price-badge">
-From ₹${trip.price.toLocaleString()}
+<img src="${t.image}" alt="${t.name}" loading="lazy">
+<div class="badge">${t.category}</div>
+<div class="price-badge">From ₹${t.price.toLocaleString()}</div>
 </div>
-
-</div>
-
 <div class="trip-info">
-
-<h3>${trip.name}</h3>
-
-<p>📍 ${trip.destination}</p>
-
+<h3>${t.name}</h3>
+<p>📍 ${t.destination}</p>
 <div class="trip-meta">
-<span>📅 ${trip.duration}</span>
-<span>⭐ 4.8</span>
+<span>📅 ${t.duration}</span><span>⭐ 4.8</span>
 </div>
+<button class="book-btn" onclick="openTrip('${currentService}',${i})">View & Book Now →</button>
+</div></div>`).join("")
+:`<div class="no-results">😔 No trips found.</div>`;
+}
 
-<button class="book-btn"
-onclick="openTrip('${currentService}',${index})">
-View & Book Now →
-</button>
-
-</div>
-
-</div>
-
-`).join("");
-
-};
-
-
-/* OPEN TRIP */
-window.openTrip=function(type,index){
-
-const list = type === "world" ? worldTrips : indiaTrips;
-
-selectedTrip=list[index];
-
+function openTrip(type,index){
+selectedTrip=(type==="world"?worldTrips:indiaTrips)[index];
 document.getElementById("modalTitle").innerText=selectedTrip.name;
-
 document.getElementById("modalDetails").innerHTML=`
-
 <div class="detail-box">
 <p><b>📍 Destination:</b> ${selectedTrip.destination}</p>
 <p><b>📅 Duration:</b> ${selectedTrip.duration}</p>
 <p><b>💰 Starting Price:</b> ₹${selectedTrip.price.toLocaleString()} per person</p>
 <p><b>✨ About:</b> ${selectedTrip.description}</p>
-</div>
+</div>`;
+document.getElementById("bookingModal").style.display="flex";
+}
 
+function closeModal(){
+document.getElementById("bookingModal").style.display="none";
+}
+
+function submitBooking(){
+let n=document.getElementById("customerName").value.trim();
+let p=document.getElementById("customerPhone").value.trim();
+
+if(!n||!p)return alert("Please enter your name and mobile number.");
+
+let list=JSON.parse(localStorage.getItem("haloraBookings")||"[]");
+
+list.push({
+trip:selectedTrip.name,
+name:n,
+phone:p,
+date:document.getElementById("customerDate").value,
+package:document.getElementById("packageType").value,
+createdAt:new Date().toISOString()
+});
+
+localStorage.setItem("haloraBookings",JSON.stringify(list));
+alert("✅ Booking enquiry saved! HALORA team will contact you soon.");
+closeModal();
+}
+
+function sendTicketEnquiry(){
+let f=document.getElementById("from").value;
+let t=document.getElementById("to").value;
+
+if(!f||!t)return alert("Please enter From and To locations.");
+
+let list=JSON.parse(localStorage.getItem("haloraTicketEnquiries")||"[]");
+
+list.push({
+type:currentService,
+from:f,to:t,
+date:document.getElementById("travelDate").value,
+travellers:document.getElementById("travellers").value,
+createdAt:new Date().toISOString()
+});
+
+localStorage.setItem("haloraTicketEnquiries",JSON.stringify(list));
+alert("✅ Enquiry saved! HALORA team will help you with booking.");
+}
+
+function visaEnquiry(service){
+selectedTrip={
+name:service,
+destination:"Passport / Visa Service",
+description:"HALORA team will guide you regarding the service and required documents."
+};
+
+document.getElementById("modalTitle").innerText=service;
+document.getElementById("modalDetails").innerHTML=`
 <div class="detail-box">
-<b>✅ Package Includes</b>
-<p>✔ Hotel accommodation</p>
-<p>✔ Selected sightseeing</p>
-<p>✔ Travel assistance</p>
-<p>✔ HALORA support</p>
-</div>
-
-`;
+<p>🛂 <b>${service}</b></p>
+<p>Our team will contact you and provide guidance about the application process and required documents.</p>
+</div>`;
 
 document.getElementById("bookingModal").style.display="flex";
-
-};
-
-
-/* CLOSE */
-window.closeModal=function(){
-
-document.getElementById("bookingModal").style.display="none";
-
-};
-
-
-/* SAVE BOOKING */
-window.submitBooking=async function(){
-
-const name=document.getElementById("customerName").value.trim();
-const phone=document.getElementById("customerPhone").value.trim();
-const date=document.getElementById("customerDate").value;
-const packageType=document.getElementById("packageType").value;
-
-if(!name || !phone){
-
-alert("Please enter your name and mobile number.");
-return;
-
 }
 
-try{
-
-await addDoc(collection(db,"bookings"),{
-
-type:"trip",
-
-tripName:selectedTrip.name,
-destination:selectedTrip.destination,
-price:selectedTrip.price,
-
-customerName:name,
-phone:phone,
-travelDate:date,
-packageType:packageType,
-
-createdAt:serverTimestamp()
-
+document.getElementById("bookingModal").addEventListener("click",function(e){
+if(e.target===this)closeModal();
 });
-
-alert("✅ Booking enquiry sent successfully! HALORA team will contact you soon.");
-
-closeModal();
-
-}
-catch(error){
-
-console.error(error);
-
-/* Backup if Firebase permission isn't ready */alert("Your enquiry is ready. Please check Firebase permissions to save online.");
-
-}
-
-};
-
-/* TICKET ENQUIRY */
-
-window.sendTicketEnquiry=async function(){
-
-const
-
-from=document.getElementById("from").value;
-
-const to=document.getElementById("to").value;
-
-const
-
-date=document.getElementById("travelDate").valu e;
-
-if(!from || !to){
-
-alert("Please enter From and To locations.");
-
-return;
-
-}
-
-const ticketType=currentService;
-
-try{
-
-await addDoc(collection (db, "ticketEnquiries"), {
-
-ticketType:ticketType,
-
-from:from,
-
-to:to,
-
-travelDate:date,
-
-travellers:document.getElementById("travellers" ).value,
-
-createdAt:serverTimestamp()
-
-});
-
-alert( ${ticketType.toUpperCase()} enquiry sent! HALORA team will help you with booking.`);
-
-}
-
-catch(error){
-
-alert("Enquiry details captured. Please check Firebase permissions.");
-
-}
-
-};
-
-/* VISA */
-
-window.visa Enquiry=function(service) {
-
-selectedTrip={
-
-name: service,
-
-destination: "Passport / Visa Service",
-
-duration: "As per application",
-
-price:0,
-
-description: "HALORA team will guide you
-
-regarding the service and required documents."
-
-};
-
-document.getElementById("modalTitle").innerText =service;
-
-document.getElementById("modalDetails").innerHT ML=
-
-<div class="detail-box">
-
-<p> <b>${service}</b></p>
-
-<p>Our team will contact you and provide guidance about the application process and required documents.</p>
-
-</div>
-;
-
-document.getElementById("bookingModal").style.d isplay="flex";
-
-};
-
-/* CLOSE MODAL ON OUTSIDE CLICK */
-
-document.getElementById("bookingModal").addEven
-
-tListener("click", function(e){
-
-if(e.target===this) closeModal();
-
-});
-
-/* DEFAULT */
 
 renderTrips();
-
 </script>
-
 </body>
-
 </html>

@@ -1,33 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Profile</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile | HALORA</title>
   <link rel="stylesheet" href="./style.css">
+
+  <style>
+    .profile-menu{
+      margin-top:18px;
+      display:grid;
+      gap:10px;
+    }
+
+    .profile-option{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:15px;
+      background:#f5f7fb;
+      border-radius:12px;
+      text-decoration:none;
+      color:#1d2433;
+      font-weight:600;
+    }
+
+    .profile-option span{
+      font-size:20px;
+    }
+
+    .profile-photo{
+      width:100px;
+      height:100px;
+      border-radius:50%;
+      object-fit:cover;
+      border:4px solid #ff7a00;
+    }
+
+    .logout-profile{
+      background:#fff1f1;
+      color:#d93025;
+      border:none;
+      width:100%;
+      padding:14px;
+      border-radius:12px;
+      font-weight:bold;
+      cursor:pointer;
+      margin-top:10px;
+    }
+  </style>
 </head>
+
 <body>
 
 <header class="topbar">
   <div class="logo">My Profile</div>
-  <a href="./dashboard.html" class="logout-btn">Back</a>
+  <a href="./dashboard.html" class="logout-btn">← Back</a>
 </header>
 
 <main class="page-center">
 
   <section class="card">
 
+    <!-- PROFILE PHOTO -->
     <div style="text-align:center;margin-bottom:20px;">
-      <img src="https://source.unsplash.com/100x100/?person" style="border-radius:50%;">
+      <img
+        id="profilePhoto"
+        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80"
+        class="profile-photo"
+        alt="Profile Photo"
+      >
+
       <h2 id="userName">Bhala Ram</h2>
-      <p style="color:gray">User ID: 875421</p>
+      <p style="color:gray">HALORA Traveller</p>
+      <p style="color:gray;font-size:12px">User ID: 875421</p>
     </div>
 
+    <!-- UPDATE PROFILE -->
     <input type="text" id="name" placeholder="Update Name">
     <input type="email" id="email" placeholder="Update Email">
 
-    <button class="main-btn">Update Profile</button>
+    <button class="main-btn" onclick="updateProfile()">
+      Update Profile
+    </button>
+
+    <!-- PROFILE FEATURES -->
+    <div class="profile-menu">
+
+      <a href="./my-bookings.html" class="profile-option">
+        <div>🎫 My Bookings</div>
+        <span>›</span>
+      </a>
+
+      <a href="./saved-trips.html" class="profile-option">
+        <div>❤️ Saved Trips</div>
+        <span>›</span>
+      </a>
+
+      <a href="./notifications.html" class="profile-option">
+        <div>🔔 Notifications</div>
+        <span>›</span>
+      </a>
+
+      <a href="./change-password.html" class="profile-option">
+        <div>🔐 Change Password</div>
+        <span>›</span>
+      </a>
+
+    </div>
+
+    <button class="logout-profile" onclick="logoutUser()">
+      🚪 Logout
+    </button>
 
   </section>
 
 </main>
+
+<script>
+  function updateProfile() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+
+    if (name) {
+      document.getElementById("userName").innerText = name;
+      localStorage.setItem("haloraUserName", name);
+    }
+
+    if (email) {
+      localStorage.setItem("haloraUserEmail", email);
+    }
+
+    alert("✅ Profile updated successfully!");
+  }
+
+  function logoutUser() {
+    const confirmLogout = confirm("Are you sure you want to logout?");
+
+    if (confirmLogout) {
+      localStorage.removeItem("haloraUserName");
+      localStorage.removeItem("haloraUserEmail");
+      window.location.href = "./login.html";
+    }
+  }
+
+  // Load saved profile
+  window.onload = function() {
+    const savedName = localStorage.getItem("haloraUserName");
+    const savedEmail = localStorage.getItem("haloraUserEmail");
+
+    if (savedName) {
+      document.getElementById("userName").innerText = savedName;
+      document.getElementById("name").value = savedName;
+    }
+
+    if (savedEmail) {
+      document.getElementById("email").value = savedEmail;
+    }
+  };
+</script>
+
 </body>
 </html>

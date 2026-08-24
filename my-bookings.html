@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Bookings | HALORA</title>
+
+<link rel="stylesheet" href="./style.css">
+
+<style>
+
+body{
+  background:#f5f7fb;
+  margin:0;
+  font-family:Arial, sans-serif;
+}
+
+.booking-page{
+  max-width:700px;
+  margin:auto;
+  padding:20px;
+}
+
+.booking-title{
+  margin:15px 0 20px;
+  font-size:24px;
+  color:#1d2433;
+}
+
+.booking-card{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 5px 18px rgba(0,0,0,.08);
+  border-left:5px solid #ff7a00;
+}
+
+.booking-card h3{
+  margin:0 0 12px;
+  color:#1d2433;
+}
+
+.booking-card p{
+  color:#64748b;
+  margin:8px 0;
+  font-size:14px;
+}
+
+.booking-status{
+  display:inline-block;
+  background:#fff3e8;
+  color:#e66a00;
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.empty-bookings{
+  text-align:center;
+  background:white;
+  padding:40px 20px;
+  border-radius:20px;
+  color:#64748b;
+  box-shadow:0 5px 18px rgba(0,0,0,.06);
+}
+
+.explore-btn{
+  display:inline-block;
+  margin-top:15px;
+  padding:13px 20px;
+  background:#ff7a00;
+  color:white;
+  text-decoration:none;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+.loader{
+  text-align:center;
+  padding:40px;
+  color:#64748b;
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="logo">My Bookings 🎫</div>
+  <a href="./profile.html" class="logout-btn">← Back</a>
+</header>
+
+<main class="booking-page">
+
+  <h2 class="booking-title">Your Travel Bookings ✈️</h2>
+
+  <div id="bookingList">
+    <div class="loader">Loading your bookings... ⏳</div>
+  </div>
+
+</main>
+
+
+<script type="module">
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where
+} from
+"https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+
+/* =========================
+   HALORA FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDJnOh92AYUzFeWtuLMtDciETdpCQ7-MNs",
+  authDomain: "halorebook.firebaseapp.com",
+  projectId: "halorebook",
+  storageBucket: "halorebook.firebasestorage.app",
+  messagingSenderId: "58132767978",
+  appId: "1:58132767978:web:2165ca8a94fb0cfe5a6393"
+};
+
+
+/* =========================
+   FIREBASE START
+========================= */
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const bookingList =
+document.getElementById("bookingList");
+
+
+/* =========================
+   CURRENT USER ID
+========================= */
+
+let currentUserId =
+localStorage.getItem("haloraUserId");
+
+if(!currentUserId){
+
+  currentUserId = "875421";
+
+  localStorage.setItem(
+    "haloraUserId",
+    currentUserId
+  );
+
+}
+
+
+/* =========================
+   LOAD ONLY MY BOOKINGS
+========================= */
+
+async function loadBookings(){
+
+  try{
+
+    const bookingQuery = query(
+
+      collection(db,"bookings"),
+
+      where(
+        "userId",
+        "==",
+        currentUserId
+      )
+
+    );
+
+
+    const snapshot =
+    await getDocs(bookingQuery);
+
+
+    /* NO BOOKINGS */
+
+    if(snapshot.empty){
+
+      bookingList.innerHTML = `
+
+        <div class="empty-bookings">
+
+          <div style="font-size:55px">
+            🎫
+          </div>
+
+          <h3>No bookings yet</h3>
+
+          <p>
+            Your booked trips will appear here.
+          </p>
+
+          <a href="./trip.html"
+             class="explore-btn">
+
+             Explore Trips ✈️
+
+          </a>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    /* CLEAR LOADER */
+
+    bookingList.innerHTML = "";
+
+
+    /* SHOW BOOKINGS */
+
+    snapshot.forEach((doc)=>{
+
+      const booking = doc.data();
+
+
+      const price = booking.price
+
+        ? "₹" +
+          Number(
+            booking.price
+          ).toLocaleString("en-IN")
+
+        : "Price on request";
+
+
+      const status =
+      booking.status ||
+      "Enquiry Received";
+
+
+      bookingList.innerHTML += `
+
+        <div class="booking-card">
+
+          <h3>
+            ✈️
+            ${booking.tripName ||
+              "Travel Booking"}
+          </h3>
+
+
+          <p>
+            📍 <b>Destination:</b>
+            ${booking.destination ||
+              "Not specified"}
+          </p>
+
+
+          <p>
+            📅 <b>Travel Date:</b>
+            ${booking.travelDate ||
+              "To be confirmed"}
+          </p>
+
+
+          <p>
+            🧳 <b>Package:</b>
+            ${booking.packageType ||
+              "Standard Package"}
+          </p>
+
+
+          <p>
+            💰 <b>Starting Price:</b>
+            ${price}
+          </p>
+
+
+          <div class="booking-status">
+            ⏳ ${status}
+          </div>
+
+        </div>
+
+      `;
+
+    });
+
+  }
+
+
+  catch(error){
+
+    console.error(
+      "Booking loading error:",
+      error
+    );
+
+
+    bookingList.innerHTML = `
+
+      <div class="empty-bookings">
+
+        <div style="font-size:50px">
+          ⚠️
+        </div>
+
+        <h3>
+          Unable to load bookings
+        </h3>
+
+        <p>
+          Please check Firebase permissions
+          and try again.
+        </p>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* START */
+
+loadBookings();
+
+</script>
+
+</body>
+</html>

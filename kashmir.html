@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kashmir Paradise | HALORA Travel</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#172033;
+    padding-bottom:30px;
+}
+
+.header{
+    background:linear-gradient(135deg,#111827,#172554,#312e81);
+    color:white;
+    padding:20px;
+    border-radius:0 0 28px 28px;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.back{
+    text-decoration:none;
+    color:white;
+    background:rgba(255,255,255,.15);
+    padding:9px 14px;
+    border-radius:20px;
+}
+
+.hero{
+    margin-top:25px;
+}
+
+.hero h1{
+    font-size:28px;
+}
+
+.hero p{
+    margin-top:8px;
+    opacity:.8;
+    font-size:14px;
+}
+
+.container{
+    max-width:850px;
+    margin:auto;
+    padding:20px;
+}
+
+/* HERO IMAGE */
+.main-image{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+    border-radius:22px;
+    margin-bottom:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.15);
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:18px;
+    box-shadow:0 5px 18px rgba(0,0,0,.07);
+}
+
+.card h2{
+    margin-bottom:12px;
+    font-size:21px;
+}
+
+.card p{
+    color:#536174;
+    line-height:1.6;
+    font-size:14px;
+}
+
+/* INFO */
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:15px;
+}
+
+.info{
+    background:#eef2ff;
+    padding:14px;
+    border-radius:14px;
+    font-size:13px;
+}
+
+/* PLACES */
+.place{
+    display:flex;
+    gap:15px;
+    padding:14px 0;
+    border-bottom:1px solid #eee;
+}
+
+.place:last-child{
+    border:none;
+}
+
+.place-icon{
+    width:50px;
+    height:50px;
+    min-width:50px;
+    background:#eef2ff;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+}
+
+.place h3{
+    margin-bottom:6px;
+}
+
+.place p{
+    font-size:13px;
+}
+
+/* ITINERARY */
+.day{
+    display:flex;
+    gap:15px;
+    margin:15px 0;
+}
+
+.day-number{
+    min-width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#4f46e5;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+}
+
+.day-content h3{
+    margin-bottom:5px;
+}
+
+/* BOOK BUTTON */
+.book-btn{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.book-btn:active{
+    transform:scale(.98);
+}
+
+/* BOOKING FORM */
+.booking{
+    display:none;
+}
+
+.booking input,
+.booking select{
+    width:100%;
+    padding:14px;
+    margin:7px 0;
+    border:1px solid #ddd;
+    border-radius:12px;
+    font-size:14px;
+}
+
+.success{
+    display:none;
+    text-align:center;
+    padding:15px;
+    background:#dcfce7;
+    color:#166534;
+    border-radius:12px;
+    margin-top:12px;
+}
+
+@media(max-width:500px){
+    .info-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="top">
+        <div class="logo">HALORA ✈️</div>
+        <a href="./index.html" class="back">← Back</a>
+    </div>
+
+    <div class="hero">
+        <h1>🏔️ Kashmir Paradise</h1>
+        <p>Experience the beauty of Heaven on Earth</p>
+    </div>
+</div>
+
+<div class="container">
+
+<!-- MAIN PHOTO -->
+<img class="main-image"
+src="https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1200&q=80"
+alt="Beautiful Kashmir Mountains">
+
+<!-- ABOUT -->
+<div class="card">
+<h2>✨ About Kashmir</h2>
+
+<p>
+Kashmir is famous for its beautiful valleys, lakes, snow-covered
+mountains and peaceful green meadows. From the Dal Lake in Srinagar
+to the mountains of Gulmarg and the valleys of Pahalgam, this journey
+offers a memorable travel experience.
+</p>
+
+<div class="info-grid">
+    <div class="info">📍 Jammu & Kashmir, India</div>
+    <div class="info">📅 5 Nights / 6 Days</div>
+    <div class="info">🏔️ Nature & Adventure</div>
+    <div class="info">👨‍👩‍👧 Family Friendly</div>
+</div>
+</div>
+
+<!-- DESTINATIONS -->
+<div class="card">
+
+<h2>📍 Places You'll Explore</h2>
+
+<div class="place">
+<div class="place-icon">🌊</div>
+<div>
+<h3>Srinagar</h3>
+<p>Enjoy Dal Lake, Shikara rides, houseboats and the famous Mughal Gardens.</p>
+</div>
+</div>
+
+<div class="place">
+<div class="place-icon">❄️</div>
+<div>
+<h3>Gulmarg</h3>
+<p>Experience beautiful meadows, mountain views, snow activities and the famous Gondola ride.</p>
+</div>
+</div>
+
+<div class="place">
+<div class="place-icon">🌲</div>
+<div>
+<h3>Pahalgam</h3>
+<p>Explore green valleys, forests and the beautiful Lidder River.</p>
+</div>
+</div>
+
+<div class="place">
+<div class="place-icon">🏔️</div>
+<div>
+<h3>Sonamarg</h3>
+<p>Enjoy spectacular Himalayan scenery and the beautiful Thajiwas Glacier area.</p>
+</div>
+</div>
+
+<div class="place">
+<div class="place-icon">🌿</div>
+<div>
+<h3>Yusmarg</h3>
+<p>A peaceful meadow perfect for nature walks and relaxing away from crowds.</p>
+</div>
+</div>
+
+<div class="place">
+<div class="place-icon">🏞️</div>
+<div>
+<h3>Doodhpathri</h3>
+<p>Discover green meadows, streams and peaceful mountain landscapes.</p>
+</div>
+</div>
+
+</div>
+
+<!-- ITINERARY -->
+<div class="card">
+
+<h2>🗓️ 6 Days Kashmir Itinerary</h2>
+
+<div class="day">
+<div class="day-number">1</div>
+<div class="day-content">
+<h3>Arrival in Srinagar 🌊</h3>
+<p>Arrival, hotel check-in, Dal Lake and a beautiful Shikara ride.</p>
+</div>
+</div>
+
+<div class="day">
+<div class="day-number">2</div>
+<div class="day-content">
+<h3>Gulmarg Adventure ❄️</h3>
+<p>Visit Gulmarg, enjoy mountain views and optional Gondola or snow activities.</p>
+</div>
+</div>
+
+<div class="day">
+<div class="day-number">3</div>
+<div class="day-content">
+<h3>Pahalgam Valley 🌲</h3>
+<p>Explore scenic valleys, forests and the beautiful Lidder River.</p>
+</div>
+</div>
+
+<div class="day">
+<div class="day-number">4</div>
+<div class="day-content">
+<h3>Sonamarg 🏔️</h3>
+<p>Explore Sonamarg and enjoy views of the Himalayan landscape and glacier area.</p>
+</div>
+</div>
+
+<div class="day">
+<div class="day-number">5</div>
+<div class="day-content">
+<h3>Yusmarg 🌿</h3>
+<p>Relax in peaceful meadows and enjoy nature walks or optional horse riding.</p>
+</div>
+</div>
+
+<div class="day">
+<div class="day-number">6</div>
+<div class="day-content">
+<h3>Doodhpathri & Departure 🏞️</h3>
+<p>Visit beautiful green meadows before your onward journey.</p>
+</div>
+</div>
+
+</div>
+
+<!-- PACKAGE -->
+<div class="card">
+<h2>🎒 Package Highlights</h2>
+<p>
+✅ Hotel Stay<br><br>
+✅ Sightseeing Assistance<br><br>
+✅ Travel Support<br><br>
+✅ HALORA Booking Assistance<br><br>
+⚠️ Flights, activities and other inclusions can be selected according to your final package.
+</p>
+</div>
+
+<!-- BOOK -->
+<div class="card">
+
+<h2>💰 Want to Book This Trip?</h2>
+<p style="margin-bottom:15px">
+Send your details and the HALORA team can prepare a suitable package for you.
+</p>
+
+<button class="book-btn" onclick="showBooking()">
+✈️ Book Kashmir Trip
+</button>
+
+<div id="bookingForm" class="booking">
+
+<input type="text" id="name" placeholder="Your Full Name">
+<input type="tel" id="phone" placeholder="Mobile Number">
+<input type="date" id="date">
+
+<select id="travellers">
+<option>1 Traveller</option>
+<option>2 Travellers</option>
+<option>3 Travellers</option>
+<option>4+ Travellers</option>
+</select>
+
+<button class="book-btn" onclick="submitBooking()">
+Send Booking Enquiry 🚀
+</button>
+
+<div class="success" id="success">
+✅ Your Kashmir booking enquiry has been saved! HALORA will contact you soon.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function showBooking(){
+    document.getElementById("bookingForm").style.display="block";
+}
+
+function submitBooking(){
+
+    const name=document.getElementById("name").value.trim();
+    const phone=document.getElementById("phone").value.trim();
+    const date=document.getElementById("date").value;
+    const travellers=document.getElementById("travellers").value;
+
+    if(!name || !phone){
+        alert("Please enter your name and mobile number.");
+        return;
+    }
+
+    let bookings=JSON.parse(
+        localStorage.getItem("haloraBookings") || "[]"
+    );
+
+    bookings.push({
+        trip:"Kashmir Paradise",
+        name:name,
+        phone:phone,
+        date:date,
+        travellers:travellers,
+        createdAt:new Date().toISOString()
+    });
+
+    localStorage.setItem(
+        "haloraBookings",
+        JSON.stringify(bookings)
+    );
+
+    document.getElementById("success").style.display="block";
+
+    document.getElementById("name").value="";
+    document.getElementById("phone").value="";
+}
+
+</script>
+
+</body>
+  </html>

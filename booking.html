@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>HALORA - Package Booking</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f6fb;
+      color: #1e293b;
+    }
+
+    header {
+      background: #312e81;
+      color: white;
+      padding: 18px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .container {
+      width: min(92%, 600px);
+      margin: 30px auto;
+    }
+
+    .booking-card {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .package-box {
+      background: #eef2ff;
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 22px;
+    }
+
+    .package-box h2 {
+      margin: 0 0 8px;
+      color: #312e81;
+    }
+
+    .price {
+      font-size: 24px;
+      font-weight: bold;
+      color: #16a34a;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .payment-options {
+      margin-top: 10px;
+    }
+
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px;
+      margin: 10px 0;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .payment-option input {
+      width: auto;
+    }
+
+    .confirm-btn {
+      width: 100%;
+      border: none;
+      background: #312e81;
+      color: white;
+      padding: 16px;
+      margin-top: 25px;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .confirm-btn:active {
+      transform: scale(0.98);
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 14px;
+      background: #fffbeb;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #92400e;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 18px;
+      text-decoration: none;
+      color: #312e81;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    ✈️ HALORA PACKAGE BOOKING
+  </header>
+
+  <main class="container">
+
+    <div class="booking-card">
+
+      <!-- Selected Package -->
+      <div class="package-box">
+        <h2 id="selectedPackageName">Loading Package...</h2>
+        <div class="price" id="selectedPackagePrice">₹0</div>
+      </div>
+
+      <!-- Booking Form -->
+      <form id="bookingForm">
+
+        <label for="customerName">👤 Your Name</label>
+        <input
+          type="text"
+          id="customerName"
+          placeholder="Enter your full name"
+          required
+        >
+
+        <label for="customerPhone">📱 Mobile Number</label>
+        <input
+          type="tel"
+          id="customerPhone"
+          placeholder="Enter mobile number"
+          required
+        >
+
+        <label for="travelDate">📅 Travel Date</label>
+        <input
+          type="date"
+          id="travelDate"
+          required
+        >
+
+        <label for="travellers">👥 Number of Travellers</label>
+        <select id="travellers" required>
+          <option value="">Select Travellers</option>
+          <option value="1">1 Traveller</option>
+          <option value="2">2 Travellers</option>
+          <option value="3">3 Travellers</option>
+          <option value="4">4 Travellers</option>
+          <option value="5">5+ Travellers</option>
+        </select>
+
+        <!-- Payment -->
+        <h3 style="margin-top:25px;">💳 Choose Payment Method</h3>
+
+        <div class="payment-options">
+
+          <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="UPI">
+            📱 UPI Payment
+          </label>
+
+          <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="Card">
+            💳 Credit / Debit Card
+          </label>
+
+          <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="EMI">
+            🏦 EMI Payment
+          </label>
+
+          <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="Offline">
+            🤝 Offline / Contact HALORA
+          </label>
+
+        </div>
+
+        <button
+          type="button"
+          class="confirm-btn"
+          onclick="submitPackageBooking()"
+        >
+          ✅ Confirm Booking
+        </button>
+
+      </form>
+
+      <div class="note">
+        🔒 आपकी booking सुरक्षित रूप से HALORA system में save होगी।
+        Payment status verification के बाद update किया जाएगा।
+      </div>
+
+      <a href="index.html" class="back-btn">
+        ← Back to Home
+      </a>
+
+    </div>
+
+  </main>
+
+  <!-- COMMON HALORA BOOKING SYSTEM -->
+  <script type="module" src="./js/package-booking.js"></script>
+
+</body>
+</html>

@@ -4,461 +4,683 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kashmir Paradise | HALORA Travel</title>
+<title>Kashmir Tour Packages | HALORA</title>
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
 }
 
 body{
-    background:#f5f7fb;
-    color:#172033;
-    padding-bottom:30px;
+  background:#f5f7fb;
+  color:#172033;
+  padding-bottom:40px;
 }
 
+/* HEADER */
 .header{
-    background:linear-gradient(135deg,#111827,#172554,#312e81);
-    color:white;
-    padding:20px;
-    border-radius:0 0 28px 28px;
+  background:linear-gradient(135deg,#111827,#172554,#312e81);
+  color:white;
+  padding:20px;
+  border-radius:0 0 28px 28px;
 }
 
 .top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
 .logo{
-    font-size:22px;
-    font-weight:bold;
+  font-size:24px;
+  font-weight:800;
+}
+
+.logo span{
+  color:#60a5fa;
 }
 
 .back{
-    text-decoration:none;
-    color:white;
-    background:rgba(255,255,255,.15);
-    padding:9px 14px;
-    border-radius:20px;
+  color:white;
+  text-decoration:none;
+  background:rgba(255,255,255,.15);
+  padding:10px 15px;
+  border-radius:20px;
 }
 
 .hero{
-    margin-top:25px;
+  margin-top:25px;
 }
 
 .hero h1{
-    font-size:28px;
+  font-size:28px;
 }
 
 .hero p{
-    margin-top:8px;
-    opacity:.8;
-    font-size:14px;
+  margin-top:8px;
+  opacity:.8;
+  font-size:14px;
 }
 
+/* CONTAINER */
 .container{
-    max-width:850px;
-    margin:auto;
-    padding:20px;
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
 }
 
-/* HERO IMAGE */
-.main-image{
-    width:100%;
-    height:250px;
-    object-fit:cover;
-    border-radius:22px;
-    margin-bottom:20px;
-    box-shadow:0 8px 25px rgba(0,0,0,.15);
+.title{
+  font-size:21px;
+  margin:10px 0 18px;
 }
 
-.card{
-    background:white;
-    padding:20px;
-    border-radius:20px;
-    margin-bottom:18px;
-    box-shadow:0 5px 18px rgba(0,0,0,.07);
+/* PACKAGE GRID */
+.packages{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+  gap:16px;
 }
 
-.card h2{
-    margin-bottom:12px;
-    font-size:21px;
+.package{
+  background:white;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 5px 18px rgba(0,0,0,.08);
+  transition:.2s;
 }
 
-.card p{
-    color:#536174;
-    line-height:1.6;
-    font-size:14px;
+.package:hover{
+  transform:translateY(-3px);
 }
 
-/* INFO */
-.info-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-    margin-top:15px;
+.package img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
 }
 
-.info{
-    background:#eef2ff;
-    padding:14px;
-    border-radius:14px;
-    font-size:13px;
+.package-info{
+  padding:16px;
 }
 
-/* PLACES */
-.place{
-    display:flex;
-    gap:15px;
-    padding:14px 0;
-    border-bottom:1px solid #eee;
+.tag{
+  display:inline-block;
+  background:#eef2ff;
+  color:#4338ca;
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:8px;
 }
 
-.place:last-child{
-    border:none;
+.package h2{
+  font-size:19px;
+  margin-bottom:8px;
 }
 
-.place-icon{
-    width:50px;
-    height:50px;
-    min-width:50px;
-    background:#eef2ff;
-    border-radius:14px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:25px;
+.package p{
+  color:#64748b;
+  font-size:13px;
+  line-height:1.6;
+  margin:4px 0;
 }
 
-.place h3{
-    margin-bottom:6px;
+.price{
+  font-size:21px;
+  font-weight:bold;
+  color:#16a34a;
+  margin:14px 0 8px;
 }
 
-.place p{
-    font-size:13px;
+.select-btn,
+.pay-btn{
+  width:100%;
+  border:none;
+  padding:14px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:14px;
 }
 
-/* ITINERARY */
-.day{
-    display:flex;
-    gap:15px;
-    margin:15px 0;
-}
-
-.day-number{
-    min-width:45px;
-    height:45px;
-    border-radius:50%;
-    background:#4f46e5;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-weight:bold;
-}
-
-.day-content h3{
-    margin-bottom:5px;
-}
-
-/* BOOK BUTTON */
-.book-btn{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:14px;
-    background:linear-gradient(135deg,#4f46e5,#7c3aed);
-    color:white;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.book-btn:active{
-    transform:scale(.98);
-}
-
-/* BOOKING FORM */
+/* BOOKING BOX */
 .booking{
-    display:none;
+  display:none;
+  background:white;
+  border-radius:22px;
+  padding:20px;
+  margin-top:25px;
+  box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+.booking h2{
+  margin-bottom:15px;
+}
+
+.details{
+  background:#f8fafc;
+  padding:14px;
+  border-radius:14px;
+  line-height:1.7;
+  font-size:14px;
+  margin-bottom:15px;
 }
 
 .booking input,
 .booking select{
-    width:100%;
-    padding:14px;
-    margin:7px 0;
-    border:1px solid #ddd;
-    border-radius:12px;
-    font-size:14px;
+  width:100%;
+  padding:14px;
+  margin:7px 0;
+  border:1px solid #dbe1ea;
+  border-radius:12px;
+  outline:none;
+  font-size:14px;
+}
+
+/* PAYMENT */
+.payment-options{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin:12px 0;
+}
+
+.payment-option{
+  border:2px solid #e2e8f0;
+  padding:14px;
+  border-radius:13px;
+  cursor:pointer;
+  text-align:center;
+  font-size:14px;
+  background:white;
+}
+
+.payment-option.active{
+  border-color:#4f46e5;
+  background:#eef2ff;
+}
+
+.payment-box{
+  display:none;
+  background:#f8fafc;
+  border-radius:14px;
+  padding:14px;
+  margin:12px 0;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.note{
+  font-size:12px;
+  color:#64748b;
+  line-height:1.5;
+  margin-top:12px;
 }
 
 .success{
-    display:none;
-    text-align:center;
-    padding:15px;
-    background:#dcfce7;
-    color:#166534;
-    border-radius:12px;
-    margin-top:12px;
+  display:none;
+  background:#dcfce7;
+  color:#166534;
+  padding:15px;
+  border-radius:12px;
+  margin-top:15px;
+  text-align:center;
+  line-height:1.5;
 }
 
 @media(max-width:500px){
-    .info-grid{
-        grid-template-columns:1fr 1fr;
-    }
+  .payment-options{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hero h1{
+    font-size:24px;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
-    <div class="top">
-        <div class="logo">HALORA ✈️</div>
-        <a href="./index.html" class="back">← Back</a>
-    </div>
 
-    <div class="hero">
-        <h1>🏔️ Kashmir Paradise</h1>
-        <p>Experience the beauty of Heaven on Earth</p>
-    </div>
+  <div class="top">
+    <div class="logo">HALORA <span>TRAVEL</span></div>
+    <a href="./index.html" class="back">← Back</a>
+  </div>
+
+  <div class="hero">
+    <h1>🏔️ Kashmir Tour Packages</h1>
+    <p>Choose the perfect Kashmir experience for your journey.</p>
+  </div>
+
 </div>
+
 
 <div class="container">
 
-<!-- MAIN PHOTO -->
-<img class="main-image"
-src="https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1200&q=80"
-alt="Beautiful Kashmir Mountains">
+<h2 class="title">✨ Choose Your Kashmir Package</h2>
 
-<!-- ABOUT -->
-<div class="card">
-<h2>✨ About Kashmir</h2>
+<!-- PACKAGES -->
+<div class="packages">
 
-<p>
-Kashmir is famous for its beautiful valleys, lakes, snow-covered
-mountains and peaceful green meadows. From the Dal Lake in Srinagar
-to the mountains of Gulmarg and the valleys of Pahalgam, this journey
-offers a memorable travel experience.
-</p>
-
-<div class="info-grid">
-    <div class="info">📍 Jammu & Kashmir, India</div>
-    <div class="info">📅 5 Nights / 6 Days</div>
-    <div class="info">🏔️ Nature & Adventure</div>
-    <div class="info">👨‍👩‍👧 Family Friendly</div>
-</div>
+<!-- PACKAGE 1 -->
+<div class="package">
+  <img src="https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=900&q=80">
+  <div class="package-info">
+    <span class="tag">BUDGET</span>
+    <h2>🌸 Kashmir Budget</h2>
+    <p>📅 4 Nights / 5 Days</p>
+    <p>📍 Srinagar • Gulmarg • Pahalgam</p>
+    <div class="price">From ₹12,999</div>
+    <button class="select-btn"
+    onclick="selectPackage('Kashmir Budget','4 Nights / 5 Days',12999)">
+    Select Package →
+    </button>
+  </div>
 </div>
 
-<!-- DESTINATIONS -->
-<div class="card">
 
-<h2>📍 Places You'll Explore</h2>
-
-<div class="place">
-<div class="place-icon">🌊</div>
-<div>
-<h3>Srinagar</h3>
-<p>Enjoy Dal Lake, Shikara rides, houseboats and the famous Mughal Gardens.</p>
-</div>
-</div>
-
-<div class="place">
-<div class="place-icon">❄️</div>
-<div>
-<h3>Gulmarg</h3>
-<p>Experience beautiful meadows, mountain views, snow activities and the famous Gondola ride.</p>
-</div>
+<!-- PACKAGE 2 -->
+<div class="package">
+  <img src="https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=900&q=80">
+  <div class="package-info">
+    <span class="tag">POPULAR ⭐</span>
+    <h2>⭐ Kashmir Classic</h2>
+    <p>📅 5 Nights / 6 Days</p>
+    <p>📍 Srinagar • Gulmarg • Sonamarg • Pahalgam</p>
+    <div class="price">From ₹18,999</div>
+    <button class="select-btn"
+    onclick="selectPackage('Kashmir Classic','5 Nights / 6 Days',18999)">
+    Select Package →
+    </button>
+  </div>
 </div>
 
-<div class="place">
-<div class="place-icon">🌲</div>
-<div>
-<h3>Pahalgam</h3>
-<p>Explore green valleys, forests and the beautiful Lidder River.</p>
-</div>
+
+<!-- PACKAGE 3 -->
+<div class="package">
+  <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=900&q=80">
+  <div class="package-info">
+    <span class="tag">WINTER ❄️</span>
+    <h2>❄️ Kashmir Snow Special</h2>
+    <p>📅 5 Nights / 6 Days</p>
+    <p>📍 Srinagar • Gulmarg</p>
+    <div class="price">From ₹22,999</div>
+    <button class="select-btn"
+    onclick="selectPackage('Kashmir Snow Special','5 Nights / 6 Days',22999)">
+    Select Package →
+    </button>
+  </div>
 </div>
 
-<div class="place">
-<div class="place-icon">🏔️</div>
-<div>
-<h3>Sonamarg</h3>
-<p>Enjoy spectacular Himalayan scenery and the beautiful Thajiwas Glacier area.</p>
-</div>
+
+<!-- PACKAGE 4 -->
+<div class="package">
+  <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=900&q=80">
+  <div class="package-info">
+    <span class="tag">ROMANTIC ❤️</span>
+    <h2>❤️ Kashmir Honeymoon</h2>
+    <p>📅 6 Nights / 7 Days</p>
+    <p>📍 Srinagar • Gulmarg • Pahalgam</p>
+    <div class="price">From ₹29,999</div>
+    <button class="select-btn"
+    onclick="selectPackage('Kashmir Honeymoon','6 Nights / 7 Days',29999)">
+    Select Package →
+    </button>
+  </div>
 </div>
 
-<div class="place">
-<div class="place-icon">🌿</div>
-<div>
-<h3>Yusmarg</h3>
-<p>A peaceful meadow perfect for nature walks and relaxing away from crowds.</p>
-</div>
+
+<!-- PACKAGE 5 -->
+<div class="package">
+  <img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80">
+  <div class="package-info">
+    <span class="tag">FAMILY 👨‍👩‍👧</span>
+    <h2>👨‍👩‍👧 Kashmir Family</h2>
+    <p>📅 6 Nights / 7 Days</p>
+    <p>📍 Srinagar • Sonamarg • Gulmarg • Pahalgam</p>
+    <div class="price">From ₹24,999</div>
+    <button class="select-btn"
+    onclick="selectPackage('Kashmir Family','6 Nights / 7 Days',24999)">
+    Select Package →
+    </button>
+  </div>
 </div>
 
-<div class="place">
-<div class="place-icon">🏞️</div>
-<div>
-<h3>Doodhpathri</h3>
-<p>Discover green meadows, streams and peaceful mountain landscapes.</p>
-</div>
-</div>
 
-</div>
-
-<!-- ITINERARY -->
-<div class="card">
-
-<h2>🗓️ 6 Days Kashmir Itinerary</h2>
-
-<div class="day">
-<div class="day-number">1</div>
-<div class="day-content">
-<h3>Arrival in Srinagar 🌊</h3>
-<p>Arrival, hotel check-in, Dal Lake and a beautiful Shikara ride.</p>
-</div>
-</div>
-
-<div class="day">
-<div class="day-number">2</div>
-<div class="day-content">
-<h3>Gulmarg Adventure ❄️</h3>
-<p>Visit Gulmarg, enjoy mountain views and optional Gondola or snow activities.</p>
-</div>
-</div>
-
-<div class="day">
-<div class="day-number">3</div>
-<div class="day-content">
-<h3>Pahalgam Valley 🌲</h3>
-<p>Explore scenic valleys, forests and the beautiful Lidder River.</p>
-</div>
-</div>
-
-<div class="day">
-<div class="day-number">4</div>
-<div class="day-content">
-<h3>Sonamarg 🏔️</h3>
-<p>Explore Sonamarg and enjoy views of the Himalayan landscape and glacier area.</p>
-</div>
-</div>
-
-<div class="day">
-<div class="day-number">5</div>
-<div class="day-content">
-<h3>Yusmarg 🌿</h3>
-<p>Relax in peaceful meadows and enjoy nature walks or optional horse riding.</p>
-</div>
-</div>
-
-<div class="day">
-<div class="day-number">6</div>
-<div class="day-content">
-<h3>Doodhpathri & Departure 🏞️</h3>
-<p>Visit beautiful green meadows before your onward journey.</p>
-</div>
+<!-- PACKAGE 6 -->
+<div class="package">
+  <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80">
+  <div class="package-info">
+    <span class="tag">ADVENTURE 🏔️</span>
+    <h2>🏔️ Kashmir Adventure</h2>
+    <p>📅 7 Nights / 8 Days</p>
+    <p>📍 Srinagar • Gulmarg • Sonamarg • Pahalgam</p>
+    <div class="price">From ₹32,999</div>
+    <button class="select-btn"
+    onclick="selectPackage('Kashmir Adventure','7 Nights / 8 Days',32999)">
+    Select Package →
+    </button>
+  </div>
 </div>
 
 </div>
 
-<!-- PACKAGE -->
-<div class="card">
-<h2>🎒 Package Highlights</h2>
-<p>
-✅ Hotel Stay<br><br>
-✅ Sightseeing Assistance<br><br>
-✅ Travel Support<br><br>
-✅ HALORA Booking Assistance<br><br>
-⚠️ Flights, activities and other inclusions can be selected according to your final package.
-</p>
-</div>
 
-<!-- BOOK -->
-<div class="card">
+<!-- BOOKING FORM -->
+<div class="booking" id="booking">
 
-<h2>💰 Want to Book This Trip?</h2>
-<p style="margin-bottom:15px">
-Send your details and the HALORA team can prepare a suitable package for you.
-</p>
+  <h2 id="selectedTitle">Book Your Package</h2>
 
-<button class="book-btn" onclick="showBooking()">
-✈️ Book Kashmir Trip
-</button>
+  <div class="details" id="selectedDetails"></div>
 
-<div id="bookingForm" class="booking">
+  <input type="text" id="customerName" placeholder="Your Full Name">
 
-<input type="text" id="name" placeholder="Your Full Name">
-<input type="tel" id="phone" placeholder="Mobile Number">
-<input type="date" id="date">
+  <input type="tel" id="customerPhone"
+  placeholder="Mobile Number">
 
-<select id="travellers">
-<option>1 Traveller</option>
-<option>2 Travellers</option>
-<option>3 Travellers</option>
-<option>4+ Travellers</option>
-</select>
+  <input type="date" id="travelDate">
 
-<button class="book-btn" onclick="submitBooking()">
-Send Booking Enquiry 🚀
-</button>
+  <select id="travellers">
+    <option value="1">1 Traveller</option>
+    <option value="2">2 Travellers</option>
+    <option value="3">3 Travellers</option>
+    <option value="4">4 Travellers</option>
+    <option value="5+">5+ Travellers</option>
+  </select>
 
-<div class="success" id="success">
-✅ Your Kashmir booking enquiry has been saved! HALORA will contact you soon.
-</div>
+
+  <h3 style="margin-top:18px">💳 Choose Payment Method</h3>
+
+  <div class="payment-options">
+
+    <div class="payment-option active"
+    onclick="choosePayment('UPI',this)">
+    📱 UPI
+    </div>
+
+    <div class="payment-option"
+    onclick="choosePayment('Card',this)">
+    💳 Card
+    </div>
+
+    <div class="payment-option"
+    onclick="choosePayment('EMI',this)">
+    📅 EMI
+    </div>
+
+    <div class="payment-option"
+    onclick="choosePayment('Offline',this)">
+    💵 Offline
+    </div>
+
+  </div>
+
+
+  <div class="payment-box" id="paymentBox"></div>
+
+  <button class="pay-btn" onclick="continueBooking()">
+    Continue Booking →
+  </button>
+
+  <p class="note">
+    🔒 आपकी booking सुरक्षित रूप से HALORA system में भेजी जाएगी।
+    Card और EMI payments के लिए बाद में verified payment gateway जोड़ना जरूरी होगा।
+    Package price starting price है और date तथा availability के अनुसार बदल सकता है।
+  </p>
+
+  <div class="success" id="success"></div>
 
 </div>
 
 </div>
 
-</div>
 
-<script>
+<!-- FIREBASE + JAVASCRIPT -->
+<script type="module">
 
-function showBooking(){
-    document.getElementById("bookingForm").style.display="block";
-}
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
 
-function submitBooking(){
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
-    const name=document.getElementById("name").value.trim();
-    const phone=document.getElementById("phone").value.trim();
-    const date=document.getElementById("date").value;
-    const travellers=document.getElementById("travellers").value;
 
-    if(!name || !phone){
-        alert("Please enter your name and mobile number.");
-        return;
-    }
+/* HALORA FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDJnOh92AYUzFeWtuLMtDciETdpCQ7-MNs",
+  authDomain: "halorebook.firebaseapp.com",
+  projectId: "halorebook",
+  storageBucket: "halorebook.firebasestorage.app",
+  messagingSenderId: "58132767978",
+  appId: "1:58132767978:web:2165ca8a94fb0cfe5a6393"
+};
 
-    let bookings=JSON.parse(
-        localStorage.getItem("haloraBookings") || "[]"
-    );
 
-    bookings.push({
-        trip:"Kashmir Paradise",
-        name:name,
-        phone:phone,
-        date:date,
-        travellers:travellers,
-        createdAt:new Date().toISOString()
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+/* VARIABLES */
+let selectedPackage = null;
+let paymentMethod = "UPI";
+
+
+/* SELECT PACKAGE */
+window.selectPackage = function(name,duration,price){
+
+  selectedPackage = {
+    name:name,
+    duration:duration,
+    price:price
+  };
+
+  document.getElementById("booking").style.display="block";
+
+  document.getElementById("selectedTitle").innerText =
+  "🏔️ Book " + name;
+
+  document.getElementById("selectedDetails").innerHTML =
+  "<b>📦 Package:</b> " + name + "<br>" +
+  "<b>📅 Duration:</b> " + duration + "<br>" +
+  "<b>💰 Starting Price:</b> ₹" +
+  price.toLocaleString() + " per person";
+
+  document.getElementById("booking")
+  .scrollIntoView({behavior:"smooth"});
+
+  const firstPayment =
+  document.querySelector(".payment-option");
+
+  choosePayment("UPI",firstPayment);
+};
+
+
+/* PAYMENT METHOD */
+window.choosePayment = function(method,element){
+
+  paymentMethod = method;
+
+  document.querySelectorAll(".payment-option")
+  .forEach(el=>el.classList.remove("active"));
+
+  if(element){
+    element.classList.add("active");
+  }
+
+  const box=document.getElementById("paymentBox");
+
+  box.style.display="block";
+
+  if(method==="UPI"){
+
+    box.innerHTML=`
+    <b>📱 UPI Payment</b><br><br>
+    अपनी booking confirm करने के बाद आपको सुरक्षित payment process के लिए आगे बढ़ाया जाएगा।
+    <div class="note">
+    Live UPI payment शुरू करने के लिए verified payment system connect करना होगा।
+    </div>
+    `;
+
+  }
+
+  else if(method==="Card"){
+
+    box.innerHTML=`
+    <b>💳 Debit / Credit Card</b><br><br>
+    Card payment secure payment gateway connect होने के बाद उपलब्ध होगा।
+    `;
+
+  }
+
+  else if(method==="EMI"){
+
+    box.innerHTML=`
+    <b>📅 EMI Payment</b><br><br>
+    EMI availability आपके bank, card और payment provider की eligibility पर निर्भर करेगी।
+    `;
+
+  }
+
+  else{
+
+    box.innerHTML=`
+    <b>💵 Offline Payment</b><br><br>
+    आपकी booking request HALORA Admin को भेजी जाएगी।
+    हमारी team payment और यात्रा details के लिए आपसे संपर्क करेगी।
+    `;
+
+  }
+
+};
+
+
+/* SAVE BOOKING TO FIREBASE */
+window.continueBooking = async function(){
+
+  const name =
+  document.getElementById("customerName").value.trim();
+
+  const phone =
+  document.getElementById("customerPhone").value.trim();
+
+  const travelDate =
+  document.getElementById("travelDate").value;
+
+  const travellers =
+  document.getElementById("travellers").value;
+
+
+  if(!selectedPackage){
+
+    alert("Please select a package first.");
+    return;
+
+  }
+
+
+  if(!name || !phone){
+
+    alert("Please enter your name and mobile number.");
+    return;
+
+  }
+
+
+  const button=document.querySelector(".pay-btn");
+
+  button.innerText="Saving Booking...";
+  button.disabled=true;
+
+
+  try{
+
+    await addDoc(collection(db,"bookings"),{
+
+      /* BOOKING TYPE */
+      type:"Kashmir Package",
+
+      /* PACKAGE DETAILS */
+      packageName:selectedPackage.name,
+      duration:selectedPackage.duration,
+      price:selectedPackage.price,
+
+      /* CUSTOMER DETAILS */
+      customerName:name,
+      phone:phone,
+      travelDate:travelDate,
+      travellers:travellers,
+
+      /* PAYMENT */
+      paymentMethod:paymentMethod,
+      paymentStatus:"Pending",
+
+      /* BOOKING STATUS */
+      bookingStatus:"New",
+
+      /* TIME */
+      createdAt:serverTimestamp()
+
     });
 
-    localStorage.setItem(
-        "haloraBookings",
-        JSON.stringify(bookings)
+
+    const success=document.getElementById("success");
+
+    success.style.display="block";
+
+    success.innerHTML=`
+    🎉 <b>Booking Successfully Sent!</b><br>
+    आपकी ${selectedPackage.name} booking HALORA Admin को भेज दी गई है।
+    हमारी team जल्द आपसे संपर्क करेगी।
+    `;
+
+
+    /* CLEAR FORM */
+    document.getElementById("customerName").value="";
+    document.getElementById("customerPhone").value="";
+    document.getElementById("travelDate").value="";
+
+
+    button.innerText="Booking Sent ✓";
+
+
+    setTimeout(()=>{
+      button.innerText="Continue Booking →";
+      button.disabled=false;
+    },3000);
+
+
+  }
+
+  catch(error){
+
+    console.error("Firebase Error:",error);
+
+    alert(
+    "❌ Booking save नहीं हुई। Internet या Firebase settings check करके फिर try करें।"
     );
 
-    document.getElementById("success").style.display="block";
+    button.innerText="Continue Booking →";
+    button.disabled=false;
 
-    document.getElementById("name").value="";
-    document.getElementById("phone").value="";
-}
+  }
+
+};
 
 </script>
 
 </body>
-  </html>
+</html>

@@ -206,26 +206,40 @@ let filtered=trips.filter(t=>
 
 let grid=document.getElementById("tripGrid");
 
-grid.innerHTML=filtered.length?
-filtered.map((t,i)=>`
+grid.innerHTML = filtered.map((t,i) => `
 <div class="trip-card">
-<div class="trip-image">
-<img src="${t.image}" alt="${t.name}" loading="lazy">
-<div class="badge">${t.category}</div>
-<div class="price-badge">From ₹${t.price.toLocaleString()}</div>
+    <div class="trip-image">
+        <img src="${t.image}" alt="${t.name}" loading="lazy">
+        <div class="badge">${t.category}</div>
+        <div class="price-badge">From ₹${t.price.toLocaleString()}</div>
+    </div>
+
+    <div class="trip-info">
+        <h3>${t.name}</h3>
+        <p>📍 ${t.destination}</p>
+
+        <div class="trip-meta">
+            <span>📅 ${t.duration}</span>
+            <span>⭐ 4.8</span>
+        </div>
+
+        <button class="book-btn" onclick="openTrip('${currentService}',${i})">
+            View & Book Now →
+        </button>
+    </div>
 </div>
-<div class="trip-info">
-<h3>${t.name}</h3>
-<p>📍 ${t.destination}</p>
-<div class="trip-meta">
-<span>📅 ${t.duration}</span><span>⭐ 4.8</span>
-</div>
+`).join("");
+
+} // renderTrips() खत्म
+
+
+// TRIP DETAILS
 function openTrip(type, index) {
 
     const list = type === "world" ? worldTrips : indiaTrips;
     selectedTrip = list[index];
 
-    // Kashmir की अलग Details Page खोलें
+    // Kashmir की अलग Details Page
     if (selectedTrip.name === "Kashmir Paradise") {
         window.location.href = "kashmir.html";
         return;
@@ -233,25 +247,17 @@ function openTrip(type, index) {
 
     document.getElementById("modalTitle").innerText = selectedTrip.name;
 
-    // बाकी आपका पुराना code नीचे रहेगा...
-}
-</div></div>`).join("")
-:`<div class="no-results">😔 No trips found.</div>`;
-}
+    document.getElementById("modalDetails").innerHTML = `
+        <div class="detail-box">
+            <p><b>📍 Destination:</b> ${selectedTrip.destination}</p>
+            <p><b>📅 Duration:</b> ${selectedTrip.duration}</p>
+            <p><b>💰 Starting Price:</b> ₹${selectedTrip.price.toLocaleString()} per person</p>
+            <p><b>✨ About:</b> ${selectedTrip.description}</p>
+        </div>
+    `;
 
-function openTrip(type,ilocalStorage.setItem(\"haloraBookings\",JSON.stringify(list));ndex){
-selectedTrip=(type==="world"?worldTrips:indiaTrips)[index];
-document.getElementById("modalTitle").innerText=selectedTrip.name;
-document.getElementById("modalDetails").innerHTML=`
-<div class="detail-box">
-<p><b>📍 Destination:</b> ${selectedTrip.destination}</p>
-<p><b>📅 Duration:</b> ${selectedTrip.duration}</p>
-<p><b>💰 Starting Price:</b> ₹${selectedTrip.price.toLocaleString()} per person</p>
-<p><b>✨ About:</b> ${selectedTrip.description}</p>
-</div>`;
-document.getElementById("bookingModal").style.display="flex";
+    document.getElementById("bookingModal").style.display = "flex";
 }
-
 function closeModal(){
 document.getElementById("bookingModal").style.display="none";
 }

@@ -220,12 +220,26 @@ filtered.map((t,i)=>`
 <div class="trip-meta">
 <span>📅 ${t.duration}</span><span>⭐ 4.8</span>
 </div>
-<button class="book-btn" onclick="openTrip('${currentService}',${i})">View & Book Now →</button>
+function openTrip(type, index) {
+
+    const list = type === "world" ? worldTrips : indiaTrips;
+    selectedTrip = list[index];
+
+    // Kashmir की अलग Details Page खोलें
+    if (selectedTrip.name === "Kashmir Paradise") {
+        window.location.href = "kashmir.html";
+        return;
+    }
+
+    document.getElementById("modalTitle").innerText = selectedTrip.name;
+
+    // बाकी आपका पुराना code नीचे रहेगा...
+}
 </div></div>`).join("")
 :`<div class="no-results">😔 No trips found.</div>`;
 }
 
-function openTrip(type,index){
+function openTrip(type,ilocalStorage.setItem(\"haloraBookings\",JSON.stringify(list));ndex){
 selectedTrip=(type==="world"?worldTrips:indiaTrips)[index];
 document.getElementById("modalTitle").innerText=selectedTrip.name;
 document.getElementById("modalDetails").innerHTML=`

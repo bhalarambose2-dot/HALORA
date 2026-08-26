@@ -6,12 +6,13 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebas
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const firebaseConfig = {
-  apiKey: "अपनी मौजूदा API KEY यहां रखो",
+  apiKey: "AIzaSyDJnOh92AYUzFeWtuLMtDciETdpCQ7-MNs",
   authDomain: "halorebook.firebaseapp.com",
   projectId: "halorebook",
   storageBucket: "halorebook.firebasestorage.app",
-  messagingSenderId: "अपनी मौजूदा Messaging Sender ID यहां रखो",
-  appId: "अपनी मौजूदा App ID यहां रखो"
+  messagingSenderId: "58132767978",
+  appId: "1:58132767978:web:8136b579841652b15a6393",
+  measurementId: "G-TDSM97W54X
 };
 
 const app = initializeApp(firebaseConfig);

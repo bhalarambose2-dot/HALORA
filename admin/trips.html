@@ -340,7 +340,126 @@ document
 
 </script>
 
+<script type="module">
+import { db } from "./js/firebase-config.js";
 
+import {
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+async function loadHALORAAdminTrips() {
+
+  try {
+
+    const snapshot = await getDocs(
+      collection(db, "trips")
+    );
+
+    if (snapshot.empty) {
+      console.log("No admin trips found");
+      return;
+    }
+
+    const adminTrips = [];
+
+    snapshot.forEach((docSnap) => {
+
+      const t = docSnap.data();
+
+      if (
+        String(t.status || "Active").toLowerCase()
+        !== "active"
+      ) {
+        return;
+      }
+
+      adminTrips.push({
+
+        id: docSnap.id,
+
+        name:
+          t.title ||
+          t.name ||
+          "HALORA Trip",
+
+        image:
+          t.image ||
+          "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1000&q=85",
+
+        category:
+          t.category ||
+          "Popular",
+
+        duration:
+          t.duration ||
+          "Custom Trip",
+
+        price:
+          Number(t.price || 0),
+
+        destination:
+          (t.from || "India") +
+          " → " +
+          (t.destination || "India"),
+
+        description:
+          t.description ||
+          "HALORA Travel Package",
+
+        startDate:
+          t.startDate ||
+          "",
+
+        endDate:
+          t.endDate ||
+          "",
+
+        seats:
+          Number(t.seats || 0)
+
+      });
+
+    });
+
+
+    /*
+      ADMIN TRIPS KO EXISTING
+      TRIPS KE SAATH ADD KARNA
+    */
+
+    if (
+      typeof window.addFirebaseTrips ===
+      "function"
+    ) {
+
+      window.addFirebaseTrips(
+        adminTrips
+      );
+
+    }
+
+    console.log(
+      "HALORA Firebase Trips:",
+      adminTrips
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Firebase Trips Error:",
+      error
+    );
+
+  }
+
+}
+
+loadHALORAAdminTrips();
+
+</script>
 </body>
 
 </html>

@@ -12,7 +12,7 @@ const firebaseConfig = {
   storageBucket: "halorebook.firebasestorage.app",
   messagingSenderId: "58132767978",
   appId: "1:58132767978:web:8136b579841652b15a6393",
-  measurementId: "G-TDSM97W54X
+  measurementId: "G-TDSM97W54X"
 };
 
 const app = initializeApp(firebaseConfig);

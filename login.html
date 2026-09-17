@@ -13,6 +13,25 @@
     <a href="./signup.html" class="logout-btn">Signup</a>
   </header>
 
-  <" src="./js/auth.js"></script>
+  <main class="container">
+    <div class="card">
+      <h2>Login</h2>
+
+      <input id="email" type="email" placeholder="Email" />
+      <input id="password" type="password" placeholder="Password" />
+
+      <button class="main-btn" onclick="loginUser()">Login</button>
+
+      <p style="margin-top:16px;">
+        Login nahi hai? <a href="./signup.html">Signup Karen</a>
+      </p>
+
+      <p>
+        <a href="./forgot-password.html">Forgot Password?</a>
+      </p>
+    </div>
+  </main>
+
+  <script type="module" src="./js/auth.js"></script>
 </body>
 </html>

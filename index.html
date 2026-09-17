@@ -15,7 +15,7 @@
   <link
     rel="icon"
     type="image/png"
-    href="./assets/halora-icon.png"
+    href="./assets/file_0000000043f08211a4b2f2ae3238c0b5.png"
   >
 
   <style>
@@ -36,14 +36,18 @@
     ========================= */
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
       background:
         radial-gradient(
           circle at top,
-          #0f172a 0%,
-          #020617 45%,
-          #000814 100%
+          #101a30 0%,
+          #030914 45%,
+          #00040a 100%
         );
 
       color: #ffffff;
@@ -68,18 +72,22 @@
 
       align-items: center;
 
-      justify-content: space-between;
+      justify-content: center;
 
       padding: 0 20px;
 
-      background: rgba(5, 10, 25, 0.85);
+      background:
+        rgba(5, 10, 25, 0.88);
 
-      backdrop-filter: blur(12px);
+      backdrop-filter:
+        blur(12px);
 
-      -webkit-backdrop-filter: blur(12px);
+      -webkit-backdrop-filter:
+        blur(12px);
 
       border-bottom:
-        1px solid rgba(255, 180, 40, 0.15);
+        1px solid
+        rgba(255, 183, 0, 0.18);
 
       position: relative;
 
@@ -88,7 +96,7 @@
 
 
     /* =========================
-       LOGO TEXT
+       LOGO
     ========================= */
 
     .logo {
@@ -97,14 +105,17 @@
 
       font-weight: 800;
 
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
 
       background:
         linear-gradient(
           45deg,
-          #ffffff,
-          #ffffff,
-          #ffb700
+          #ffffff 20%,
+          #ffffff 45%,
+          #ffb700 75%,
+          #ff9900 100%
         );
 
       -webkit-background-clip: text;
@@ -113,7 +124,11 @@
 
       background-clip: text;
 
-      text-transform: uppercase;
+      filter:
+        drop-shadow(
+          0 0 8px
+          rgba(255, 183, 0, 0.25)
+        );
     }
 
 
@@ -134,14 +149,16 @@
 
       align-items: center;
 
-      padding: 20px;
+      padding: 15px;
 
       position: relative;
+
+      z-index: 2;
     }
 
 
     /* =========================
-       VIDEO BOX
+       HERO BOX
     ========================= */
 
     .hero-box {
@@ -170,9 +187,10 @@
 
       max-width: 520px;
 
-      max-height: 82vh;
-
       height: auto;
+
+      max-height:
+        calc(100vh - 95px);
 
       object-fit: contain;
 
@@ -180,48 +198,92 @@
 
       border-radius: 20px;
 
-      background: #000;
+      background: #000000;
+
+      border:
+        1px solid
+        rgba(255, 183, 0, 0.20);
 
       box-shadow:
 
         0 0 20px
-        rgba(255, 183, 0, 0.25),
+        rgba(255, 183, 0, 0.30),
 
         0 0 50px
         rgba(255, 183, 0, 0.12);
 
-      border:
-        1px solid
-        rgba(255, 190, 50, 0.18);
+      animation:
+        videoGlow 3s
+        ease-in-out
+        infinite;
     }
 
 
     /* =========================
-       VIDEO LOADING
+       VIDEO GLOW
     ========================= */
 
-    .video-loading {
+    @keyframes videoGlow {
 
-      position: absolute;
+      0% {
 
-      top: 50%;
+        box-shadow:
+          0 0 20px
+          rgba(255, 183, 0, 0.20);
+      }
+
+      50% {
+
+        box-shadow:
+          0 0 35px
+          rgba(255, 183, 0, 0.40);
+      }
+
+      100% {
+
+        box-shadow:
+          0 0 20px
+          rgba(255, 183, 0, 0.20);
+      }
+    }
+
+
+    /* =========================
+       LOADING
+    ========================= */
+
+    .loading {
+
+      position: fixed;
 
       left: 50%;
+
+      top: 50%;
 
       transform:
         translate(-50%, -50%);
 
-      color: #ffb700;
+      z-index: 20;
 
-      font-size: 15px;
+      font-size: 16px;
 
       font-weight: 600;
 
       letter-spacing: 1px;
 
-      pointer-events: none;
+      color: #ffb700;
+
+      background:
+        rgba(0,0,0,0.55);
+
+      padding:
+        12px 20px;
+
+      border-radius: 30px;
 
       opacity: 0;
+
+      pointer-events: none;
 
       transition: 0.3s;
     }
@@ -237,13 +299,14 @@
 
       left: 50%;
 
-      bottom: -150px;
+      bottom: -180px;
 
-      transform: translateX(-50%);
+      transform:
+        translateX(-50%);
 
-      width: 500px;
+      width: 600px;
 
-      height: 300px;
+      height: 350px;
 
       background:
         radial-gradient(
@@ -254,7 +317,7 @@
 
       pointer-events: none;
 
-      z-index: 0;
+      z-index: 1;
     }
 
 
@@ -268,15 +331,14 @@
 
         height: 62px;
 
-        padding:
-          0 16px;
+        padding: 0 15px;
       }
 
       .logo {
 
-        font-size: 19px;
+        font-size: 20px;
 
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
       }
 
       .hero {
@@ -284,7 +346,7 @@
         min-height:
           calc(100vh - 62px);
 
-        padding: 10px;
+        padding: 8px;
       }
 
       .hero-box {
@@ -301,7 +363,7 @@
         max-width: 100%;
 
         max-height:
-          calc(100vh - 85px);
+          calc(100vh - 78px);
 
         border-radius: 15px;
       }
@@ -309,7 +371,7 @@
 
 
     /* =========================
-       VERY SMALL SCREEN
+       SMALL HEIGHT MOBILE
     ========================= */
 
     @media (max-height: 650px) {
@@ -322,7 +384,7 @@
       .hero-video {
 
         max-height:
-          calc(100vh - 75px);
+          calc(100vh - 70px);
       }
     }
 
@@ -348,7 +410,7 @@
 
 
   <!-- =========================
-       MAIN VIDEO
+       VIDEO SECTION
   ========================= -->
 
   <main class="hero">
@@ -364,32 +426,37 @@
         preload="auto"
       >
 
-        <!--
-          अपनी video का नाम यहाँ रखें
-        -->
+        <!-- YOUR UPLOADED VIDEO -->
 
         <source
-          <source src="./assets/HALORA_20260917_104007_0000.mp4" type="video/mp4">
+          src="./assets/HALORA_20260917_104007_0000.mp4"
+          type="video/mp4"
         >
 
         आपका browser video support नहीं करता।
 
       </video>
 
-
-      <div
-        id="videoLoading"
-        class="video-loading"
-      >
-        Loading...
-      </div>
-
     </div>
 
   </main>
 
 
-  <!-- Background glow -->
+  <!-- =========================
+       LOADING
+  ========================= -->
+
+  <div
+    id="loading"
+    class="loading"
+  >
+    Loading HALORA...
+  </div>
+
+
+  <!-- =========================
+       GLOW
+  ========================= -->
 
   <div class="bottom-glow"></div>
 
@@ -401,16 +468,20 @@
   <script>
 
     const video =
-      document.getElementById("haloraVideo");
+      document.getElementById(
+        "haloraVideo"
+      );
 
     const loading =
-      document.getElementById("videoLoading");
+      document.getElementById(
+        "loading"
+      );
 
 
-    /*
-      Video खत्म होते ही
-      Login Page खुलेगा
-    */
+    /* =========================
+       VIDEO END
+       OPEN LOGIN PAGE
+    ========================= */
 
     video.addEventListener(
       "ended",
@@ -423,10 +494,9 @@
     );
 
 
-    /*
-      Video load होने पर
-      loading हटाएँ
-    */
+    /* =========================
+       VIDEO LOADED
+    ========================= */
 
     video.addEventListener(
       "loadeddata",
@@ -438,38 +508,64 @@
     );
 
 
-    /*
-      अगर video play नहीं होती
-      तो manually play करने की कोशिश
-    */
+    /* =========================
+       TRY AUTOPLAY
+    ========================= */
 
     window.addEventListener(
       "load",
       function () {
 
-        video.play().catch(
-          function () {
+        video.muted = true;
+
+        video.play()
+          .then(function () {
+
+            console.log(
+              "HALORA video started"
+            );
+
+          })
+          .catch(function (error) {
+
+            console.log(
+              "Autoplay blocked:",
+              error
+            );
 
             loading.style.opacity = "1";
 
-          }
-        );
+          });
 
       }
     );
 
 
-    /*
-      Video में error आने पर
-      सीधे login page खोलें
-    */
+    /* =========================
+       VIDEO ERROR
+    ========================= */
 
     video.addEventListener(
       "error",
       function () {
 
         console.log(
-          "HALORA video load नहीं हुई"
+          "HALORA video load error"
+        );
+
+        /*
+          अगर video नहीं मिली,
+          तो login page खोल दें
+        */
+
+        setTimeout(
+          function () {
+
+            window.location.href =
+              "./login.html";
+
+          },
+          1500
         );
 
       }

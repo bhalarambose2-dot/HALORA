@@ -2,94 +2,91 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta charset="UTF-8">
 
-  <title>HALORA Admin - Trips</title>
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-  <link rel="stylesheet" href="admin.css">
+<title>HALORA Admin - Trips</title>
 
-  <style>
+<link
+  rel="stylesheet"
+  href="admin.css"
+>
 
-    .trip-form {
-      background: #151515;
-      border: 1px solid #292929;
-      border-radius: 20px;
-      padding: 22px;
-      margin-bottom: 30px;
-    }
+<style>
 
-    .trip-form h2 {
-      margin-bottom: 20px;
-    }
+.trip-form {
+  background:#151515;
+  border:1px solid #292929;
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:30px;
+}
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
+.form-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
+.form-group {
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
 
-    .form-group label {
-      color: #bbb;
-      font-weight: bold;
-    }
+.form-group label {
+  color:#bbb;
+  font-weight:bold;
+}
 
-    .form-group input {
-      width: 100%;
-      padding: 14px;
-      border-radius: 10px;
-      border: 1px solid #444;
-      background: #0d0d0d;
-      color: white;
-      font-size: 16px;
-      outline: none;
-    }
+.form-group input,
+.form-group textarea {
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #444;
+  background:#0d0d0d;
+  color:white;
+  font-size:16px;
+  box-sizing:border-box;
+}
 
-    .form-group input:focus {
-      border-color: #ff9800;
-    }
+.form-group textarea {
+  min-height:110px;
+  resize:vertical;
+}
 
-    .add-trip-btn {
-      width: 100%;
-      margin-top: 18px;
-      padding: 15px;
-      border: none;
-      border-radius: 12px;
-      background: #ff9800;
-      color: #111;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.add-trip-btn {
+  width:100%;
+  margin-top:18px;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  background:#ff9800;
+  color:#111;
+  font-size:17px;
+  font-weight:bold;
+}
 
-    .add-trip-btn:active {
-      transform: scale(.98);
-    }
+.trip-list {
+  display:grid;
+  gap:18px;
+}
 
-    .trip-list {
-      display: grid;
-      gap: 15px;
-    }
+@media(max-width:600px) {
 
-    @media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns:1fr;
+  }
 
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
+}
 
-    }
-
-  </style>
+</style>
 
 </head>
 
@@ -97,29 +94,27 @@
 <body>
 
 
-<!-- HEADER -->
-
 <header class="admin-header">
 
-  <div>
+<div>
 
-    <h1>HALORA</h1>
+<h1>HALORA</h1>
 
-    <p>Trip Management</p>
+<p>Trip Management</p>
 
-  </div>
+</div>
 
 
-  <div class="header-actions">
+<div class="header-actions">
 
-    <a
-      href="admin.html"
-      class="back-btn"
-    >
-      ← Dashboard
-    </a>
+<a
+href="admin.html"
+class="back-btn"
+>
+← Dashboard
+</a>
 
-  </div>
+</div>
 
 </header>
 
@@ -128,176 +123,194 @@
 <main class="admin-container">
 
 
-  <!-- WELCOME -->
+<section class="welcome-box">
 
-  <section class="welcome-box">
+<h2>🧳 Trips Management</h2>
 
-    <h2>🧳 Trips Management</h2>
+<p>
+Create and manage HALORA trips.
+</p>
 
-    <p>
-      Add and manage HALORA travel trips.
-    </p>
+</section>
 
-  </section>
 
 
+<section class="trip-form">
 
-  <!-- ADD TRIP -->
+<h2>➕ Add New Trip</h2>
 
-  <section class="trip-form">
 
-    <h2>➕ Add New Trip</h2>
+<form id="tripForm">
 
 
-    <form id="tripForm">
+<div class="form-grid">
 
 
-      <div class="form-grid">
+<div class="form-group">
 
+<label>Trip Name *</label>
 
-        <div class="form-group">
+<input
+type="text"
+id="tripTitle"
+placeholder="Kashmir Trip"
+required
+>
 
-          <label>
-            Trip Name *
-          </label>
+</div>
 
-          <input
-            type="text"
-            id="tripTitle"
-            placeholder="Example: Kashmir Trip"
-            required
-          >
 
-        </div>
+<div class="form-group">
 
+<label>From *</label>
 
+<input
+type="text"
+id="tripFrom"
+placeholder="Jaipur"
+required
+>
 
-        <div class="form-group">
+</div>
 
-          <label>
-            From *
-          </label>
 
-          <input
-            type="text"
-            id="tripFrom"
-            placeholder="Example: Jaipur"
-            required
-          >
+<div class="form-group">
 
-        </div>
+<label>Destination *</label>
 
+<input
+type="text"
+id="tripDestination"
+placeholder="Kashmir"
+required
+>
 
+</div>
 
-        <div class="form-group">
 
-          <label>
-            Destination *
-          </label>
+<div class="form-group">
 
-          <input
-            type="text"
-            id="tripDestination"
-            placeholder="Example: Kashmir"
-            required
-          >
+<label>Price ₹ *</label>
 
-        </div>
+<input
+type="number"
+id="tripPrice"
+placeholder="12000"
+min="0"
+required
+>
 
+</div>
 
 
-        <div class="form-group">
+<div class="form-group">
 
-          <label>
-            Price (₹) *
-          </label>
+<label>Start Date</label>
 
-          <input
-            type="number"
-            id="tripPrice"
-            placeholder="12000"
-            min="0"
-            required
-          >
+<input
+type="date"
+id="tripDate"
+>
 
-        </div>
+</div>
 
 
+<div class="form-group">
 
-        <div class="form-group">
+<label>End Date</label>
 
-          <label>
-            Trip Date
-          </label>
+<input
+type="date"
+id="tripEndDate"
+>
 
-          <input
-            type="date"
-            id="tripDate"
-          >
+</div>
 
-        </div>
 
+<div class="form-group">
 
+<label>Duration</label>
 
-        <div class="form-group">
+<input
+type="text"
+id="tripDuration"
+placeholder="5 Days / 4 Nights"
+>
 
-          <label>
-            Seats
-          </label>
+</div>
 
-          <input
-            type="number"
-            id="tripSeats"
-            placeholder="20"
-            min="0"
-          >
 
-        </div>
+<div class="form-group">
 
+<label>Total Seats</label>
 
-      </div>
+<input
+type="number"
+id="tripSeats"
+placeholder="20"
+min="0"
+>
 
+</div>
 
 
-      <button
-        type="submit"
-        class="add-trip-btn"
-      >
+<div class="form-group">
 
-        🚀 Add Trip
+<label>Trip Image URL</label>
 
-      </button>
+<input
+type="url"
+id="tripImage"
+placeholder="https://..."
+>
 
+</div>
 
-    </form>
 
-  </section>
+<div class="form-group">
 
+<label>Description</label>
 
+<textarea
+id="tripDescription"
+placeholder="Trip ke baare mein details..."
+></textarea>
 
-  <!-- TRIP LIST -->
+</div>
 
-  <section class="admin-section">
 
-    <div class="section-title">
+</div>
 
-      <h2>🧳 All Trips</h2>
 
-    </div>
+<button
+type="submit"
+class="add-trip-btn"
+>
+🚀 Add Trip
+</button>
 
 
-    <div
-      id="tripList"
-      class="trip-list"
-    >
+</form>
 
-      <p>
-        Loading trips...
-      </p>
+</section>
 
-    </div>
 
-  </section>
+
+<section class="admin-section">
+
+<h2>🧳 All Trips</h2>
+
+
+<div
+id="tripList"
+class="trip-list"
+>
+
+<p>Loading trips...</p>
+
+</div>
+
+</section>
 
 
 </main>
@@ -305,23 +318,25 @@
 
 
 <script
-  type="module"
-  src="./trips-admin.js"
+type="module"
+src="./trips-admin.js"
 ></script>
-
 
 
 <script>
 
-  document
-    .getElementById("tripForm")
-    .addEventListener("submit", function(event) {
+document
+.getElementById("tripForm")
+.addEventListener(
+  "submit",
+  function(event) {
 
-      event.preventDefault();
+    event.preventDefault();
 
-      addTrip();
+    addTrip();
 
-    });
+  }
+);
 
 </script>
 

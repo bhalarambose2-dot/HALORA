@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>HALORA Admin - Users</title>
+
+  <link
+    rel="stylesheet"
+    href="admin.css"
+  >
+
+</head>
+
+
+<body>
+
+
+<header class="admin-header">
+
+  <div>
+
+    <h1>HALORA</h1>
+
+    <p>User Management</p>
+
+  </div>
+
+
+  <div class="header-actions">
+
+    <a
+      href="admin.html"
+      class="back-btn"
+    >
+      ← Dashboard
+    </a>
+
+  </div>
+
+</header>
+
+
+
+<main class="admin-container">
+
+
+  <section class="welcome-box">
+
+    <h2>👥 Users Management</h2>
+
+    <p>
+      View and manage HALORA users.
+    </p>
+
+  </section>
+
+
+
+  <!-- SEARCH -->
+
+  <section class="admin-section">
+
+    <div class="filter-bar">
+
+      <input
+        type="search"
+        id="userSearch"
+        placeholder="🔍 Search name, email or phone..."
+      >
+
+
+      <button
+        class="filter-btn"
+        onclick="loadUsers()"
+      >
+        Search
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- USERS -->
+
+  <section class="admin-section">
+
+    <div class="section-title">
+
+      <h2>👤 All Users</h2>
+
+    </div>
+
+
+    <div
+      id="userList"
+      class="admin-list"
+    >
+
+      <p>
+        Loading users...
+      </p>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+
+<script
+  type="module"
+  src="./users-admin.js"
+></script>
+
+
+</body>
+
+</html>

@@ -1,45 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>HALORA Admin - Bookings</title>
-  <link rel="stylesheet" href="admin.css"/>
+
+  <link rel="stylesheet" href="admin.css">
 </head>
+
 <body>
 
-<div class="sidebar">
-  <h2>HALORA</h2>
-  <a href="admin.html">Dashboard</a>
-  <a href="users.html">Users</a>
-  <a href="bookings.html">Bookings</a>
-</div>
+  <header class="admin-header">
 
-<div class="main">
-  <h1>📦 All Bookings</h1>
+    <div>
+      <h1>HALORA</h1>
+      <p>Booking Management</p>
+    </div>
 
-  <div class="filter-bar">
-    <select id="statusFilter">
-      <option value="">All Status</option>
-      <option value="Pending">Pending</option>
-      <option value="Approved">Approved</option>
-      <option value="Completed">Completed</option>
-      <option value="Rejected">Rejected</option>
-    </select>
+    <div class="header-actions">
 
-    <select id="typeFilter">
-      <option value="">All Types</option>
-      <option value="ride">Ride</option>
-      <option value="hotel">Hotel</option>
-      <option value="trip">Trip</option>
-    </select>
+      <a href="admin.html" class="back-btn">
+        ← Dashboard
+      </a>
 
-    <button onclick="loadBookings()">Filter</button>
-  </div>
+    </div>
 
-  <div id="bookingList"></div>
-</div>
+  </header>
 
-<script type="module" src="./bookings-admin.js"></script>
+
+  <main class="admin-container">
+
+    <section class="welcome-box">
+
+      <h2>📦 All Bookings</h2>
+
+      <p>
+        View and manage all HALORA bookings.
+      </p>
+
+    </section>
+
+
+    <!-- FILTERS -->
+
+    <section class="admin-section">
+
+      <div class="filter-bar">
+
+        <select id="statusFilter">
+
+          <option value="">
+            All Status
+          </option>
+
+          <option value="Pending">
+            Pending
+          </option>
+
+          <option value="Approved">
+            Approved
+          </option>
+
+          <option value="Completed">
+            Completed
+          </option>
+
+          <option value="Rejected">
+            Rejected
+          </option>
+
+        </select>
+
+
+        <select id="typeFilter">
+
+          <option value="">
+            All Types
+          </option>
+
+          <option value="ride">
+            Ride
+          </option>
+
+          <option value="hotel">
+            Hotel
+          </option>
+
+          <option value="trip">
+            Trip
+          </option>
+
+        </select>
+
+
+        <button
+          class="filter-btn"
+          onclick="loadBookings()">
+
+          🔍 Filter
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- BOOKINGS -->
+
+    <section class="admin-section">
+
+      <div class="section-title">
+
+        <h2>🚕 Booking List</h2>
+
+      </div>
+
+
+      <div
+        id="bookingList"
+        class="admin-list">
+
+        <p>
+          Loading bookings...
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script
+    type="module"
+    src="./bookings-admin.js">
+  </script>
+
 </body>
+
 </html>

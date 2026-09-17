@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>HALORA Admin - Trips</title>
+
+  <link rel="stylesheet" href="admin.css">
+
+  <style>
+
+    .trip-form {
+      background: #151515;
+      border: 1px solid #292929;
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 30px;
+    }
+
+    .trip-form h2 {
+      margin-bottom: 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-group label {
+      color: #bbb;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #444;
+      background: #0d0d0d;
+      color: white;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: #ff9800;
+    }
+
+    .add-trip-btn {
+      width: 100%;
+      margin-top: 18px;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: #ff9800;
+      color: #111;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .add-trip-btn:active {
+      transform: scale(.98);
+    }
+
+    .trip-list {
+      display: grid;
+      gap: 15px;
+    }
+
+    @media (max-width: 600px) {
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="admin-header">
+
+  <div>
+
+    <h1>HALORA</h1>
+
+    <p>Trip Management</p>
+
+  </div>
+
+
+  <div class="header-actions">
+
+    <a
+      href="admin.html"
+      class="back-btn"
+    >
+      ← Dashboard
+    </a>
+
+  </div>
+
+</header>
+
+
+
+<main class="admin-container">
+
+
+  <!-- WELCOME -->
+
+  <section class="welcome-box">
+
+    <h2>🧳 Trips Management</h2>
+
+    <p>
+      Add and manage HALORA travel trips.
+    </p>
+
+  </section>
+
+
+
+  <!-- ADD TRIP -->
+
+  <section class="trip-form">
+
+    <h2>➕ Add New Trip</h2>
+
+
+    <form id="tripForm">
+
+
+      <div class="form-grid">
+
+
+        <div class="form-group">
+
+          <label>
+            Trip Name *
+          </label>
+
+          <input
+            type="text"
+            id="tripTitle"
+            placeholder="Example: Kashmir Trip"
+            required
+          >
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label>
+            From *
+          </label>
+
+          <input
+            type="text"
+            id="tripFrom"
+            placeholder="Example: Jaipur"
+            required
+          >
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label>
+            Destination *
+          </label>
+
+          <input
+            type="text"
+            id="tripDestination"
+            placeholder="Example: Kashmir"
+            required
+          >
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label>
+            Price (₹) *
+          </label>
+
+          <input
+            type="number"
+            id="tripPrice"
+            placeholder="12000"
+            min="0"
+            required
+          >
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label>
+            Trip Date
+          </label>
+
+          <input
+            type="date"
+            id="tripDate"
+          >
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label>
+            Seats
+          </label>
+
+          <input
+            type="number"
+            id="tripSeats"
+            placeholder="20"
+            min="0"
+          >
+
+        </div>
+
+
+      </div>
+
+
+
+      <button
+        type="submit"
+        class="add-trip-btn"
+      >
+
+        🚀 Add Trip
+
+      </button>
+
+
+    </form>
+
+  </section>
+
+
+
+  <!-- TRIP LIST -->
+
+  <section class="admin-section">
+
+    <div class="section-title">
+
+      <h2>🧳 All Trips</h2>
+
+    </div>
+
+
+    <div
+      id="tripList"
+      class="trip-list"
+    >
+
+      <p>
+        Loading trips...
+      </p>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+
+<script
+  type="module"
+  src="./trips-admin.js"
+></script>
+
+
+
+<script>
+
+  document
+    .getElementById("tripForm")
+    .addEventListener("submit", function(event) {
+
+      event.preventDefault();
+
+      addTrip();
+
+    });
+
+</script>
+
+
+</body>
+
+</html>

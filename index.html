@@ -1,140 +1,484 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>HALORA RIDE</title>
 
-  <link rel="icon" type="image/png" href="./assets/halora-icon.png">
-
-  <!-- ✅ AdSense Code (IMPORTANT) -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1378977567187279"
-     crossorigin="anonymous"></script>
+  <link
+    rel="icon"
+    type="image/png"
+    href="./assets/halora-icon.png"
+  >
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
+
+    /* =========================
+       RESET
+    ========================= */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body{
-      font-family: Arial, sans-serif;
-      background: radial-gradient(circle at top, #0f172a, #020617);
-      color:#fff;
-      display:flex;
-      flex-direction:column;
-      min-height:100vh;
+
+    /* =========================
+       BODY
+    ========================= */
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+
+      background:
+        radial-gradient(
+          circle at top,
+          #0f172a 0%,
+          #020617 45%,
+          #000814 100%
+        );
+
+      color: #ffffff;
+
+      min-height: 100vh;
+
+      overflow: hidden;
     }
 
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:15px 20px;
-      background:rgba(10,15,30,0.8);
-      backdrop-filter: blur(10px);
-      position:sticky;
-      top:0;
-      z-index:100;
+
+    /* =========================
+       TOP BAR
+    ========================= */
+
+    .topbar {
+
+      width: 100%;
+
+      height: 70px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 0 20px;
+
+      background: rgba(5, 10, 25, 0.85);
+
+      backdrop-filter: blur(12px);
+
+      -webkit-backdrop-filter: blur(12px);
+
+      border-bottom:
+        1px solid rgba(255, 180, 40, 0.15);
+
+      position: relative;
+
+      z-index: 10;
     }
 
-    .logo{
-      font-size:22px;
-      font-weight:700;
-      background: linear-gradient(45deg, #ffffff, #ff7a00);
+
+    /* =========================
+       LOGO TEXT
+    ========================= */
+
+    .logo {
+
+      font-size: 23px;
+
+      font-weight: 800;
+
+      letter-spacing: 1.5px;
+
+      background:
+        linear-gradient(
+          45deg,
+          #ffffff,
+          #ffffff,
+          #ffb700
+        );
+
       -webkit-background-clip: text;
+
       -webkit-text-fill-color: transparent;
+
+      background-clip: text;
+
+      text-transform: uppercase;
     }
 
-    .btn{
-      padding:12px 24px;
-      border-radius:30px;
-      background: linear-gradient(45deg, #ff7a00, #ffae00);
-      color:#fff;
-      font-weight:600;
-      text-decoration:none;
-      box-shadow: 0 4px 15px rgba(255,122,0,0.4);
-      transition:0.3s;
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+
+      width: 100%;
+
+      min-height:
+        calc(100vh - 70px);
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      padding: 20px;
+
+      position: relative;
     }
 
-    .btn:hover{
-      transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 6px 20px rgba(255,122,0,0.6);
+
+    /* =========================
+       VIDEO BOX
+    ========================= */
+
+    .hero-box {
+
+      width: 100%;
+
+      max-width: 520px;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      position: relative;
     }
 
-    .btn:active{
-      transform: scale(0.95);
+
+    /* =========================
+       VIDEO
+    ========================= */
+
+    .hero-video {
+
+      width: 100%;
+
+      max-width: 520px;
+
+      max-height: 82vh;
+
+      height: auto;
+
+      object-fit: contain;
+
+      display: block;
+
+      border-radius: 20px;
+
+      background: #000;
+
+      box-shadow:
+
+        0 0 20px
+        rgba(255, 183, 0, 0.25),
+
+        0 0 50px
+        rgba(255, 183, 0, 0.12);
+
+      border:
+        1px solid
+        rgba(255, 190, 50, 0.18);
     }
 
-    .hero{
-      flex:1;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      padding:20px;
+
+    /* =========================
+       VIDEO LOADING
+    ========================= */
+
+    .video-loading {
+
+      position: absolute;
+
+      top: 50%;
+
+      left: 50%;
+
+      transform:
+        translate(-50%, -50%);
+
+      color: #ffb700;
+
+      font-size: 15px;
+
+      font-weight: 600;
+
+      letter-spacing: 1px;
+
+      pointer-events: none;
+
+      opacity: 0;
+
+      transition: 0.3s;
     }
 
-    .hero-box{
-      max-width:500px;
+
+    /* =========================
+       BOTTOM GLOW
+    ========================= */
+
+    .bottom-glow {
+
+      position: fixed;
+
+      left: 50%;
+
+      bottom: -150px;
+
+      transform: translateX(-50%);
+
+      width: 500px;
+
+      height: 300px;
+
+      background:
+        radial-gradient(
+          ellipse,
+          rgba(255, 183, 0, 0.12),
+          transparent 70%
+        );
+
+      pointer-events: none;
+
+      z-index: 0;
     }
 
-    .hero-title{
-      font-size:36px;
-      font-weight:800;
-      margin-bottom:10px;
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      .topbar {
+
+        height: 62px;
+
+        padding:
+          0 16px;
+      }
+
+      .logo {
+
+        font-size: 19px;
+
+        letter-spacing: 1px;
+      }
+
+      .hero {
+
+        min-height:
+          calc(100vh - 62px);
+
+        padding: 10px;
+      }
+
+      .hero-box {
+
+        width: 100%;
+
+        max-width: 100%;
+      }
+
+      .hero-video {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        max-height:
+          calc(100vh - 85px);
+
+        border-radius: 15px;
+      }
     }
 
-    .hero-sub{
-      color:#ccc;
-      margin-bottom:25px;
-      font-size:16px;
+
+    /* =========================
+       VERY SMALL SCREEN
+    ========================= */
+
+    @media (max-height: 650px) {
+
+      .hero {
+
+        padding: 5px;
+      }
+
+      .hero-video {
+
+        max-height:
+          calc(100vh - 75px);
+      }
     }
 
-    footer{
-      text-align:center;
-      padding:15px;
-      background:#111827;
-      font-size:14px;
-    }
-
-    footer a{
-      color:#00d4ff;
-      margin:0 10px;
-      text-decoration:none;
-    }
-
-    footer a:hover{
-      text-decoration:underline;
-    }
   </style>
+
 </head>
+
 
 <body>
 
-<header class="topbar">
-  <div class="logo">HALORA RIDE</div>
-  <a href="./login.html" class="btn">Get Started</a>
-</header>
 
-<main class="hero">
-  <div class="hero-box">
-    <h1 class="hero-title">HALORA RIDE</h1>
-    <p class="hero-sub">
-      Smart Ride, Taxi, Auto & Hotel Booking Platform
-    </p>
+  <!-- =========================
+       HEADER
+  ========================= -->
 
-    <a href="./login.html" class="btn">🚀 Get Started</a>
-  </div>
-</main>
+  <header class="topbar">
 
-<footer>
-  <p>© 2026 HALORA</p>
-  <a href="privacy.html">Privacy Policy</a>
-  <a href="terms.html">Terms</a>
-  <a href="refund.html">Refund</a>
-</footer>
+    <div class="logo">
+      HALORA RIDE
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       MAIN VIDEO
+  ========================= -->
+
+  <main class="hero">
+
+    <div class="hero-box">
+
+      <video
+        id="haloraVideo"
+        class="hero-video"
+        autoplay
+        muted
+        playsinline
+        preload="auto"
+      >
+
+        <!--
+          अपनी video का नाम यहाँ रखें
+        -->
+
+        <source
+          src="./assets/halora-promo.mp4"
+          type="video/mp4"
+        >
+
+        आपका browser video support नहीं करता।
+
+      </video>
+
+
+      <div
+        id="videoLoading"
+        class="video-loading"
+      >
+        Loading...
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- Background glow -->
+
+  <div class="bottom-glow"></div>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
+  <script>
+
+    const video =
+      document.getElementById("haloraVideo");
+
+    const loading =
+      document.getElementById("videoLoading");
+
+
+    /*
+      Video खत्म होते ही
+      Login Page खुलेगा
+    */
+
+    video.addEventListener(
+      "ended",
+      function () {
+
+        window.location.href =
+          "./login.html";
+
+      }
+    );
+
+
+    /*
+      Video load होने पर
+      loading हटाएँ
+    */
+
+    video.addEventListener(
+      "loadeddata",
+      function () {
+
+        loading.style.opacity = "0";
+
+      }
+    );
+
+
+    /*
+      अगर video play नहीं होती
+      तो manually play करने की कोशिश
+    */
+
+    window.addEventListener(
+      "load",
+      function () {
+
+        video.play().catch(
+          function () {
+
+            loading.style.opacity = "1";
+
+          }
+        );
+
+      }
+    );
+
+
+    /*
+      Video में error आने पर
+      सीधे login page खोलें
+    */
+
+    video.addEventListener(
+      "error",
+      function () {
+
+        console.log(
+          "HALORA video load नहीं हुई"
+        );
+
+      }
+    );
+
+  </script>
+
 
 </body>
+
 </html>

@@ -1,64 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HALORA Admin Panel</title>
-  <link rel="stylesheet" href="admin.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HALORA Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css">
 </head>
 
 <body>
 
+  <!-- HEADER -->
   <header class="admin-header">
-    <h1>HALORA Admin Panel</h1>
-    <a href="../dashboard.html" class="back-btn">← Back</a>
+    <div>
+      <h1>HALORA</h1>
+      <p>Admin Control Center</p>
+    </div>
+
+    <div class="header-actions">
+      <a href="../dashboard.html" class="back-btn">← App</a>
+      <button id="logoutBtn" class="logout-btn">Logout</button>
+    </div>
   </header>
 
+
+  <!-- MAIN -->
   <main class="admin-container">
 
-    <!-- STATS -->
-    <div class="stats-grid">
+    <!-- WELCOME -->
+    <section class="welcome-box">
+      <h2>Welcome, Admin 👋</h2>
+      <p>Manage HALORA users, bookings, partners and KYC from one place.</p>
+    </section>
+
+
+    <!-- STATISTICS -->
+    <section class="stats-grid">
+
       <div class="stat-card">
-        <h3 id="totalBookings">0</h3>
-        <p>Bookings</p>
+        <div class="stat-icon">🚕</div>
+        <div>
+          <h3 id="totalBookings">0</h3>
+          <p>Total Bookings</p>
+        </div>
       </div>
 
       <div class="stat-card">
-        <h3 id="totalPartners">0</h3>
-        <p>Partners</p>
+        <div class="stat-icon">🤝</div>
+        <div>
+          <h3 id="totalPartners">0</h3>
+          <p>Total Partners</p>
+        </div>
       </div>
 
       <div class="stat-card">
-        <h3 id="totalKYC">0</h3>
-        <p>KYC Requests</p>
+        <div class="stat-icon">🪪</div>
+        <div>
+          <h3 id="totalKYC">0</h3>
+          <p>KYC Requests</p>
+        </div>
       </div>
 
       <div class="stat-card">
-        <h3 id="totalUsers">0</h3>
-        <p>Users</p>
+        <div class="stat-icon">👥</div>
+        <div>
+          <h3 id="totalUsers">0</h3>
+          <p>Total Users</p>
+        </div>
       </div>
-    </div>
+
+    </section>
+
+
+    <!-- QUICK MENU -->
+    <section class="quick-menu">
+
+      <h2>Admin Management</h2>
+
+      <div class="menu-grid">
+
+        <a href="bookings.html" class="menu-card">
+          <span>🚕</span>
+          <strong>Bookings</strong>
+          <small>Manage all bookings</small>
+        </a>
+
+        <a href="../trip.html" class="menu-card">
+          <span>🧳</span>
+          <strong>Trips</strong>
+          <small>View trip services</small>
+        </a>
+
+        <a href="wallet-admin.html" class="menu-card">
+          <span>💰</span>
+          <strong>Wallet</strong>
+          <small>Payments & withdrawals</small>
+        </a>
+
+        <a href="../partner.html" class="menu-card">
+          <span>🤝</span>
+          <strong>Partners</strong>
+          <small>Partner management</small>
+        </a>
+
+      </div>
+
+    </section>
+
 
     <!-- BOOKINGS -->
     <section class="admin-section">
-      <h2>🚖 Bookings</h2>
-      <div id="adminBookings"></div>
+
+      <div class="section-title">
+        <h2>🚕 Recent Bookings</h2>
+        <a href="bookings.html">View All →</a>
+      </div>
+
+      <div id="adminBookings" class="admin-list">
+        <p>Loading bookings...</p>
+      </div>
+
     </section>
+
 
     <!-- PARTNERS -->
     <section class="admin-section">
-      <h2>🤝 Partners</h2>
-      <div id="adminPartners"></div>
+
+      <div class="section-title">
+        <h2>🤝 Partner Requests</h2>
+      </div>
+
+      <div id="adminPartners" class="admin-list">
+        <p>Loading partners...</p>
+      </div>
+
     </section>
+
 
     <!-- KYC -->
     <section class="admin-section">
-      <h2>🪪 KYC Requests</h2>
-      <div id="adminKYC"></div>
+
+      <div class="section-title">
+        <h2>🪪 KYC Requests</h2>
+      </div>
+
+      <div id="adminKYC" class="admin-list">
+        <p>Loading KYC requests...</p>
+      </div>
+
+    </section>
+
+
+    <!-- FUTURE FEATURES -->
+    <section class="admin-section future-section">
+
+      <h2>🚀 Coming Soon</h2>
+
+      <div class="future-grid">
+
+        <div>📊 Advanced Analytics</div>
+        <div>🔔 Notifications</div>
+        <div>💳 Payment Reports</div>
+        <div>🏨 Hotel Management</div>
+        <div>🏍️ Driver Management</div>
+        <div>🎫 Coupon Management</div>
+
+      </div>
+
     </section>
 
   </main>
 
+
+  <!-- ADMIN JS -->
   <script type="module" src="./admin.js"></script>
+
+  <!-- LOGOUT -->
+  <script>
+    document.getElementById("logoutBtn")?.addEventListener("click", () => {
+      if (confirm("Logout from HALORA Admin?")) {
+        window.location.href = "../login.html";
+      }
+    });
+  </script>
+
 </body>
 </html>

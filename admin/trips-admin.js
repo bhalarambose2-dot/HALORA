@@ -11,26 +11,23 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-// ==============================
+// =====================================
 // LOAD TRIPS
-// ==============================
+// =====================================
 
 window.loadTrips = async function () {
 
-  const tripList =
-    document.getElementById("tripList");
+  const tripList = document.getElementById("tripList");
 
   if (!tripList) return;
 
-  tripList.innerHTML =
-    "<p>Loading trips...</p>";
+  tripList.innerHTML = "<p>Loading trips...</p>";
 
   try {
 
-    const snapshot =
-      await getDocs(
-        collection(db, "trips")
-      );
+    const snapshot = await getDocs(
+      collection(db, "trips")
+    );
 
     if (snapshot.empty) {
 
@@ -44,85 +41,158 @@ window.loadTrips = async function () {
 
     snapshot.forEach((tripDoc) => {
 
-      const trip =
-        tripDoc.data();
+      const trip = tripDoc.data();
+      const id = tripDoc.id;
+
+      const title =
+        trip.title || trip.name || "Trip";
+
+      const from =
+        trip.from || "N/A";
+
+      const destination =
+        trip.destination ||
+        trip.to ||
+        "N/A";
+
+      const price =
+        trip.price || 0;
+
+      const date =
+        trip.date || "N/A";
+
+      const endDate =
+        trip.endDate || "N/A";
+
+      const duration =
+        trip.duration || "N/A";
+
+      const seats =
+        trip.seats || 0;
+
+      const description =
+        trip.description || "No description";
+
+      const image =
+        trip.image || "";
+
+      const status =
+        trip.status || "Active";
+
 
       html += `
 
-        <div class="admin-card">
+        <div class="admin-card trip-card">
+
+          ${
+            image
+              ? `
+                <img
+                  src="${safeText(image)}"
+                  alt="${safeText(title)}"
+                  style="
+                    width:100%;
+                    max-height:220px;
+                    object-fit:cover;
+                    border-radius:15px;
+                    margin-bottom:15px;
+                  "
+                >
+              `
+              : ""
+          }
+
 
           <h3>
-            🧳 ${safeText(
-              trip.title ||
-              trip.name ||
-              "Trip"
-            )}
+            🧳 ${safeText(title)}
           </h3>
 
-          <p>
-            📍 From:
-            ${safeText(
-              trip.from || "N/A"
-            )}
-          </p>
 
           <p>
-            📍 Destination:
-            ${safeText(
-              trip.destination ||
-              trip.to ||
-              "N/A"
-            )}
+            📍 <strong>From:</strong>
+            ${safeText(from)}
           </p>
 
-          <p>
-            💰 Price:
-            ₹${safeText(
-              trip.price || 0
-            )}
-          </p>
 
           <p>
-            📅 Date:
-            ${safeText(
-              trip.date || "N/A"
-            )}
+            📍 <strong>Destination:</strong>
+            ${safeText(destination)}
           </p>
 
-          <p>
-            👥 Seats:
-            ${safeText(
-              trip.seats || 0
-            )}
-          </p>
 
           <p>
-            Status:
-            ${safeText(
-              trip.status || "Active"
-            )}
+            📅 <strong>Start:</strong>
+            ${safeText(date)}
+          </p>
+
+
+          <p>
+            📅 <strong>End:</strong>
+            ${safeText(endDate)}
+          </p>
+
+
+          <p>
+            ⏱️ <strong>Duration:</strong>
+            ${safeText(duration)}
+          </p>
+
+
+          <p>
+            💰 <strong>Price:</strong>
+            ₹${safeText(price)}
+          </p>
+
+
+          <p>
+            👥 <strong>Seats:</strong>
+            ${safeText(seats)}
+          </p>
+
+
+          <p>
+            📝 <strong>Description:</strong><br>
+            ${safeText(description)}
+          </p>
+
+
+          <p>
+            <strong>Status:</strong>
+
+            <span class="status">
+              ${safeText(status)}
+            </span>
+
           </p>
 
 
           <div class="admin-actions">
 
             <button
-              onclick="editTrip(
-                '${tripDoc.id}'
-              )">
-
+              onclick="editTrip('${id}')"
+            >
               ✏️ Edit
-
             </button>
 
 
             <button
-              onclick="deleteTrip(
-                '${tripDoc.id}'
-              )">
+              onclick="toggleTripStatus(
+                '${id}',
+                '${status === "Active" ? "Inactive" : "Active"}'
+              )"
+            >
+              ${
+                status === "Active"
+                  ? "⛔ Disable"
+                  : "✅ Activate"
+              }
+            </button>
 
+
+            <button
+              onclick="deleteTrip('${id}')"
+            >
               🗑️ Delete
-
             </button>
 
           </div>
@@ -132,12 +202,13 @@ window.loadTrips = async function () {
       `;
     });
 
+
     tripList.innerHTML = html;
 
   } catch (error) {
 
     console.error(
-      "Trips error:",
+      "Trips loading error:",
       error
     );
 
@@ -147,9 +218,10 @@ window.loadTrips = async function () {
 };
 
 
-// ==============================
+
+// =====================================
 // ADD TRIP
-// ==============================
+// =====================================
 
 window.addTrip = async function () {
 
@@ -173,9 +245,25 @@ window.addTrip = async function () {
     document.getElementById("tripDate")
       ?.value;
 
+  const endDate =
+    document.getElementById("tripEndDate")
+      ?.value;
+
+  const duration =
+    document.getElementById("tripDuration")
+      ?.value.trim();
+
   const seats =
     document.getElementById("tripSeats")
       ?.value;
+
+  const image =
+    document.getElementById("tripImage")
+      ?.value.trim();
+
+  const description =
+    document.getElementById("tripDescription")
+      ?.value.trim();
 
 
   if (
@@ -186,7 +274,7 @@ window.addTrip = async function () {
   ) {
 
     alert(
-      "Please fill required fields."
+      "Please fill all required fields."
     );
 
     return;
@@ -199,17 +287,26 @@ window.addTrip = async function () {
       collection(db, "trips"),
       {
 
-        title,
+        title: title,
 
-        from,
+        from: from,
 
-        destination,
+        destination: destination,
 
         price: Number(price),
 
         date: date || "",
 
+        endDate: endDate || "",
+
+        duration: duration || "",
+
         seats: Number(seats || 0),
+
+        image: image || "",
+
+        description:
+          description || "",
 
         status: "Active",
 
@@ -221,20 +318,24 @@ window.addTrip = async function () {
 
 
     alert(
-      "Trip added successfully!"
+      "✅ Trip added successfully!"
     );
 
 
-    document.getElementById(
-      "tripForm"
-    )?.reset();
+    document
+      .getElementById("tripForm")
+      ?.reset();
 
 
     loadTrips();
 
+
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Add trip error:",
+      error
+    );
 
     alert(
       "Error: " +
@@ -244,16 +345,128 @@ window.addTrip = async function () {
 };
 
 
-// ==============================
+
+// =====================================
+// EDIT TRIP
+// =====================================
+
+window.editTrip =
+async function (id) {
+
+  const title =
+    prompt(
+      "Enter new trip name:"
+    );
+
+  if (!title) return;
+
+
+  const price =
+    prompt(
+      "Enter new price:",
+      ""
+    );
+
+
+  if (!price) return;
+
+
+  try {
+
+    await updateDoc(
+      doc(db, "trips", id),
+      {
+
+        title: title.trim(),
+
+        price: Number(price),
+
+        updatedAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    alert(
+      "✅ Trip updated successfully!"
+    );
+
+
+    loadTrips();
+
+
+  } catch (error) {
+
+    console.error(
+      "Edit trip error:",
+      error
+    );
+
+    alert(
+      "Error: " +
+      error.message
+    );
+  }
+};
+
+
+
+// =====================================
+// ACTIVE / INACTIVE
+// =====================================
+
+window.toggleTripStatus =
+async function (id, newStatus) {
+
+  try {
+
+    await updateDoc(
+      doc(db, "trips", id),
+      {
+
+        status: newStatus,
+
+        updatedAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    alert(
+      `Trip ${newStatus}`
+    );
+
+
+    loadTrips();
+
+
+  } catch (error) {
+
+    console.error(
+      "Status error:",
+      error
+    );
+
+    alert(
+      error.message
+    );
+  }
+};
+
+
+
+// =====================================
 // DELETE TRIP
-// ==============================
+// =====================================
 
 window.deleteTrip =
 async function (id) {
 
   if (
     !confirm(
-      "Delete this trip?"
+      "⚠️ Delete this trip permanently?"
     )
   ) {
     return;
@@ -268,15 +481,19 @@ async function (id) {
 
 
     alert(
-      "Trip deleted."
+      "🗑️ Trip deleted."
     );
 
 
     loadTrips();
 
+
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Delete trip error:",
+      error
+    );
 
     alert(
       error.message
@@ -285,58 +502,14 @@ async function (id) {
 };
 
 
-// ==============================
-// EDIT TRIP
-// ==============================
 
-window.editTrip =
-async function (id) {
-
-  const title =
-    prompt(
-      "Enter new trip name:"
-    );
-
-  if (!title) return;
-
-
-  try {
-
-    await updateDoc(
-      doc(db, "trips", id),
-      {
-        title: title,
-        updatedAt:
-          serverTimestamp()
-      }
-    );
-
-
-    alert(
-      "Trip updated."
-    );
-
-
-    loadTrips();
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert(
-      error.message
-    );
-  }
-};
-
-
-// ==============================
+// =====================================
 // SAFE TEXT
-// ==============================
+// =====================================
 
 function safeText(value) {
 
-  return String(value || "")
+  return String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -345,8 +518,9 @@ function safeText(value) {
 }
 
 
-// ==============================
+
+// =====================================
 // INITIAL LOAD
-// ==============================
+// =====================================
 
 loadTrips();
